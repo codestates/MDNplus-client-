@@ -54,11 +54,25 @@ function Nav() {
 
   const kakaoUserInfo = () => {
     console.log('카카오 유저 정보 받아오는 요청 보내짐')
-    axios.get("https://kapi.kakao.com/v2/user/me", header)
+    axios.get("https://kapi.kakao.com/v2/user/me", {headers: {Autorization: `Bearer ${accessToken}`}})
     .then(res => console.log(res))
 
-
   };
+  // const kakaoUserInfo = async () => {
+  //   console.log("카카오 유저 정보 받아오는 요청 보내짐");
+  //   // await axios
+  //   //   .get("https://kapi.kakao.com/v2/user/me", { headers: { Authorization: `Bearer ${accessToken}` } })
+  //   //   .then((res) => console.log("요청 성공"))
+  //   //   .catch((err) => console.log(err));
+  //   // Kakao.API.request({
+  //   //   url: '/v2/user/me',
+  //   //   success: function(response) {
+  //   //       console.log(response);
+  //   //   },
+  //   //   fail: function(error) {
+  //   //       console.log(error);
+  //   //   }
+  // };
 
   // loginModal에서 깃허브 로그인 성공 후, 리디렉션이 되어서 localhost로 돌아오면 실행되는 라이프사이클 코드
   useEffect(() => {

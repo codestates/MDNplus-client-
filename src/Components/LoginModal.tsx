@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 
 const REST_API_KEY = '144bf580b6a5f37255716facf6728b0d'
 const REDIRECT_URI = 'http://localhost:3000/kakaoLogin'
+const { Kakao }:any = window
 
 
 function LoginModal() {
@@ -21,8 +22,12 @@ function LoginModal() {
     }
 
     const kakaoLoginHandler = () => { // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
-        console.log('카카오 로그인 실행됨')
-        window.location.assign(KAKAO_LOGIN_URL)
+        // console.log('카카오 로그인 실행됨')
+        // window.location.assign(KAKAO_LOGIN_URL)
+        // console.log('리다이렉션 페이지로 이동')
+        Kakao.Auth.authorize({
+            redirectUri: REDIRECT_URI
+        });
     }
         
 

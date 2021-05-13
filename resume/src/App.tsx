@@ -1,9 +1,11 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MainPage from "./Pages/MainPage";
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <MainPage></MainPage>
         </p>
         Learn React
       </header>

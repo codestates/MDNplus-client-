@@ -12,28 +12,12 @@ function Nav() {
   const accessToken = localStorage.getItem("accessToken");
   const history = useHistory();
 
-  //서버로부터 깃허브 accessToken 받아오는 요청
+  //깃허브 accessToken 받아오는 요청
   const gitAccessToken = (authorizationCode: string) => {
     axios.post("http://localhost:80/oauth/github", { authorizationCode: authorizationCode }).then((res) => {
       if (res.data.accessToken) {
         setIsLogin(true);
         localStorage.setItem("accessToken", res.data.accessToken);
-      }
-    });
-  };
-
-  //서버로부터 카카오 accessToken 받아오는 요청
-  const kakaoAccessToken = (authorizationCode: string) => {
-    console.log("카카오 accessToken 받는 요청 보내짐");
-    console.log(authorizationCode);
-    axios.post("http://localhost:80/oauth/kakao", { authorizationCode: authorizationCode }).then((res) => {
-      console.log(res);
-      const { accessToken, refreshToken } = res.data.data;
-      if (accessToken) {
-        setIsLogin(true);
-        Kakao.Auth.setAccessToken(accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        kakaoUserInfo();
       }
     });
   };
@@ -51,17 +35,34 @@ function Nav() {
       });
   };
 
+  //카카오 accessToken 받아오는 요청
+  const kakaoAccessToken = (authorizationCode: string) => {
+    console.log("카카오 accessToken 받는 요청 보내짐");
+    console.log(authorizationCode);
+    axios.post("http://localhost:80/oauth/kakao", { authorizationCode: authorizationCode }).then((res) => {
+      console.log(res);
+      const { accessToken, refreshToken } = res.data.data;
+      if (accessToken) {
+        setIsLogin(true);
+        Kakao.Auth.setAccessToken(accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        kakaoUserInfo();
+      }
+    });
+  };
+
+  //카카오 유저 정보 받아오는 요청
   const kakaoUserInfo = () => {
     console.log("hi");
     Kakao.API.request({
       url: '/v2/user/me',
-      success: function(response:any) {
-        const {email} = response.kakao_account
-        const {nickname} = response.properties
+      success: function(res:any) {
+        const email = res.kakao_account.email
+        const nickname = res.properties.nickname
           console.log(email, nickname);
       },
-      fail: function(error:any) {
-          console.log(error);
+      fail: function(err:any) {
+          console.log(err);
       }
   });
   };
@@ -75,15 +76,18 @@ function Nav() {
       console.log(Kakao.Auth.getAccessToken());
       setIsLogin(false)
     });
-    // Kakao.API.request({
-    //   url: '/v1/user/unlink',
-    //   success: function(response:any) {
-    //     console.log(response);
-    //   },
-    //   fail: function(error:any) {
-    //     console.log(error);
-    //   },
-    // });
+  }
+
+  const handleWithDraw = () => {
+    Kakao.API.request({
+      url: '/v1/user/unlink',
+      success: function(response:any) {
+        console.log(response);
+      },
+      fail: function(error:any) {
+        console.log(error);
+      },
+    });
   }
 
   // loginModal에서 깃허브 로그인 성공 후, 리디렉션이 되어서 localhost로 돌아오면 실행되는 라이프사이클 코드
@@ -112,6 +116,7 @@ function Nav() {
       {isLogin ? <div>로그인 되어 있음</div> : <div>로그인 안되어 있음</div>}
       {userName ? <div>{userName}</div> : <div>아직 깃허브에서 유저정보 안가져옴</div>}
       <button onClick={handleLogout}>로그아웃</button>
+      <button onClick={handleWithDraw}>회원탈퇴</button>
     </div>
   );
 }

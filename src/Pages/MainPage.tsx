@@ -10,17 +10,18 @@ import { useEffect } from "react";
 // 2-1. useEffect 실행하여 dispatch 메소드로 allData, arrayData, objectData에 데이터들을 넣어줌
 
 type Method = {
- id: number;
- title: string;
- body: string;
- count: number;
-}
+  id: number;
+  title: string;
+  body: string;
+  count: number;
+};
+
+type AA = {
+  arrayData: Array<Method>;
+};
 
 function MainPage() {
   const { state, onFilterArray, onFilterObject } = useAllData();
-  if(state.arrayData) {
-    const arrayData = state.arrayData
-  }
 
   const handleFilterArr = () => {
     return FakeData.filter((el) => {
@@ -45,12 +46,22 @@ function MainPage() {
     if (objectMethods) {
       onFilterObject(objectMethods);
     }
-    console.log('state 바꿔짐')
+    console.log("state 바꿔짐");
   }, []);
 
-  return <div>{state.arrayData === null ? <div>로딩 중입니다.</div> : state.arrayData.map((el:any) => {
-    return <div key={el.id}>{el.title}</div>
-  })}</div>;
+  console.log(state.arrayData);
+
+  return (
+    <div>
+      {state.arrayData === null ? (
+        <div>로딩 중입니다.</div>
+      ) : (
+        state.arrayData.map((el: any) => {
+          return <div key={el.id}>{el.title}</div>;
+        })
+      )}
+    </div>
+  );
 }
 
 export default MainPage;

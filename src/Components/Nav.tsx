@@ -78,7 +78,7 @@ function Nav() {
     });
   }
 
-  const handleWithDraw = () => {
+  const handleMembership = () => {
     Kakao.API.request({
       url: '/v1/user/unlink',
       success: function(response:any) {
@@ -116,7 +116,7 @@ function Nav() {
       {isLogin ? <div>로그인 되어 있음</div> : <div>로그인 안되어 있음</div>}
       {userName ? <div>{userName}</div> : <div>아직 깃허브에서 유저정보 안가져옴</div>}
       <button onClick={handleLogout}>로그아웃</button>
-      <button onClick={handleWithDraw}>회원탈퇴</button>
+      <button onClick={handleMembership}>회원탈퇴</button>
     </div>
   );
 }

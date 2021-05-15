@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faTimes, faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter } from "react-router-dom";
-library.add(faSearch, faTimes);
+library.add(faSearch, faTimes, faSortDown, faSortUp);
 
 ReactDOM.render(
   <BrowserRouter>

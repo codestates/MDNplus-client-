@@ -1,6 +1,6 @@
 import MainPage from "./Pages/MainPage";
 import Nav from "./Components/Nav";
-import { Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import ContentPage from "./Pages/ContentPage";
 import EditPage from "./Pages/EditPage";
 import MyPage from "./Pages/MyPage";
@@ -14,12 +14,12 @@ function App() {
       <Nav></Nav>
       <Switch>
         <Route exact path="/" render={() => <MainPage />} />
-        <Route path="ContentPage" render={() => <ContentPage />} />
-        <Route path="EditPage" render={() => <EditPage />} />
-        <Route path="MyPage" render={() => <MyPage />} />
-        <Route path="QuestionPage" render={() => <QuestionPage />} />
-        <Route path="SearchPage" render={() => <SearchPage />} />
-        <Route path="SettingPage" render={() => <SettingPage />} />
+        <Route path="/ContentPage" render={() => <ContentPage />} />
+        <Route path="/EditPage" render={() => <EditPage />} />
+        <Route path="/MyPage" render={() => <MyPage />} />
+        <Route path="/QuestionPage" render={() => <QuestionPage />} />
+        <Route path="/SearchPage" render={() => <SearchPage />} />
+        <Route path="/SettingPage" render={() => <SettingPage />} />
       </Switch>
     </div>
   );

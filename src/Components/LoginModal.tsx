@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  checkLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function LoginModal({ isOpen, onClose }: Props) {
+function LoginModal({ isOpen, onClose, checkLogin }: Props) {
   const overLay = useRef(null);
 
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -20,6 +21,23 @@ function LoginModal({ isOpen, onClose }: Props) {
     onClose();
   };
 
+  const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize/?client_id=6247a72ec8e51735ea34`;
+
+  //카카오톡 URL 마크 해줘야함
+  const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=&redirect_uri=`;
+
+  const socialLoginHandler = () => {
+    // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
+    console.log("깃허브 로그인 실행됨");
+    window.location.assign(GITHUB_LOGIN_URL);
+  };
+
+  const kakaoLoginHandler = () => {
+    // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
+    console.log("카카오 로그인 실행됨");
+    window.location.assign(KAKAO_LOGIN_URL);
+  };
+
   return isOpen ? (
     <ModalContainer>
       <Overlay onClick={handleOverLay} ref={overLay} />
@@ -28,8 +46,8 @@ function LoginModal({ isOpen, onClose }: Props) {
           <FontAwesomeIcon icon="times" size="lg" color="#005ce7" />
         </CloseIcon>
         <OauthContainer>
-          <KakaoOauth>kakao로 로그인</KakaoOauth>
-          <GithubOauthButton>github로 로그인</GithubOauthButton>
+          <KakaoOauth onClick={kakaoLoginHandler}>kakao로 로그인</KakaoOauth>
+          <GithubOauthButton onClick={socialLoginHandler}>github로 로그인</GithubOauthButton>
         </OauthContainer>
       </ModalBox>
     </ModalContainer>

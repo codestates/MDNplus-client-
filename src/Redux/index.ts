@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux'
 import AllDataReducer from './AllData'
+import ContentDataReducer from './ContentData'
 
 const rootReducer = combineReducers({
-    AllDataReducer
+    AllDataReducer, ContentDataReducer
 })
 
 export default rootReducer

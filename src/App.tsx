@@ -8,6 +8,7 @@ import MyPage from "./Pages/MyPage";
 import QuestionPage from "./Pages/QuestionPage";
 import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
+import "./App.css";
 
 function App() {
   return (
@@ -15,12 +16,12 @@ function App() {
       <Nav></Nav>
         <Switch>
           <Route exact path="/" render={() => <MainPage />} />
-          <Route path="ContentPage" render={() => <ContentPage />} />
-          <Route path="EditPage" render={() => <EditPage />} />
-          <Route path="MyPage" render={() => <MyPage />} />
-          <Route path="QuestionPage" render={() => <QuestionPage />} />
-          <Route path="SearchPage" render={() => <SearchPage />} />
-          <Route path="SettingPage" render={() => <SettingPage />} />
+          <Route path="/ContentPage" render={() => <ContentPage />} />
+          <Route path="/EditPage" render={() => <EditPage />} />
+          <Route path="/MyPage" render={() => <MyPage />} />
+          <Route path="/QuestionPage" render={() => <QuestionPage />} />
+          <Route path="/SearchPage" render={() => <SearchPage />} />
+          <Route path="/SettingPage" render={() => <SettingPage />} />
         </Switch>
     </BrowserRouter>
   );

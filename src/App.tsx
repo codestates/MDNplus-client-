@@ -22,7 +22,6 @@ function App() {
           <Route path="SearchPage" render={() => <SearchPage />} />
           <Route path="SettingPage" render={() => <SettingPage />} />
         </Switch>
-      <MainPage></MainPage>
     </BrowserRouter>
   );
 }

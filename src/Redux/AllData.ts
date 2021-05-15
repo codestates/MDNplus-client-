@@ -15,15 +15,12 @@ type Method = {
   count: number;
 };
 
-type ArrayData = {
-  arrayData: Array<Method>;
-};
-
 // 초기 state 타입 설정
 type InitState = {
-  allData: null | object[];
-  arrayData: null | object[];
-  objectData: null | object[];
+  allData: null | Method[];
+  arrayData: null | Method[];
+  objectData: null | Method[];
+  currentData: null | Method[]
 };
 
 // 초기 state 설정
@@ -31,6 +28,7 @@ const initialState = {
   allData: null,
   arrayData: null,
   objectData: null,
+  currentData: null
 };
 
 function AllDataReducer(state: InitState = initialState, action: AllDataAction) {

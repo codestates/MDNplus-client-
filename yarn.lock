@@ -11338,6 +11338,11 @@
     "glob" "^7.1.4"
     "minimatch" "^3.0.4"
 
+"text-field-edit@^3.1.0":
+  "integrity" "sha512-4mVLiSRR5/p0Zhdl8QkjkUeYUDMSQSYdKsEgR6uOySjcc6QB/O2hzuUlxepL2kQQL0NrpYiI6Ywj6TZULYI9/w=="
+  "resolved" "https://registry.npmjs.org/text-field-edit/-/text-field-edit-3.1.0.tgz"
+  "version" "3.1.0"
+
 "text-table@^0.2.0", "text-table@0.2.0":
   "integrity" "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ="
   "resolved" "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz"

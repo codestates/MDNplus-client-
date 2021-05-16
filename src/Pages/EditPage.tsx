@@ -7,16 +7,18 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { render } from "react-dom";
+import { text } from '@fortawesome/fontawesome-svg-core';
+
 
 function EditPage() {
   const { state, onChangeContent } = useContentData();
   const { contentData } = state; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
   const [checkModal, setCheckModal] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState<number | undefined>(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  // const [currentIndex, setCurrentIndex] = useState<number | undefined>(0);
 
   //유저가 글을 수정하여 onchange 이벤트가 발생 시, contentData의 body를 수정하기 위한 함수
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: any) => {
     onChangeContent(e.target.value);
   };
 
@@ -29,40 +31,14 @@ function EditPage() {
     }
   };
 
-  const handleGetIndex = () => {
-    const text = textareaRef.current;
-    const currentIndex = text?.selectionStart;
-    console.log(currentIndex);
-    setCurrentIndex(currentIndex);
-  };
-
-  const handleMarkdownH1 = () => {
-    if (contentData) {
-      const splitedArr = contentData.body.split("\n");
-      const newContentBody = contentData.body.slice(0, currentIndex);
-      const splitedNewArr = newContentBody.split("\n");
-      const targetString = splitedNewArr[splitedNewArr.length - 1];
-      const targetStringIdx = splitedNewArr.length - 1
-      console.log(splitedNewArr);
-      console.log(targetString);
-      console.log(targetStringIdx)
-      console.log(splitedArr)
-      splitedArr[targetStringIdx] = `# ${splitedArr[targetStringIdx]}`
-      console.log(splitedArr)
-
-      let result = ''
-
-      for(let i = 0; i < splitedArr.length; i++) {
-        if(splitedArr[i] === "") {
-          result = result + '\n'
-        } else {
-          result = result + splitedArr[i]
-        }
-      }
-
-      onChangeContent(result)
-    }
-  };
+  // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)
+  // const handleGetIndex = () => {
+  //   const text = textareaRef.current;
+  //   const currentIndex = text?.selectionStart;
+  //   console.log(text)
+  //   console.log(currentIndex);
+  //   setCurrentIndex(currentIndex);
+  // };
 
   return (
     <>
@@ -73,14 +49,8 @@ function EditPage() {
         <Container>
           <LeftContainer>
             <Title>{contentData.title}</Title>
-            <div>
-              <button onClick={handleMarkdownH1}>h1</button>
-              <button>h2</button>
-              <button>h3</button>
-              <button>h4</button>
-            </div>
             {contentData.body ? (
-              <Body ref={textareaRef} defaultValue={contentData.body} onClick={handleGetIndex} onChange={handleChange} autoFocus></Body>
+              <Body ref={textareaRef} defaultValue={contentData.body} onChange={handleChange} autoFocus></Body>
             ) : (
               <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>
             )}
@@ -101,6 +71,9 @@ export const Components = {
     return <SyntaxHighlighter style={docco} language="javascript" PreTag="div" children={String(children).replace(/\n$/, "")} {...props} />;
   },
 };
+
+export default EditPage;
+
 
 const Container = styled.div`
   display: grid;
@@ -143,4 +116,31 @@ const PreviewBody = styled.div`
   font-size: 20px;
 `;
 
-export default EditPage;
+
+
+
+
+
+// const handleMarkdownH1 = () => {
+//   if (contentData) {
+//     const splitedArr = contentData.body.split("\n");
+//     const newContentBody = contentData.body.slice(0, currentIndex);
+//     const splitedNewArr = newContentBody.split("\n");
+//     const targetString = splitedNewArr[splitedNewArr.length - 1];
+//     const targetStringIdx = splitedNewArr.length - 1      
+
+//     // splitedArr[targetStringIdx] = `# ${splitedArr[targetStringIdx]}`
+
+//     // let result = ''
+
+//     // for(let i = 0; i < splitedArr.length; i++) {
+//     //   if(splitedArr[i] === "") {
+//     //     result = result + '\n'
+//     //   } else {
+//     //     result = result + splitedArr[i]
+//     //   }
+//     // }
+
+//     // onChangeContent(result)
+//   }
+// };

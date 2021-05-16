@@ -12,12 +12,11 @@ type DataType = {
   content: Array<ContentType>;
 };
 function useMypage() {
-  const myPageState = useSelector((state: RootState) => state.MyPageRedux);
-  const { myData }: any = myPageState;
+  const myPageState: any = useSelector((state: RootState) => state.MyPageRedux);
 
-  const { userNamee, content }: DataType = myData;
+  console.log(myPageState.myData.userNamee);
 
-  return { userNamee, content };
+  return { myPageState };
 }
 
 export default useMypage;

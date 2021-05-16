@@ -15,17 +15,17 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import useMyPage from "../Hooks/useMypage";
 import { displayMyData } from "../Redux/MyPageRedux";
 import { useDispatch } from "react-redux";
 import { DummyData } from "../MyPageDummyData";
+import useMypage from "../Hooks/useMypage";
 
 function MyPage() {
   const [userName, setUserName] = useState("");
   const accessToken = localStorage.getItem("accessToken");
   // const { userNamee, content }: DataType = DummyData;
+  const { myPageState } = useMypage();
   const dispatch = useDispatch();
-  const { userNamee, content } = useMyPage();
 
   const UserInfo = async () => {
     console.log("유저정보 가져오는 요청 실행됨");
@@ -46,16 +46,16 @@ function MyPage() {
   }, []);
 
   // console.log("useEffect 사용되기 전" + userName);
-
+  console.log(myPageState.myData);
   return (
     <div>
-      {content.map((el) => (
+      {/* {content.map((el) => (
         <div>
           {el.title}
           {el.body}
           {el.updatedAt}
         </div>
-      ))}
+      ))} */}
     </div>
   );
 

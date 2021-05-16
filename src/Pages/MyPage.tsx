@@ -13,46 +13,39 @@
 //   ],
 // };
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import useMyPage from "../Hooks/useMypage";
+import { displayMyData } from "../Redux/MyPageRedux";
+import { useDispatch } from "react-redux";
 import { DummyData } from "../MyPageDummyData";
-
-type ContentType = {
-  title: string;
-  body: string;
-  updatedAt: string;
-};
-
-type DataType = {
-  userNamee: string;
-  content: Array<ContentType>;
-};
 
 function MyPage() {
   const [userName, setUserName] = useState("");
   const accessToken = localStorage.getItem("accessToken");
-  const { userNamee, content }: DataType = DummyData;
+  // const { userNamee, content }: DataType = DummyData;
+  const dispatch = useDispatch();
+  const { userNamee, content } = useMyPage();
 
   const UserInfo = async () => {
     console.log("유저정보 가져오는 요청 실행됨");
-    await axios
-      .get("https://api.github.com/user", {
-        headers: { authorization: `token ${accessToken}` },
-      })
-      .then((res) => {
-        console.log("여기 깃허브 유저인포 가져옴");
-        setUserName(res.data.login);
-      });
+    dispatch(displayMyData(DummyData));
+    // await axios
+    //   .get("https://api.github.com/user", {
+    //     headers: { authorization: `token ${accessToken}` },
+    //   })
+    //   .then((res) => {
+    //     console.log("여기 깃허브 유저인포 가져옴");
+    //     setUserName(res.data.login);
+    //   });
   };
 
   useEffect(() => {
     console.log("useEffect 사용된 후" + userName);
     UserInfo();
-  });
+  }, []);
 
   // console.log("useEffect 사용되기 전" + userName);
-
-  console.log("hi");
 
   return (
     <div>

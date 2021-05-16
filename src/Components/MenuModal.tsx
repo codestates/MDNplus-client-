@@ -46,13 +46,13 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
 export default MenuModal;
 
 const LogOut = styled.button`
-  border: 1.8px solid #a7a3a3;
+  border: none;
   background-color: white;
   margin: 10px;
 `;
 
 const MyPage = styled.div`
-  border: 1.8px solid #a7a3a3;
+  border: none;
   background-color: white;
   margin: 10px;
 `;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useHistory } from "react-router-dom";
+import useContentData from '../Hooks/useContentData';
 
 type EditProps = { // EditPage로부터 받아오는 Props 타입 설정을 위한 코드
     handleConfirmModal: () => void;
@@ -8,13 +9,16 @@ type EditProps = { // EditPage로부터 받아오는 Props 타입 설정을 위�
 
 //EditPage에서 수정 버튼 누를 시, 정말로 수정을 할 것인지 유저에게 확인하기 위해 만든 모달
 function EditConfirmModal({handleConfirmModal}: EditProps) {
+  const {state} = useContentData()
   const history = useHistory();
+  const {contentData} = state
 
   // 모달창에 있는 수정 버튼 또는 O 버튼 누를 시, 서버에 글수정 요청을 보내는 코드
   const handleSubmit = () => {
       console.log('수정 요청 성공')
       handleConfirmModal()
       history.push('/ContentPage')
+      console.log(contentData)
   }
 
   return (
@@ -62,3 +66,21 @@ const ModalBox = styled.div`
 const SubmitBtn = styled.button`
     
 `
+
+
+
+
+// # h1
+// ## h2
+// ### h3
+// #### h4
+
+// _기울기_
+
+// ***굵기 && 기울기***
+
+// ```
+// 테스트 const test = [1, 2, 3, 4, 5]
+// ```
+
+// ![](https://media.istockphoto.com/vectors/hundred-number-vector-icon-symbol-isolated-on-white-background-vector-id1097228036?k=6&m=1097228036&s=612x612&w=0&h=66yCC83tPzTe7w6CdzTvZy6UeEwNhBIuLp6Ambyrqis=)

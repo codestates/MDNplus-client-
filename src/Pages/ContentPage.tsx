@@ -1,7 +1,9 @@
 import React from "react";
+import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router';
 import styled from "styled-components";
 import useContentData from "../Hooks/useContentData";
+import {Components} from "./EditPage" 
 
 function ContentPage() {
   const { state } = useContentData();
@@ -21,7 +23,8 @@ function ContentPage() {
         ) : (
           <div>
             <Title>{contentData.title}</Title>
-            <Body>{contentData.body}</Body>
+            <ReactMarkdown components={Components} children={contentData.body} />
+            {/* <Body>{contentData.body}</Body> */}
           </div>
         )}
         <EditBtnBox>
@@ -46,7 +49,9 @@ const Stage = styled.div`
   width: 50%;
 `;
 
-const Title = styled.h1``;
+const Title = styled.h1`
+  font-size: 45px;
+`;
 
 const Body = styled.div``;
 

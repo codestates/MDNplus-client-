@@ -1,10 +1,12 @@
-import {combineReducers} from 'redux'
-import AllDataReducer from './AllData'
+import { combineReducers } from "redux";
+import AllDataReducer from "./AllData";
+import MyPageReducer from "./MyPageData";
 
 const rootReducer = combineReducers({
-    AllDataReducer
-})
+  AllDataReducer,
+  MyPageReducer,
+});
 
-export default rootReducer
+export default rootReducer;
 
 export type RootState = ReturnType<typeof rootReducer>;

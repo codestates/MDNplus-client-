@@ -17,14 +17,16 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
   const overLay = useRef(null);
   const history = useHistory();
 
-  const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleOverLay = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === overLay.current) {
       onClose();
     }
   };
   //<Link to="/courses" replace />
 
-  const handleLogOutButton = () => {};
+  const handleLogOutButton = () => {
+    console.log("logout");
+  };
 
   const handleMyPageButton = () => {
     history.push("MyPage");
@@ -32,7 +34,7 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
 
   return (
     <ModalContainer>
-      <Overlay onClick={handleOverLay} ref={overLay}></Overlay>
+      <Overlay onClick={handleOverLay} ref={overLay} />
       <ModalBox>
         <MenuButtonContainer>
           <LogOut onClick={handleLogOutButton}>로그아웃</LogOut>
@@ -45,14 +47,12 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
 
 export default MenuModal;
 
-const LogOut = styled.button`
-  border: 1.8px solid #a7a3a3;
+const LogOut = styled.div`
   background-color: white;
   margin: 10px;
 `;
 
 const MyPage = styled.div`
-  border: 1.8px solid #a7a3a3;
   background-color: white;
   margin: 10px;
 `;

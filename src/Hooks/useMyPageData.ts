@@ -1,10 +1,19 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../Redux/";
 
-function useMyPageData() {
-  const myPageState = useSelector((state: RootState) => state.MyPageReducer);
+type ContentType = {
+  title: string;
+  body: string;
+  updatedAt: string;
+};
 
-  console.log(myPageState);
+type DataType = {
+  userNamee: string;
+  content: Array<ContentType>;
+};
+
+function useMyPageData() {
+  const myPageState: any = useSelector((state: RootState) => state.MyPageReducer);
 
   return { myPageState };
 }

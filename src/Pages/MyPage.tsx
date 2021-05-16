@@ -15,32 +15,21 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { DummyData } from "../MyPageDummyData";
-import { userData } from "../Redux/MyPageData";
+import { myPageUserAction } from "../Redux/MyPageData";
+import MyPageList from "../Components/MyPageList";
 import useMyPageData from "../Hooks/useMyPageData";
-
-type ContentType = {
-  title: string;
-  body: string;
-  updatedAt: string;
-};
-
-type DataType = {
-  userNamee: string;
-  content: Array<ContentType>;
-};
+import axios from "axios";
 
 function MyPage() {
   const [userName, setUserName] = useState("");
   const accessToken = localStorage.getItem("accessToken");
-  const { userNamee, content }: DataType = DummyData;
+  // const { userNamee, content }: DataType = DummyData;
   const dispatch = useDispatch();
   const { myPageState } = useMyPageData();
-
+  const { myPageUserData, myPagearrayData, myPageobjectData, myPagecurrentData } = myPageState;
   const UserInfo = async () => {
     console.log("유저정보 가져오는 요청 실행됨");
-    dispatch(userData(DummyData));
     // await axios
     //   .get("https://api.github.com/user", {
     //     headers: { authorization: `token ${accessToken}` },
@@ -53,29 +42,20 @@ function MyPage() {
 
   useEffect(() => {
     console.log("useEffect 사용된 후" + userName);
+    dispatch(myPageUserAction(DummyData));
+
     UserInfo();
   }, []);
+
+  // if (myPageUserData !== null) {
+  //   console.log(myPageUserData);
+  // }
 
   // console.log("useEffect 사용되기 전" + userName);
 
   console.log("hi");
-  console.log(myPageState);
 
-  return (
-    <div>
-      {/* {content.map((el) => (
-        <div>
-          {el.title}
-          {el.body}
-          {el.updatedAt}
-        </div>
-      ))} */}
-    </div>
-  );
-
-  {
-    /* return <div>{accessToken ? <div>{userName}</div> : <div>accessToken 없음</div>}</div>; */
-  }
+  return myPageUserData === null ? <div>로딩중</div> : <MyPageList />;
 }
 
 export default MyPage;

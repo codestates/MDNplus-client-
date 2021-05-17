@@ -8,7 +8,7 @@ import axios from "axios";
 const { Kakao }: any = window;
 
 function Nav() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [gitHubImage, setGitHubImage] = useState([]);
@@ -64,7 +64,7 @@ function Nav() {
     }
   }, []);
 
-  return isLogin ? (
+  return (
     <NavBar>
       <Logo>MDN +</Logo>
       <SearchBar>
@@ -73,29 +73,22 @@ function Nav() {
         </Icon>
         <Search />
       </SearchBar>
-      <NavButtons>
-        <UserIconContainer onClick={handleMenuModal}>
-          <User>유저정보창</User>
-          <FontAwesomeIcon icon="sort-down" size="sm" color="black" />
-          {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
-        </UserIconContainer>
-        <QuestionBtn>자주하는 질문</QuestionBtn>
-      </NavButtons>
-    </NavBar>
-  ) : (
-    <NavBar>
-      <Logo>MDN +</Logo>
-      <SearchBar>
-        <Icon>
-          <FontAwesomeIcon icon="search" size="1x" color="black" />
-        </Icon>
-        <Search />
-      </SearchBar>
-      <NavButtons>
-        <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
-        <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal} checkLogin={setIsLogin}></LoginModal>
-        <QuestionBtn>자주하는 질문</QuestionBtn>
-      </NavButtons>
+      {isLogin ? (
+        <NavButtons>
+          <UserIconContainer onClick={handleMenuModal}>
+            <User>유저정보창</User>
+            <FontAwesomeIcon icon="sort-down" size="sm" color="black" />
+            {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
+          </UserIconContainer>
+          <QuestionBtn>자주하는 질문</QuestionBtn>
+        </NavButtons>
+      ) : (
+        <NavButtons>
+          <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
+          <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal} checkLogin={setIsLogin}></LoginModal>
+          <QuestionBtn>자주하는 질문</QuestionBtn>
+        </NavButtons>
+      )}
     </NavBar>
   );
 }

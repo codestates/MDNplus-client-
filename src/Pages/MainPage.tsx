@@ -15,22 +15,12 @@ type Method = {
   body: string;
   count: number;
 };
-<<<<<<< HEAD
-
-type AA = {
-  arrayData: Array<Method>;
-};
-
-function MainPage() {
-  const { state, onFilterArray, onFilterObject } = useAllData();
-=======
 
 function MainPage() {
   const { state, onFilterArray, onFilterObject } = useAllData();
   if (state.arrayData) {
     const arrayData = state.arrayData;
   }
->>>>>>> 630278859462151cecc9f1b8ab52aa53ca94fa97
 
   const handleFilterArr = () => {
     return FakeData.filter((el) => {
@@ -58,11 +48,8 @@ function MainPage() {
     console.log("state 바꿔짐");
   }, []);
 
-<<<<<<< HEAD
   console.log(state.arrayData);
 
-=======
->>>>>>> 630278859462151cecc9f1b8ab52aa53ca94fa97
   return (
     <div>
       {state.arrayData === null ? (

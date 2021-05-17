@@ -16,7 +16,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { DummyData } from "../MyPageDummyData";
-import { myPageUserAction } from "../Redux/MyPageData";
+import {myPageUserAction} from '../Redux/MyPageData'
 import MyPageList from "../Components/MyPageList";
 import useMyPageData from "../Hooks/useMyPageData";
 import axios from "axios";
@@ -27,7 +27,7 @@ function MyPage() {
   // const { userNamee, content }: DataType = DummyData;
   const dispatch = useDispatch();
   const { myPageState } = useMyPageData();
-  const { myPageUserData, myPagearrayData, myPageobjectData, myPagecurrentData } = myPageState;
+  const { myPageUserData, myPageArrayData, myPageCurrentData, myPageObjectData} = myPageState;
   const UserInfo = async () => {
     console.log("유저정보 가져오는 요청 실행됨");
     // await axios
@@ -43,7 +43,6 @@ function MyPage() {
   useEffect(() => {
     console.log("useEffect 사용된 후" + userName);
     dispatch(myPageUserAction(DummyData));
-
     UserInfo();
   }, []);
 

@@ -8,12 +8,12 @@ type ContentType = {
 };
 
 type DataType = {
-  userNamee: string;
+  myPageUserName: string;
   content: Array<ContentType>;
 };
 
 function useMyPageData() {
-  const myPageState: any = useSelector((state: RootState) => state.MyPageReducer);
+  const myPageState = useSelector((state: RootState) => state.MyPageReducer);
 
   return { myPageState };
 }

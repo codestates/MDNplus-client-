@@ -19,16 +19,10 @@
     "react-markdown": "^6.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-<<<<<<< HEAD
     "react-scripts": "^4.0.3",
     "react-syntax-highlighter": "^15.4.3",
     "redux": "^4.1.0",
     "text-field-edit": "^3.1.0",
-=======
-    "react-scripts": "4.0.3",
-    "redux": "^4.1.0",
-    "styled-components": "^5.3.0",
->>>>>>> 36cb644f88b4ce9bc4f5416b7a269e2abf2a265c
     "web-vitals": "^1.0.1"
   },
   "scripts": {

@@ -19,17 +19,10 @@ type Method = {
 };
 
 function MainPage() {
-<<<<<<< HEAD
   const { allState, onFilter, onClickFilter } = useAllData();
   const { arrayData, objectData, currentData } = allState;
   const { onClickMethod } = useContentData()
   const history = useHistory()
-=======
-  const { state, onFilterArray, onFilterObject } = useAllData();
-  if (state.arrayData) {
-    const arrayData = state.arrayData;
-  }
->>>>>>> 36cb644f88b4ce9bc4f5416b7a269e2abf2a265c
 
   // 왼쪽 사이드바에 메소드 타이틀을 클릭했을 때, 오른쪽에 데이터들을 변경하기 위한 함수
   const handleClickFilter = (MethodTitle: string) => {
@@ -54,7 +47,6 @@ function MainPage() {
   // 처음 스토어에 저장되어 있는 값들은 null이므로 '로딩 중입니다'가 렌더링 된다. 
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
-<<<<<<< HEAD
     onFilter(FakeData);
   }, []);
 
@@ -96,31 +88,6 @@ function MainPage() {
         )}
       </RightContainer>
     </Container>
-=======
-    const arrayMethods = handleFilterArr();
-    const objectMethods = handleFilterObj();
-    if (arrayMethods) {
-      onFilterArray(arrayMethods);
-    }
-    if (objectMethods) {
-      onFilterObject(objectMethods);
-    }
-    console.log("state 바꿔짐");
-  }, []);
-
-  console.log(state.arrayData);
-
-  return (
-    <div>
-      {state.arrayData === null ? (
-        <div>로딩 중입니다.</div>
-      ) : (
-        state.arrayData.map((el: any) => {
-          return <div key={el.id}>{el.title}</div>;
-        })
-      )}
-    </div>
->>>>>>> 36cb644f88b4ce9bc4f5416b7a269e2abf2a265c
   );
 }
 export default MainPage;

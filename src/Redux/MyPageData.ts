@@ -3,32 +3,42 @@ const MYPAGEARRAYDATA = "MyPageData/MYPAGARRAYDATA" as const;
 const MYPAGEOBJECTDATA = "MyPageData/MYPAGOBJECTDATA" as const;
 const MYPAGECURRENTDATA = "MyPageData/MYPAGCURRENTDATA" as const;
 
-export const myPageUserAction = (el: object) => ({
+export const myPageUserAction = (el: DataType) => ({
   type: MYPAGEUSERDATA,
   payload: el,
 });
-export const myPageArrayAction = (el: object[]) => ({
+export const myPageArrayAction = (el: ContentType[]) => ({
   type: MYPAGEARRAYDATA,
   payload: el,
 });
 
-export const myPageObjectAction = (el: object[]) => ({
+export const myPageObjectAction = (el: ContentType[]) => ({
   type: MYPAGEOBJECTDATA,
   payload: el,
 });
 
-export const myPageCurrentAction = (el: object[]) => ({
+export const myPageCurrentAction = (el: ContentType[]) => ({
   type: MYPAGECURRENTDATA,
   payload: el,
 });
 
 type DataAction = ReturnType<typeof myPageUserAction> | ReturnType<typeof myPageArrayAction> | ReturnType<typeof myPageObjectAction> | ReturnType<typeof myPageCurrentAction>;
 
+type ContentType = {
+  title: string;
+  body: string;
+};
+
+type DataType = {
+  myPageUserName: string;
+  content: Array<ContentType>;
+};
+
 type typeDataType = {
-  myPageUserData: null | object;
-  myPageArrayData: null | object[];
-  myPageObjectData: null | object[];
-  myPageCurrentData: null | object[];
+  myPageUserData: null | DataType;
+  myPageArrayData: null | ContentType[];
+  myPageObjectData: null | ContentType[];
+  myPageCurrentData: null | ContentType[];
 };
 
 const initialState = {

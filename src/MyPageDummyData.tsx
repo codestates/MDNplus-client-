@@ -1,0 +1,26 @@
+export const DummyData = {
+  myPageUserName: "Jun",
+
+  content: [
+    { id: 1, title: "Array.map()", body: "" },
+    { id: 2, title: "Array.copyWithin()", body: "" },
+    { id: 3, title: "Array.entries()", body: "" },
+    { id: 4, title: "Array.every()", body: "" },
+    { id: 5, title: "Array.fill()", body: "" },
+    { id: 6, title: "Array.filter()", body: "" },
+    { id: 7, title: "Array.find()", body: "" },
+    { id: 8, title: "Array.findIndex()", body: "" },
+    { id: 9, title: "Array.concat()", body: "" },
+    { id: 10, title: "Object.assign()", body: "" },
+    { id: 11, title: "Object.create()", body: "" },
+    { id: 12, title: "Object.defineProperties()", body: "" },
+    { id: 13, title: "Object.defineProperty()", body: "" },
+    { id: 14, title: "Object.entries()", body: "" },
+    { id: 15, title: "Object.values()", body: "" },
+    { id: 16, title: "Object.key", body: "" },
+    { id: 17, title: "Object.key", body: "" },
+    { id: 18, title: "Object.key", body: "" },
+    { id: 19, title: "Object.key", body: "" },
+    { id: 20, title: "Object.key", body: "" },
+  ],
+};

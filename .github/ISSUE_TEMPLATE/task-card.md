@@ -1,5 +1,5 @@
 ---
-name: Task Card 생성 템플릿
+name: Task Card
 about: Task Card 생성시 사용되는 template 입니다.
 title: ''
 labels: ''

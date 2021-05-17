@@ -5,14 +5,14 @@ import useContentData from "../Hooks/useContentData";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { render } from "react-dom";
-import { text } from '@fortawesome/fontawesome-svg-core';
+// import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+// import { render } from "react-dom";
+// import { text } from '@fortawesome/fontawesome-svg-core';
 
 
 function EditPage() {
-  const { state, onChangeContent } = useContentData();
-  const { contentData } = state; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
+  const { contentState, onChangeContent } = useContentData();
+  const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
   const [checkModal, setCheckModal] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   // const [currentIndex, setCurrentIndex] = useState<number | undefined>(0);
@@ -58,7 +58,7 @@ function EditPage() {
           </LeftContainer>
           <RightContainer>
             <Title>{contentData.title}</Title>
-            <ReactMarkdown components={Components} children={contentData.body} />
+            <ReactMarkdown components={Components} children={contentData.body} className="markdown"/>
           </RightContainer>
         </Container>
       )}
@@ -86,15 +86,17 @@ const LeftContainer = styled.div`
   padding: 0px 30px 30px 30px;
 `;
 
-const Title = styled.h1``;
+const Title = styled.h1`
+
+`;
 
 const Body = styled.textarea`
   width: 100%;
   height: 100%;
-  font-size: 20px;
   border: none;
   outline: none;
   resize: none;
+  font-size: 16px;
 `;
 
 const SubmitBtn = styled.button`
@@ -110,11 +112,6 @@ const RightContainer = styled.div`
   padding: 0px 30px 30px 30px;
 `;
 
-const PreviewTitle = styled.h1``;
-
-const PreviewBody = styled.div`
-  font-size: 20px;
-`;
 
 
 

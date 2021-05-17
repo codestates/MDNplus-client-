@@ -9,9 +9,9 @@ type EditProps = { // EditPage로부터 받아오는 Props 타입 설정을 위�
 
 //EditPage에서 수정 버튼 누를 시, 정말로 수정을 할 것인지 유저에게 확인하기 위해 만든 모달
 function EditConfirmModal({handleConfirmModal}: EditProps) {
-  const {state} = useContentData()
+  const {contentState} = useContentData()
   const history = useHistory();
-  const {contentData} = state
+  const {contentData} = contentState
 
   // 모달창에 있는 수정 버튼 또는 O 버튼 누를 시, 서버에 글수정 요청을 보내는 코드
   const handleSubmit = () => {

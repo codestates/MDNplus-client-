@@ -19,8 +19,8 @@ type Method = {
 };
 
 function MainPage() {
-  const { state, onFilter, onClickFilter } = useAllData();
-  const { arrayData, objectData, currentData } = state;
+  const { allState, onFilter, onClickFilter } = useAllData();
+  const { arrayData, objectData, currentData } = allState;
   const { onClickMethod } = useContentData()
   const history = useHistory()
 

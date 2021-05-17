@@ -25,6 +25,7 @@ export const myPageCurrentAction = (el: ContentType[]) => ({
 type DataAction = ReturnType<typeof myPageUserAction> | ReturnType<typeof myPageArrayAction> | ReturnType<typeof myPageObjectAction> | ReturnType<typeof myPageCurrentAction>;
 
 type ContentType = {
+  id: number;
   title: string;
   body: string;
 };
@@ -33,7 +34,6 @@ type DataType = {
   myPageUserName: string;
   content: Array<ContentType>;
 };
-
 type typeDataType = {
   myPageUserData: null | DataType;
   myPageArrayData: null | ContentType[];

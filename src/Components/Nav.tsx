@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MenuModal from "./MenuModal";
 import axios from "axios";
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 
 const { Kakao }: any = window;
 
@@ -13,11 +13,11 @@ function Nav() {
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [gitHubImage, setGitHubImage] = useState([]);
-  const history = useHistory()
+  const history = useHistory();
 
   const handleHomeBtn = () => {
-    history.push('/')
-  }
+    history.push("/");
+  };
 
   const handleLoginModal = () => {
     setIsLogInOpen(!isLogInOpen);

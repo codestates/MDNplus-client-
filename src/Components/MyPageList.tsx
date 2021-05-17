@@ -10,12 +10,11 @@ type ContentType = {
   id: number;
   title: string;
   body: string;
-  updatedAt: string;
 };
 
 function MyPageList() {
   const dispatch = useDispatch();
-  const { myPageState } = useMyPageData();
+  const { myPageState }: any = useMyPageData();
   const { myPageUserData, myPageArrayData, myPageObjectData, myPageCurrentData } = myPageState;
   const { myPageUserName, content } = myPageUserData;
 

@@ -30,6 +30,9 @@ function EditPage() {
       setCheckModal(true);
     }
   };
+  if(contentData)
+  console.log(contentData.body)
+  console.log(contentData?.body.length)
 
   // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)
   // const handleGetIndex = () => {

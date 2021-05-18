@@ -123,6 +123,7 @@ function Nav() {
       {userName ? <div>{userName}</div> : <div>아직 깃허브에서 유저정보 안가져옴</div>}
       <button onClick={handleLogout}>로그아웃</button>
       <button onClick={handleCancelKakao}>회원탈퇴</button>
+      <button onClick={(() => {history.push('QuestionPage')})}>자주 하는 질문</button>
     </div>
   );
 }

@@ -17,7 +17,6 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { DummyData } from "../MyPageDummyData";
 import {myPageUserAction} from '../Redux/MyPageData'
-import MyPageList from "../Components/MyPageList";
 import useMyPageData from "../Hooks/useMyPageData";
 import axios from "axios";
 
@@ -54,7 +53,7 @@ function MyPage() {
 
   console.log("hi");
 
-  return myPageUserData === null ? <div>로딩중</div> : <MyPageList />;
+  return <div></div>
 }
 
 export default MyPage;

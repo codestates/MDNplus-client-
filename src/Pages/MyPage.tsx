@@ -16,7 +16,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { DummyData } from "../MyPageDummyData";
-import {myPageUserAction} from '../Redux/MyPageData'
+import { myPageUserAction } from "../Redux/MyPageData";
 import MyPageList from "../Components/MyPageList";
 import useMyPageData from "../Hooks/useMyPageData";
 import axios from "axios";
@@ -26,10 +26,13 @@ function MyPage() {
   const accessToken = localStorage.getItem("accessToken");
   // const { userNamee, content }: DataType = DummyData;
   const dispatch = useDispatch();
-  const { myPageState } = useMyPageData();
-  const { myPageUserData, myPageArrayData, myPageCurrentData, myPageObjectData} = myPageState;
+  const { myPageUserData } = useMyPageData();
+
   const UserInfo = async () => {
     console.log("유저정보 가져오는 요청 실행됨");
+
+    dispatch(myPageUserAction(DummyData));
+
     // await axios
     //   .get("https://api.github.com/user", {
     //     headers: { authorization: `token ${accessToken}` },
@@ -42,15 +45,8 @@ function MyPage() {
 
   useEffect(() => {
     console.log("useEffect 사용된 후" + userName);
-    dispatch(myPageUserAction(DummyData));
     UserInfo();
   }, []);
-
-  // if (myPageUserData !== null) {
-  //   console.log(myPageUserData);
-  // }
-
-  // console.log("useEffect 사용되기 전" + userName);
 
   console.log("hi");
 

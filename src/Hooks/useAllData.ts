@@ -14,8 +14,8 @@ type Method = {
 function useAllData() {
   const allState = useSelector((state: RootState) => state.AllDataReducer);
   const dispatch = useDispatch();
-  const onFilter = useCallback((data:Method[]) => dispatch(filter(data)), [dispatch]);
-  const onClickFilter = useCallback((data:Method[]) => dispatch(clickFilter(data)), [dispatch]);
+  const onFilter = useCallback((data: Method[]) => dispatch(filter(data)), [dispatch]);
+  const onClickFilter = useCallback((data: Method[]) => dispatch(clickFilter(data)), [dispatch]);
   return { allState, onFilter, onClickFilter };
 }
 

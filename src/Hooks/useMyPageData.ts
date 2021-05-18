@@ -13,9 +13,11 @@ type DataType = {
 };
 
 function useMyPageData() {
-  const myPageState = useSelector((state: RootState) => state.MyPageReducer);
+  const myPageState: any = useSelector((state: RootState) => state.MyPageReducer);
 
-  return { myPageState };
+  const { myPageUserData, myPageArrayData, myPageCurrentData, myPageObjectData } = myPageState;
+
+  return { myPageUserData, myPageArrayData, myPageCurrentData, myPageObjectData };
 }
 
 export default useMyPageData;

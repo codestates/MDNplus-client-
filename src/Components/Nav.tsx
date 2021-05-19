@@ -90,6 +90,10 @@ function Nav() {
     }
   }, []);
 
+  const option = (e: any) => {
+    console.log(e.target.value);
+  };
+
   return (
     <NavBar>
       <Logo onClick={handleHomeBtn}>MDN +</Logo>
@@ -97,8 +101,14 @@ function Nav() {
         <Icon>
           <FontAwesomeIcon icon="search" size="1x" color="black" />
         </Icon>
-        <Search onKeyPress={handleKeyPress} />
+        <Search type="search" onKeyPress={handleKeyPress} />
       </SearchBar>
+      <Select>
+        <option value="바디" onClick={option}>
+          바디
+        </option>
+        <option>타이틀</option>
+      </Select>
       {isLogin ? (
         <NavButtons>
           <UserIconContainer onClick={handleMenuModal}>
@@ -106,7 +116,7 @@ function Nav() {
             <FontAwesomeIcon icon="sort-down" size="sm" color="black" />
             {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
           </UserIconContainer>
-          <QuestionBtn>HelpDesk</QuestionBtn>
+          <QuestionBtn>Help Desk</QuestionBtn>
         </NavButtons>
       ) : (
         <NavButtons>
@@ -121,8 +131,11 @@ function Nav() {
 
 export default Nav;
 
-const User = styled.div`
-  margin: 2px;
+const User = styled.div``;
+
+const Select = styled.select`
+  border: none;
+  background-color: white;
 `;
 
 const NavBar = styled.div`
@@ -172,7 +185,7 @@ const LoginBtn = styled.button`
   cursor: pointer;
 `;
 
-const QuestionBtn = styled.button`
+const QuestionBtn = styled.div`
   border-radius: 34px;
   background-color: white;
   padding: 10px;
@@ -190,7 +203,7 @@ const Logo = styled.div`
   cursor: pointer;
 `;
 
-const UserIconContainer = styled.button`
+const UserIconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

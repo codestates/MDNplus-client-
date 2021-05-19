@@ -1,12 +1,15 @@
-import {combineReducers} from 'redux'
-import AllDataReducer from './AllData'
-import ContentDataReducer from './ContentData'
+import { combineReducers } from "redux";
+import AllDataReducer from "./AllData";
+import ContentDataReducer from "./ContentData";
 import MyPageReducer from "./MyPageData";
+import SearchDataReducer from "./SearchData";
 
 const rootReducer = combineReducers({
-    AllDataReducer, ContentDataReducer, MyPageReducer,
-
-})
+  AllDataReducer,
+  ContentDataReducer,
+  MyPageReducer,
+  SearchDataReducer,
+});
 
 export default rootReducer;
 

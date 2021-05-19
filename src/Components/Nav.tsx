@@ -5,15 +5,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MenuModal from "./MenuModal";
 import axios from "axios";
 import { useHistory } from "react-router";
+import React from "react";
+import useMyPageData from "../Hooks/useSearchData";
+import FakeData from "../FakeData";
+import { useDispatch } from "react-redux";
+import { searchWord } from "../Redux/SearchData";
 
 const { Kakao }: any = window;
 
 function Nav() {
-  const [isLogin, setIsLogin] = useState(false);
+  const { onSearching } = useMyPageData();
+  const [isLogin, setIsLogin] = useState(true);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [gitHubImage, setGitHubImage] = useState([]);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleHomeBtn = () => {
     history.push("/");
@@ -25,6 +32,20 @@ function Nav() {
 
   const handleMenuModal = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>): void => {
+    if (e.key === "Enter") {
+      console.log(e.target.value);
+
+      dispatch(searchWord(e.target.value));
+
+      //리덕스 훅스에가서 state 업데이트함.
+      onSearching(FakeData);
+
+      history.push("/SearchPage");
+      e.target.value = "";
+    }
   };
 
   //깃허브 accessToken 받아오는 요청
@@ -76,7 +97,7 @@ function Nav() {
         <Icon>
           <FontAwesomeIcon icon="search" size="1x" color="black" />
         </Icon>
-        <Search />
+        <Search onKeyPress={handleKeyPress} />
       </SearchBar>
       {isLogin ? (
         <NavButtons>
@@ -85,7 +106,7 @@ function Nav() {
             <FontAwesomeIcon icon="sort-down" size="sm" color="black" />
             {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
           </UserIconContainer>
-          <QuestionBtn>자주하는 질문</QuestionBtn>
+          <QuestionBtn>HelpDesk</QuestionBtn>
         </NavButtons>
       ) : (
         <NavButtons>
@@ -114,7 +135,7 @@ const NavBar = styled.div`
 `;
 
 const Icon = styled.span`
-  padding: 15px;
+  padding: 20px;
 `;
 
 const Search = styled.input`
@@ -122,7 +143,7 @@ const Search = styled.input`
   width: 400px;
   font-size: 1.2em;
   outline: none;
-  height: 2em;
+  height: 2.2em;
 `;
 
 const SearchBar = styled.div`

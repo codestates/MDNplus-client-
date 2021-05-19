@@ -29,7 +29,11 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
   };
 
   const handleMyPageButton = () => {
-    history.push("MyPage");
+    history.push("/MyPage");
+  };
+
+  const handleEditInfoButton = () => {
+    history.push("/SettingPage");
   };
 
   return (
@@ -38,6 +42,7 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
       <ModalBox>
         <MenuButtonContainer>
           <LogOut onClick={handleLogOutButton}>로그아웃</LogOut>
+          <EditInfo onClick={handleEditInfoButton}>정보수정</EditInfo>
           <MyPage onClick={handleMyPageButton}>마이페이지</MyPage>
         </MenuButtonContainer>
       </ModalBox>
@@ -53,6 +58,11 @@ const LogOut = styled.div`
 `;
 
 const MyPage = styled.div`
+  background-color: white;
+  margin: 10px;
+`;
+
+const EditInfo = styled.div`
   background-color: white;
   margin: 10px;
 `;

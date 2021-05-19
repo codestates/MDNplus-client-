@@ -59,6 +59,7 @@ function EditPage() {
           <RightContainer>
             <Title>{contentData.title}</Title>
             <ReactMarkdown components={Components} children={contentData.body} className="markdown"/>
+            <ReactMarkdown components={Components} children={contentData.body} className="markdown"/>
           </RightContainer>
         </Container>
       )}

@@ -26,7 +26,7 @@ const QfakeData = {
     {
       id: 2,
       userId: 5,
-      userName: "kimcoding",
+      userName: "kimcoding==========",
       title: "object.assign 어떻게 사용하나요3",
       body: "개발 처음이라 모르겠습니다",
       answers: [{ id: 2, userId: 3, userName: "son", qTitle: "object.assign 어떻게 사용하나요3", body: "그건 이렇게 하면 됩니다", likes: 3, createdAt: "2021-05-04" }],

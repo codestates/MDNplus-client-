@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faSearch, faTimes, faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp as fasFaThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp as farFaThumbsUp } from "@fortawesome/free-regular-svg-icons";
+
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -10,7 +13,7 @@ import rootReducer from "./Redux/index";
 
 const store = createStore(rootReducer);
 
-library.add(faSearch, faTimes, faSortDown, faSortUp);
+library.add(faSearch, faTimes, faSortDown, faSortUp, fasFaThumbsUp, farFaThumbsUp);
 
 ReactDOM.render(
   <Provider store={store}>

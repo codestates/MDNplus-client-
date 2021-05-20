@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import userMyPateData from "../Hooks/useMyPageData";
+// import userMyPateData from "../Hooks/useMyPageData";
 
 function SettingPage() {
-  const { myPageUserData } = userMyPateData();
+  // const { myPageUserData } = userMyPateData();
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -32,7 +32,7 @@ function SettingPage() {
     <Container>
       <UserInfo>
         !!!!!!Setting Page!!!!!!
-        <div>{myPageUserData.myPageUserName}</div>
+        {/* <div>{myPageUserData.myPageUserName}</div> */}
         <h1>Upload Images</h1>
         <input type="file" name="file" placeholder="upload an image" onChange={onChange} />
         <button onClick={onClick}>제출</button>

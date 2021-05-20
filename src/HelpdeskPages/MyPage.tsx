@@ -1,52 +1,133 @@
-// 카카오나 깃허브로 로그인이 성공되면 authorization code 를 백엔드 측으로 보내주고 유저 정보를 요청함.
-// 유저 정보를 성공적으로 받으면 State 를 받게됨
-// State에는 string 형태의 유저네임하고 array object 형태인 Content 를 받게됨
-//State = username:string, content
-
-//더미 데이터 예시.
-
-// export const DummyData = {
-//   userNamee: "Jun",
-
-//   content: [
-//     { title: "title1", body: "body1", updatedAt: "updateDate" },
-//   ],
-// };
-
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { DummyData } from "../MyPageDummyData";
+import { useSelector, useDispatch } from "react-redux";
+import { myPageAction, questionAction, answerAction } from "../Redux/MyPageData";
+import { RootState } from "../Redux";
+import { useHistory, useLocation } from "react-router-dom";
+import FakeData2 from "../FakeData2";
+import { currentQData } from "../Redux/QcontentData";
 
-import useMyPageData from "../Hooks/useMyPageData";
 import axios from "axios";
 
+type QuestionType = {
+  id: number;
+  userId: number;
+  userName: string;
+  title: string;
+  body: string;
+  answers: {
+    id: number;
+    userId: number;
+    userName: string;
+    qTitle: string;
+    body: string;
+    likes: number;
+    createdAt: string;
+  }[];
+  likes: number;
+  tags: string[];
+  createdAt: string;
+};
+
+type AnswerType = {
+  id: number;
+  userId: number;
+  userName: string;
+  qTitle: string;
+  body: string;
+  likes: number;
+  createdAt: string;
+};
+
 function MyPage() {
-  const [userName, setUserName] = useState("");
-  const accessToken = localStorage.getItem("accessToken");
-  // const { userNamee, content }: DataType = DummyData;
   const dispatch = useDispatch();
+  const history = useHistory();
+  const allState = useSelector((state: RootState) => state.MyPageReducer);
+  const { myPageData, questionData, answerData } = allState;
 
-  const UserInfo = async () => {
-    console.log("유저정보 가져오는 요청 실행됨");
-
-    // await axios
-    //   .get("https://api.github.com/user", {
-    //     headers: { authorization: `token ${accessToken}` },
-    //   })
-    //   .then((res) => {
-    //     console.log("여기 깃허브 유저인포 가져옴");
-    //     setUserName(res.data.login);
-    //   });
-  };
+  const [isQuestion, setIsQuestion] = useState(true);
 
   useEffect(() => {
-    console.log("useEffect 사용된 후" + userName);
-    UserInfo();
+    dispatch(questionAction(FakeData2.myData));
+    dispatch(answerAction(FakeData2.answers));
   }, []);
 
-  console.log("hi");
+  //나의 질문에는 질문자가 질문한 제목,내용,날짜
+  //나의 답변에는 답변된 질문의 제목과, 답변내용
+  const handleMyQuestions = (e: QuestionType) => {
+    setIsQuestion(true);
+    dispatch(currentQData(e));
 
-  return <div></div>;
+    history.push({
+      pathname: "/Qcontentpage",
+      state: { pageName: "thisis Question State" },
+    });
+  };
+
+  const handleMyAnswers = (e: AnswerType) => {
+    setIsQuestion(false);
+    // dispatch(currentQData(e));
+
+    history.push({
+      pathname: "/Qcontentpage",
+      state: { pageName: "this is answer state" },
+    });
+  };
+
+  const handleMyPage = () => {
+    setIsQuestion(() => !isQuestion);
+  };
+
+  return (
+    <div>
+      <div onClick={handleMyPage}>나의질문</div>
+      <div onClick={handleMyPage}>나의답변</div>
+
+      {isQuestion ? (
+        <div>
+          <div>{questionData?.userName}</div>
+          <div>
+            {questionData?.allData.map((el) => (
+              <div onClick={() => handleMyQuestions(el)}>
+                <div>나의질문</div>
+
+                <div>{el.title}</div>
+                <div>{el.body}</div>
+
+                <div>{el.tags}</div>
+
+                <div>{el.likes}</div>
+                <div>나의 질문에 대한 답변</div>
+                <div>
+                  {el.answers.map((el) => (
+                    <div>
+                      <div>{el.userName}</div>
+                      <div>{el.qTitle}</div>
+                      <div>{el.body}</div>
+                      <div>{el.likes}</div>
+                      <div>{el.createdAt}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div>
+          {answerData?.map((el) => (
+            <div onClick={() => handleMyAnswers(el)}>
+              <div>나의답변</div>
+              <div>{el.userName}</div>
+              <div>{el.qTitle}</div>
+              <div>{el.body}</div>
+              <div>{el.likes}</div>
+              <div>{el.createdAt}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default MyPage;

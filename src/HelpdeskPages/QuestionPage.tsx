@@ -12,11 +12,11 @@ function QuestionPage({ QuestionPage }: any) {
 
   const location = useLocation<pageType>();
 
-  if (location.state.pageName === "recieve!!") {
-    console.log("CORRECTTT");
+  if (location.state === undefined) {
+    console.log("null");
+  } else {
+    console.log(location.state.pageName);
   }
-
-  console.log(location.state.pageName);
 
   const gogo = () => {
     history.push({

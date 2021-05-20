@@ -16,8 +16,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { DummyData } from "../MyPageDummyData";
-import { myPageUserAction } from "../Redux/MyPageData";
-import MyPageList from "../Components/MyPageList";
+
 import useMyPageData from "../Hooks/useMyPageData";
 import axios from "axios";
 
@@ -26,12 +25,9 @@ function MyPage() {
   const accessToken = localStorage.getItem("accessToken");
   // const { userNamee, content }: DataType = DummyData;
   const dispatch = useDispatch();
-  const { myPageUserData } = useMyPageData();
 
   const UserInfo = async () => {
     console.log("유저정보 가져오는 요청 실행됨");
-
-    dispatch(myPageUserAction(DummyData));
 
     // await axios
     //   .get("https://api.github.com/user", {
@@ -50,7 +46,7 @@ function MyPage() {
 
   console.log("hi");
 
-  return myPageUserData === null ? <div>로딩중</div> : <MyPageList />;
+  return <div></div>;
 }
 
 export default MyPage;

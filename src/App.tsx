@@ -4,10 +4,12 @@ import Nav from "./Components/Nav";
 import { BrowserRouter, Router, Switch, Route } from "react-router-dom";
 import ContentPage from "./Pages/ContentPage";
 import EditPage from "./Pages/EditPage";
-import MyPage from "./Pages/MyPage";
-import QuestionPage from "./Pages/QuestionPage";
+import MyPage from "./HelpdeskPages/MyPage";
+import QuestionPage from "./HelpdeskPages/QuestionPage";
 import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
+import QcontentPage from "./HelpdeskPages/QcontentPage";
+
 import "./App.css";
 
 function App() {
@@ -15,6 +17,10 @@ function App() {
     <BrowserRouter>
       <Nav></Nav>
       <Switch>
+        <Route path="/questionPage" component={QuestionPage} render={() => <QuestionPage />} />
+        <Route path="/QcontentPage" render={() => <QcontentPage />} />
+      </Switch>
+      {/* <Switch>
         <Route exact path="/" render={() => <MainPage />} />
         <Route path="/ContentPage" render={() => <ContentPage />} />
         <Route path="/EditPage" render={() => <EditPage />} />
@@ -22,7 +28,7 @@ function App() {
         <Route path="/QuestionPage" render={() => <QuestionPage />} />
         <Route path="/SearchPage" render={() => <SearchPage />} />
         <Route path="/SettingPage" render={() => <SettingPage />} />
-      </Switch>
+      </Switch> */}
     </BrowserRouter>
   );
 }

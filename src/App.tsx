@@ -10,6 +10,7 @@ import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
 import "./App.css";
 import HelpdeskPage from './HelpdeskPages/HelpdeskPage';
+import HquestionPage from './HelpdeskPages/HquestionPage'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/SearchPage" render={() => <SearchPage />} />
         <Route path="/SettingPage" render={() => <SettingPage />} />
         <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
+        <Route path="/HquestionPage" render={() => <HquestionPage />} />
       </Switch>
     </BrowserRouter>
   );

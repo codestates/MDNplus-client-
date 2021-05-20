@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import useHelpData from '../Hooks/useHelpData';
 import fakeData2 from '../FakeData2'
 import styled from 'styled-components'
+import { useHistory } from 'react-router';
 
 type Question = {
     id: number;
@@ -32,6 +33,7 @@ type HelpData = {
 const HelpdeskPage = () => {
     const {helpData, onStoreData, onFilterFast, onFilterPopular, onClickQuestion} = useHelpData()
     const {allQuestions}:HelpData = helpData
+    const history = useHistory()
 
     useEffect(() => {
         onStoreData(fakeData2.allQuestions)
@@ -39,6 +41,7 @@ const HelpdeskPage = () => {
 
     return (
         <div>
+            <button onClick={(() => {history.push('/HquestionPage')})}>질문하기</button>
             <span onClick={onFilterFast}>최신순</span>
             <span onClick={onFilterPopular}>인기순</span>
         <div>

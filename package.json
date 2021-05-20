@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/react-redux": "^7.1.16",
     "@types/styled-components": "^5.1.9",
+    "autosize": "^4.0.4",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "react": "^17.0.2",
@@ -51,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/autosize": "^3.0.7",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-syntax-highlighter": "^13.5.0"
   }

@@ -2,18 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faTimes, faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter } from "react-router-dom";
-import {Provider} from "react-redux";
-import {createStore} from 'redux'
-import rootReducer from './Redux/index'
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "./Redux/index";
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer);
 
-library.add(faSearch);
+library.add(faSearch, faTimes, faSortDown, faSortUp);
 
 ReactDOM.render(
-  <Provider store={store} >
+  <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById("root")

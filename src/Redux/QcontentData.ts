@@ -21,7 +21,7 @@ type DataType = {
   createdAt?: string;
 };
 
-export const currentQData = (currentData: DataType) => ({
+export const currentQData = (currentData: DataType | undefined) => ({
   type: CURRENTQDATA,
   payload: currentData,
 });
@@ -37,7 +37,7 @@ export const likeData = (updateLike: number, contentId: number) => ({
 type CurrentQDataAction = ReturnType<typeof currentQData> | ReturnType<typeof likeData>;
 
 type InitState = {
-  currentData: null | DataType;
+  currentData: null | undefined | DataType;
   currentLike: null | DataType;
 };
 

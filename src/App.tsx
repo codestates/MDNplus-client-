@@ -10,6 +10,7 @@ import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
 import QcontentPage from "./HelpdeskPages/QcontentPage";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
+import AnswerPage from "./HelpdeskPages/AnswerPage";
 
 import "./App.css";
 
@@ -28,6 +29,8 @@ function App() {
         <Route path="/QuestionPage" render={() => <QuestionPage />} />
         <Route path="/QcontentPage" render={() => <QcontentPage />} />
         <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
+        <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
+        <Route path="/AnswerPage" render={() => <AnswerPage />} />
       </Switch>
     </BrowserRouter>
   );

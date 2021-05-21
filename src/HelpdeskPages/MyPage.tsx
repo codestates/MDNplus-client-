@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { myPageAction, questionAction, answerAction } from "../Redux/MyPageData";
 import { RootState } from "../Redux";
 import { useHistory, useLocation } from "react-router-dom";
-import FakeData2 from "../FakeData2";
 import { currentQData } from "../Redux/QcontentData";
+import styled from "styled-components";
+import FakeData2 from "../FakeData2";
 
 import axios from "axios";
 
@@ -54,23 +55,33 @@ function MyPage() {
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
   //나의 답변에는 답변된 질문의 제목과, 답변내용
   const handleMyQuestions = (e: QuestionType) => {
-    setIsQuestion(true);
     dispatch(currentQData(e));
 
     history.push({
       pathname: "/Qcontentpage",
-      state: { pageName: "thisis Question State" },
+      state: { pageName: "this is Question State" },
     });
   };
 
-  const handleMyAnswers = (e: AnswerType) => {
-    setIsQuestion(false);
-    // dispatch(currentQData(e));
+  const handleMyAnswers = (el: AnswerType) => {
+    const answerTitle = el.qTitle;
 
-    history.push({
-      pathname: "/Qcontentpage",
-      state: { pageName: "this is answer state" },
-    });
+    const findData = questionData?.allData.filter((questionTitle) => questionTitle.title === answerTitle);
+
+    console.log(findData);
+    if (findData !== undefined && findData !== null) {
+      dispatch(currentQData(findData[0]));
+      history.push({
+        pathname: "/Qcontentpage",
+        state: { pageName: "this is Answer State" },
+      });
+    }
+
+    // dispatch(currentQData(e));
+    // history.push({
+    //   pathname: "/Qcontentpage",
+    //   state: { pageName: "this is answer state" },
+    // });
   };
 
   const handleMyPage = () => {
@@ -83,12 +94,12 @@ function MyPage() {
       <div onClick={handleMyPage}>나의답변</div>
 
       {isQuestion ? (
-        <div>
-          <div>{questionData?.userName}</div>
+        <QuestionContainer>
+          <div>나의질문</div>
           <div>
             {questionData?.allData.map((el) => (
-              <div onClick={() => handleMyQuestions(el)}>
-                <div>나의질문</div>
+              <QuestionBox onClick={() => handleMyQuestions(el)}>
+                <div>{questionData?.userName}</div>
 
                 <div>{el.title}</div>
                 <div>{el.body}</div>
@@ -108,12 +119,12 @@ function MyPage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </QuestionBox>
             ))}
           </div>
-        </div>
+        </QuestionContainer>
       ) : (
-        <div>
+        <AnswerContainer>
           {answerData?.map((el) => (
             <div onClick={() => handleMyAnswers(el)}>
               <div>나의답변</div>
@@ -124,10 +135,22 @@ function MyPage() {
               <div>{el.createdAt}</div>
             </div>
           ))}
-        </div>
+        </AnswerContainer>
       )}
     </div>
   );
 }
 
 export default MyPage;
+
+const QuestionContainer = styled.div`
+  border: 2px solid #a7a3a3;
+`;
+
+const QuestionBox = styled.div`
+  border: 2px solid #a7a3a3;
+`;
+
+const AnswerContainer = styled.div`
+  border: 2px solid #a7a3a3;
+`;

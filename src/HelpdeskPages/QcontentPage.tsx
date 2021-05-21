@@ -5,6 +5,7 @@ import { currentQData, likeData } from "../Redux/QcontentData";
 import { useHistory, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
+import { answerPageData } from "../Redux/AnswerPageData";
 import QfakeData from "../QFakeData";
 
 type PageNameType = {
@@ -44,63 +45,76 @@ function QcontentPage() {
 
     dispatch(likeData(likesNum - 1, idNum));
   };
-  console.log(currentData);
-  const handleAnswerBtn = () => {};
 
+  const handleAnswerBtn = () => {
+    dispatch(answerPageData(currentData));
+    history.push({
+      pathname: "/AnswerPage",
+      state: { pageName: "this page is from QcontentPage" },
+    });
+  };
+
+  console.log("myPage에서 전달받은 질문", currentData);
   return (
     <div>
-      {currentData !== null ? (
-        <div>
-          {currentData.userName}
-          {currentData.id}
-          {currentData.title}
+      {currentData !== null && currentData !== undefined ? (
+        <Container>
+          <div> 질문한</div>
+          <QuestionContainer>
+            <Title> {currentData.title}</Title>
+            <Date>{currentData.createdAt}</Date>
+            <UserName>{currentData.userName}</UserName>
+            <Body>{currentData.body}</Body>
+            <Likes>{currentData.likes}</Likes>
+            <Tags>{currentData.tags}</Tags>
 
-          {isLike ? (
-            <div onClick={() => handleIncreaseLikes(currentData.likes, currentData.id)}>{currentData.likes}</div>
-          ) : (
-            <div onClick={() => handleDecreaseLikes(currentData.likes, currentData.id)}>{currentData.likes}</div>
-          )}
-        </div>
+            {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
+
+            {isLike ? (
+              <div onClick={() => handleIncreaseLikes(currentData.likes, currentData.id)}>{currentData.likes}</div>
+            ) : (
+              <div onClick={() => handleDecreaseLikes(currentData.likes, currentData.id)}>{currentData.likes}</div>
+            )}
+          </QuestionContainer>
+
+          <AnswerContainer>
+            <div> 답변</div>
+            {currentData.answers?.map((answerData) => (
+              <AnswerBox>
+                <Title> {answerData.userName}</Title>
+                <Date>{answerData.createdAt}</Date>
+                <UserName>{answerData.userName}</UserName>
+                <Body>{answerData.body}</Body>
+                <Likes>{answerData.likes}</Likes>
+              </AnswerBox>
+            ))}
+          </AnswerContainer>
+        </Container>
       ) : (
         <div>empty</div>
       )}
-      {/* {currentData?.allData.map((el: any) => (
-        <div>
-          {isLike ? (
-            <div onClick={handleLikeBtn}>
-              <FontAwesomeIcon icon={["fas", "thumbs-up"]} size="2x" color="blue" />
-            </div>
-          ) : (
-            <div onClick={handleLikeBtn}>
-              <FontAwesomeIcon icon={["far", "thumbs-up"]} size="2x" color="blue" />
-            </div>
-          )}
-          <div>
-            <div>{el.userName}</div>
-            <div>{el.title}</div>
-            <div>{el.body}</div>
-            <Likes onClick={() => handleLikesNum(el.likes, el.id)}> 라이크 버튼{el.likes}</Likes>
-            <div>{el.tags}</div>
-            <div>{el.createdAt}</div>
-          </div>
-          {isMainPage ? <div onClick={handleAnswerBtn}>답변버튼버튼버튼</div> : <div>마이페이지에서 와서 버튼 음슴</div>}
-          {el.answers.map((el: any) => (
-            <div>
-              <div>{el.userName}</div>
-              <div>{el.qTitle}</div>
-              <div>{el.body}</div>
-              <div>{el.likes}</div>
-              <div>{el.createdAt}</div>
-            </div>
-          ))}
-        </div>
-      ))} */}
     </div>
   );
 }
 
 export default QcontentPage;
 
-const Likes = styled.div`
+const Container = styled.div`
   cursor: pointer;
 `;
+
+const QuestionContainer = styled.div`
+  border: 2px solid #a7a3a3;
+`;
+const AnswerContainer = styled.div`
+  border: 2px solid #a7a3a3;
+`;
+
+const AnswerBox = styled.div``;
+const Title = styled.div``;
+const Date = styled.div``;
+const UserName = styled.div``;
+const Body = styled.div``;
+const Likes = styled.div``;
+const Tags = styled.div``;
+const AnswerBtn = styled.div``;

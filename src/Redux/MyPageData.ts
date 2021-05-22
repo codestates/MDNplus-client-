@@ -1,6 +1,41 @@
 const MYPAGEDATA = "MyPageData/MYPAGEDATA" as const;
 const QUESTIONDATA = "QuestionData/CURRENTMYPAGEDATA" as const;
 const ANSWERDATA = "AnswerData/CURRENTMYPAGEDATA" as const;
+const ALLDATA = "AllData/ALLDATA" as const;
+
+// allData: [
+//   {
+//     id: 0,
+//     userName: "Kim",
+//     userId: 15,
+//     title: "array.map 어떻게 사용하죠",
+//     body: "지금 개발 처음인데 어떻게 하면 되죠?",
+//     answers: [{ id: 0, userId: 5, userName: "kimcoding", qTitle: "array.map 어떻게 사용하죠", body: "이렇게 하면 됩니다", likes: 5, createdAt: "2021-05-04" }],
+//     likes: 5,
+//     tags: ["array", "javascript"],
+//     createdAt: "2021-05-04",
+//   },
+
+type AllData = {
+  id: number;
+  userName: string;
+  userId: number;
+  title: string;
+  body: string;
+  answers: {
+    id: number;
+    userId: number;
+    userName: string;
+    qTitle: string;
+    body: string;
+    likes: number;
+    createdAt: string;
+  }[];
+  likes: number;
+  tags: string[];
+
+  createdAt: string;
+};
 
 type DataType = {
   myData: {
@@ -73,6 +108,11 @@ type AnswerType = {
   createdAt: string;
 }[];
 
+export const allDataAction = (mdnAllData: AllData[] | null) => ({
+  type: ALLDATA,
+  payload: mdnAllData,
+});
+
 export const myPageAction = (myPageData: DataType) => ({
   type: MYPAGEDATA,
   payload: myPageData,
@@ -87,15 +127,17 @@ export const answerAction = (answerData: AnswerType | undefined) => ({
   payload: answerData,
 });
 
-type MyPageDataAction = ReturnType<typeof myPageAction> | ReturnType<typeof questionAction> | ReturnType<typeof answerAction>;
+type MyPageDataAction = ReturnType<typeof myPageAction> | ReturnType<typeof questionAction> | ReturnType<typeof answerAction> | ReturnType<typeof allDataAction>;
 
 type InitState = {
+  mdnAllData: null | AllData[];
   myPageData: null | DataType;
   questionData: QuestionType | undefined;
   answerData: AnswerType | undefined;
 };
 
 const initialState = {
+  mdnAllData: null,
   myPageData: null,
   questionData: undefined,
   answerData: undefined,
@@ -103,6 +145,8 @@ const initialState = {
 
 function MyPageReducer(state: InitState = initialState, action: MyPageDataAction): InitState {
   switch (action.type) {
+    case ALLDATA:
+      return { ...state, mdnAllData: action.payload };
     case MYPAGEDATA:
       return { ...state, myPageData: action.payload };
     case QUESTIONDATA:

@@ -59,22 +59,21 @@ function QcontentPage() {
     <div>
       {currentData !== null && currentData !== undefined ? (
         <Container>
-          <div> 질문한</div>
+          <div> 질문한 내용</div>
           <QuestionContainer>
             <Title> {currentData.title}</Title>
             <Date>{currentData.createdAt}</Date>
             <UserName>{currentData.userName}</UserName>
             <Body>{currentData.body}</Body>
-            <Likes>{currentData.likes}</Likes>
             <Tags>{currentData.tags}</Tags>
-
-            {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
 
             {isLike ? (
               <div onClick={() => handleIncreaseLikes(currentData.likes, currentData.id)}>{currentData.likes}</div>
             ) : (
               <div onClick={() => handleDecreaseLikes(currentData.likes, currentData.id)}>{currentData.likes}</div>
             )}
+
+            {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기 버튼</AnswerBtn> : null}
           </QuestionContainer>
 
           <AnswerContainer>

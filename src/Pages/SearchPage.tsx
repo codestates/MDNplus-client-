@@ -15,6 +15,10 @@ function SearchPage() {
 
   console.log(SearchDataState);
 
+  const handleSearchData = (el: any) => {
+    console.log(el);
+  };
+
   return SearchDataState.contentData === null ? (
     <div>비어있음!</div>
   ) : (
@@ -22,7 +26,7 @@ function SearchPage() {
       <SearchResult>검색결과: "{SearchDataState.word}" (을)를 검색하셨습니다.</SearchResult>
       <ContentContainer>
         {SearchDataState.contentData.map((el: Data) => (
-          <Content>
+          <Content onClick={() => handleSearchData(el)}>
             <Title>{el.title}</Title>
             <Body>{el.body}</Body>
           </Content>

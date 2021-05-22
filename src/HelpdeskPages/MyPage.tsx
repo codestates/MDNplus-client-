@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { myPageAction, questionAction, answerAction } from "../Redux/MyPageData";
+import { myPageAction, questionAction, answerAction, allDataAction } from "../Redux/MyPageData";
 import { RootState } from "../Redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { currentQData } from "../Redux/QcontentData";
@@ -43,13 +43,14 @@ function MyPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const allState = useSelector((state: RootState) => state.MyPageReducer);
-  const { myPageData, questionData, answerData } = allState;
+  const { mdnAllData, myPageData, questionData, answerData } = allState;
 
   const [isQuestion, setIsQuestion] = useState(true);
 
   useEffect(() => {
     dispatch(questionAction(FakeData2.myData));
     dispatch(answerAction(FakeData2.answers));
+    dispatch(allDataAction(FakeData2.allData));
   }, []);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
@@ -64,11 +65,13 @@ function MyPage() {
   };
 
   const handleMyAnswers = (el: AnswerType) => {
-    const answerTitle = el.qTitle;
+    // const findData = questionData?.allData.filter((questionTitle) => questionTitle.title == answerTitle);
+    // const findData = questionData?.allData.filter((el) => (el.answers.filter((questionTitle) => questionTitle.qTitle === answerTitle)));
 
-    const findData = questionData?.allData.filter((questionTitle) => questionTitle.title === answerTitle);
+    const findData = mdnAllData?.filter((all) => all.title === el.qTitle);
 
     console.log(findData);
+
     if (findData !== undefined && findData !== null) {
       dispatch(currentQData(findData[0]));
       history.push({
@@ -77,7 +80,7 @@ function MyPage() {
       });
     }
 
-    // dispatch(currentQData(e));
+    // dispatch(currentQData(findData));
     // history.push({
     //   pathname: "/Qcontentpage",
     //   state: { pageName: "this is answer state" },
@@ -89,9 +92,9 @@ function MyPage() {
   };
 
   return (
-    <div>
-      <div onClick={handleMyPage}>나의질문</div>
-      <div onClick={handleMyPage}>나의답변</div>
+    <Container>
+      <QuestionTag onClick={handleMyPage}>나의질문</QuestionTag>
+      <AnswerTag onClick={handleMyPage}>나의답변</AnswerTag>
 
       {isQuestion ? (
         <QuestionContainer>
@@ -119,6 +122,7 @@ function MyPage() {
                     </div>
                   ))}
                 </div>
+                <BackBtn>뒤로가기버튼</BackBtn>
               </QuestionBox>
             ))}
           </div>
@@ -137,11 +141,19 @@ function MyPage() {
           ))}
         </AnswerContainer>
       )}
-    </div>
+    </Container>
   );
 }
 
 export default MyPage;
+
+const Container = styled.div``;
+
+const QuestionTag = styled.div``;
+
+const AnswerTag = styled.div``;
+
+const BackBtn = styled.div``;
 
 const QuestionContainer = styled.div`
   border: 2px solid #a7a3a3;

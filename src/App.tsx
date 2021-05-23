@@ -13,21 +13,24 @@ import HelpdeskPage from './HelpdeskPages/HelpdeskPage';
 import HquestionPage from './HelpdeskPages/HquestionPage'
 import styled from 'styled-components'
 import SideBar from "./Components/SideBar"
+import useAllData from './Hooks/useAllData';
 
 function App() {
+  // const [ writeMode, setWriteMode ] = useState(false)
+  const {allState, onSetWriteMode} = useAllData()
+  const {writeMode} = allState
 
 
   return (
     <>
-    <Nav></Nav>
+    {writeMode ? null : <Nav></Nav>}
     <Container>
-    <SideBar></SideBar>
+    {writeMode ? null : <SideBar></SideBar>}
       <Switch>
         <Route exact path="/" render={() => <MainPage />} />
         <Route path="/ContentPage" render={() => <ContentPage />} />
         <Route path="/EditPage" render={() => <EditPage />} />
         <Route path="/MyPage" render={() => <MyPage />} />
-        {/* <Route path="/QuestionPage" render={() => <QuestionPage />} /> */}
         <Route path="/SearchPage" render={() => <SearchPage />} />
         <Route path="/SettingPage" render={() => <SettingPage />} />
         <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />

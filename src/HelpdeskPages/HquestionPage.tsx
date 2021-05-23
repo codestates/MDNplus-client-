@@ -7,6 +7,8 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import autosize from "autosize";
 import QconfirmModal from "../Components/QconfirmModal";
+import useAllData from '../Hooks/useAllData';
+import { useHistory } from 'react-router-dom';
 
 const date = new Date();
 type NewQuestion = {
@@ -24,7 +26,9 @@ const QuestionPage = () => {
     body: "",
     tags: [],
   });
+  const {onSetWriteMode} = useAllData()
   const { title, body, tags } = newQuestion;
+  const history = useHistory()
 
   //유저가 왼쪽에 내용을 입력 시, title과 body 상태를 실시간으로 변경해주는 코드
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, type: string) => {
@@ -75,7 +79,18 @@ const QuestionPage = () => {
   // 모달에서 등록하기 버튼 누를 시, 서버에 새 질문 저장하는 요청 보내는 코드(모달에 props로 전달함)
   const handleSubmitQ = () => {
     console.log(title, body, tags);
+    history.push('/HelpdeskPage')
+    onSetWriteMode()
   };
+
+  const handleExit = () => {
+    history.push('/HelpdeskPage')
+    onSetWriteMode()
+  }
+
+  useEffect(() => {
+    onSetWriteMode()
+  }, [])
 
   return (
     <>
@@ -113,6 +128,7 @@ const QuestionPage = () => {
               autoFocus
             ></Body>
           )}
+          <span onClick={handleExit}>나가기</span>
           <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
         </LeftContainer>
         <RightContainer>

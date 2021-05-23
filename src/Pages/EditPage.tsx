@@ -1,21 +1,30 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import EditConfirmModal from "../Components/EditConfirmModal";
 import useContentData from "../Hooks/useContentData";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-// import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
-// import { render } from "react-dom";
-// import { text } from '@fortawesome/fontawesome-svg-core';
+import {useHistory} from "react-router-dom"
+import useAllData from "../Hooks/useAllData"
 
+
+// type PropsOption = {
+//   setWriteMode: (boolean:boolean) => void;
+// }
 
 function EditPage() {
   const { contentState, onChangeContent } = useContentData();
   const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
+  const {allState, onSetWriteMode} = useAllData()
+  const {writeMode} = allState
   const [checkModal, setCheckModal] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  // const [currentIndex, setCurrentIndex] = useState<number | undefined>(0);
+  const history = useHistory()
+
+  // if(!writeMode) {
+  //   onSetWriteMode()
+  // }
 
   //유저가 글을 수정하여 onchange 이벤트가 발생 시, contentData의 body를 수정하기 위한 함수
   const handleChange = (e: any) => {
@@ -30,10 +39,16 @@ function EditPage() {
       setCheckModal(true);
     }
   };
-  if(contentData)
-  console.log(contentData.body)
-  console.log(contentData?.body.length)
 
+  const handleExit = () => {
+    history.push('/ContentPage')
+    onSetWriteMode()
+  }
+
+  useEffect(() => {
+    onSetWriteMode()
+  }, [])
+  
   // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)
   // const handleGetIndex = () => {
   //   const text = textareaRef.current;
@@ -57,6 +72,7 @@ function EditPage() {
             ) : (
               <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>
             )}
+            <span onClick={handleExit}>나가기</span>
             <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
           </LeftContainer>
           <RightContainer>

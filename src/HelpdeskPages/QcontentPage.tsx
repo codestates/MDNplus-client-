@@ -23,6 +23,8 @@ function QcontentPage() {
 
   const location = useLocation<PageNameType>();
 
+  console.log("hello");
+
   useEffect(() => {
     if (location.state === undefined) {
       console.log("null");

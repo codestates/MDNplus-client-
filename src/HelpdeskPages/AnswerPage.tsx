@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -6,18 +6,25 @@ import ReactMarkdown from "react-markdown";
 import { RootState } from "../Redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import useAllData from "../Hooks/useAllData";
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
+  const { onSetWriteMode } = useAllData();
   const history = useHistory();
   const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");
+
+  useEffect(() => {
+    onSetWriteMode();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWriting(e.target.value);
   };
 
   const handleAnswerBtn = () => {
+    onSetWriteMode();
     window.history.back();
   };
 

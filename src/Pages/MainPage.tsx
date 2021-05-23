@@ -2,9 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import useAllData from "../Hooks/useAllData";
 import FakeData from "../FakeData";
-import { useEffect } from "react";
-import { useHistory } from 'react-router';
-import useContentData from '../Hooks/useContentData';
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
+import useContentData from "../Hooks/useContentData";
+import ideaIcon from "../img/idea.png";
 
 // type DataOption = {
 //   arrayData: Method[];
@@ -19,32 +20,37 @@ type Method = {
 };
 
 function MainPage() {
-  const { allState, onFilter, onClickFilter } = useAllData();
+  const [firstOption, setFirstOption] = useState("javascript");
+  const { allState, onFilter, onChangeFilter } = useAllData();
   const { arrayData, objectData, currentData } = allState;
-  const { onClickMethod } = useContentData()
-  const history = useHistory()
+  const { onClickMethod } = useContentData();
+  const history = useHistory();
 
   // 왼쪽 사이드바에 메소드 타이틀을 클릭했을 때, 오른쪽에 데이터들을 변경하기 위한 함수
-  const handleClickFilter = (MethodTitle: string) => {
-    if (MethodTitle === "object") {
+  const handleFilter = (e: any) => {
+    console.log(e.target.value);
+    if (e.target.value === "object") {
       if (objectData) {
-        onClickFilter(objectData);
+        onChangeFilter(objectData);
+        return;
       }
     }
-    if (MethodTitle === "array") {
+    if (e.target.value === "array") {
       if (arrayData) {
-        onClickFilter(arrayData);
+        onChangeFilter(arrayData);
+        return;
       }
     }
   };
 
   // 오른쪽에 렌더링된 하나의 메소드 박스를 클릭했을 시, ContentPage로 이동하기 위한 함수
-  const handleClickMethod = (method:Method )=> {
-    onClickMethod(method) // ContentData 값을 변경하기 위한 dispatch 메소드
-    history.push('/ContentPage')
-  }
+  const handleClickMethod = (method: Method) => {
+    console.log("컨텐츠 페이지에 뿌려줘야됨");
+    onClickMethod(method); // ContentData 값을 변경하기 위한 dispatch 메소드
+    history.push("/ContentPage");
+  };
 
-  // 처음 스토어에 저장되어 있는 값들은 null이므로 '로딩 중입니다'가 렌더링 된다. 
+  // 처음 스토어에 저장되어 있는 값들은 null이므로 '로딩 중입니다'가 렌더링 된다.
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
     onFilter(FakeData);
@@ -52,41 +58,58 @@ function MainPage() {
 
   return (
     <Container>
-      <LeftContainer>
-        {arrayData && objectData ? (
-          <SideList>
-            <SideMethod
-              onClick={() => {
-                handleClickFilter("array");
-              }}
-            >
-              array {arrayData.length}
-            </SideMethod>
-            <SideMethod
-              onClick={() => {
-                handleClickFilter("object");
-              }}
-            >
-              object {objectData.length}
-            </SideMethod>
-          </SideList>
-        ) : null}
-      </LeftContainer>
-      <RightContainer>
+      <IntroBox>
+        <Icon src={ideaIcon}></Icon>
+        <IntroContents>
+          <IntroTitle>MDN+ WiKi</IntroTitle>
+          <IntroLetter>당신의 지식을 공유해주세요</IntroLetter>
+        </IntroContents>
+      </IntroBox>
+      {/* <UnderLine></UnderLine> */}
+      <FilterBox>
+        <FirstFilter onChange={(e) => setFirstOption(e.target.value)} name="firstFilter" id="firstFilter">
+          {/* <label htmlFor="firstFilter"></label> */}
+          <option value="javascript">Javascript</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+        </FirstFilter>
+        {firstOption === "javascript" ? (
+          <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
+            {/* <label htmlFor="secondFilter"></label> */}
+            <option value="array">Array</option>
+            <option value="object">Object</option>
+            <option value="math">Math</option>
+            <option value="math">String</option>
+            <option value="math">Promise</option>
+          </SecondFilter>
+        ) : (
+          <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
+            {/* <label htmlFor="secondFilter"></label> */}
+            <option value="구현중">구현중</option>
+          </SecondFilter>
+        )}
+      </FilterBox>
+      <Stage>
         {currentData === null ? (
           <div>로딩중입니다</div>
         ) : (
           currentData.map((el) => (
-            <div key={el.id}>
-              <MethodBox onClick={(() => {handleClickMethod(el)})}>
-                <MethodTitle>{el.title}</MethodTitle>
-                {el.body ? <MethodBody>{el.body.slice(0, 40)}</MethodBody> : <MethodBody>빈칸</MethodBody>}
-              </MethodBox>
-              <MethodCount>{el.count}</MethodCount>
-            </div>
+            <MethodBox key={el.id}>
+              <div>
+                <MethodContents
+                  onClick={() => {
+                    handleClickMethod(el);
+                  }}
+                >
+                  <MethodTitle>{el.title}</MethodTitle>
+                  {el.body ? <MethodBody>{el.body.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
+                </MethodContents>
+              </div>
+              <MethodCount>수정된 횟수 {el.count}</MethodCount>
+            </MethodBox>
           ))
         )}
-      </RightContainer>
+      </Stage>
     </Container>
   );
 }
@@ -94,52 +117,116 @@ export default MainPage;
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 5fr;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 `;
 
-const LeftContainer = styled.div``;
-
-const SideList = styled.div`
-  padding: 30px;
+const IntroBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 4rem;
 `;
-const SideMethod = styled.div`
-  font-size: 20px;
-  transition: 0.3s ease-in-out;
-  cursor: pointer;
-  &:hover {
-    font-size: 24px;
+
+const IntroContents = styled.div`
+  margin-left: 1rem;
+`;
+
+const IntroTitle = styled.h1`
+  color: #757575;
+  font-weight: 600;
+`;
+
+const IntroLetter = styled.div`
+  margin-top: -1rem;
+  margin-left: 0.1rem;
+  color: #9e9e9e;
+  font-weight: bold;
+`;
+
+const Icon = styled.img`
+  width: 3rem;
+  margin-top: 1rem;
+`;
+
+const UnderLine = styled.div`
+  margin-top: 1.5rem;
+  width: 100%;
+  border-bottom: 0.5px solid #e0e0e0;
+`;
+
+const Stage = styled.div`
+  background: white;
+  display: grid;
+  grid-template-columns: repeat(3, 21rem);
+  grid-auto-rows: 13rem;
+  row-gap: 3.5rem;
+  column-gap: 3.2rem;
+  padding: 2rem;
+  margin-left: 2rem;
+  margin-top: 1rem;
+
+  @media (max-width: 375px) {
+    width: 375px;
   }
 `;
 
-const RightContainer = styled.div`
-  background: #dcdcdc;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 150px;
-  row-gap: 30px;
-  column-gap: 30px;
-  padding: 50px;
+const FilterBox = styled.div`
+  margin-top: 2rem;
+  // margin-left: 4rem;
+  width: 100%;
+  display: flex;
+  // border: 1px solid black;
+  justify-content: center;
+`;
+
+const FirstFilter = styled.select`
+  font-size: 1.2rem;
+  width: 10rem;
+  border: none;
+  outline: none;
+  color: #616161;
+  background-color: white;
+`;
+
+const SecondFilter = styled.select`
+  font-size: 1.2rem;
+  width: 10rem;
+  border: none;
+  outline: none;
+  margin-left: 2rem;
+  color: #616161;
+  background-color: white;
 `;
 
 const MethodBox = styled.div`
-  border: 1px solid black;
-  border-bottom: none;
-  padding: 0px 5px 15px 15px;
-  height: 120px;
+  border-radius: 1rem;
+  padding: 0 1rem 1rem 1rem;
+  // padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: white;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
-const MethodTitle = styled.h3``;
+const MethodContents = styled.div`
+  height: 10rem;
+`;
 
-const MethodBody = styled.div``;
+const MethodTitle = styled.h3`
+  color: #757575;
+`;
+
+const MethodBody = styled.div`
+  color: #757575;
+`;
 
 const MethodCount = styled.div`
-  border: 1px solid black;
-  border-top: 1px solid #dcdcdc;
   display: flex;
   justify-content: flex-end;
-  padding-right: 10px;
-  background: white;
+  font-size: 0.8rem;
+  color: #757575;
 `;

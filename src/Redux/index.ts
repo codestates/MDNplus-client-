@@ -5,6 +5,7 @@ import MyPageReducer from "./MyPageData";
 import SearchDataReducer from "./SearchData";
 import QcontentDataReducer from "./QcontentData";
 import AnswerPageReducer from "./AnswerPageData";
+import HelpDataReducer from "./HelpData";
 
 const rootReducer = combineReducers({
   AllDataReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   SearchDataReducer,
   QcontentDataReducer,
   AnswerPageReducer,
+  HelpDataReducer,
 });
 
 export default rootReducer;

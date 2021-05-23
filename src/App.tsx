@@ -1,39 +1,56 @@
 import MainPage from "./Pages/MainPage";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "./Components/Nav";
-import { BrowserRouter, Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, useHistory, withRouter } from "react-router-dom";
 import ContentPage from "./Pages/ContentPage";
 import EditPage from "./Pages/EditPage";
 import MyPage from "./HelpdeskPages/MyPage";
-import QuestionPage from "./HelpdeskPages/QuestionPage";
 import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
 import QcontentPage from "./HelpdeskPages/QcontentPage";
-import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
 
 import "./App.css";
+import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
+import HquestionPage from "./HelpdeskPages/HquestionPage";
+import styled from "styled-components";
+import SideBar from "./Components/SideBar";
+import useAllData from "./Hooks/useAllData";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Nav></Nav>
+  // const [ writeMode, setWriteMode ] = useState(false)
+  const { allState, onSetWriteMode } = useAllData();
+  const { writeMode } = allState;
 
-      <Switch>
-        <Route exact path="/" render={() => <MainPage />} />
-        <Route path="/ContentPage" render={() => <ContentPage />} />
-        <Route path="/EditPage" render={() => <EditPage />} />
-        <Route path="/SearchPage" render={() => <SearchPage />} />
-        <Route path="/SettingPage" render={() => <SettingPage />} />
-        <Route path="/MyPage" render={() => <MyPage />} />
-        <Route path="/QuestionPage" render={() => <QuestionPage />} />
-        <Route path="/QcontentPage" render={() => <QcontentPage />} />
-        <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-        <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-        <Route path="/AnswerPage" render={() => <AnswerPage />} />
-      </Switch>
-    </BrowserRouter>
+  return (
+    <>
+      {writeMode ? null : <Nav></Nav>}
+      <Container>
+        {writeMode ? null : <SideBar></SideBar>}
+        <Switch>
+          <Route exact path="/" render={() => <MainPage />} />
+          <Route path="/ContentPage" render={() => <ContentPage />} />
+          <Route path="/EditPage" render={() => <EditPage />} />
+          <Route path="/SearchPage" render={() => <SearchPage />} />
+          <Route path="/SettingPage" render={() => <SettingPage />} />
+          <Route path="/MyPage" render={() => <MyPage />} />
+          <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
+          <Route path="/AnswerPage" render={() => <AnswerPage />} />
+          <Route path="/HquestionPage" render={() => <HquestionPage />} />
+          <Route path="/QcontentPage" render={() => <QcontentPage />} />
+        </Switch>
+      </Container>
+    </>
   );
 }
 
-export default App;
+export default withRouter(App);
+
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+
+  @media (max-width: 375px) {
+    flex-direction: column;
+  }
+`;

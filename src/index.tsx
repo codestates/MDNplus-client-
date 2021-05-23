@@ -13,9 +13,12 @@ const store = createStore(rootReducer);
 library.add(faSearch, faTimes, faSortDown, faSortUp);
 
 ReactDOM.render(
+  <BrowserRouter>
   <Provider store={store}>
     <App />
-  </Provider>,
+  </Provider>
+  </BrowserRouter>
+,
   document.getElementById("root")
 );
 

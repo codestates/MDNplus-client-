@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import LoginModal from "./LoginModal";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import MenuModal from "./MenuModal";
 import axios from "axios";
 import { useHistory } from "react-router";
-import React from "react";
 import useMyPageData from "../Hooks/useSearchData";
-import FakeData from "../FakeData";
 import { useDispatch } from "react-redux";
+import LoginModal from "./LoginModal";
+import MenuModal from "./MenuModal";
+import FakeData from "../FakeData";
 import { searchWord } from "../Redux/SearchData";
+import search from "../img/search.jpeg"
 
 const { Kakao }: any = window;
 
@@ -92,13 +92,19 @@ function Nav() {
 
   return (
     <NavBar>
-      <Logo onClick={handleHomeBtn}>MDN +</Logo>
+      <LeftBox>
+      <Logo>MDN +</Logo>
       <SearchBar>
-        <Icon>
-          <FontAwesomeIcon icon="search" size="1x" color="black" />
-        </Icon>
         <Search onKeyPress={handleKeyPress} />
+          <SearchIcon src={search}></SearchIcon>
       </SearchBar>
+      <SearchFilter name="filter" id="filter">
+          <option value="all">전체</option>
+          <option value="title">제목</option>
+          <option value="body">내용</option>
+          <option value="tag">태그</option>
+        </SearchFilter>
+      </LeftBox>
       {isLogin ? (
         <NavButtons>
           <UserIconContainer onClick={handleMenuModal}>
@@ -106,13 +112,11 @@ function Nav() {
             <FontAwesomeIcon icon="sort-down" size="sm" color="black" />
             {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
           </UserIconContainer>
-          <QuestionBtn onClick={(() => {history.push('/HelpdeskPage')})}>HelpDesk</QuestionBtn>
         </NavButtons>
       ) : (
         <NavButtons>
           <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
           <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal} checkLogin={setIsLogin}></LoginModal>
-          <QuestionBtn>자주하는 질문</QuestionBtn>
         </NavButtons>
       )}
     </NavBar>
@@ -121,38 +125,60 @@ function Nav() {
 
 export default Nav;
 
-const User = styled.div`
-  margin: 2px;
-`;
-
 const NavBar = styled.div`
-  margin-top: 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 30px;
-  border-bottom: 1.8px solid #a7a3a3;
+  background: #f4f4f4;
+  font-family: "Archivo Black", sans-serif;
+  box-shadow: 0px 4px 5px #EEEEEE;
+
+  @media (max-width: 375px) {
+    width: 375px;
+  }
 `;
 
-const Icon = styled.span`
-  padding: 20px;
+const LeftBox = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const Logo = styled.div`
+  font-size: 2.5rem;
+  color: #005ce7;
+  margin: 1rem 1rem 1rem 3rem;
+`;
+
+const SearchBar = styled.div`
+  border: 1px solid #005ce7;
+  width: 37%;
+  background: white;
+  padding-left: 1rem;
+  margin-left: 2rem;
+
 `;
 
 const Search = styled.input`
   border: none;
-  width: 400px;
-  font-size: 1.2em;
+  width: 90%;
+  font-size: 1rem;
   outline: none;
-  height: 2.2em;
+  height: 2rem;
 `;
 
-const SearchBar = styled.div`
-  border: 1.8px solid #a7a3a3;
-  border-radius: 34px;
-  width: 517px;
-  height: 45;
-  box-shadow: 12px 8px 10px #a7a3a3;
-`;
+const SearchIcon = styled.img`
+  width: 10%;
+  margin-bottom: -0.3rem;
+  margin-left: -0.4rem;
+`
+
+const SearchFilter = styled.select`
+  margin-left: 1rem;
+  border: none;
+  background: #f4f4f4;
+  padding-right: 0.3rem;
+  outline: none;
+`
 
 const NavButtons = styled.div`
   display: flex;
@@ -184,12 +210,6 @@ const QuestionBtn = styled.button`
   cursor: pointer;
 `;
 
-const Logo = styled.div`
-  font-size: 64px;
-  color: #005ce7;
-  cursor: pointer;
-`;
-
 const UserIconContainer = styled.button`
   display: flex;
   justify-content: center;
@@ -201,8 +221,11 @@ const UserIconContainer = styled.button`
   font-weight: bold;
   margin: 5px;
   border: 1.8px solid #a7a3a3;
-  box-shadow: 12px 8px 10px #a7a3a3;
   cursor: pointer;
+`;
+
+const User = styled.div`
+  margin: 2px;
 `;
 
 // import React, { useEffect, useState } from "react";

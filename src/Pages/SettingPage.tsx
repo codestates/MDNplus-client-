@@ -9,9 +9,22 @@ function SettingPage() {
     url: "",
   });
   const [loading, setLoading] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [username, setUsername] = useState("Seong seok");
 
   const url = "https://api.cloudinary.com/v1_1/dr4ka7tze/image/upload";
   const formData = new FormData();
+
+  // 유저가 이름을 수정할 시, 바뀌는 이름을 실시간으로 state에 업데이트하는 코드
+  const handleInputChange = (e: any) => {
+    setUsername(e.target.value);
+  };
+
+  //유저 이름 수정 완료 버튼을 눌렀을 시, 서버에 수정된 이름을 업데이트 하기 위한 코드
+  const handleNameSave = () => {
+    console.log(username);
+    setEditing(false);
+  };
 
   // 유저가 file을 업로드하여 change 이벤트가 발생할 때, 실행되는 코드
   const handleChange = async (e: any) => {
@@ -47,10 +60,30 @@ function SettingPage() {
     <Container>
       <Stage>
         <ImgBox>{!loading && !newImg.url ? <Img></Img> : loading && !newImg.url ? <Img></Img> : !loading && newImg.url ? <Img src={newImg.url}></Img> : null}</ImgBox>
-        <UserNameBox>
-          <UserName>Seong seok Moon</UserName>
-          <EditName>수정</EditName>
-        </UserNameBox>
+        {!editing ? (
+          <UserNameBox>
+            <UserName>{username}</UserName>
+            <EditName
+              onClick={() => {
+                setEditing(true);
+              }}
+            >
+              수정
+            </EditName>
+          </UserNameBox>
+        ) : (
+          <UserNameBox>
+            <input onChange={handleInputChange} value={username} autoFocus></input>
+            <EditName
+              onClick={() => {
+                handleNameSave();
+              }}
+            >
+              저장
+            </EditName>
+          </UserNameBox>
+        )}
+
         <SubmitBox>
           <ImgPickerBox>
             <ImgPicker type="file" id="ex_file" onChange={handleChange} />

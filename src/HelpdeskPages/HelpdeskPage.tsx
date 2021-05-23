@@ -40,7 +40,7 @@ const HelpdeskPage = () => {
     }, [])
 
     return (
-        <div>
+        <Container>
             <button onClick={(() => {history.push('/HquestionPage')})}>질문하기</button>
             <span onClick={onFilterFast}>최신순</span>
             <span onClick={onFilterPopular}>인기순</span>
@@ -60,12 +60,16 @@ const HelpdeskPage = () => {
             ))
             }
         </div>
-        </div>
+        </Container>
 
     )
 }
             
 export default HelpdeskPage;
+
+const Container = styled.div`
+    width: 100vw;
+`
 
 const QuestionBox = styled.div`
     border: 1px solid gray;

@@ -16,6 +16,7 @@ function ContentPage() {
   // const handleChangeContent = () => {
   //   onChangeContent()
   // }
+  console.log('hi')
 
   // 수정 버튼 누르면, EditPage로 이동
   const handleClickEdit = () => {

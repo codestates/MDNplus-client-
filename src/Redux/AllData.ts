@@ -1,12 +1,12 @@
 // 액션 타입
 const FILTER = "AllData/FILTER" as const;
-const CLICKFILTER = "AllData/CLICKFILTER" as const;
+const CHANGEFILTER = "AllData/CHANGEFILTER" as const;
 // 액션 생성 함수
 export const filter = (data: Method[]) => ({ type: FILTER, payload: data });
-export const clickFilter = (data: Method[]) => ({ type: CLICKFILTER, payload: data });
+export const changeFilter = (data: Method[]) => ({ type: CHANGEFILTER, payload: data });
 
 // 액션 객체 타입 설정(타입스크립트)
-type AllDataAction = ReturnType<typeof filter> | ReturnType<typeof clickFilter>;
+type AllDataAction = ReturnType<typeof filter> | ReturnType<typeof changeFilter>;
 
 type Method = {
   id: number;
@@ -44,7 +44,7 @@ function AllDataReducer(state: InitState = initialState, action: AllDataAction) 
       });
       const currentData = arrayData;
       return { ...state, allData: action.payload, currentData, arrayData, objectData };
-    case CLICKFILTER:
+    case CHANGEFILTER:
       return { ...state, currentData: action.payload}
     default:
       return state;

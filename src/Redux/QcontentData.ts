@@ -76,19 +76,17 @@ export const currentQData = (currentData: undefined | DataType) => ({
   payload: currentData,
 });
 
-export const questionLike = (updateLike: number, contentId: string) => ({
+export const questionLike = (questionUpdate: DataType) => ({
   type: QUESTIONLIKE,
   payload: {
-    updateLike,
-    contentId,
+    questionUpdate,
   },
 });
 
-export const answerLike = (updateLike: number, contentId: string) => ({
+export const answerLike = (answerUpdate: AnswerType) => ({
   type: ANSWERLIKE,
   payload: {
-    updateLike,
-    contentId,
+    answerUpdate,
   },
 });
 
@@ -96,36 +94,31 @@ type CurrentQDataAction = ReturnType<typeof currentQData> | ReturnType<typeof qu
 
 type InitState = {
   currentData: null | undefined | DataType;
+  questionUpdate: null | DataType;
+  answerUpdate: null | AnswerType;
 };
 
 const initialState = {
   currentData: null,
+  questionUpdate: null,
+  answerUpdate: null,
 };
 
 function QcontentDataReducer(state: InitState = initialState, action: CurrentQDataAction): InitState {
   switch (action.type) {
     case CURRENTQDATA:
       return { ...state, currentData: action.payload };
-    // case QUESTIONLIKE:
-    //   console.log(action.payload);
-    //   console.log(state);
+    case QUESTIONLIKE:
+      return {
+        ...state,
+        currentData: action.payload.questionUpdate,
+      };
 
-    //   return {
-
-    //     ...state.currentData, currentData:{...state.currentData, question:{...state.currentData?.question, like:action.payload.updateLike, _id:action.payload.contentId}} };
-
-    //   // return { ...state, currentData: { ...state.currentData, ...state, question:{ like:action.payload.updateLike}  } };
-
-    // case ANSWERLIKE:
-    //   console.log(action.payload);
-    //   console.log(state);
-    //   // return { ...state };
-    //   // return { ...state, currentData: { ...state.currentData, likes: action.payload.updateLike } };
-    //   return state;
-    //   // return {
-
-    //   ...state.currentData, currentData:{...state.currentData, comments:{...state.currentData?.comments, like:action.payload.updateLike, _id:action.payload.contentId}} };
-
+    case ANSWERLIKE:
+      return {
+        ...state,
+        answerUpdate: action.payload.answerUpdate,
+      };
     default:
       return state;
   }

@@ -101,7 +101,7 @@ function Nav() {
   }, []);
 
   //태그를 선택할때 tag state 업데이트가 됨.
-  const option = (e: any) => {
+  const option = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(searchSelect(e.target.value));
   };
 
@@ -113,11 +113,11 @@ function Nav() {
           <Search type="search" onKeyPress={handleKeyPress} onChange={handleWritingState} />
           <SearchIcon src={search}></SearchIcon>
         </SearchBar>
-        <SearchFilter name="filter" id="filter">
-          <option value="all">전체</option>
-          <option value="title">제목</option>
-          <option value="body">내용</option>
-          <option value="tag">태그</option>
+        <SearchFilter name="filter" id="filter" onChange={option}>
+          <option value="전체">전체</option>
+          <option value="제목">제목</option>
+          <option value="내용">내용</option>
+          <option value="태그">태그</option>
         </SearchFilter>
       </LeftBox>
       {isLogin ? (

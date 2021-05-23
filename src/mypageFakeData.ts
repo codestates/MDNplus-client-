@@ -1,0 +1,88 @@
+const myPageFakeData = {
+  user: {
+    nickName: "김승용",
+    image: "URL",
+    _id: "60a5aa8ad96cdef21153faec",
+  },
+  questions: [
+    {
+      tags: ["javascript", "method"],
+      commentCount: 0,
+      like: 9,
+      _id: "60a680241268412fe6bf075e",
+      title: "함수가 뭔가요?",
+      body: "함수를 공부하고 싶은데 뭔지 모르겠어요",
+      userId: "60a5aa8ad96cdef21153faec",
+      createdAt: "2021-05-20T15:28:36.048Z",
+      updatedAt: "2021-05-21T05:49:09.523Z",
+      __v: 0,
+    },
+    {
+      tags: [],
+      commentCount: 7,
+      like: 10,
+      _id: "60a681b11268412fe6bf0761",
+      title: "method는 계속 만들어지는 중인가요?",
+      body: "method는 누가 만들고 어떻게 만드는건지 궁금합니다.",
+      userId: "60a5aa8ad96cdef21153faec",
+      createdAt: "2021-05-20T15:35:13.253Z",
+      updatedAt: "2021-05-22T06:54:37.188Z",
+      __v: 0,
+    },
+    {
+      tags: ["고차함수", "reduce", "method"],
+      commentCount: 0,
+      like: 0,
+      _id: "60a70dd640feee0a929bdef4",
+      title: "고참함수가 뭐죠?",
+      body: "좀 상세하게 알려주세요",
+      userId: "60a5aa8ad96cdef21153faec",
+      createdAt: "2021-05-21T01:33:10.819Z",
+      updatedAt: "2021-05-21T06:45:36.855Z",
+      __v: 0,
+    },
+  ],
+  comments: [
+    {
+      like: 0,
+      _id: "60a796ab1e86412517c69d1a",
+      questionId: {
+        _id: "60a681b11268412fe6bf0761",
+        title: "method는 계속 만들어지는 중인가요?",
+      },
+      content: "좀 더 상세하게 질문해주세요",
+      userId: "60a5aa8ad96cdef21153faec",
+      createdAt: "2021-05-21T11:16:59.656Z",
+      updatedAt: "2021-05-21T11:16:59.656Z",
+      __v: 0,
+    },
+    {
+      like: 0,
+      _id: "60a796c81e86412517c69d1b",
+      questionId: {
+        _id: "60a681b11268412fe6bf0761",
+        title: "method는 계속 만들어지는 중인가요?",
+      },
+      content: "아직 모르시나요?",
+      userId: "60a5aa8ad96cdef21153faec",
+      createdAt: "2021-05-21T11:17:28.278Z",
+      updatedAt: "2021-05-21T11:17:28.278Z",
+      __v: 0,
+    },
+    {
+      like: 10,
+      _id: "60a8aaad5a383a15bd0e785e",
+      questionId: {
+        _id: "60a681b11268412fe6bf0761",
+        title: "method는 계속 만들어지는 중인가요?",
+      },
+      content: "아직 모르시나요?",
+      userId: "60a5aa8ad96cdef21153faec",
+      createdAt: "2021-05-22T06:54:37.088Z",
+      updatedAt: "2021-05-22T06:55:46.270Z",
+      __v: 0,
+    },
+  ],
+};
+
+export default myPageFakeData;

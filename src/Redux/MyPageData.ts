@@ -17,142 +17,178 @@ const ALLDATA = "AllData/ALLDATA" as const;
 //   },
 
 type AllData = {
-  id: number;
-  userName: string;
-  userId: number;
-  title: string;
-  body: string;
-  answers: {
-    id: number;
-    userId: number;
-    userName: string;
-    qTitle: string;
-    body: string;
-    likes: number;
-    createdAt: string;
-  }[];
-  likes: number;
-  tags: string[];
-
-  createdAt: string;
-};
-
-type DataType = {
-  myData: {
-    id: number;
-    userName: string;
-    profile: string;
-    allData: {
-      id: number;
-      userId: number;
-      userName: string;
-      title: string;
-      body: string;
-      answers: {
-        id: number;
-        userId: number;
-        userName: string;
-        qTitle: string;
-        body: string;
-        likes: number;
-        createdAt: string;
-      }[];
-      likes: number;
-      tags: string[];
-      createdAt: string;
-    }[];
+  user: {
+    nickName: string;
+    image: string;
+    _id: string;
   };
-  answers: {
-    id: number;
-    userId: number;
-    userName: string;
-    qTitle: string;
-    body: string;
-    likes: number;
-    createdAt: string;
-  }[];
-};
-
-type QuestionType = {
-  id: number;
-  userName: string;
-  profile: string;
-  allData: {
-    id: number;
-    userId: number;
-    userName: string;
+  questions: {
+    tags: string[];
+    commentCount: number;
+    like: number;
+    _id: string;
     title: string;
     body: string;
-    answers: {
-      id: number;
-      userId: number;
-      userName: string;
-      qTitle: string;
-      body: string;
-      likes: number;
-      createdAt: string;
-    }[];
-    likes: number;
-    tags: string[];
+    userId: string;
     createdAt: string;
+    updatedAt: string;
+    __v: number;
+  }[];
+
+  comments: {
+    like: number;
+    _id: string;
+    questionId: {
+      _id: string;
+      title: string;
+    };
+    content: string;
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
   }[];
 };
 
-type AnswerType = {
-  id: number;
-  userId: number;
-  userName: string;
-  qTitle: string;
-  body: string;
-  likes: number;
-  createdAt: string;
-}[];
+// type AllData = {
+//   id: number;
+//   userName: string;
+//   userId: number;
+//   title: string;
+//   body: string;
+//   answers: {
+//     id: number;
+//     userId: number;
+//     userName: string;
+//     qTitle: string;
+//     body: string;
+//     likes: number;
+//     createdAt: string;
+//   }[];
+//   likes: number;
+//   tags: string[];
 
-export const allDataAction = (mdnAllData: AllData[] | null) => ({
+//   createdAt: string;
+// };
+
+// type DataType = {
+//   myData: {
+//     id: number;
+//     userName: string;
+//     profile: string;
+//     allData: {
+//       id: number;
+//       userId: number;
+//       userName: string;
+//       title: string;
+//       body: string;
+//       answers: {
+//         id: number;
+//         userId: number;
+//         userName: string;
+//         qTitle: string;
+//         body: string;
+//         likes: number;
+//         createdAt: string;
+//       }[];
+//       likes: number;
+//       tags: string[];
+//       createdAt: string;
+//     }[];
+//   };
+//   answers: {
+//     id: number;
+//     userId: number;
+//     userName: string;
+//     qTitle: string;
+//     body: string;
+//     likes: number;
+//     createdAt: string;
+//   }[];
+// };
+
+// type QuestionType = {
+//   id: number;
+//   userName: string;
+//   profile: string;
+//   allData: {
+//     id: number;
+//     userId: number;
+//     userName: string;
+//     title: string;
+//     body: string;
+//     answers: {
+//       id: number;
+//       userId: number;
+//       userName: string;
+//       qTitle: string;
+//       body: string;
+//       likes: number;
+//       createdAt: string;
+//     }[];
+//     likes: number;
+//     tags: string[];
+//     createdAt: string;
+//   }[];
+// };
+
+// type AnswerType = {
+//   id: number;
+//   userId: number;
+//   userName: string;
+//   qTitle: string;
+//   body: string;
+//   likes: number;
+//   createdAt: string;
+// }[];
+
+export const allDataAction = (mdnAllData: AllData | null) => ({
   type: ALLDATA,
   payload: mdnAllData,
 });
 
-export const myPageAction = (myPageData: DataType) => ({
-  type: MYPAGEDATA,
-  payload: myPageData,
-});
+// export const myPageAction = (myPageData: DataType) => ({
+//   type: MYPAGEDATA,
+//   payload: myPageData,
+// });
 
-export const questionAction = (questionData: QuestionType | undefined) => ({
-  type: QUESTIONDATA,
-  payload: questionData,
-});
-export const answerAction = (answerData: AnswerType | undefined) => ({
-  type: ANSWERDATA,
-  payload: answerData,
-});
+// export const questionAction = (questionData: QuestionType | undefined) => ({
+//   type: QUESTIONDATA,
+//   payload: questionData,
+// });
+// export const answerAction = (answerData: AnswerType | undefined) => ({
+//   type: ANSWERDATA,
+//   payload: answerData,
+// });
 
-type MyPageDataAction = ReturnType<typeof myPageAction> | ReturnType<typeof questionAction> | ReturnType<typeof answerAction> | ReturnType<typeof allDataAction>;
+// type MyPageDataAction = ReturnType<typeof myPageAction> | ReturnType<typeof questionAction> | ReturnType<typeof answerAction> | ReturnType<typeof allDataAction>;
+
+type MyPageDataAction = ReturnType<typeof allDataAction>;
 
 type InitState = {
-  mdnAllData: null | AllData[];
-  myPageData: null | DataType;
-  questionData: QuestionType | undefined;
-  answerData: AnswerType | undefined;
+  mdnAllData: null | AllData;
+  // myPageData: null | DataType;
+  // questionData: QuestionType | undefined;
+  // answerData: AnswerType | undefined;
 };
 
 const initialState = {
   mdnAllData: null,
-  myPageData: null,
-  questionData: undefined,
-  answerData: undefined,
+  // myPageData: null,
+  // questionData: undefined,
+  // answerData: undefined,
 };
 
 function MyPageReducer(state: InitState = initialState, action: MyPageDataAction): InitState {
   switch (action.type) {
     case ALLDATA:
       return { ...state, mdnAllData: action.payload };
-    case MYPAGEDATA:
-      return { ...state, myPageData: action.payload };
-    case QUESTIONDATA:
-      return { ...state, questionData: action.payload };
-    case ANSWERDATA:
-      return { ...state, answerData: action.payload };
+    // case MYPAGEDATA:
+    //   return { ...state, myPageData: action.payload };
+    // case QUESTIONDATA:
+    //   return { ...state, questionData: action.payload };
+    // case ANSWERDATA:
+    //   return { ...state, answerData: action.payload };
     default:
       return state;
   }

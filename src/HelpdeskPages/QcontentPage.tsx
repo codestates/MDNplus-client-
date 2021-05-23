@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux";
-import { currentQData, likeData } from "../Redux/QcontentData";
+import { currentQData, questionLike } from "../Redux/QcontentData";
 import { useHistory, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import QfakeData from "../QFakeData";
+import QContentFakeData from "../QContentFakeData";
 
 type PageNameType = {
   pageName: string;
@@ -15,9 +16,10 @@ function QcontentPage() {
   const history = useHistory();
   const allState = useSelector((state: RootState) => state.QcontentDataReducer);
   const dispatch = useDispatch();
-  const { currentData, currentLike } = allState;
+  const { currentData } = allState;
   const [isMainPage, setisMainPage] = useState<boolean>(true);
   const [isLike, setIsLike] = useState<boolean>(true);
+  const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
 
   const location = useLocation<PageNameType>();
 
@@ -30,24 +32,32 @@ function QcontentPage() {
     } else {
       console.log(location.state.pageName);
     }
+
+    dispatch(currentQData(QContentFakeData));
   }, []);
 
-  const handleIncreaseLikes = (likesNum: number, idNum: number) => {
+  const handleQuestionIncreaseLikes = (likesNum: number, idNum: string) => {
     console.log("좋아요 증가");
     setIsLike(() => !isLike);
-
-    dispatch(likeData(likesNum + 1, idNum));
   };
 
-  const handleDecreaseLikes = (likesNum: number, idNum: number) => {
+  const handleQuestionDecreaseLikes = (likesNum: number, idNum: string) => {
     console.log("좋아요 감소");
     setIsLike(() => !isLike);
+  };
 
-    dispatch(likeData(likesNum - 1, idNum));
+  const handleAnswerDecreaseLikes = (likesNum: number, idNum: string) => {
+    console.log("답변 좋아요 감소", likesNum);
+    setIsAnswerLike(() => !isAnswerLike);
+  };
+
+  const handleAnswerIncreaseLikes = (likesNum: number, idNum: string) => {
+    console.log("답변 좋아요 증가", likesNum);
+    setIsAnswerLike(() => !isAnswerLike);
   };
 
   const handleAnswerBtn = () => {
-    dispatch(answerPageData(currentData));
+    dispatch(answerPageData(currentData?.question));
     history.push({
       pathname: "/AnswerPage",
       state: { pageName: "this page is from QcontentPage" },
@@ -59,33 +69,41 @@ function QcontentPage() {
     <div>
       {currentData !== null && currentData !== undefined ? (
         <Container>
-          <div> 질문한 내용</div>
           <QuestionContainer>
-            <Title> {currentData.title}</Title>
-            <Date>{currentData.createdAt}</Date>
-            <UserName>{currentData.userName}</UserName>
-            <Body>{currentData.body}</Body>
-            <Tags>{currentData.tags}</Tags>
+            <LikesPart>
+              <span onClick={() => handleQuestionIncreaseLikes(currentData.question.like, currentData.question._id)}>up</span>
+              <Likes>좋아요 &nbsp; {currentData.question.like}</Likes>
+              <span onClick={() => handleQuestionDecreaseLikes(currentData.question.like, currentData.question._id)}>down</span>
+            </LikesPart>
 
-            {isLike ? (
-              <div onClick={() => handleIncreaseLikes(currentData.likes, currentData.id)}>{currentData.likes}</div>
-            ) : (
-              <div onClick={() => handleDecreaseLikes(currentData.likes, currentData.id)}>{currentData.likes}</div>
-            )}
+            <QuestionBox>
+              <Title> {currentData.question.title}</Title>
+              <UserName>유저이름</UserName>
+              <Date>{currentData.question.createdAt}</Date>
 
-            {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기 버튼</AnswerBtn> : null}
+              <Body>{currentData.question.body}</Body>
+              {currentData.question.tags?.map((el) => (
+                <Tags>{el}</Tags>
+              ))}
+
+              {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
+            </QuestionBox>
           </QuestionContainer>
 
           <AnswerContainer>
-            <div> 답변</div>
-            {currentData.answers?.map((answerData) => (
-              <AnswerBox>
-                <Title> {answerData.userName}</Title>
-                <Date>{answerData.createdAt}</Date>
-                <UserName>{answerData.userName}</UserName>
-                <Body>{answerData.body}</Body>
-                <Likes>{answerData.likes}</Likes>
-              </AnswerBox>
+            {currentData.comments.map((el) => (
+              <EachAnswer>
+                <LikesPart>
+                  <span onClick={() => handleAnswerIncreaseLikes(el.like, el._id)}> up</span>
+                  <Likes>좋아요 &nbsp; {el.like}</Likes>
+                  <span onClick={() => handleAnswerDecreaseLikes(el.like, el._id)}> down</span>
+                </LikesPart>
+                <AnswerBox>
+                  <UserName>답변자 이름</UserName>
+                  <Date>{el.createdAt}</Date>
+                  <Body>{el.content}</Body>
+                </AnswerBox>
+              </EachAnswer>
             ))}
           </AnswerContainer>
         </Container>
@@ -99,21 +117,77 @@ function QcontentPage() {
 export default QcontentPage;
 
 const Container = styled.div`
-  cursor: pointer;
+  height: 100vh;
+  weidth: 100vw;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
 `;
 
 const QuestionContainer = styled.div`
-  border: 2px solid #a7a3a3;
-`;
-const AnswerContainer = styled.div`
-  border: 2px solid #a7a3a3;
+  grid-area: 1/2/2/6;
+  display: flex;
+  align-items: center;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid #a7a3a3;
 `;
 
-const AnswerBox = styled.div``;
-const Title = styled.div``;
-const Date = styled.div``;
-const UserName = styled.div``;
-const Body = styled.div``;
-const Likes = styled.div``;
-const Tags = styled.div``;
-const AnswerBtn = styled.div``;
+const QuestionBox = styled.div`
+  width: 80%;
+`;
+
+const AnswerContainer = styled.div`
+  grid-area: 2/2/3/6;
+`;
+
+const EachAnswer = styled.div`
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #a7a3a3;
+`;
+
+const AnswerBox = styled.div`
+  margin: 1rem;
+  width: 80%;
+`;
+const Title = styled.div`
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 1rem;
+`;
+const Date = styled.div`
+  padding: 1rem;
+
+  text-align: right;
+`;
+const UserName = styled.div`
+  padding: 1rem;
+`;
+const Body = styled.div`
+  padding: 1rem;
+  line-height: 2rem;
+`;
+const LikesPart = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-contents: center;
+  align-items: center;
+  margin: 1rem;
+  cursor: pointer;
+`;
+
+const Likes = styled.span`
+  padding: 0.5rem;
+`;
+
+const Tags = styled.span`
+  border: 1px solid gray;
+  padding: 0.2rem;
+  margin: 1rem;
+`;
+
+const AnswerBtn = styled.span`
+  float: right;
+  color: blue;
+  cursor: pointer;
+`;

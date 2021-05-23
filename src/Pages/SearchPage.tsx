@@ -13,7 +13,7 @@ function SearchPage() {
   const { SearchDataState }: any = useSearchData();
   // const { contentData }:Data[] = SearchDataState;
 
-  console.log(SearchDataState);
+  console.log(SearchDataState.result);
 
   const handleSearchData = (el: any) => {
     console.log(el);
@@ -23,7 +23,13 @@ function SearchPage() {
     <div>비어있음!</div>
   ) : (
     <Container>
-      <SearchResult>검색결과: "{SearchDataState.word}" (을)를 검색하셨습니다.</SearchResult>
+      <SearchResult>
+        검색결과: "
+        <ResultText>
+          {SearchDataState.result}, {SearchDataState.tagResult}
+        </ResultText>
+        " (을)를 검색하셨습니다.
+      </SearchResult>
       <ContentContainer>
         {SearchDataState.contentData.map((el: Data) => (
           <Content onClick={() => handleSearchData(el)}>
@@ -54,6 +60,14 @@ const SearchResult = styled.div`
   font-size: 25px;
 `;
 
+const ResultText = styled.span`
+  margin: 10px;
+  color: #005ce7;
+  font-weight: bold;
+  width: 70%;
+  font-size: 25px;
+`;
+
 const ContentContainer = styled.div`
   width: 80%;
   height: 90%;
@@ -63,8 +77,8 @@ const Content = styled.div`
   padding: 30px;
   cursor: pointer;
   &:hover {
-    color:#005ce7;
-
+    color: #005ce7;
+  }
 `;
 
 const Title = styled.div`

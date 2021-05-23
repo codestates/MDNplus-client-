@@ -1,25 +1,19 @@
 const ANSWERPAGEDATA = "AnswerPageData/ANSWERPAGEDATA" as const;
 
-type DataType = {
-  id: number;
-  userId?: number;
-  userName?: string;
-  title?: string;
-  body?: string;
-  answers?: {
-    id: number;
-    userId: number;
-    userName: string;
-    qTitle: string;
-    body: string;
-    likes: number;
-    createdAt: string;
-  }[];
-  likes: number;
-  tags?: string[];
-  createdAt?: string;
+type QuestionType = {
+  tags: string[];
+  commentCount: number;
+  like: number;
+  _id: string;
+  title: string;
+  body: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 };
-export const answerPageData = (displayQuestion: DataType | undefined | null) => ({
+
+export const answerPageData = (displayQuestion: QuestionType | undefined | null) => ({
   type: ANSWERPAGEDATA,
   payload: displayQuestion,
 });
@@ -27,7 +21,7 @@ export const answerPageData = (displayQuestion: DataType | undefined | null) => 
 type AnswerPageActionType = ReturnType<typeof answerPageData>;
 
 type InitState = {
-  displayQuestion: null | DataType | undefined;
+  displayQuestion: null | QuestionType | undefined;
 };
 
 const initialState = {

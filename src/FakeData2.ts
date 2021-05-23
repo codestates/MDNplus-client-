@@ -28,7 +28,12 @@ const fakeData2 = {
       userId: 3,
       title: "질문자가 작성한 답변 제목",
       body: "지금 개발 처음인데 어떻게 하면 되죠?",
-      answers: [{ id: 0, userId: 13, userName: "leecoding", qTitle: "array.filter 어떻게 사용하죠", body: "이렇게 하면 됩니다", likes: 1, createdAt: "2021-05-25" }],
+      answers: [
+        { id: 0, userId: 13, userName: "leecoding", qTitle: "array.filter 어떻게 사용하죠", body: "이렇게 하면 됩니다1", likes: 1, createdAt: "2021-05-25" },
+        { id: 0, userId: 13, userName: "leecoding", qTitle: "array.filter 어떻게 사용하죠", body: "이렇게 하면 됩니다2", likes: 2, createdAt: "2021-05-26" },
+        { id: 0, userId: 13, userName: "leecoding", qTitle: "array.filter 어떻게 사용하죠", body: "이렇게 하면 됩니다3", likes: 3, createdAt: "2021-05-27" },
+        { id: 0, userId: 13, userName: "leecoding", qTitle: "array.filter 어떻게 사용하죠", body: "이렇게 하면 됩니다4", likes: 4, createdAt: "2021-05-28" },
+      ],
       likes: 3,
       tags: ["array", "javascript"],
       createdAt: "2021-05-22",

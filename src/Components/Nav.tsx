@@ -9,12 +9,12 @@ import React from "react";
 import useMyPageData from "../Hooks/useSearchData";
 import FakeData from "../FakeData";
 import { useDispatch } from "react-redux";
-import { searchWord } from "../Redux/SearchData";
+import { searchWord, searchSelect, searchResult } from "../Redux/SearchData";
 
 const { Kakao }: any = window;
 
 function Nav() {
-  const { onSearching } = useMyPageData();
+  const { onSearching, SearchDataState } = useMyPageData();
   const [isLogin, setIsLogin] = useState(true);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,12 +34,22 @@ function Nav() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // 검색창에 검색을 칠때마다 state를 업데이트함.
+  const handleWritingState = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(searchWord(e.target.value));
+  };
+
+  //엔터를 치면 검색 결과와 select 태그 내용을 가져오게됨.
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
-      console.log(e.target.value);
+      console.log(SearchDataState.word, "태그내용", SearchDataState.tag);
 
-      dispatch(searchWord(e.target.value));
+      if (SearchDataState.tag === null || SearchDataState.tag === "-선택해주세요-") {
+        alert("선택해주세요");
+        return;
+      }
 
+      dispatch(searchResult(e.target.value, SearchDataState.tag));
       //리덕스 훅스에가서 state 업데이트함.
       onSearching(FakeData);
 
@@ -90,8 +100,9 @@ function Nav() {
     }
   }, []);
 
+  //태그를 선택할때 tag state 업데이트가 됨.
   const option = (e: any) => {
-    console.log(e.target.value);
+    dispatch(searchSelect(e.target.value));
   };
 
   return (
@@ -101,14 +112,15 @@ function Nav() {
         <Icon>
           <FontAwesomeIcon icon="search" size="1x" color="black" />
         </Icon>
-        <Search type="search" onKeyPress={handleKeyPress} />
+        <Search type="search" onKeyPress={handleKeyPress} onChange={handleWritingState} />
+        <Select onClick={option}>
+          <option>-선택해주세요-</option>
+          <option>바디</option>
+          <option>타이틀</option>
+          <option>태그</option>
+        </Select>
       </SearchBar>
-      <Select>
-        <option value="바디" onClick={option}>
-          바디
-        </option>
-        <option>타이틀</option>
-      </Select>
+
       {isLogin ? (
         <NavButtons>
           <UserIconContainer onClick={handleMenuModal}>
@@ -136,6 +148,8 @@ const User = styled.div``;
 const Select = styled.select`
   border: none;
   background-color: white;
+  padding: 0.1rem;
+  width: auto;
 `;
 
 const NavBar = styled.div`
@@ -153,7 +167,7 @@ const Icon = styled.span`
 
 const Search = styled.input`
   border: none;
-  width: 400px;
+  width: 20rem;
   font-size: 1.2em;
   outline: none;
   height: 2.2em;
@@ -162,7 +176,7 @@ const Search = styled.input`
 const SearchBar = styled.div`
   border: 1.8px solid #a7a3a3;
   border-radius: 34px;
-  width: 517px;
+  width: 560px;
   height: 45;
   box-shadow: 12px 8px 10px #a7a3a3;
 `;

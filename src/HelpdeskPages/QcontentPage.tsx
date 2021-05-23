@@ -121,14 +121,14 @@ const Container = styled.div`
   weidth: 100vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(4, auto);
 `;
 
 const QuestionContainer = styled.div`
-  grid-area: 1/2/2/6;
+  grid-area: 1/2/3/6;
   display: flex;
+  padding-bottom: 2rem;
   align-items: center;
-  padding-bottom: 3rem;
   border-bottom: 2px solid #a7a3a3;
 `;
 
@@ -137,7 +137,7 @@ const QuestionBox = styled.div`
 `;
 
 const AnswerContainer = styled.div`
-  grid-area: 2/2/3/6;
+  grid-area: 3/2/5/6;
 `;
 
 const EachAnswer = styled.div`

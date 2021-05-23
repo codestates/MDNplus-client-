@@ -29,7 +29,7 @@ function AnswerPage() {
     } else if (mark === "H3") {
       setWriting(writing + "\n" + "### ");
     } else if (mark === "H4") {
-      setWriting(writing + "\n" + "### ");
+      setWriting(writing + "\n" + "#### ");
     } else if (mark === "Code") {
       setWriting(writing + " \n ```" + "\n 코드를 입력해주세요 \n" + "\n ```");
     } else if (mark === "Bold") {
@@ -39,7 +39,7 @@ function AnswerPage() {
     } else if (mark === "Link") {
       setWriting(writing + "[Name](http://)");
     } else if (mark === "List") {
-      setWriting(writing + "* ");
+      setWriting(writing + "\n" + "* ");
     } else if (mark === "Horizontal") {
       setWriting(writing + "\n" + "---" + " \n");
     }

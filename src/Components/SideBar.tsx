@@ -19,6 +19,7 @@ const SideBar = () => {
 
   return (
     <Container>
+      <span onClick={(() => history.push('/MyPage'))}>마이페이지</span>
       {sideBar === "wiki" ? (
         <Wiki color="isSelected" onClick={handleMoveToWiki}>
           MDN+ WiKi

@@ -10,6 +10,8 @@ import myPageFakeData from "../mypageFakeData";
 
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 type QuestionType = {
   tags: string[];
   commentCount: number;
@@ -43,11 +45,22 @@ function MyPage() {
   const allState = useSelector((state: RootState) => state.MyPageReducer);
   const { mdnAllData } = allState;
   const [isQuestion, setIsQuestion] = useState(true);
+  const [myInfo, setMyInfo] = useState({
+    nickName: "",
+    image: "",
+  });
 
   useEffect(() => {
-    // axios.get("http://localhost:80") // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
-    dispatch(allDataAction(myPageFakeData));
+    // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
+    axios.get("http://localhost:80/helpdesk/me").then((res) => {
+      console.log(res)
+      const { nickName, image } = res.data.user;
+      setMyInfo({ nickName, image });
+    });
+    // dispatch(allDataAction(myPageFakeData));
   }, []);
+
+  console.log(myInfo);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
   //나의 답변에는 답변된 질문의 제목과, 답변내용
@@ -67,7 +80,6 @@ function MyPage() {
   const handleMyAnswers = (el: AnswerType) => {
     //해당 답변을 클릭했을시 질문에 해당하는 ID를 요청보내주면됨
     // axios.get('http://localhost:80/') //내가 답변한 질문을 클릭했을 시, 해당하는 질문의 데이터들을 받아오는 요청 (해당 질문 ID 필요)
-
     // el.questionId;
     // const findData = questionData?.allData.filter((questionTitle) => questionTitle.title == answerTitle);
     // const findData = questionData?.allData.filter((el) => (el.answers.filter((questionTitle) => questionTitle.qTitle === answerTitle)));
@@ -94,8 +106,17 @@ function MyPage() {
   return (
     <Container>
       <UserInfoContainer>
-        <UserInfoImage> 유저 사진</UserInfoImage>
-        <UserInfoName> 유저이름</UserInfoName>
+        {!myInfo ? (
+          <div>
+            <UserInfoImage> 유저 사진</UserInfoImage>
+            <UserInfoName> 유저 이름</UserInfoName>
+          </div>
+        ) : (
+          <div>
+            <UserInfoImage>{myInfo.image}</UserInfoImage>
+            <UserInfoName>{myInfo.nickName}</UserInfoName>
+          </div>
+        )}
       </UserInfoContainer>
       <LeftContainer>
         <QuestionList onClick={handleMyPage}>나의질문</QuestionList>

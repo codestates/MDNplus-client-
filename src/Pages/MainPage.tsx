@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
 import ideaIcon from "../img/idea.png";
+import axios from 'axios';
 
 // type DataOption = {
 //   arrayData: Method[];
@@ -54,6 +55,7 @@ function MainPage() {
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
     onFilter(FakeData);
+    // axios.get('http://localhost:80/section/mainpage')
   }, []);
 
   return (

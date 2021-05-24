@@ -21,10 +21,10 @@ function EditPage() {
   const [checkModal, setCheckModal] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const history = useHistory()
-
   // if(!writeMode) {
   //   onSetWriteMode()
   // }
+  console.log(contentData)
 
   //유저가 글을 수정하여 onchange 이벤트가 발생 시, contentData의 body를 수정하기 위한 함수
   const handleChange = (e: any) => {

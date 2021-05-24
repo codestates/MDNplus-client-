@@ -3,6 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 import loadingGif from "../img/R6bD.gif";
 
+// axios.defaults.withCredentials = true;
+
 function SettingPage() {
   const [img, setImage] = useState<any>(null);
   const [newImg, setNewImg] = useState({
@@ -10,7 +12,7 @@ function SettingPage() {
   });
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [username, setUsername] = useState("Seong seok");
+  const [username, setUsername] = useState("");
 
   const url = "https://api.cloudinary.com/v1_1/dr4ka7tze/image/upload";
   const formData = new FormData();
@@ -22,8 +24,7 @@ function SettingPage() {
 
   //유저 이름 수정 완료 버튼을 눌렀을 시, 서버에 수정된 이름을 업데이트 하기 위한 코드
   const handleNameSave = () => {
-    // axios.put('http://localhost:80/section/setting', {nickName: username})
-    // .then(res => console.log(res))
+    axios.patch("http://localhost:80/userinfo/nick", { nickName: username }).then((res) => console.log(res));
     setEditing(false);
   };
 
@@ -52,12 +53,20 @@ function SettingPage() {
         .post(url, formData)
         .then((res) => {
           setNewImg({ url: res.data.url });
-          // axios.patch('http://localhost:80/section/setting', {image: res.data.url})
+          console.log(res.data.url);
           setLoading(false); // newImg state가 업데이트 되고난 후, 로딩중 gif를 제거
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log("에러뜸"));
     }
   }, [img]);
+
+  // axios.patch('http://localhost:80/userinfo/img', {image: res.data.url})
+          // .then(res => console.log(res))
+
+  useEffect(() => {
+    axios.get('http://localhost:80/userinfo')
+    .then(res => setUsername(res.data.nickName))
+  },[])
 
   return (
     <Container>

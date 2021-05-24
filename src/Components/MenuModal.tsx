@@ -3,7 +3,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 type MenuProps = {
@@ -14,6 +14,7 @@ type MenuProps = {
 };
 
 function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
+  const [isHelpDesk, setIsHelpDesk] = useState(false);
   const overLay = useRef(null);
   const history = useHistory();
 
@@ -24,12 +25,30 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
   };
   //<Link to="/courses" replace />
 
+  useEffect(() => {
+    var pageName = "";
+
+    var tempPageName = window.location.href;
+    var strPageName = tempPageName.split("/");
+    pageName = strPageName[strPageName.length - 1];
+
+    if (pageName === "HelpdeskPage") {
+      setIsHelpDesk(true);
+    } else {
+      setIsHelpDesk(false);
+    }
+  }, []);
+
   const handleLogOutButton = () => {
     console.log("logout");
   };
 
   const handleEditInfoButton = () => {
     history.push("/SettingPage");
+  };
+
+  const handleMyPageButton = () => {
+    history.push("/MyPage");
   };
 
   return (
@@ -39,6 +58,7 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
         <MenuButtonContainer>
           <LogOut onClick={handleLogOutButton}>로그아웃</LogOut>
           <EditInfo onClick={handleEditInfoButton}>정보수정</EditInfo>
+          {isHelpDesk ? <div onClick={handleMyPageButton}>마이페이지</div> : null}
         </MenuButtonContainer>
       </ModalBox>
     </ModalContainer>

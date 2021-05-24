@@ -113,17 +113,15 @@ function MyPage() {
         {isQuestion ? (
           <QuestionContainer>
             {mdnAllData?.questions.map((el) => (
-              <QuestionBox onClick={() => handleMyQuestions(el)}>
-                <QuestionTitle>
-                  <span>Q</span>
-                  {el.title}
-                </QuestionTitle>
+              <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
+                <QuestionTitle>{el.title}</QuestionTitle>
                 <QuestionBody>{el.body}</QuestionBody>
-
-                <QuestionLastLine>
-                  {el.tags.map((el) => (
-                    <QuestionTag>{el}</QuestionTag>
+                <div>
+                  {el.tags.map((el, index: number) => (
+                    <QuestionTag key={index}>{el}</QuestionTag>
                   ))}
+                </div>
+                <QuestionLastLine>
                   <QuestionLikes> 좋아요: &nbsp; {el.like}</QuestionLikes>
                   <QuestionAnswersNum>답변수:&nbsp; {el.commentCount}</QuestionAnswersNum>
                   <QuestionDate>{el.createdAt}</QuestionDate>
@@ -146,14 +144,14 @@ function MyPage() {
         ) : (
           <QuestionContainer>
             {mdnAllData?.comments.map((el) => (
-              <QuestionBox onClick={() => handleMyAnswers(el)}>
+              <QuestionBox key={el._id} onClick={() => handleMyAnswers(el)}>
                 <QuestionTitle>
                   <span>Q</span>
                   {el.questionId.title}
                 </QuestionTitle>
                 <QuestionBody>{el.content}</QuestionBody>
                 <QuestionLastLine>
-                  <QuestionLikes>{el.like}</QuestionLikes>
+                  <QuestionLikes> 좋아요: &nbsp;{el.like}</QuestionLikes>
                   <QuestionDate>{el.createdAt}</QuestionDate>
                 </QuestionLastLine>
               </QuestionBox>
@@ -168,10 +166,11 @@ function MyPage() {
 export default MyPage;
 
 const Container = styled.div`
+  margin-top: 1rem;
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   grid-template-rows: 300px 1000px;
 `;
 
@@ -195,16 +194,19 @@ const AnswerList = styled.div`
 const QuestionContainer = styled.div``;
 
 const QuestionBox = styled.div`
-  margin: 1rem;
-  padding: 2rem;
+  border-radius: 1rem;
+  border: none;
+  padding: 0 1rem 1rem 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 20px;
+  background: white;
   cursor: pointer;
-  border-bottom: 2px solid #a7a3a3;
+  margin: 2rem 0 2rem 0;
 `;
 
 const AnswerContainer = styled.div``;
 
 const UserInfoContainer = styled.div`
-  grid-area: 1/2/2/6;
+  grid-area: 1/2/2/8;
   display: flex;
   align-items: center;
   border-bottom: 2px solid #a7a3a3;
@@ -228,35 +230,47 @@ const LeftContainer = styled.div`
 `;
 
 const RightContainer = styled.div`
-  grid-area: 2/3/3/6;
+  grid-area: 2/3/3/8;
 `;
 
 const QuestionTitle = styled.div`
+  font-weight: bold;
   font-size: 1.5rem;
   padding 1rem;
 `;
 
 const QuestionBody = styled.div`
-padding 0.7rem;`;
+padding 0.7rem;
+margin: 1.5rem 0 2rem 2rem;
+line-height: 1.8rem;
+`;
 
 const QuestionAnswersNum = styled.span`
 padding 0.5rem;`;
 
 const QuestionDate = styled.span`
 padding 0.5rem;
-float:right;
+margin-right:1rem;
 `;
 
 const QuestionLikes = styled.span`
-padding 0.5rem;`;
-
-const QuestionTag = styled.span`
 padding 0.5rem;
-border: 1px solid gray;
-margin:0.1rem;
+margin-right:1rem;
 
 `;
 
+const QuestionTag = styled.span`
+  font-size: 0.8rem;
+  border-radius: 1.5rem;
+  border: none;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  color: #1658d8;
+  background-color: #f5f5f5;
+`;
+
 const QuestionLastLine = styled.div`
-  padding: 0.7rem;
+  text-align: right;
+  margin: 1.2rem 0 3rem 0;
+  color: #686868;
 `;

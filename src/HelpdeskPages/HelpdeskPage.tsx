@@ -4,6 +4,9 @@ import fakeData2 from "../FakeData2";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import ideaIcon from "../img/idea.png";
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import {currentQData} from "../Redux/QcontentData"
 
 type Question = {
   id: number;
@@ -36,6 +39,7 @@ const HelpdeskPage = () => {
   const { helpData, onStoreData, onFilterFast, onFilterPopular, onClickQuestion } = useHelpData();
   const { allQuestions }: HelpData = helpData;
   const history = useHistory();
+  const dispatch = useDispatch()
 
   const handleFilter = (type: string) => {
     if (type === "최신순") {
@@ -47,7 +51,15 @@ const HelpdeskPage = () => {
     }
   };
 
+  const handleClickQuestion = (question:any) => {
+    dispatch(currentQData(question))
+    history.push('/QcontentPage')
+    
+  }
+
   useEffect(() => {
+    // 헬프데스크 메인페이지 렌더링에 필요한 데이터 받아오는 요청
+    // axios.get('http://localhost:80/')
     onStoreData(fakeData2.allQuestions);
   }, []);
 
@@ -116,7 +128,7 @@ const HelpdeskPage = () => {
                 <>
                   <QuestionBox
                     onClick={() => {
-                      onClickQuestion(el);
+                      handleClickQuestion(el)
                     }}
                     key={el.id}
                   >

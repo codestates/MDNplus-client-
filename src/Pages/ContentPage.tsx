@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { useHistory } from "react-router";
 import styled from "styled-components";
@@ -18,6 +18,11 @@ function ContentPage() {
   const handleClickEdit = () => {
     history.push("/EditPage");
   };
+
+  useEffect(() => {
+    // console.log('유즈 이펙트 실행됨')
+    
+  })
 
   return (
     <>

@@ -22,7 +22,8 @@ function SettingPage() {
 
   //유저 이름 수정 완료 버튼을 눌렀을 시, 서버에 수정된 이름을 업데이트 하기 위한 코드
   const handleNameSave = () => {
-    console.log(username);
+    // axios.put('http://localhost:80/section/setting', {nickName: username})
+    // .then(res => console.log(res))
     setEditing(false);
   };
 
@@ -32,7 +33,9 @@ function SettingPage() {
   };
 
   //이미지 제거 클릭했을 시, 실행되는 코드
-  const handleImgDelete = () => {};
+  const handleImgDelete = () => {
+    // axios.patch('http://localhost:80/section/setting', {image: ''})
+  };
 
   // 유저가 이미지 업로드를 하였을 때, img state가 업데이트 되고난 후, 실행되는 코드
   // 아래 useEffect가 실행되는 조건
@@ -48,8 +51,8 @@ function SettingPage() {
       axios
         .post(url, formData)
         .then((res) => {
-          console.log(res);
           setNewImg({ url: res.data.url });
+          // axios.patch('http://localhost:80/section/setting', {image: res.data.url})
           setLoading(false); // newImg state가 업데이트 되고난 후, 로딩중 gif를 제거
         })
         .catch((err) => console.log(err));

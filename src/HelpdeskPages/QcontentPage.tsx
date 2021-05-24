@@ -8,11 +8,13 @@ import styled from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import QfakeData from "../QFakeData";
 import QContentFakeData from "../QContentFakeData";
+import axios from 'axios';
 
 type PageNameType = {
   pageName: string;
 };
 function QcontentPage() {
+  const [questionId, setQuestionId] = useState(0)
   const history = useHistory();
   const allState = useSelector((state: RootState) => state.QcontentDataReducer);
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ function QcontentPage() {
 
   const location = useLocation<PageNameType>();
 
-  console.log("hello");
+  console.log(currentData);
 
   useEffect(() => {
     if (location.state === undefined) {
@@ -36,26 +38,32 @@ function QcontentPage() {
     }
 
     dispatch(currentQData(QContentFakeData));
+    // 메인페이지, 마이페이지에서 질문 클릭이 됐을 때, 해당 질문 데이터들을 받아오는 요청
+    // axios.get('http://localhost:80/') // 질문 ID가 필요
   }, []);
 
   const handleQuestionIncreaseLikes = (likesNum: number, idNum: string) => {
     console.log("좋아요 증가");
     setIsLike(() => !isLike);
+    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
 
   const handleQuestionDecreaseLikes = (likesNum: number, idNum: string) => {
     console.log("좋아요 감소");
     setIsLike(() => !isLike);
+    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
 
   const handleAnswerDecreaseLikes = (likesNum: number, idNum: string) => {
     console.log("답변 좋아요 감소", likesNum);
     setIsAnswerLike(() => !isAnswerLike);
+    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
 
   const handleAnswerIncreaseLikes = (likesNum: number, idNum: string) => {
     console.log("답변 좋아요 증가", likesNum);
     setIsAnswerLike(() => !isAnswerLike);
+    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
 
   const handleAnswerBtn = () => {

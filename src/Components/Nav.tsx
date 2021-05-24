@@ -51,7 +51,11 @@ function Nav() {
 
       dispatch(searchResult(e.target.value, SearchDataState.tag));
       //리덕스 훅스에가서 state 업데이트함.
+      
+      // 검색할 때 필요한 요청 코드
+      // axios.post('http://localhost:80/section/search', {title: e.target.value, type: SearchDataState.type})
       onSearching(FakeData);
+
 
       history.push("/SearchPage");
       e.target.value = "";

@@ -45,6 +45,7 @@ function MyPage() {
   const [isQuestion, setIsQuestion] = useState(true);
 
   useEffect(() => {
+    // axios.get("http://localhost:80") // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
     dispatch(allDataAction(myPageFakeData));
   }, []);
 
@@ -54,6 +55,9 @@ function MyPage() {
     //myPage 에서 클릭한 question Id 값으로 요청보내면됨 Q컨텐트페이지에서 데이터 받게됨.
     // dispatch(currentQData(el));
 
+    // 마이페이지에서 질문을 클릭했을 때, 해당하는 질문의 데이터들을 받아오는 요청(질문의 ID가 params로 필요)
+    // axios.get('http://localhost:80')
+
     history.push({
       pathname: "/Qcontentpage",
       state: { pageName: "this is Question State" },
@@ -62,6 +66,8 @@ function MyPage() {
 
   const handleMyAnswers = (el: AnswerType) => {
     //해당 답변을 클릭했을시 질문에 해당하는 ID를 요청보내주면됨
+    // axios.get('http://localhost:80/') //내가 답변한 질문을 클릭했을 시, 해당하는 질문의 데이터들을 받아오는 요청 (해당 질문 ID 필요)
+
     // el.questionId;
     // const findData = questionData?.allData.filter((questionTitle) => questionTitle.title == answerTitle);
     // const findData = questionData?.allData.filter((el) => (el.answers.filter((questionTitle) => questionTitle.qTitle === answerTitle)));

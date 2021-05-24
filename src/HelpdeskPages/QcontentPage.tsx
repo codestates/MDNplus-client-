@@ -7,6 +7,7 @@ import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
 import axios from 'axios';
+import QfakeData from '../QContentFakeData';
 
 type DataType = {
   question: {

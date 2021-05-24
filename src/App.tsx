@@ -17,16 +17,24 @@ import HquestionPage from "./HelpdeskPages/HquestionPage";
 import styled from "styled-components";
 import SideBar from "./Components/SideBar";
 import useAllData from "./Hooks/useAllData";
+import userIcon from "./img/userIcon_gray.png"
 
 
 function App() {
-  // const [ writeMode, setWriteMode ] = useState(false)
+  const [userImg, setUserImg] = useState(userIcon)
   const { allState, onSetWriteMode } = useAllData();
   const { writeMode } = allState;
 
+  const handleChangeMenuIcon = (url:string) => {
+    console.log('이미지 바뀌는 요청 들어옴')
+    setUserImg(url)
+  }
+
+  console.log(userImg)
+
   return (
     <>
-      {writeMode ? null : <Nav></Nav>}
+      {writeMode ? null : <Nav userImg={userImg}></Nav>}
       <Container>
         {writeMode ? null : <SideBar></SideBar>}
         <Switch>
@@ -34,7 +42,7 @@ function App() {
           <Route path="/ContentPage" render={() => <ContentPage />} />
           <Route path="/EditPage" render={() => <EditPage />} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
-          <Route path="/SettingPage" render={() => <SettingPage />} />
+          <Route path="/SettingPage" render={() => <SettingPage handleChangeMenuIcon={handleChangeMenuIcon}/>} />
           <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />

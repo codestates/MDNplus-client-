@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
 const SideBar = () => {
-  //   const [isSelected, setIsSelected] = useState("#DCEAFF");
   const [sideBar, setSideBar] = useState("wiki");
   const history = useHistory();
 

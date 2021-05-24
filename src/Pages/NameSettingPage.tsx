@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 
-axios.defaults.withCredentials=true;
+// axios.defaults.withCredentials=true;
 
 const NameSettingPage = () => {
     const [nickname, setNickname] = useState('')

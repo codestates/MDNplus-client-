@@ -11,7 +11,7 @@ import useAllData from '../Hooks/useAllData';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 const date = new Date();
 type NewQuestion = {
@@ -83,7 +83,7 @@ const QuestionPage = () => {
   const handleSubmitQ = () => {
     console.log('새 질문 등록 요청 보내짐')
     console.log(title, body, tags);
-    axios.post('http://localhost:80/question', {title, body, tags})
+    axios.post('http://localhost:80/question', {title, body, tags},{withCredentials:true})
     .then(res => console.log(res))
     history.push('/HelpdeskPage')
     onSetWriteMode()

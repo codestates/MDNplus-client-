@@ -10,17 +10,19 @@ import LoginModal from "./LoginModal";
 import MenuModal from "./MenuModal";
 import FakeData from "../FakeData";
 import search from "../img/search.jpeg";
+import userIcon from "../img/userIcon_gray.png"
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 const { Kakao }: any = window;
 
-function Nav() {
+function Nav({userImg}:any) {
   const { onSearching, SearchDataState } = useMyPageData();
   const [isLogin, setIsLogin] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [gitHubImage, setGitHubImage] = useState([]);
+  // const [userImg, setUserImg] = useState(userIcon)
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -65,7 +67,7 @@ function Nav() {
 
   //깃허브 accessToken 받아오는 요청
   const gitAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }).then((res) => {
+    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, {withCredentials:true}).then((res) => {
       console.log("요청 성공해서 들어옴");
       // localStorage.setItem("sessionId", );
       const { nickName, _id} = res.data
@@ -139,6 +141,8 @@ function Nav() {
     dispatch(searchSelect(e.target.value));
   };
 
+  console.log(userImg)
+
   return (
     <NavBar>
       <LeftBox>
@@ -156,11 +160,9 @@ function Nav() {
       </LeftBox>
       {isLogin ? (
         <NavButtons>
-          <UserIconContainer onClick={handleMenuModal}>
-            <User>유저정보창</User>
-            <FontAwesomeIcon icon="sort-down" size="sm" color="black" />
-            {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
+          <UserIconContainer src={userImg} onClick={handleMenuModal}>
           </UserIconContainer>
+            {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
         </NavButtons>
       ) : (
         <NavButtons>
@@ -242,24 +244,13 @@ const LoginBtn = styled.button`
   border: 1.8px solid #a7a3a3;
   padding: 10px;
   border-radius: 34px;
-  box-shadow: 12px 8px 10px #a7a3a3;
   cursor: pointer;
 `;
 
-const UserIconContainer = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 34px;
-  background-color: white;
-  padding: 10px;
-  font-size: 14px;
-  font-weight: bold;
-  margin: 5px;
-  border: 1.8px solid #a7a3a3;
-  cursor: pointer;
+const UserIconContainer = styled.img`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
 `;
 
-const User = styled.div`
-  margin: 2px;
-`;

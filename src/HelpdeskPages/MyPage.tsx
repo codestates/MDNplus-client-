@@ -43,6 +43,8 @@ function MyPage() {
   const allState = useSelector((state: RootState) => state.MyPageReducer);
   const { mdnAllData } = allState;
   const [isQuestion, setIsQuestion] = useState(true);
+  const [questionColor, setQuestionColor] = useState("blue");
+  const [answerColor, setAnswerColor] = useState("black");
 
   useEffect(() => {
     dispatch(allDataAction(myPageFakeData));
@@ -81,8 +83,16 @@ function MyPage() {
     // });
   };
 
-  const handleMyPage = () => {
-    setIsQuestion(() => !isQuestion);
+  const HandleMDNClicked = () => {
+    setQuestionColor("blue");
+    setAnswerColor("black");
+    setIsQuestion(true);
+  };
+
+  const HandleHelpDeckClicked = () => {
+    setAnswerColor("blue");
+    setQuestionColor("black");
+    setIsQuestion(false);
   };
 
   return (
@@ -92,8 +102,12 @@ function MyPage() {
         <UserInfoName> 유저이름</UserInfoName>
       </UserInfoContainer>
       <LeftContainer>
-        <QuestionList onClick={handleMyPage}>나의질문</QuestionList>
-        <AnswerList onClick={handleMyPage}>나의답변</AnswerList>
+        <QuestionList style={{ color: questionColor }} onClick={HandleMDNClicked}>
+          나의질문
+        </QuestionList>
+        <AnswerList style={{ color: answerColor }} onClick={HandleHelpDeckClicked}>
+          나의답변
+        </AnswerList>
       </LeftContainer>
       <RightContainer>
         {isQuestion ? (
@@ -155,10 +169,10 @@ export default MyPage;
 
 const Container = styled.div`
   height: 100vh;
-  weidth: 100vw;
+  width: 100vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 300px auto;
+  grid-template-rows: 300px 1000px;
 `;
 
 const QuestionList = styled.div`
@@ -210,13 +224,11 @@ const LeftContainer = styled.div`
   align-items: center;
   flex-direction: column;
   cursor: pointer;
-
   padding: 2rem;
 `;
 
 const RightContainer = styled.div`
   grid-area: 2/3/3/6;
-  flex-wrap: wrap;
 `;
 
 const QuestionTitle = styled.div`

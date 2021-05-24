@@ -37,6 +37,7 @@ function Nav() {
   // 검색창에 검색을 칠때마다 state를 업데이트함.
   const handleWritingState = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(searchWord(e.target.value));
+    console.log(e.target.value);
   };
 
   //엔터를 치면 검색 결과와 select 태그 내용을 가져오게됨.
@@ -44,8 +45,8 @@ function Nav() {
     if (e.key === "Enter") {
       console.log(SearchDataState.word, "태그내용", SearchDataState.tag);
 
-      if (SearchDataState.tag === null || SearchDataState.tag === "-선택해주세요-") {
-        alert("선택해주세요");
+      if (SearchDataState.word === "" || SearchDataState.word === SearchDataState.result) {
+        alert("입력해주세요");
         return;
       }
 
@@ -54,6 +55,7 @@ function Nav() {
       onSearching(FakeData);
 
       history.push("/SearchPage");
+
       e.target.value = "";
     }
   };

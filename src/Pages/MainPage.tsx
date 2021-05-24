@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
 import ideaIcon from "../img/idea.png";
+import axios from 'axios';
 
 // type DataOption = {
 //   arrayData: Method[];
@@ -44,7 +45,7 @@ function MainPage() {
   };
 
   // 오른쪽에 렌더링된 하나의 메소드 박스를 클릭했을 시, ContentPage로 이동하기 위한 함수
-  const handleClickMethod = (method: Method) => {
+  const handleClickMethod = (method: any) => {
     console.log("컨텐츠 페이지에 뿌려줘야됨");
     onClickMethod(method); // ContentData 값을 변경하기 위한 dispatch 메소드
     history.push("/ContentPage");
@@ -53,8 +54,12 @@ function MainPage() {
   // 처음 스토어에 저장되어 있는 값들은 null이므로 '로딩 중입니다'가 렌더링 된다.
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
-    onFilter(FakeData);
+    console.log('데이터 가져오는 요청 보내짐')
+    axios.get('http://localhost:80/maincontent')
+    .then(res => onFilter(res.data))
   }, []);
+
+  console.log(currentData)
 
   return (
     <Container>
@@ -93,8 +98,8 @@ function MainPage() {
         {currentData === null ? (
           <div>로딩중입니다</div>
         ) : (
-          currentData.map((el) => (
-            <MethodBox key={el.id}>
+          currentData.map((el:any) => (
+            <MethodBox key={el._id}>
               <div>
                 <MethodContents
                   onClick={() => {

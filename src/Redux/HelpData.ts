@@ -62,12 +62,12 @@ function HelpDataReducer(state:HelpDataState = initialState, action: HelpDataAct
         case FILTERFAST:
             console.log('최신순으로 필터')
             const newArr2 = state.allQuestions?.sort(date_ascending)
+            console.log(newArr2)
             return {...state, allQuestions: newArr2}
-            return state
         case FILTERPOPULAR:
             console.log('인기순으로 필터')
             console.log(state.allQuestions)
-            const sorted = state.allQuestions?.sort((a, b) => b.likes - a.likes)
+            const sorted = state.allQuestions?.sort((a:any, b:any) => b.like - a.like)
             console.log(sorted)
             return {...state, allQuestions: sorted}
         case CLICKQUESTION:

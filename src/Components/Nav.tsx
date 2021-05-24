@@ -11,11 +11,13 @@ import MenuModal from "./MenuModal";
 import FakeData from "../FakeData";
 import search from "../img/search.jpeg";
 
+axios.defaults.withCredentials = true;
+
 const { Kakao }: any = window;
 
 function Nav() {
   const { onSearching, SearchDataState } = useMyPageData();
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [gitHubImage, setGitHubImage] = useState([]);
@@ -51,6 +53,9 @@ function Nav() {
 
       dispatch(searchResult(e.target.value, SearchDataState.tag));
       //리덕스 훅스에가서 state 업데이트함.
+
+      // 검색할 때 필요한 요청 코드
+      // axios.post('http://localhost:80/section/search', {title: e.target.value, type: SearchDataState.type})
       onSearching(FakeData);
 
       history.push("/SearchPage");
@@ -60,25 +65,54 @@ function Nav() {
 
   //깃허브 accessToken 받아오는 요청
   const gitAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:80/oauth/github", { authorizationCode: authorizationCode }).then((res) => {
-      if (res.data.accessToken) {
-        setIsLogin(true);
-        localStorage.setItem("accessToken", res.data.accessToken);
+    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }).then((res) => {
+      console.log("요청 성공해서 들어옴");
+      // localStorage.setItem("sessionId", );
+      const { nickName, _id} = res.data
+      if(nickName) {
+        console.log('이미 가입했던 회원이므로 메인페이지로 이동')
+        console.log(res)
+        history.push('/')
+        setIsLogin(true)
+      } else {
+        console.log('처음 로그인한 유저이므로 닉네임 설정 페이지로 이동')
+        console.log(res)
+        setIsLogin(true)
+        history.push('/NameSettingPage')
       }
+      // if (res.data.d) {
+      //   setIsLogin(true);
+      //   localStorage.setItem("sessionId", res.data.data._id);
+      // } else if(res.data.user) {
+      //   setIsLogin(true);
+      //   localStorage.setItem("sessionId", res.data.data._id);
+      // }
     });
   };
 
   //서버로부터 카카오 accessToken 받아오는 요청
   const kakaoAccessToken = (authorizationCode: string) => {
     console.log("카카오 accessToken 받는 요청 보내짐");
-    axios.post("http://localhost:80/oauth/kakao", { authorizationCode: authorizationCode }).then((res) => {
+    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }).then((res) => {
       console.log(res);
-      const { accessToken, refreshToken } = res.data.data;
-      if (accessToken) {
-        setIsLogin(true);
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+      const { nickName, _id} = res.data
+
+      if(nickName) {
+        console.log('이미 가입했던 회원이므로 메인페이지로 이동')
+        console.log(res)
+        history.push('/')
+        setIsLogin(true)
+      } else {
+        console.log('처음 로그인한 유저이므로 닉네임 설정 페이지로 이동')
+        console.log(res)
+        setIsLogin(true)
+        history.push('/NameSettingPage')
       }
+      // if (accessToken) {
+      //   setIsLogin(true);
+      //   localStorage.setItem("accessToken", accessToken);
+      //   localStorage.setItem("refreshToken", refreshToken);
+      // }
     });
   };
 

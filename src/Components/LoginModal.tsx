@@ -14,6 +14,7 @@ function LoginModal({ isOpen, onClose, checkLogin }: Props) {
   const REST_API_KEY = "144bf580b6a5f37255716facf6728b0d";
   const REDIRECT_URI = "http://localhost:3000/kakaoLogin";
   const { Kakao }: any = window;
+  
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === overLay.current) {
       onClose();

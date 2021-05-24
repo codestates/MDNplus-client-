@@ -15,8 +15,8 @@ type Method = {
 function useContentData() {
     const contentState = useSelector((state: RootState) => state.ContentDataReducer);
     const dispatch = useDispatch()
-    const onClickMethod = useCallback((data:Method) => dispatch(clickMethod(data)), [dispatch]);
-    const onChangeContent = useCallback((data:string) => dispatch(changeContent(data)), [dispatch])
+    const onClickMethod = useCallback((data:any) => dispatch(clickMethod(data)), [dispatch]);
+    const onChangeContent = useCallback((data:any) => dispatch(changeContent(data)), [dispatch])
     return {contentState, onClickMethod, onChangeContent}
 }
 

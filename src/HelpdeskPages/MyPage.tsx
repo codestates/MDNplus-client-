@@ -10,6 +10,8 @@ import myPageFakeData from "../mypageFakeData";
 
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 type QuestionType = {
   tags: string[];
   commentCount: number;
@@ -43,9 +45,18 @@ function MyPage() {
   const allState = useSelector((state: RootState) => state.MyPageReducer);
   const { mdnAllData } = allState;
   const [isQuestion, setIsQuestion] = useState(true);
+  // const [myInfo, setMyInfo] = useState({
+  //   nickName: "",
+  //   image: "",
+  //   questions: []
+  // });
 
   useEffect(() => {
-    dispatch(allDataAction(myPageFakeData));
+    // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
+    axios.get("http://localhost:80/helpdesk/me").then((res) => {
+      console.log(res);
+      dispatch(allDataAction(res.data));
+    });
   }, []);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
@@ -53,6 +64,9 @@ function MyPage() {
   const handleMyQuestions = (el: QuestionType) => {
     //myPage 에서 클릭한 question Id 값으로 요청보내면됨 Q컨텐트페이지에서 데이터 받게됨.
     // dispatch(currentQData(el));
+
+    // 마이페이지에서 질문을 클릭했을 때, 해당하는 질문의 데이터들을 받아오는 요청(질문의 ID가 params로 필요)
+    // axios.get('http://localhost:80')
 
     history.push({
       pathname: "/Qcontentpage",
@@ -62,6 +76,7 @@ function MyPage() {
 
   const handleMyAnswers = (el: AnswerType) => {
     //해당 답변을 클릭했을시 질문에 해당하는 ID를 요청보내주면됨
+    // axios.get('http://localhost:80/') //내가 답변한 질문을 클릭했을 시, 해당하는 질문의 데이터들을 받아오는 요청 (해당 질문 ID 필요)
     // el.questionId;
     // const findData = questionData?.allData.filter((questionTitle) => questionTitle.title == answerTitle);
     // const findData = questionData?.allData.filter((el) => (el.answers.filter((questionTitle) => questionTitle.qTitle === answerTitle)));
@@ -88,8 +103,17 @@ function MyPage() {
   return (
     <Container>
       <UserInfoContainer>
-        <UserInfoImage> 유저 사진</UserInfoImage>
-        <UserInfoName> 유저이름</UserInfoName>
+        {!mdnAllData ? (
+          <div>
+            <UserInfoImage> 유저 사진</UserInfoImage>
+            <UserInfoName> 유저 이름</UserInfoName>
+          </div>
+        ) : (
+          <div>
+            <UserInfoImage>{mdnAllData.user.image}</UserInfoImage>
+            <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
+          </div>
+        )}
       </UserInfoContainer>
       <LeftContainer>
         <QuestionList onClick={handleMyPage}>나의질문</QuestionList>

@@ -9,6 +9,7 @@ import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
 import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
+import NameSettingPage from "./Pages/NameSettingPage"
 
 import "./App.css";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
@@ -16,6 +17,7 @@ import HquestionPage from "./HelpdeskPages/HquestionPage";
 import styled from "styled-components";
 import SideBar from "./Components/SideBar";
 import useAllData from "./Hooks/useAllData";
+
 
 function App() {
   // const [ writeMode, setWriteMode ] = useState(false)
@@ -33,6 +35,7 @@ function App() {
           <Route path="/EditPage" render={() => <EditPage />} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
           <Route path="/SettingPage" render={() => <SettingPage />} />
+          <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
           <Route path="/AnswerPage" render={() => <AnswerPage />} />

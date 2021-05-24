@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
 import useContentData from "../Hooks/useContentData";
 import useAllData from '../Hooks/useAllData';
+import axios from 'axios'
+
+axios.defaults.withCredentials = true
 
 type EditProps = {
   // EditPage로부터 받아오는 Props 타입 설정을 위한 코드
@@ -18,13 +21,14 @@ function EditConfirmModal({ handleConfirmModal }:EditProps) {
 
   // 모달창에 있는 수정 버튼 또는 O 버튼 누를 시, 서버에 글수정 요청을 보내는 코드
   const handleSubmit = () => {
-    console.log("수정 요청 성공");
+    axios.patch('http://localhost:80/maincontent', {mainContentId: contentData._id, body: contentData.body})
+    .then(res => console.log(res))
     handleConfirmModal();
     history.push("/ContentPage");
     onSetWriteMode()
-    console.log(contentData);
   };
-
+  
+  console.log(contentData);
   return (
     <ModalContainer onClick={handleConfirmModal}>
         <ModalBox onClick={(e) => e.stopPropagation()}>

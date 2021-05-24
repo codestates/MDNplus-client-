@@ -16,6 +16,7 @@ function SearchPage() {
   console.log(SearchDataState.result);
 
   const handleSearchData = (el: any) => {
+    
     console.log(el);
   };
 

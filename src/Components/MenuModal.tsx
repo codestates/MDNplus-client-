@@ -28,10 +28,6 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
     console.log("logout");
   };
 
-  const handleMyPageButton = () => {
-    history.push("/MyPage");
-  };
-
   const handleEditInfoButton = () => {
     history.push("/SettingPage");
   };
@@ -43,7 +39,6 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
         <MenuButtonContainer>
           <LogOut onClick={handleLogOutButton}>로그아웃</LogOut>
           <EditInfo onClick={handleEditInfoButton}>정보수정</EditInfo>
-          <MyPage onClick={handleMyPageButton}>마이페이지</MyPage>
         </MenuButtonContainer>
       </ModalBox>
     </ModalContainer>

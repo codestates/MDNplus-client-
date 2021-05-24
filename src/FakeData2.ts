@@ -36,9 +36,10 @@ const fakeData2 = {
   ],
   myPageData: {
     id: 5,
-    userName: "kimcoding",
+    userName: "질문자",
     profile: "",
-    myQuestions: [ // 나의 질문들만 필터할 때, 필요한 데이터들
+    myQuestions: [
+      // 나의 질문들만 필터할 때, 필요한 데이터들
       {
         id: 0,
         userId: 5,

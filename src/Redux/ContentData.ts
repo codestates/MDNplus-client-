@@ -24,6 +24,7 @@ const initialState = {
 function ContentDataReducer(state: InitState = initialState, action: ContentDataAction) {
   switch (action.type) {
     case CLICKMETHOD:
+        console.log(action.payload)
         return { ...state, contentData: action.payload };
     case CHANGECONTENT:
         console.log('변경해줘야됨')

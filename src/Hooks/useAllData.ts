@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/";
-import { filter, clickFilter } from "../Redux/AllData";
+import { filter, changeFilter, setWriteMode } from "../Redux/AllData";
 import { useCallback } from "react";
 
 type Method = {
@@ -15,8 +15,9 @@ function useAllData() {
   const allState = useSelector((state: RootState) => state.AllDataReducer);
   const dispatch = useDispatch();
   const onFilter = useCallback((data: Method[]) => dispatch(filter(data)), [dispatch]);
-  const onClickFilter = useCallback((data: Method[]) => dispatch(clickFilter(data)), [dispatch]);
-  return { allState, onFilter, onClickFilter };
+  const onChangeFilter = useCallback((data: Method[]) => dispatch(changeFilter(data)), [dispatch]);
+  const onSetWriteMode = useCallback(() => dispatch(setWriteMode()), [dispatch])
+  return { allState, onFilter, onChangeFilter, onSetWriteMode };
 }
 
 export default useAllData;

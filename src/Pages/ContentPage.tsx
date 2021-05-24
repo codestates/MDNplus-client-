@@ -13,34 +13,15 @@ function ContentPage() {
   const { currentData } = allState;
   const history = useHistory();
 
-  // const handleChangeContent = () => {
-  //   onChangeContent()
-  // }
 
   // 수정 버튼 누르면, EditPage로 이동
   const handleClickEdit = () => {
     history.push("/EditPage");
   };
+
   return (
     <>
       <Container>
-        <LeftContainer>
-          <SideList>
-            {!currentData
-              ? null
-              : currentData.map((el) => (
-                  <SideMethod
-                    onClick={() => {
-                      onClickMethod(el);
-                    }}
-                    key={el.id}
-                  >
-                    {el.title}
-                  </SideMethod>
-                ))}
-          </SideList>
-        </LeftContainer>
-        <RightContainer>
           {contentData === null ? (
             <div>로딩중입니다</div>
           ) : (
@@ -52,7 +33,6 @@ function ContentPage() {
               <ReactMarkdown components={Components} children={contentData.body} />
             </ContentBox>
           )}
-        </RightContainer>
       </Container>
     </>
   );
@@ -61,34 +41,16 @@ function ContentPage() {
 export default ContentPage;
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
   width: 100vw;
   height: 100vh;
-`;
-
-const LeftContainer = styled.div``;
-const SideList = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 30px;
-  padding-top: 170px;
-`;
-
-const SideMethod = styled.div`
-  margin-bottom: 20px;
-  cursor: pointer;
-  color: #283593;
-`;
-
-const RightContainer = styled.div`
-  padding: 100px;
-  padding-top: 50px;
   display: flex;
+  justify-content: center;
 `;
 
 const ContentBox = styled.div`
-  width: 80%;
+  width: 53%;
+  margin-top: 2rem;
+  margin-left: -10rem;
 `;
 
 const TitleBox = styled.div`

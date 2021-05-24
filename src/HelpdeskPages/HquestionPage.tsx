@@ -11,6 +11,8 @@ import useAllData from '../Hooks/useAllData';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const date = new Date();
 type NewQuestion = {
   title: string;
@@ -79,8 +81,10 @@ const QuestionPage = () => {
 
   // 모달에서 등록하기 버튼 누를 시, 서버에 새 질문 저장하는 요청 보내는 코드(모달에 props로 전달함)
   const handleSubmitQ = () => {
-    // axios.post('http://localhost:80/')
+    console.log('새 질문 등록 요청 보내짐')
     console.log(title, body, tags);
+    axios.post('http://localhost:80/question', {title, body, tags})
+    .then(res => console.log(res))
     history.push('/HelpdeskPage')
     onSetWriteMode()
   };

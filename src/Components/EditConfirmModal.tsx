@@ -21,14 +21,14 @@ function EditConfirmModal({ handleConfirmModal }:EditProps) {
 
   // 모달창에 있는 수정 버튼 또는 O 버튼 누를 시, 서버에 글수정 요청을 보내는 코드
   const handleSubmit = () => {
-    axios.patch('http://localhost:80/maincontent', {mainContentId: contentData?.id, body: contentData?.body})
+    axios.patch('http://localhost:80/maincontent', {mainContentId: contentData._id, body: contentData.body})
     .then(res => console.log(res))
     handleConfirmModal();
     history.push("/ContentPage");
     onSetWriteMode()
-    console.log(contentData);
   };
-
+  
+  console.log(contentData);
   return (
     <ModalContainer onClick={handleConfirmModal}>
         <ModalBox onClick={(e) => e.stopPropagation()}>

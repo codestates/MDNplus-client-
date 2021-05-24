@@ -37,7 +37,7 @@ type HelpData = {
 const HelpdeskPage = () => {
   const [isSelected, setIsSelected] = useState("최신순");
   const { helpData, onStoreData, onFilterFast, onFilterPopular, onClickQuestion } = useHelpData();
-  const { allQuestions }: HelpData = helpData;
+  const { allQuestions }: any = helpData;
   const history = useHistory();
   const dispatch = useDispatch()
 
@@ -59,11 +59,13 @@ const HelpdeskPage = () => {
 
   useEffect(() => {
     // 헬프데스크 메인페이지 렌더링에 필요한 데이터 받아오는 요청
-    // axios.get('http://localhost:80/')
-    onStoreData(fakeData2.allQuestions);
+    axios.get('http://localhost:80/helpdesk')
+    .then(res => onStoreData(res.data.allQuestions))
   }, []);
 
-  console.log(allQuestions);
+  if(allQuestions) {
+    console.log(allQuestions[0]._id);
+  }
 
   return (
     <>
@@ -124,21 +126,21 @@ const HelpdeskPage = () => {
             {allQuestions === null ? (
               <div>로딩 중입니다</div>
             ) : (
-              allQuestions.map((el) => (
+              allQuestions.map((el:any, idx:any) => (
                 <>
                   <QuestionBox
                     onClick={() => {
                       handleClickQuestion(el)
                     }}
-                    key={el.id}
+                    key={el._id}
                   >
                     <FirstBox>
                       <LikeBox>
-                        <LikesNum>{el.likes}</LikesNum>
+                        <LikesNum>{el.like}</LikesNum>
                         <Like>좋아요</Like>
                       </LikeBox>
                       <AnswerBox>
-                        <AnswersNum>{el.answers.length}</AnswersNum>
+                        <AnswersNum>{el.commentCount}</AnswersNum>
                         <Answer>답변</Answer>
                       </AnswerBox>
                     </FirstBox>
@@ -149,14 +151,14 @@ const HelpdeskPage = () => {
                       </TitleBox>
                       <Body>{el.body}</Body>
                       <TagBox>
-                        {el.tags.map((el, idx) => (
+                        {el.tags.map((el:any, idx:number) => (
                           <Tag key={idx + 1}>{el}</Tag>
                         ))}
                       </TagBox>
                     </SecondBox>
                     <ThirdBox>
                       <Date>{el.createdAt}</Date>
-                      <Writer>{el.userName}</Writer>
+                      <Writer>{el.userId.nickName}</Writer>
                     </ThirdBox>
                   </QuestionBox>
                   <UnderLine></UnderLine>

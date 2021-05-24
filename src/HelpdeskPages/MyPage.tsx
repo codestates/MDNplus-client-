@@ -45,22 +45,19 @@ function MyPage() {
   const allState = useSelector((state: RootState) => state.MyPageReducer);
   const { mdnAllData } = allState;
   const [isQuestion, setIsQuestion] = useState(true);
-  const [myInfo, setMyInfo] = useState({
-    nickName: "",
-    image: "",
-  });
+  // const [myInfo, setMyInfo] = useState({
+  //   nickName: "",
+  //   image: "",
+  //   questions: []
+  // });
 
   useEffect(() => {
     // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
     axios.get("http://localhost:80/helpdesk/me").then((res) => {
-      console.log(res)
-      const { nickName, image } = res.data.user;
-      setMyInfo({ nickName, image });
+      console.log(res);
+      dispatch(allDataAction(res.data));
     });
-    // dispatch(allDataAction(myPageFakeData));
   }, []);
-
-  console.log(myInfo);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
   //나의 답변에는 답변된 질문의 제목과, 답변내용
@@ -106,15 +103,15 @@ function MyPage() {
   return (
     <Container>
       <UserInfoContainer>
-        {!myInfo ? (
+        {!mdnAllData ? (
           <div>
             <UserInfoImage> 유저 사진</UserInfoImage>
             <UserInfoName> 유저 이름</UserInfoName>
           </div>
         ) : (
           <div>
-            <UserInfoImage>{myInfo.image}</UserInfoImage>
-            <UserInfoName>{myInfo.nickName}</UserInfoName>
+            <UserInfoImage>{mdnAllData.user.image}</UserInfoImage>
+            <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
           </div>
         )}
       </UserInfoContainer>

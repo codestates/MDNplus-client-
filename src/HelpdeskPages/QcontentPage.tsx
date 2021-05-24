@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
+import axios from 'axios';
 
 type DataType = {
   question: {
@@ -63,6 +64,9 @@ function QcontentPage() {
     console.log(updateData);
 
     onQuestionLike(updateData);
+
+    axios.post('http://localhost:80/question/like', {questionId: updateData.question._id, like: updateData.question.like})
+    .then(res => console.log(res))
   };
 
   const handleQuestionDecreaseLikes = (updateData: DataType) => {

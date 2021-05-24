@@ -1,67 +1,107 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../Redux";
-import { currentQData, questionLike } from "../Redux/QcontentData";
 import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
-import QfakeData from "../QFakeData";
 import QContentFakeData from "../QContentFakeData";
-import axios from 'axios';
+import useQcontentData from "../Hooks/useQcontentData";
+
+type DataType = {
+  question: {
+    tags: string[];
+    commentCount: number;
+    like: number;
+    _id: string;
+    title: string;
+    body: string;
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+  comments: {
+    like: number;
+    _id: string;
+    questionId: string;
+    content: string;
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  }[];
+};
+
+type AnswerType = {
+  like: number;
+  _id: string;
+  questionId: string;
+  content: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
 
 type PageNameType = {
   pageName: string;
 };
-function QcontentPage() {
-  const [questionId, setQuestionId] = useState(0)
-  const history = useHistory();
-  const allState = useSelector((state: RootState) => state.QcontentDataReducer);
-  const dispatch = useDispatch();
-  const { currentData } = allState;
-  const [isMainPage, setisMainPage] = useState<boolean>(true);
-  const [isLike, setIsLike] = useState<boolean>(true);
-  const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
 
+function QcontentPage() {
+  const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } = useQcontentData();
+  const { currentData } = QcontentState;
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [isMainPage, setisMainPage] = useState<boolean>(true);
+  const [isLike, setIsLike] = useState<boolean>(false);
+  const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
 
-  console.log(currentData);
+  const handleQuestionIncreaseLikes = (updateData: DataType) => {
+    updateData.question.like = updateData.question.like + 1;
 
-  useEffect(() => {
-    if (location.state === undefined) {
-      console.log("null");
-    } else if (location.state.pageName === "MyPage") {
-      setisMainPage(false);
-      console.log(location.state.pageName);
-    } else {
-      console.log(location.state.pageName);
+    console.log(updateData);
+
+    onQuestionLike(updateData);
+  };
+
+  const handleQuestionDecreaseLikes = (updateData: DataType) => {
+    updateData.question.like = updateData.question.like - 1;
+
+    console.log(updateData);
+
+    onQuestionLike(updateData);
+
+    setIsLike(() => !isLike);
+    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
+  };
+
+  const handleAnswerDecreaseLikes = (updateData: AnswerType) => {
+    console.log("답변 좋아요 감소");
+
+    if (updateData.like <= 0) {
+      console.log("싫어요ㅠㅠ 맘이아픔니다");
+      return;
     }
+    updateData.like = updateData.like - 1;
 
-    dispatch(currentQData(QContentFakeData));
-    // 메인페이지, 마이페이지에서 질문 클릭이 됐을 때, 해당 질문 데이터들을 받아오는 요청
-    // axios.get('http://localhost:80/') // 질문 ID가 필요
-  }, []);
+    onAnswerLike(updateData);
 
-  const handleQuestionIncreaseLikes = (likesNum: number, idNum: string) => {
-    console.log("좋아요 증가");
-    setIsLike(() => !isLike);
-    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-  };
-
-  const handleQuestionDecreaseLikes = (likesNum: number, idNum: string) => {
-    console.log("좋아요 감소");
-    setIsLike(() => !isLike);
-    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-  };
-
-  const handleAnswerDecreaseLikes = (likesNum: number, idNum: string) => {
-    console.log("답변 좋아요 감소", likesNum);
     setIsAnswerLike(() => !isAnswerLike);
     // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
 
-  const handleAnswerIncreaseLikes = (likesNum: number, idNum: string) => {
-    console.log("답변 좋아요 증가", likesNum);
+  const handleAnswerIncreaseLikes = (updateData: AnswerType) => {
+    console.log("답변 좋아요 증가");
+
+    setTimeout(() => {
+      console.log("실행");
+    }, 3000);
+
+    updateData.like = updateData.like + 1;
+
+    onAnswerLike(updateData);
+
     setIsAnswerLike(() => !isAnswerLike);
     // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
@@ -74,6 +114,20 @@ function QcontentPage() {
     });
   };
 
+  useEffect(() => {
+    if (location.state === undefined) {
+      console.log("null");
+    } else if (location.state.pageName === "MyPage") {
+      setisMainPage(false);
+      console.log(location.state.pageName);
+    } else {
+      console.log(location.state.pageName);
+    }
+    onCurrentQData(QContentFakeData);
+
+    console.log("쿼스천 함수 실행됨");
+  }, []);
+
   console.log("myPage에서 전달받은 질문", currentData);
   return (
     <div>
@@ -81,9 +135,9 @@ function QcontentPage() {
         <Container>
           <QuestionContainer>
             <LikesPart>
-              <span onClick={() => handleQuestionIncreaseLikes(currentData.question.like, currentData.question._id)}>up</span>
+              <span onClick={() => handleQuestionIncreaseLikes(currentData)}>up</span>
               <Likes>좋아요 &nbsp; {currentData.question.like}</Likes>
-              <span onClick={() => handleQuestionDecreaseLikes(currentData.question.like, currentData.question._id)}>down</span>
+              <span onClick={() => handleQuestionDecreaseLikes(currentData)}>down</span>
             </LikesPart>
 
             <QuestionBox>
@@ -101,12 +155,12 @@ function QcontentPage() {
           </QuestionContainer>
 
           <AnswerContainer>
-            {currentData.comments.map((el) => (
+            {currentData.comments?.map((el) => (
               <EachAnswer>
                 <LikesPart>
-                  <span onClick={() => handleAnswerIncreaseLikes(el.like, el._id)}> up</span>
+                  <span onClick={() => handleAnswerIncreaseLikes(el)}> up</span>
                   <Likes>좋아요 &nbsp; {el.like}</Likes>
-                  <span onClick={() => handleAnswerDecreaseLikes(el.like, el._id)}> down</span>
+                  <span onClick={() => handleAnswerDecreaseLikes(el)}> down</span>
                 </LikesPart>
                 <AnswerBox>
                   <UserName>답변자 이름</UserName>

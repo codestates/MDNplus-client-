@@ -4,9 +4,9 @@ import fakeData2 from "../FakeData2";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import ideaIcon from "../img/idea.png";
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import {currentQData} from "../Redux/QcontentData"
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { currentQData } from "../Redux/QcontentData";
 
 type Question = {
   id: number;
@@ -39,7 +39,7 @@ const HelpdeskPage = () => {
   const { helpData, onStoreData, onFilterFast, onFilterPopular, onClickQuestion } = useHelpData();
   const { allQuestions }: any = helpData;
   const history = useHistory();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleFilter = (type: string) => {
     if (type === "최신순") {
@@ -51,19 +51,21 @@ const HelpdeskPage = () => {
     }
   };
 
-  const handleClickQuestion = (question:any) => {
-    dispatch(currentQData(question))
-    history.push('/QcontentPage')
-    
-  }
+  const handleClickQuestion = (question: any) => {
+    dispatch(currentQData(question));
+
+    history.push({
+      pathname: "/Qcontentpage",
+      state: { pageName: "MainPage" },
+    });
+  };
 
   useEffect(() => {
     // 헬프데스크 메인페이지 렌더링에 필요한 데이터 받아오는 요청
-    axios.get('http://localhost:80/helpdesk')
-    .then(res => onStoreData(res.data.allQuestions))
+    axios.get("http://localhost:8080/helpdesk").then((res) => onStoreData(res.data.allQuestions));
   }, []);
 
-  if(allQuestions) {
+  if (allQuestions) {
     console.log(allQuestions[0]._id);
   }
 
@@ -126,11 +128,11 @@ const HelpdeskPage = () => {
             {allQuestions === null ? (
               <div>로딩 중입니다</div>
             ) : (
-              allQuestions.map((el:any, idx:any) => (
+              allQuestions.map((el: any, idx: any) => (
                 <>
                   <QuestionBox
                     onClick={() => {
-                      handleClickQuestion(el)
+                      handleClickQuestion(el);
                     }}
                     key={el._id}
                   >
@@ -151,7 +153,7 @@ const HelpdeskPage = () => {
                       </TitleBox>
                       <Body>{el.body}</Body>
                       <TagBox>
-                        {el.tags.map((el:any, idx:number) => (
+                        {el.tags.map((el: any, idx: number) => (
                           <Tag key={idx + 1}>{el}</Tag>
                         ))}
                       </TagBox>

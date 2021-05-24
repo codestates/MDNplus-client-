@@ -45,11 +45,8 @@ function MyPage() {
   const allState = useSelector((state: RootState) => state.MyPageReducer);
   const { mdnAllData } = allState;
   const [isQuestion, setIsQuestion] = useState(true);
-  // const [myInfo, setMyInfo] = useState({
-  //   nickName: "",
-  //   image: "",
-  //   questions: []
-  // });
+  const [questionColor, setQuestionColor] = useState("blue");
+  const [answerColor, setAnswerColor] = useState("black");
 
   useEffect(() => {
     // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
@@ -96,9 +93,19 @@ function MyPage() {
     // });
   };
 
-  const handleMyPage = () => {
-    setIsQuestion(() => !isQuestion);
+  const HandleMDNClicked = () => {
+    setQuestionColor("blue");
+    setAnswerColor("black");
+    setIsQuestion(true);
   };
+
+  const HandleHelpDeckClicked = () => {
+    setAnswerColor("blue");
+    setQuestionColor("black");
+    setIsQuestion(false);
+  };
+
+  console.log("change");
 
   return (
     <Container>
@@ -116,8 +123,12 @@ function MyPage() {
         )}
       </UserInfoContainer>
       <LeftContainer>
-        <QuestionList onClick={handleMyPage}>나의질문</QuestionList>
-        <AnswerList onClick={handleMyPage}>나의답변</AnswerList>
+        <QuestionList style={{ color: questionColor }} onClick={HandleMDNClicked}>
+          나의질문
+        </QuestionList>
+        <AnswerList style={{ color: answerColor }} onClick={HandleHelpDeckClicked}>
+          나의답변
+        </AnswerList>
       </LeftContainer>
       <RightContainer>
         {isQuestion ? (
@@ -179,10 +190,10 @@ export default MyPage;
 
 const Container = styled.div`
   height: 100vh;
-  weidth: 100vw;
+  width: 100vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 300px auto;
+  grid-template-rows: 300px 1000px;
 `;
 
 const QuestionList = styled.div`
@@ -234,13 +245,11 @@ const LeftContainer = styled.div`
   align-items: center;
   flex-direction: column;
   cursor: pointer;
-
   padding: 2rem;
 `;
 
 const RightContainer = styled.div`
   grid-area: 2/3/3/6;
-  flex-wrap: wrap;
 `;
 
 const QuestionTitle = styled.div`

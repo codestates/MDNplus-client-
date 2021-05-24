@@ -51,26 +51,6 @@ type AnswerType = {
   __v: number;
 };
 
-// type DataType = {
-//   id: number;
-//   userId?: number;
-//   userName?: string;
-//   title?: string;
-//   body?: string;
-//   answers?: {
-//     id: number;
-//     userId: number;
-//     userName: string;
-//     qTitle: string;
-//     body: string;
-//     likes: number;
-//     createdAt: string;
-//   }[];
-//   likes: number;
-//   tags?: string[];
-//   createdAt?: string;
-// };
-
 export const currentQData = (currentData: undefined | DataType) => ({
   type: CURRENTQDATA,
   payload: currentData,

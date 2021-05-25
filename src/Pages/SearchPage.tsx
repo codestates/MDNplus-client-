@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import useSearchData from "../Hooks/useSearchData";
 import styled from "styled-components";
 
@@ -10,13 +10,24 @@ type Data = {
 };
 
 function SearchPage() {
-  const { SearchDataState }: any = useSearchData();
-  // const { contentData }:Data[] = SearchDataState;
+  const { SearchDataState } = useSearchData();
+  const [MDNColor, setMDNColor] = useState("#005ce7");
+  const [HelpDeskColor, setHelpDeskColor] = useState("#a7a3a3");
 
   console.log(SearchDataState.result);
 
-  const handleSearchData = (el: any) => {
+  const handleSearchData = (el: Data) => {
     console.log(el);
+  };
+
+  const HandleMDNClicked = () => {
+    setMDNColor("#005ce7");
+    setHelpDeskColor("#a7a3a3");
+  };
+
+  const HandleHelpDeckClicked = () => {
+    setHelpDeskColor("#005ce7");
+    setMDNColor("#a7a3a3");
   };
 
   return SearchDataState.contentData === null ? (
@@ -30,9 +41,17 @@ function SearchPage() {
         </ResultText>
         " (을)를 검색하셨습니다.
       </SearchResult>
+      <FilterSearchResult>
+        <MDNPlus style={{ color: MDNColor }} onClick={HandleMDNClicked}>
+          MDN+
+        </MDNPlus>
+        <HelpDesk style={{ color: HelpDeskColor }} onClick={HandleHelpDeckClicked}>
+          Help Desk
+        </HelpDesk>
+      </FilterSearchResult>
       <ContentContainer>
         {SearchDataState.contentData.map((el: Data) => (
-          <Content onClick={() => handleSearchData(el)}>
+          <Content key={el.id} onClick={() => handleSearchData(el)}>
             <Title>{el.title}</Title>
             <Body>{el.body}</Body>
           </Content>
@@ -79,6 +98,23 @@ const Content = styled.div`
   &:hover {
     color: #005ce7;
   }
+`;
+
+const FilterSearchResult = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const MDNPlus = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.8rem;
+`;
+const HelpDesk = styled.div`
+  font-size: 2rem;
+
+  font-weight: bold;
+
+  margin: 0.8rem;
 `;
 
 const Title = styled.div`

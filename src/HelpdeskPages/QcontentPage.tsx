@@ -53,7 +53,7 @@ function QcontentPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [isMainPage, setisMainPage] = useState<boolean>(true);
-  const [isLike, setIsLike] = useState<boolean>(false);
+  const [isLike, setIsLike] = useState<boolean>(true);
   const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
 
@@ -103,6 +103,38 @@ function QcontentPage() {
     setIsAnswerLike(() => !isAnswerLike);
   };
 
+  const handleQuestionLike = (updateData: DataType) => {
+    if (isLike === true) {
+      updateData.question.like = updateData.question.like + 1;
+
+      console.log(updateData);
+
+      onQuestionLike(updateData);
+    } else {
+      updateData.question.like = updateData.question.like - 1;
+
+      console.log(updateData);
+
+      onQuestionLike(updateData);
+    }
+
+    setIsLike(() => !isLike);
+  };
+
+  const handleAnswerLike = (updateData: AnswerType) => {
+    if (isAnswerLike === true) {
+      updateData.like = updateData.like + 1;
+
+      onAnswerLike(updateData);
+    } else {
+      updateData.like = updateData.like - 1;
+
+      onAnswerLike(updateData);
+    }
+
+    setIsAnswerLike(() => !isAnswerLike);
+  };
+
   const handleAnswerBtn = () => {
     dispatch(answerPageData(currentData?.question));
     history.push({
@@ -131,38 +163,48 @@ function QcontentPage() {
       {currentData !== null && currentData !== undefined ? (
         <Container>
           <QuestionContainer>
-            <LikesPart>
-              <span onClick={() => handleQuestionIncreaseLikes(currentData)}>up</span>
-              <Likes>좋아요 &nbsp; {currentData.question.like}</Likes>
-              <span onClick={() => handleQuestionDecreaseLikes(currentData)}>down</span>
-            </LikesPart>
-
-            <QuestionBox>
-              <Title> {currentData.question.title}</Title>
-              <UserName>유저이름</UserName>
-              <Date>{currentData.question.createdAt}</Date>
-
-              <Body>{currentData.question.body}</Body>
-              {currentData.question.tags?.map((el) => (
-                <Tags>{el}</Tags>
-              ))}
-
-              {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
-            </QuestionBox>
+            <LineArea>질문</LineArea>
+            <Question>
+              <LikesPart>
+                <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span>
+                <LikesNum> {currentData.question.like}</LikesNum>
+                <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes>
+                <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span>
+              </LikesPart>
+              <QuestionBox>
+                <Q>Q</Q>
+                <Title> {currentData.question.title}</Title>
+                <NameDate>
+                  <UserName>유저이름</UserName>
+                  <Date>{currentData.question.createdAt}</Date>
+                </NameDate>
+                <Body>{currentData.question.body}</Body>
+                <div>
+                  {currentData.question.tags?.map((el, index: number) => (
+                    <Tags key={index}>{el}</Tags>
+                  ))}
+                </div>
+                {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
+              </QuestionBox>
+            </Question>
           </QuestionContainer>
 
           <AnswerContainer>
-            {currentData.comments?.map((el) => (
-              <EachAnswer>
+            <LineArea>답변</LineArea>
+            {currentData.comments?.map((el, index: number) => (
+              <EachAnswer key={index}>
                 <LikesPart>
-                  <span onClick={() => handleAnswerIncreaseLikes(el)}> up</span>
-                  <Likes>좋아요 &nbsp; {el.like}</Likes>
-                  <span onClick={() => handleAnswerDecreaseLikes(el)}> down</span>
+                  <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
+                  <LikesNum> {el.like}</LikesNum>
+                  <Likes onClick={() => handleAnswerLike(el)}>좋아요</Likes>
+                  <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
                 </LikesPart>
                 <AnswerBox>
-                  <UserName>답변자 이름</UserName>
-                  <Date>{el.createdAt}</Date>
                   <Body>{el.content}</Body>
+                  <NameDate>
+                    <UserName>답변자 이름</UserName>
+                    <Date>{el.createdAt}</Date>
+                  </NameDate>
                 </AnswerBox>
               </EachAnswer>
             ))}
@@ -187,10 +229,21 @@ const Container = styled.div`
 
 const QuestionContainer = styled.div`
   grid-area: 1/2/3/6;
+  margin: 8rem 0 2rem 0;
+`;
+
+const Question = styled.div`
+  grid-area: 1/2/3/6;
   display: flex;
-  padding-bottom: 2rem;
+  padding-bottom: 4rem;
   align-items: center;
-  border-bottom: 2px solid #a7a3a3;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.09) 10px 10px 20px;
+`;
+
+const Q = styled.span`
+  font-size: 3rem;
+  color: #005ce7;
 `;
 
 const QuestionBox = styled.div`
@@ -204,51 +257,93 @@ const AnswerContainer = styled.div`
 const EachAnswer = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #a7a3a3;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.09) 10px 10px 20px;
+  padding-bottom: 2rem;
+  margin-bottom: 3rem;
 `;
 
 const AnswerBox = styled.div`
-  margin: 1rem;
+  margin: 2rem 0 1rem 0;
   width: 80%;
 `;
-const Title = styled.div`
+
+const LineArea = styled.div`
+  font-size: 2rem;
+  color: #686868;
   font-weight: bold;
-  font-size: 1.5rem;
+  margin-bottom: 2rem;
+`;
+
+const Title = styled.span`
+  font-weight: bold;
+  font-size: 2rem;
   padding: 1rem;
 `;
-const Date = styled.div`
+const Date = styled.span`
   padding: 1rem;
+`;
+const UserName = styled.span`
+  padding: 1rem;
+`;
 
+const NameDate = styled.div`
+  margin: 2rem 0 2rem 0;
+  color: #686868;
   text-align: right;
 `;
-const UserName = styled.div`
-  padding: 1rem;
-`;
 const Body = styled.div`
-  padding: 1rem;
-  line-height: 2rem;
+  font-size: 1rem;
+  margin: 2rem 0 2rem 0;
+  line-height: 1.8rem;
 `;
 const LikesPart = styled.span`
   display: flex;
   flex-direction: column;
   justify-contents: center;
   align-items: center;
-  margin: 1rem;
-  cursor: pointer;
+  margin: 0 2rem 0 0;
+`;
+
+const LikesNum = styled.div`
+  text-align: center;
+  color: #686868;
+  font-weight: 500;
 `;
 
 const Likes = styled.span`
+  text-align: center;
+  color: #686868;
+  font-weight: 500;
   padding: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    color: #1658d8;
+    font-weight: bold;
+  }
 `;
 
 const Tags = styled.span`
-  border: 1px solid gray;
-  padding: 0.2rem;
-  margin: 1rem;
+  font-size: 0.8rem;
+  border-radius: 1.5rem;
+  border: none;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  color: #1658d8;
+  background-color: #f5f5f5;
 `;
 
-const AnswerBtn = styled.span`
+const AnswerBtn = styled.button`
+  border: none;
+  font-size: 0.8rem;
+  border-radius: 0.8rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  color: white;
+  background-color: #ef5350;
   float: right;
-  color: blue;
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.2) 10px 10px 20px;
+
+  }
 `;

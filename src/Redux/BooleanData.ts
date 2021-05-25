@@ -1,49 +1,32 @@
-const SETISLOGIN = "ContentData/SETISLOGIN" as const;
-const SETWRITEMODE = "ContentData/SETWRITEMODE" as const;
-const SETISLOGINOPEN = "ContentData/SETISLOGINOPEN" as const;
+const WRITEMODE = "ContentData/SETWRITEMODE" as const;
+const CONTENTPAGE = "ContentData/SETCONTENTPAGE" as const;
 
-export const setIsLogin = () => ({ type: SETISLOGIN });
-export const setWriteMode = () => ({ type: SETWRITEMODE });
-export const setIsLogInOpen = (boolean:Boolean) => ({ type: SETISLOGINOPEN, payload: boolean });
+export const setWriteMode = () => ({ type: WRITEMODE });
+export const setContentPage = (boolean:Boolean) => ({ type: CONTENTPAGE, payload: boolean });
 
-type BooleanData = ReturnType<typeof setIsLogin> | ReturnType<typeof setWriteMode> | ReturnType<typeof setIsLogInOpen>;
+type BooleanData = ReturnType<typeof setWriteMode> | ReturnType<typeof setContentPage>
 
 type InitState = {
-  isLogin: Boolean;
   writeMode: Boolean;
-  isLogInOpen: Boolean;
+  contentPage: Boolean;
 };
 
 const initialState = {
-  isLogin: false,
   writeMode: false,
-  isLogInOpen: false,
+  contentPage: false, // 로그인 누르기 전 페이지가 contentPage인지 아닌지의 여부
 };
 
 function BooleanDataReducer(state: InitState = initialState, action: BooleanData) {
   switch (action.type) {
-    case SETISLOGIN:
-      if (state.isLogin) {
-        return { ...state, isLogin: false };
-      } else {
-        return { ...state, isLogin: true };
-      }
-    case SETWRITEMODE:
+    case WRITEMODE:
       console.log("writeMode 바껴짐");
       if (state.writeMode) {
         return { ...state, writeMode: false };
       } else {
         return { ...state, writeMode: true };
       }
-
-    case SETISLOGINOPEN:
-        console.log('로그인 모달 상태 바꿔줘야됨')
-        if(action.payload === true) {
-            return { ...state, isLogInOpen: false };
-        } else {
-            return { ...state, isLogInOpen: true };
-
-        }
+      case CONTENTPAGE:
+          return {...state, contentPage: action.payload}
     default:
       return state;
   }

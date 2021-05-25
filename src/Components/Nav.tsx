@@ -12,24 +12,28 @@ import FakeData from "../FakeData";
 import search from "../img/search.jpeg";
 import userIcon from "../img/userIcon_gray.png";
 import useBooleanData from "../Hooks/useBooleanData";
+import useContentData from "../Hooks/useContentData";
 
 // axios.defaults.withCredentials = true;
 
 const { Kakao }: any = window;
 
-function Nav({ userImg }: any) {
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: any) {
   const { onSearching, SearchDataState } = useMyPageData();
+  // const [isLogin, setIsLogin] = useState(false);
   // const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [gitHubImage, setGitHubImage] = useState([]);
-  const { BooleanState, onSetIsLogin, onSetIsLoginOpen } = useBooleanData();
-  const { isLogin } = BooleanState;
+  const { contentState } = useContentData();
+  const { contentData } = contentState;
+  const { BooleanState } = useBooleanData();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const handleLoginModal = () => {
-    // setIsLogInOpen(!isLogInOpen);
-      onSetIsLoginOpen(true)
+  console.log(contentData);
+
+  const handleHomeBtn = () => {
+    history.push("/");
   };
 
   const handleMenuModal = () => {
@@ -67,23 +71,24 @@ function Nav({ userImg }: any) {
   const gitAccessToken = (authorizationCode: string) => {
     axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       console.log("요청 성공해서 들어옴");
+      // localStorage.setItem("sessionId", );
       const { nickName, _id } = res.data;
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
         console.log(res);
         history.push("/");
-        onSetIsLogin();
+        handleLogin();
       } else {
         console.log("처음 로그인한 유저이므로 닉네임 설정 페이지로 이동");
         console.log(res);
-        onSetIsLogin();
+        handleLogin();
         history.push("/NameSettingPage");
       }
       // if (res.data.d) {
-      //   onSetIsLogin(true);
+      //   setIsLogin(true);
       //   localStorage.setItem("sessionId", res.data.data._id);
       // } else if(res.data.user) {
-      //   onSetIsLogin(true);
+      //   setIsLogin(true);
       //   localStorage.setItem("sessionId", res.data.data._id);
       // }
     });
@@ -93,18 +98,17 @@ function Nav({ userImg }: any) {
   const kakaoAccessToken = (authorizationCode: string) => {
     console.log("카카오 accessToken 받는 요청 보내짐");
     axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }).then((res) => {
-      console.log(res);
       const { nickName, _id } = res.data;
-
+      console.log("로그인 요청 성공함");
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
         console.log(res);
         history.push("/");
-        onSetIsLogin();
+        handleLogin();
       } else {
         console.log("처음 로그인한 유저이므로 닉네임 설정 페이지로 이동");
         console.log(res);
-        onSetIsLogin();
+        handleLogin();
         history.push("/NameSettingPage");
       }
       // if (accessToken) {
@@ -139,6 +143,7 @@ function Nav({ userImg }: any) {
   };
 
   console.log(userImg);
+  console.log(BooleanState.contentPage);
 
   return (
     <NavBar>
@@ -163,7 +168,7 @@ function Nav({ userImg }: any) {
       ) : (
         <NavButtons>
           <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
-          <LoginModal></LoginModal>
+          <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal} handleLogin={handleLogin}></LoginModal>
         </NavButtons>
       )}
     </NavBar>

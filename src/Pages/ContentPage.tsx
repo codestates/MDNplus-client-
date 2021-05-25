@@ -8,13 +8,17 @@ import useBooleanData from '../Hooks/useBooleanData';
 import useContentData from "../Hooks/useContentData";
 import { Components } from "./EditPage";
 
-function ContentPage() {
+type PropsOption = {
+  isLogin: Boolean;
+  handleLoginModal: () => void;
+}
+
+function ContentPage({isLogin, handleLoginModal}:PropsOption) {
   const { contentState, onClickMethod } = useContentData();
   const { allState } = useAllData();
   const { contentData } = contentState;
   const { currentData } = allState;
-  const {BooleanState, onSetIsLogin, onSetIsLoginOpen} = useBooleanData()
-  const {isLogin, isLogInOpen} = BooleanState
+  const {BooleanState, onsetContentPage} = useBooleanData()
   const history = useHistory();
 
 
@@ -22,10 +26,12 @@ function ContentPage() {
   const handleClickEdit = () => {
     console.log('수정 버튼 눌려짐')
     console.log(isLogin)
-    if(!isLogin) {
-      onSetIsLoginOpen(true)
-    } else {
+    if(isLogin) {
       history.push("/EditPage");
+    } else {
+      onsetContentPage(true)
+      localStorage.setItem('contentPage', 'true')
+      handleLoginModal()
     }
   };
 
@@ -37,7 +43,6 @@ function ContentPage() {
 
   return (
     <>
-    {isLogInOpen ? <LoginModal /> : <div>hello</div>}
       <Container>
           {contentData === null ? (
             <div>로딩중입니다</div>

@@ -23,32 +23,35 @@ import useBooleanData from './Hooks/useBooleanData';
 
 function App() {
   const [userImg, setUserImg] = useState(userIcon)
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(false);
+  const [isLogInOpen, setIsLogInOpen] = useState(false);
   const {BooleanState} = useBooleanData()
   const {writeMode} = BooleanState
-  
 
-  // const handleConfirmLogin = () => {
-  //   if(!isLogin) {
-
-  //   }
-  // }
+  const handleLoginModal = () => {
+    console.log('로그인 모달 다루는 코드 실행됨')
+    setIsLogInOpen(!isLogInOpen);
+  };
 
   const handleChangeMenuIcon = (url:string) => {
     console.log('이미지 바뀌는 요청 들어옴')
     setUserImg(url)
   }
 
-  console.log(userImg)
+  const handleLogin = () => {
+    setIsLogin(true)
+  }
+
+  // console.log(userImg)
 
   return (
     <>
-      {writeMode ? null : <Nav userImg={userImg}></Nav>}
+      {writeMode ? null : <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal}></Nav>}
       <Container>
         {writeMode ? null : <SideBar></SideBar>}
         <Switch>
           <Route exact path="/" render={() => <MainPage />} />
-          <Route path="/ContentPage" render={() => <ContentPage />} />
+          <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal}/>} />
           <Route path="/EditPage" render={() => <EditPage />} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
           <Route path="/SettingPage" render={() => <SettingPage handleChangeMenuIcon={handleChangeMenuIcon}/>} />

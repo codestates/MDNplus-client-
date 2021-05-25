@@ -11,6 +11,8 @@ import useAllData from '../Hooks/useAllData';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import useBooleanData from '../Hooks/useBooleanData';
+import {SubmitBtn, ExitBtn} from "../styled-components/Post"
+
 
 // axios.defaults.withCredentials = true;
 
@@ -135,7 +137,7 @@ const QuestionPage = () => {
               autoFocus
             ></Body>
           )}
-          <span onClick={handleExit}>나가기</span>
+          <ExitBtn onClick={handleExit}>나가기</ExitBtn>
           <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
         </LeftContainer>
         <RightContainer>
@@ -220,14 +222,6 @@ const GuideLine = styled.textarea`
   font-size: 16px;
   margin-top: 10px;
   color: gray;
-`;
-
-const SubmitBtn = styled.button`
-  position: fixed;
-  top: 45rem;
-  left: 38rem;
-  // top: 900px;
-  // left: 800px;
 `;
 
 const RightContainer = styled.div`

@@ -30,7 +30,7 @@ function SettingPage({handleChangeMenuIcon}:any) {
   };
 
   // 유저가 file을 업로드하여 change 이벤트가 발생할 때, 실행되는 코드
-  const handleChange = async (e: any) => {
+  const handleChange = (e: any) => {
     setImage(e.target.files[0]);
   };
 
@@ -48,15 +48,7 @@ function SettingPage({handleChangeMenuIcon}:any) {
       setLoading(true); // 아래 코드 실행 전에, 로딩중 상태를 true로 바꿔서 로딩중 gif가 뜨게 함
       formData.append("file", img);
       formData.append("upload_preset", "vzsh73vh");
-      // 서버의 upload API 호출
-      console.log(img);
-      // axios({
-      //   method: "POST",
-      //   url: url,
-      //   data: formData,
-      //   headers: {"Access-Control-Allow-Credentials": "true"}
-      // }).then(res => console.log(res))
-
+      // 클라우디너리 서버의 upload API 호출
       axios
         .post(url, formData)
         .then((res) => {
@@ -68,9 +60,6 @@ function SettingPage({handleChangeMenuIcon}:any) {
         .catch((err) => console.log(err));
     }
   }, [img]);
-
-  // axios.patch('http://localhost:80/userinfo/img', {image: res.data.url})
-  // .then(res => console.log(res))
 
   useEffect(() => {
     axios.get("http://localhost:80/userinfo", { withCredentials: true }).then((res) => setUsername(res.data.nickName));

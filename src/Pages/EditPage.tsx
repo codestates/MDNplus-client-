@@ -7,6 +7,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import {useHistory} from "react-router-dom"
 import useAllData from "../Hooks/useAllData"
+import useBooleanData from '../Hooks/useBooleanData';
 
 
 // type PropsOption = {
@@ -16,8 +17,8 @@ import useAllData from "../Hooks/useAllData"
 function EditPage() {
   const { contentState, onChangeContent } = useContentData();
   const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
-  const {allState, onSetWriteMode} = useAllData()
-  const {writeMode} = allState
+  const {allState} = useAllData()
+  const {onSetWriteMode} = useBooleanData()
   const [checkModal, setCheckModal] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const history = useHistory()
@@ -129,6 +130,8 @@ const SubmitBtn = styled.button`
 const RightContainer = styled.div`
   background: #f4f4f4;
   padding: 0px 30px 30px 30px;
+  line-height: 2rem;
+  word-spacing: 0.2rem;
 `;
 
 

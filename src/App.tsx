@@ -18,12 +18,21 @@ import styled from "styled-components";
 import SideBar from "./Components/SideBar";
 import useAllData from "./Hooks/useAllData";
 import userIcon from "./img/userIcon_gray.png"
+import useBooleanData from './Hooks/useBooleanData';
 
 
 function App() {
   const [userImg, setUserImg] = useState(userIcon)
-  const { allState, onSetWriteMode } = useAllData();
-  const { writeMode } = allState;
+  const [isLogin, setIsLogin] = useState(false)
+  const {BooleanState} = useBooleanData()
+  const {writeMode} = BooleanState
+  
+
+  // const handleConfirmLogin = () => {
+  //   if(!isLogin) {
+
+  //   }
+  // }
 
   const handleChangeMenuIcon = (url:string) => {
     console.log('이미지 바뀌는 요청 들어옴')

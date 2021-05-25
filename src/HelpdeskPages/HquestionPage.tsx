@@ -10,6 +10,7 @@ import QconfirmModal from "../Components/QconfirmModal";
 import useAllData from '../Hooks/useAllData';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import useBooleanData from '../Hooks/useBooleanData';
 
 // axios.defaults.withCredentials = true;
 
@@ -29,7 +30,7 @@ const QuestionPage = () => {
     body: "",
     tags: [],
   });
-  const {onSetWriteMode} = useAllData()
+  const {onSetWriteMode} = useBooleanData()
   const { title, body, tags } = newQuestion;
   const history = useHistory()
 

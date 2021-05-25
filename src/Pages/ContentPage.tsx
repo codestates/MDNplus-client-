@@ -21,6 +21,7 @@ function ContentPage() {
 
   useEffect(() => {
     // console.log('유즈 이펙트 실행됨')
+    window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
     
   })
 

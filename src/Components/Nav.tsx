@@ -11,6 +11,7 @@ import MenuModal from "./MenuModal";
 import FakeData from "../FakeData";
 import search from "../img/search.jpeg";
 import userIcon from "../img/userIcon_gray.png"
+import useBooleanData from '../Hooks/useBooleanData';
 
 // axios.defaults.withCredentials = true;
 
@@ -18,11 +19,12 @@ const { Kakao }: any = window;
 
 function Nav({userImg}:any) {
   const { onSearching, SearchDataState } = useMyPageData();
-  const [isLogin, setIsLogin] = useState(false);
+  // const [isLogin, setIsLogin] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [gitHubImage, setGitHubImage] = useState([]);
-  // const [userImg, setUserImg] = useState(userIcon)
+  const {BooleanState, onSetIsLogin} = useBooleanData()
+  const {isLogin} = BooleanState
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -75,18 +77,18 @@ function Nav({userImg}:any) {
         console.log('이미 가입했던 회원이므로 메인페이지로 이동')
         console.log(res)
         history.push('/')
-        setIsLogin(true)
+        onSetIsLogin()
       } else {
         console.log('처음 로그인한 유저이므로 닉네임 설정 페이지로 이동')
         console.log(res)
-        setIsLogin(true)
+        onSetIsLogin()
         history.push('/NameSettingPage')
       }
       // if (res.data.d) {
-      //   setIsLogin(true);
+      //   onSetIsLogin(true);
       //   localStorage.setItem("sessionId", res.data.data._id);
       // } else if(res.data.user) {
-      //   setIsLogin(true);
+      //   onSetIsLogin(true);
       //   localStorage.setItem("sessionId", res.data.data._id);
       // }
     });
@@ -103,11 +105,11 @@ function Nav({userImg}:any) {
         console.log('이미 가입했던 회원이므로 메인페이지로 이동')
         console.log(res)
         history.push('/')
-        setIsLogin(true)
+        onSetIsLogin()
       } else {
         console.log('처음 로그인한 유저이므로 닉네임 설정 페이지로 이동')
         console.log(res)
-        setIsLogin(true)
+        onSetIsLogin()
         history.push('/NameSettingPage')
       }
       // if (accessToken) {
@@ -167,7 +169,7 @@ function Nav({userImg}:any) {
       ) : (
         <NavButtons>
           <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
-          <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal} checkLogin={setIsLogin}></LoginModal>
+          <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal}></LoginModal>
         </NavButtons>
       )}
     </NavBar>
@@ -239,12 +241,18 @@ const NavButtons = styled.div`
 const LoginBtn = styled.button`
   background-color: white;
   font-size: 14px;
-  font-weight: bold;
-  margin: 5px;
-  border: 1.8px solid #a7a3a3;
-  padding: 10px;
-  border-radius: 34px;
+  font-weight: 500;
+  margin: 1rem;
+  border: 1px solid #a7a3a3;
+  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+  border-radius: 1.5rem;
   cursor: pointer;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background: #616161;
+    color: white;
+  }
 `;
 
 const UserIconContainer = styled.img`

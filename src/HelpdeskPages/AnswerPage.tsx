@@ -7,10 +7,11 @@ import { RootState } from "../Redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import useAllData from "../Hooks/useAllData";
+import useBooleanData from '../Hooks/useBooleanData';
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
-  const { onSetWriteMode } = useAllData();
+  const {onSetWriteMode} = useBooleanData()
   const history = useHistory();
   const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");

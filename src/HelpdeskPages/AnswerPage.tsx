@@ -7,13 +7,15 @@ import { RootState } from "../Redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import useAllData from "../Hooks/useAllData";
+import useBooleanData from '../Hooks/useBooleanData';
+import {ExitBtn, SubmitBtn} from "../styled-components/Post"
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
-  const { onSetWriteMode } = useAllData();
-  const history = useHistory();
+  const {onSetWriteMode} = useBooleanData()
   const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");
+  const history = useHistory();
 
   useEffect(() => {
     onSetWriteMode();
@@ -113,7 +115,7 @@ function AnswerPage() {
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
         <SubmitBtn onClick={handleAnswerBtn}> 답변달기</SubmitBtn>
-        <BackBtn onClick={handleAnswerBtn}> 나가기 </BackBtn>
+        <ExitBtn onClick={handleAnswerBtn}> 나가기 </ExitBtn>
       </LeftContainer>
 
       <RightContainer>
@@ -176,17 +178,6 @@ const Body = styled.textarea`
   outline: none;
   resize: none;
   font-size: 16px;
-`;
-
-const BackBtn = styled.button`
-  top: 45rem;
-  left: 38rem;
-`;
-const SubmitBtn = styled.button`
-  top: 45rem;
-  left: 38rem;
-  // top: 900px;
-  // left: 800px;
 `;
 
 const MarkDownBtn = styled.button`

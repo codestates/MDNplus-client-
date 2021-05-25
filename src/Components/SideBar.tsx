@@ -18,7 +18,6 @@ const SideBar = () => {
 
   return (
     <Container>
-      <span onClick={(() => history.push('/MyPage'))}>마이페이지</span>
       {sideBar === "wiki" ? (
         <Wiki color="isSelected" onClick={handleMoveToWiki}>
           MDN+ WiKi
@@ -52,7 +51,7 @@ const handleColorType = (color: any) => {
 
 const Container = styled.span`
   width: 17%;
-  height: 100vw;
+  height: 150rem;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
 

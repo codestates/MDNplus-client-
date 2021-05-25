@@ -170,7 +170,7 @@ const Container = styled.div`
   width: 100vw;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: 300px 1000px;
+  grid-template-rows: 300px auto;
 `;
 
 const QuestionList = styled.div`
@@ -196,7 +196,7 @@ const QuestionBox = styled.div`
   border-radius: 1rem;
   border: none;
   padding: 0 1rem 1rem 1rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 20px;
+  box-shadow: rgba(0, 0, 0, 0.03) 10px 10px 20px;
   background: white;
   cursor: pointer;
   margin: 2rem 0 2rem 0;

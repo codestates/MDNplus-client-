@@ -76,13 +76,11 @@ function AnswerPage() {
         <QuestionPart>
           <Q>Q</Q>
           <Title> {displayQuestion?.title}</Title>
-
-          <QuestionBody>{displayQuestion?.body}</QuestionBody>
           <NameDate>
-            <Likes> 좋아요: {displayQuestion?.like}</Likes>
             <UserName>유저네임</UserName>
             <Date>{displayQuestion?.createdAt}</Date>
           </NameDate>
+          <QuestionBody>{displayQuestion?.body}</QuestionBody>
         </QuestionPart>
         <WritingArea>
           <WritingTitle> 나의 답변</WritingTitle>
@@ -134,9 +132,8 @@ function AnswerPage() {
       </LeftContainer>
 
       <RightContainer>
-        <PrieviewTitle>Preview</PrieviewTitle>
+        <PrieviewTitle>ㅡㅡㅡㅡ 님의 답변</PrieviewTitle>
         <AnswerPart>
-          <Title> {displayQuestion?.title}</Title>
           <ReactMarkdown children={writing} components={Components} />
         </AnswerPart>
       </RightContainer>
@@ -159,6 +156,8 @@ const Container = styled.div`
 `;
 
 const LeftContainer = styled.div`
+margin: 3rem;
+
   width:50%;
   height:70%;
   padding 13px;
@@ -168,7 +167,7 @@ const WritingTitle = styled.div`
   font-size: 25px;
   font-weight: 700;
   margin: 1em 0;
-  border-bottom: 1.5px solid black;
+  color: #686868;
 `;
 
 const MarDownBtns = styled.div`
@@ -176,6 +175,7 @@ const MarDownBtns = styled.div`
   justify-content: space-around;
   align-items: center;
   background-color: #f5f5f5;
+  width: auto;
 `;
 
 const WritingArea = styled.div`
@@ -193,7 +193,7 @@ const Body = styled.textarea`
   outline: none;
   resize: none;
   font-size: 16px;
-  margin-top: 3rem;
+  margin: 2em 0 0 0;
 `;
 
 const BackBtn = styled.span`
@@ -211,8 +211,9 @@ const SubmitBtn = styled.span`
   }
 `;
 
-const MarkDownBtn = styled.button`
+const MarkDownBtn = styled.span`
   font-size: 1.3rem;
+
   color: #9e9e9e;
   border: none;
   background-color: #f5f5f5;
@@ -225,7 +226,7 @@ const MarkDownBtn = styled.button`
 
 const RightContainer = styled.div`
 background-color: #F5F5F5;
-width:50%;
+width: 50%;
 height:100%;
 padding 13px;
 
@@ -234,24 +235,23 @@ padding 13px;
 const PrieviewTitle = styled.div`
   font-size: 25px;
   font-weight: 700;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  border-bottom: 1.5px solid black;
+  margin: 3rem;
 `;
 
 const QuestionPart = styled.div`
-  margin: 3rem 0;
-  width: 100%;
+  width: auto;
   height: auto;
+  border-bottom: 0.05rem solid #e0e0e0;
 `;
 
 const AnswerPart = styled.div`
   font-size: 1rem;
-  width: 100%;
+  width: 50%;
   height: 100%;
   border: none;
   line-height: 2rem;
   word-spacing: 0.5rem;
+  margin: 3rem;
 `;
 
 const AnswerBox = styled.div`
@@ -267,17 +267,18 @@ const Q = styled.span`
 const Title = styled.span`
   font-size: 25px;
   font-weight: bold;
+  color: #616161;
   margin-bottom: 1rem;
 `;
 const Date = styled.span`
-  margin: 1rem;
+  margin-left: 1rem;
 `;
 
 const UserName = styled.span`
-  margin: 1rem;
+  margin-right: 1rem;
 `;
 const QuestionBody = styled.div`
-  margin: 1rem 0 1rem 0;
+  margin: 2em 0 4em 0;
   line-height: 1.8rem;
 `;
 const Likes = styled.span`
@@ -288,6 +289,7 @@ const AnswerBtn = styled.div``;
 
 const NameDate = styled.div`
   color: #686868;
+  margin: 1em 0 1em 0;
   text-align: right;
 `;
 

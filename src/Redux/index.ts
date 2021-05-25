@@ -6,6 +6,7 @@ import SearchDataReducer from "./SearchData";
 import QcontentDataReducer from "./QcontentData";
 import AnswerPageReducer from "./AnswerPageData";
 import HelpDataReducer from "./HelpData";
+import FAQdataReducer from "./FAQdata";
 
 const rootReducer = combineReducers({
   AllDataReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   QcontentDataReducer,
   AnswerPageReducer,
   HelpDataReducer,
+  FAQdataReducer,
 });
 
 export default rootReducer;

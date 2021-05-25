@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { answerLike } from "../Redux/QcontentData";
 
 type DataType = {
   question: {
@@ -121,7 +123,7 @@ function QcontentPage() {
     setIsLike(() => !isLike);
   };
 
-  const handleAnswerLike = (updateData: AnswerType) => {
+  const handleAnswerLike = (updateData: AnswerType, index: number) => {
     if (isAnswerLike === true) {
       updateData.like = updateData.like + 1;
 
@@ -163,12 +165,15 @@ function QcontentPage() {
       {currentData !== null && currentData !== undefined ? (
         <Container>
           <QuestionContainer>
-            <LineArea>질문</LineArea>
+            {/* <LineArea>질문</LineArea> */}
             <Question>
-              <LikesPart>
+              <LikesPart onClick={() => handleQuestionLike(currentData)}>
                 <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span>
+
+                {isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
                 <LikesNum> {currentData.question.like}</LikesNum>
-                <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes>
+
+                {/* <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes> */}
                 <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span>
               </LikesPart>
               <QuestionBox>
@@ -190,19 +195,23 @@ function QcontentPage() {
           </QuestionContainer>
 
           <AnswerContainer>
-            <LineArea>답변</LineArea>
+            <LineArea> N개의 답변</LineArea>
             {currentData.comments?.map((el, index: number) => (
               <EachAnswer key={index}>
-                <LikesPart>
+                <LikesPart onClick={() => handleAnswerLike(el, index)}>
                   <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
+                  {isAnswerLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" />}
+
                   <LikesNum> {el.like}</LikesNum>
-                  <Likes onClick={() => handleAnswerLike(el)}>좋아요</Likes>
+
                   <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
                 </LikesPart>
                 <AnswerBox>
+                  <AnswerTitle> 김코딩 님의 답변 </AnswerTitle>
                   <Body>{el.content}</Body>
                   <NameDate>
-                    <UserName>답변자 이름</UserName>
+                    <LikesNum onClick={() => handleAnswerLike(el, index)}> 좋아요: &nbsp; {el.like}</LikesNum>
+
                     <Date>{el.createdAt}</Date>
                   </NameDate>
                 </AnswerBox>
@@ -238,7 +247,7 @@ const Question = styled.div`
   padding-bottom: 4rem;
   align-items: center;
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.09) 10px 10px 20px;
+  box-shadow: rgba(0, 0, 0, 0.03) 10px 10px 20px;
 `;
 
 const Q = styled.span`
@@ -258,7 +267,7 @@ const EachAnswer = styled.div`
   display: flex;
   align-items: center;
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.09) 10px 10px 20px;
+  box-shadow: rgba(0, 0, 0, 0.03) 10px 10px 20px;
   padding-bottom: 2rem;
   margin-bottom: 3rem;
 `;
@@ -269,8 +278,8 @@ const AnswerBox = styled.div`
 `;
 
 const LineArea = styled.div`
-  font-size: 2rem;
-  color: #686868;
+  font-size: 1rem;
+  color: #1658d8;
   font-weight: bold;
   margin-bottom: 2rem;
 `;
@@ -280,6 +289,13 @@ const Title = styled.span`
   font-size: 2rem;
   padding: 1rem;
 `;
+
+const AnswerTitle = styled.div`
+  font-weight: bold;
+  font-size: 1rem;
+  color: #686868;
+`;
+
 const Date = styled.span`
   padding: 1rem;
 `;
@@ -294,7 +310,7 @@ const NameDate = styled.div`
 `;
 const Body = styled.div`
   font-size: 1rem;
-  margin: 2rem 0 2rem 0;
+  margin: 3rem 0 5rem 0;
   line-height: 1.8rem;
 `;
 const LikesPart = styled.span`
@@ -302,13 +318,16 @@ const LikesPart = styled.span`
   flex-direction: column;
   justify-contents: center;
   align-items: center;
-  margin: 0 2rem 0 0;
+  margin: 0 1.5rem 0 0;
+  cursor: pointer;
 `;
 
-const LikesNum = styled.div`
+const LikesNum = styled.span`
   text-align: center;
   color: #686868;
   font-weight: 500;
+  margin-top 0.4rem;
+
 `;
 
 const Likes = styled.span`
@@ -337,13 +356,12 @@ const AnswerBtn = styled.button`
   border: none;
   font-size: 0.8rem;
   border-radius: 0.8rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   margin: 0.5rem;
   color: white;
   background-color: #ef5350;
   float: right;
   cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.2) 10px 10px 20px;
-
+  box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 20px;
   }
 `;

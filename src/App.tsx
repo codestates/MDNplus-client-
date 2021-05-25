@@ -9,6 +9,7 @@ import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
 import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
+import FAQ from "./Pages/FAQ";
 
 import "./App.css";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
@@ -38,6 +39,7 @@ function App() {
           <Route path="/AnswerPage" render={() => <AnswerPage />} />
           <Route path="/HquestionPage" render={() => <HquestionPage />} />
           <Route path="/QcontentPage" render={() => <QcontentPage />} />
+          <Route path="/FAQ" render={() => <FAQ />} />
         </Switch>
       </Container>
     </>

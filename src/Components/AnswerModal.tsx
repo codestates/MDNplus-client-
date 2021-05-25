@@ -123,6 +123,7 @@ const AskInfo = styled.div`
   font-weight: bold;
   margin: 1rem;
   text-align: center;
+  color: #686868;
 `;
 
 const Answer = styled.button`
@@ -130,8 +131,11 @@ const Answer = styled.button`
   margin: 1rem;
   border: none;
   background-color: white;
+  cursor: pointer;
+  color: #686868;
 
   &:hover {
+    font-weight: bold;
     color: #005ce7;
   }
 `;

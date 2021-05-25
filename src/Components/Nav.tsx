@@ -10,30 +10,26 @@ import LoginModal from "./LoginModal";
 import MenuModal from "./MenuModal";
 import FakeData from "../FakeData";
 import search from "../img/search.jpeg";
-import userIcon from "../img/userIcon_gray.png"
-import useBooleanData from '../Hooks/useBooleanData';
+import userIcon from "../img/userIcon_gray.png";
+import useBooleanData from "../Hooks/useBooleanData";
 
 // axios.defaults.withCredentials = true;
 
 const { Kakao }: any = window;
 
-function Nav({userImg}:any) {
+function Nav({ userImg }: any) {
   const { onSearching, SearchDataState } = useMyPageData();
-  // const [isLogin, setIsLogin] = useState(false);
-  const [isLogInOpen, setIsLogInOpen] = useState(false);
+  // const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [gitHubImage, setGitHubImage] = useState([]);
-  const {BooleanState, onSetIsLogin} = useBooleanData()
-  const {isLogin} = BooleanState
+  const { BooleanState, onSetIsLogin, onSetIsLoginOpen } = useBooleanData();
+  const { isLogin } = BooleanState;
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const handleHomeBtn = () => {
-    history.push("/");
-  };
-
   const handleLoginModal = () => {
-    setIsLogInOpen(!isLogInOpen);
+    // setIsLogInOpen(!isLogInOpen);
+      onSetIsLoginOpen(true)
   };
 
   const handleMenuModal = () => {
@@ -69,20 +65,19 @@ function Nav({userImg}:any) {
 
   //깃허브 accessToken 받아오는 요청
   const gitAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, {withCredentials:true}).then((res) => {
+    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       console.log("요청 성공해서 들어옴");
-      // localStorage.setItem("sessionId", );
-      const { nickName, _id} = res.data
-      if(nickName) {
-        console.log('이미 가입했던 회원이므로 메인페이지로 이동')
-        console.log(res)
-        history.push('/')
-        onSetIsLogin()
+      const { nickName, _id } = res.data;
+      if (nickName) {
+        console.log("이미 가입했던 회원이므로 메인페이지로 이동");
+        console.log(res);
+        history.push("/");
+        onSetIsLogin();
       } else {
-        console.log('처음 로그인한 유저이므로 닉네임 설정 페이지로 이동')
-        console.log(res)
-        onSetIsLogin()
-        history.push('/NameSettingPage')
+        console.log("처음 로그인한 유저이므로 닉네임 설정 페이지로 이동");
+        console.log(res);
+        onSetIsLogin();
+        history.push("/NameSettingPage");
       }
       // if (res.data.d) {
       //   onSetIsLogin(true);
@@ -99,18 +94,18 @@ function Nav({userImg}:any) {
     console.log("카카오 accessToken 받는 요청 보내짐");
     axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }).then((res) => {
       console.log(res);
-      const { nickName, _id} = res.data
+      const { nickName, _id } = res.data;
 
-      if(nickName) {
-        console.log('이미 가입했던 회원이므로 메인페이지로 이동')
-        console.log(res)
-        history.push('/')
-        onSetIsLogin()
+      if (nickName) {
+        console.log("이미 가입했던 회원이므로 메인페이지로 이동");
+        console.log(res);
+        history.push("/");
+        onSetIsLogin();
       } else {
-        console.log('처음 로그인한 유저이므로 닉네임 설정 페이지로 이동')
-        console.log(res)
-        onSetIsLogin()
-        history.push('/NameSettingPage')
+        console.log("처음 로그인한 유저이므로 닉네임 설정 페이지로 이동");
+        console.log(res);
+        onSetIsLogin();
+        history.push("/NameSettingPage");
       }
       // if (accessToken) {
       //   setIsLogin(true);
@@ -143,7 +138,7 @@ function Nav({userImg}:any) {
     dispatch(searchSelect(e.target.value));
   };
 
-  console.log(userImg)
+  console.log(userImg);
 
   return (
     <NavBar>
@@ -162,14 +157,13 @@ function Nav({userImg}:any) {
       </LeftBox>
       {isLogin ? (
         <NavButtons>
-          <UserIconContainer src={userImg} onClick={handleMenuModal}>
-          </UserIconContainer>
-            {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
+          <UserIconContainer src={userImg} onClick={handleMenuModal}></UserIconContainer>
+          {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
         </NavButtons>
       ) : (
         <NavButtons>
           <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
-          <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal}></LoginModal>
+          <LoginModal></LoginModal>
         </NavButtons>
       )}
     </NavBar>
@@ -261,4 +255,3 @@ const UserIconContainer = styled.img`
   border-radius: 50%;
   object-fit: cover;
 `;
-

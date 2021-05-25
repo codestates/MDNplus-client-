@@ -5,27 +5,31 @@ import { fadeIn, slideUp } from "../styled-components/Animation";
 import userIcon from "../img/userIcon_blue3.png";
 import kakao from "../img/kakao2.png";
 import github from "../img/github.png";
+import useBooleanData from '../Hooks/useBooleanData';
 
-type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  // checkLogin: React.Dispatch<React.SetStateAction<boolean>>;
-};
+// type Props = {
+//   // isOpen: boolean;
+//   onClose: () => void;
+//   // checkLogin: React.Dispatch<React.SetStateAction<boolean>>;
+// };
 
-function LoginModal({ isOpen, onClose }: Props) {
+function LoginModal() {
   const overLay = useRef(null);
   const REST_API_KEY = "144bf580b6a5f37255716facf6728b0d";
   const REDIRECT_URI = "http://localhost:3000/kakaoLogin";
   const { Kakao }: any = window;
+  const {BooleanState, onSetIsLoginOpen} = useBooleanData()
+  const {isLogInOpen} = BooleanState
+
 
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === overLay.current) {
-      onClose();
+      onSetIsLoginOpen(false)
     }
   };
 
   const handleCloseIcon = () => {
-    onClose();
+    onSetIsLoginOpen(false)
   };
 
   const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize/?client_id=6247a72ec8e51735ea34`;
@@ -48,7 +52,7 @@ function LoginModal({ isOpen, onClose }: Props) {
     });
   };
 
-  return isOpen ? (
+  return isLogInOpen ? (
     <ModalContainer onClick={handleOverLay} ref={overLay}>
       <ModalBox>
         <CloseIcon onClick={handleCloseIcon}>

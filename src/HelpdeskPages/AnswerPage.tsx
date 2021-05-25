@@ -74,6 +74,7 @@ function AnswerPage() {
     <Container>
       <LeftContainer>
         <QuestionPart>
+          <Q>Q</Q>
           <Title> {displayQuestion?.title}</Title>
 
           <QuestionBody>{displayQuestion?.body}</QuestionBody>
@@ -257,7 +258,13 @@ const AnswerBox = styled.div`
   width: 100%;
   height: 100%;
 `;
-const Title = styled.div`
+const Q = styled.span`
+  font-size: 3rem;
+  margin: 0.5rem;
+  color: #005ce7;
+`;
+
+const Title = styled.span`
   font-size: 25px;
   font-weight: bold;
   margin-bottom: 1rem;

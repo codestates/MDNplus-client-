@@ -43,8 +43,8 @@ function MyPage() {
   const allState = useSelector((state: RootState) => state.MyPageReducer);
   const { mdnAllData } = allState;
   const [isQuestion, setIsQuestion] = useState(true);
-  const [questionColor, setQuestionColor] = useState("blue");
-  const [answerColor, setAnswerColor] = useState("black");
+  const [questionColor, setQuestionColor] = useState("#005ce7");
+  const [answerColor, setAnswerColor] = useState(" #a7a3a3");
 
   useEffect(() => {
     dispatch(allDataAction(myPageFakeData));
@@ -84,14 +84,14 @@ function MyPage() {
   };
 
   const HandleMDNClicked = () => {
-    setQuestionColor("blue");
-    setAnswerColor("black");
+    setQuestionColor("#005ce7");
+    setAnswerColor("#a7a3a3");
     setIsQuestion(true);
   };
 
   const HandleHelpDeckClicked = () => {
-    setAnswerColor("blue");
-    setQuestionColor("black");
+    setAnswerColor("#005ce7");
+    setQuestionColor("#a7a3a3");
     setIsQuestion(false);
   };
 
@@ -114,6 +114,7 @@ function MyPage() {
           <QuestionContainer>
             {mdnAllData?.questions.map((el) => (
               <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
+                <Q>Q</Q>
                 <QuestionTitle>{el.title}</QuestionTitle>
                 <QuestionBody>{el.body}</QuestionBody>
                 <div>
@@ -145,10 +146,8 @@ function MyPage() {
           <QuestionContainer>
             {mdnAllData?.comments.map((el) => (
               <QuestionBox key={el._id} onClick={() => handleMyAnswers(el)}>
-                <QuestionTitle>
-                  <span>Q</span>
-                  {el.questionId.title}
-                </QuestionTitle>
+                <Q>Q</Q>
+                <QuestionTitle>{el.questionId.title}</QuestionTitle>
                 <QuestionBody>{el.content}</QuestionBody>
                 <QuestionLastLine>
                   <QuestionLikes> 좋아요: &nbsp;{el.like}</QuestionLikes>
@@ -187,7 +186,7 @@ const AnswerList = styled.div`
   font-size: 1.5rem;
 
   &:hover {
-    color: #005ce7;
+    color: "#005ce7";
   }
 `;
 
@@ -233,7 +232,12 @@ const RightContainer = styled.div`
   grid-area: 2/3/3/8;
 `;
 
-const QuestionTitle = styled.div`
+const Q = styled.span`
+  font-size: 3rem;
+  color: #005ce7;
+`;
+
+const QuestionTitle = styled.span`
   font-weight: bold;
   font-size: 1.5rem;
   padding 1rem;

@@ -163,26 +163,30 @@ function QcontentPage() {
       {currentData !== null && currentData !== undefined ? (
         <Container>
           <QuestionContainer>
-            <LikesPart>
-              <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span>
-              <LikesNum> {currentData.question.like}</LikesNum>
-              <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes>
-              <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span>
-            </LikesPart>
-            <QuestionBox>
-              <Title> {currentData.question.title}</Title>
-              <NameDate>
-                <UserName>유저이름</UserName>
-                <Date>{currentData.question.createdAt}</Date>
-              </NameDate>
-              <Body>{currentData.question.body}</Body>
-              <div>
-                {currentData.question.tags?.map((el, index: number) => (
-                  <Tags key={index}>{el}</Tags>
-                ))}
-              </div>
-              {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
-            </QuestionBox>
+            <LineArea>질문</LineArea>
+            <Question>
+              <LikesPart>
+                <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span>
+                <LikesNum> {currentData.question.like}</LikesNum>
+                <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes>
+                <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span>
+              </LikesPart>
+              <QuestionBox>
+                <Q>Q</Q>
+                <Title> {currentData.question.title}</Title>
+                <NameDate>
+                  <UserName>유저이름</UserName>
+                  <Date>{currentData.question.createdAt}</Date>
+                </NameDate>
+                <Body>{currentData.question.body}</Body>
+                <div>
+                  {currentData.question.tags?.map((el, index: number) => (
+                    <Tags key={index}>{el}</Tags>
+                  ))}
+                </div>
+                {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
+              </QuestionBox>
+            </Question>
           </QuestionContainer>
 
           <AnswerContainer>
@@ -224,13 +228,22 @@ const Container = styled.div`
 `;
 
 const QuestionContainer = styled.div`
+  grid-area: 1/2/3/6;
   margin: 8rem 0 2rem 0;
+`;
+
+const Question = styled.div`
   grid-area: 1/2/3/6;
   display: flex;
   padding-bottom: 4rem;
   align-items: center;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.09) 10px 10px 20px;
+`;
+
+const Q = styled.span`
+  font-size: 3rem;
+  color: #005ce7;
 `;
 
 const QuestionBox = styled.div`
@@ -262,7 +275,7 @@ const LineArea = styled.div`
   margin-bottom: 2rem;
 `;
 
-const Title = styled.div`
+const Title = styled.span`
   font-weight: bold;
   font-size: 2rem;
   padding: 1rem;
@@ -275,6 +288,7 @@ const UserName = styled.span`
 `;
 
 const NameDate = styled.div`
+  margin: 2rem 0 2rem 0;
   color: #686868;
   text-align: right;
 `;
@@ -305,6 +319,7 @@ const Likes = styled.span`
   cursor: pointer;
   &:hover {
     color: #1658d8;
+    font-weight: bold;
   }
 `;
 

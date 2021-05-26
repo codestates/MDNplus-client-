@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
 import useContentData from "../Hooks/useContentData";
-import useAllData from '../Hooks/useAllData';
+import axios from "axios";
+import useBooleanData from "../Hooks/useBooleanData";
+
+// axios.defaults.withCredentials = true
 
 type EditProps = {
   // EditPage로부터 받아오는 Props 타입 설정을 위한 코드
@@ -10,30 +13,30 @@ type EditProps = {
 };
 
 //EditPage에서 수정 버튼 누를 시, 정말로 수정을 할 것인지 유저에게 확인하기 위해 만든 모달
-function EditConfirmModal({ handleConfirmModal }:EditProps) {
+function EditConfirmModal({ handleConfirmModal }: EditProps) {
   const { contentState } = useContentData();
   const { contentData } = contentState;
-  const { onSetWriteMode} = useAllData()
+  const { onSetWriteMode } = useBooleanData();
   const history = useHistory();
 
   // 모달창에 있는 수정 버튼 또는 O 버튼 누를 시, 서버에 글수정 요청을 보내는 코드
   const handleSubmit = () => {
-    console.log("수정 요청 성공");
+    axios.patch("http://localhost:80/maincontent", { mainContentId: contentData._id, body: contentData.body }, { withCredentials: true }).then((res) => console.log(res));
     handleConfirmModal();
     history.push("/ContentPage");
-    onSetWriteMode()
-    console.log(contentData);
+    onSetWriteMode(false);
   };
 
+  console.log(contentData);
   return (
     <ModalContainer onClick={handleConfirmModal}>
-        <ModalBox onClick={(e) => e.stopPropagation()}>
-          <div>게시물을 수정하시겠습니까?</div>
-          <div>
-            <button onClick={handleSubmit}>수정하기</button>
-            <button onClick={handleConfirmModal}>취소하기</button>
-          </div>
-        </ModalBox>
+      <ModalBox onClick={(e) => e.stopPropagation()}>
+        <div>게시물을 수정하시겠습니까?</div>
+        <div>
+          <button onClick={handleSubmit}>수정하기</button>
+          <button onClick={handleConfirmModal}>취소하기</button>
+        </div>
+      </ModalBox>
     </ModalContainer>
   );
 }

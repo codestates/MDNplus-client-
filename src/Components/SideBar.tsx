@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
 const SideBar = () => {
-  //   const [isSelected, setIsSelected] = useState("#DCEAFF");
   const [sideBar, setSideBar] = useState("wiki");
   const history = useHistory();
 
@@ -52,7 +51,7 @@ const handleColorType = (color: any) => {
 
 const Container = styled.span`
   width: 17%;
-  height: 100vw;
+  height: 150rem;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
 

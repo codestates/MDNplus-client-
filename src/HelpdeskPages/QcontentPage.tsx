@@ -17,7 +17,14 @@ type DataType = {
     _id: string;
     title: string;
     body: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: null;
+      image: null;
+      _id: string;
+      __v: 0;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -154,7 +161,7 @@ function QcontentPage() {
     } else {
       console.log(location.state.pageName);
     }
-    onCurrentQData(QContentFakeData);
+    // onCurrentQData();
 
     console.log("쿼스천 함수 실행됨");
   }, []);

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
 const SideBar = () => {
-  //   const [isSelected, setIsSelected] = useState("#DCEAFF");
   const [sideBar, setSideBar] = useState("wiki");
   const history = useHistory();
 
@@ -19,24 +18,19 @@ const SideBar = () => {
 
   return (
     <Container>
-      <span onClick={(() => history.push('/MyPage'))}>마이페이지</span>
       {sideBar === "wiki" ? (
         <Wiki color="isSelected" onClick={handleMoveToWiki}>
           MDN+ WiKi
         </Wiki>
       ) : (
-        <Wiki onClick={handleMoveToWiki}>
-          MDN+ WiKi
-        </Wiki>
+        <Wiki onClick={handleMoveToWiki}>MDN+ WiKi</Wiki>
       )}
       {sideBar === "helpdesk" ? (
         <HelpDesk color="isSelected" onClick={handleMoveToHelp}>
           HelpDesk
         </HelpDesk>
       ) : (
-        <HelpDesk onClick={handleMoveToHelp}>
-          HelpDesk
-        </HelpDesk>
+        <HelpDesk onClick={handleMoveToHelp}>HelpDesk</HelpDesk>
       )}
     </Container>
   );
@@ -53,7 +47,7 @@ const handleColorType = (color: any) => {
 
 const Container = styled.span`
   width: 17%;
-  height: 100vw;
+  height: 150rem;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
 

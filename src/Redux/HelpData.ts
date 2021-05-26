@@ -18,58 +18,56 @@ type HelpDataAction =
 | ReturnType<typeof clickQuestion>
 
 //answer 타입 설정
-type Answers = {
-    id: number;
-    userId: number;
-    userName: string;
-    qTitle: string;
-    body: string;
-    likes: number;
-    createdAt: string;
-}
+// type Answers = {
+//     id: number;
+//     userId: number;
+//     userName: string;
+//     qTitle: string;
+//     body: string;
+//     likes: number;
+//     createdAt: string;
+// }
 
 // question 타입 설정
 type Question = {
-    id: number;
-    userName: string;
-    userId: number;
+    id: string;
+    tags: string[];
+    like: number;
     title: string;
     body: string;
-    answers: Answers[];
-    likes: number;
-    tags: string[];
+    userId: string;
     createdAt: string;
+    updatedAt: string;
+    commentCount: number;
 }
 
 //initialState 타입 설정
 type HelpDataState = {
-    allQuestions: null | Question[]
+    allQuestions: null | Question[];
+    currentData: null | Question;
+    latestQuestions: null | Question[];
+    popularityQuestion: null | Question[];
 }
 
 //initialState 초기값 설정
 const initialState = {
     allQuestions: null,
-    currentData: null
+    currentData: null,
+    latestQuestions: null,
+    popularityQuestion: null
 }
 
 function HelpDataReducer(state:HelpDataState = initialState, action: HelpDataAction) {
     switch(action.type) {
         case STOREDATA:
             console.log('여기서 저장해줘야됨')
-            //브라우저에 처음부터 최신순으로 렌더링하기 위해서 데이터를 저장할 때, 최신순으로 저장
-            const newArr = action.payload.sort(date_ascending)
-            return {...state, allQuestions: newArr}
+            return {...state, allQuestions: action.payload}
         case FILTERFAST:
             console.log('최신순으로 필터')
-            const newArr2 = state.allQuestions?.sort(date_ascending)
-            console.log(newArr2)
-            return {...state, allQuestions: newArr2}
+            return state
         case FILTERPOPULAR:
             console.log('인기순으로 필터')
-            console.log(state.allQuestions)
-            const sorted = state.allQuestions?.sort((a:any, b:any) => b.like - a.like)
-            console.log(sorted)
-            return {...state, allQuestions: sorted}
+            return state
         case CLICKQUESTION:
             console.log('QcontentPage로 들어가게 될 객체를 업데이트 해야 됨')
             return state

@@ -18,20 +18,36 @@ type DataType = {
     _id: string;
     title: string;
     body: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: number;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   };
   comments: {
     like: number;
     _id: string;
     questionId: string;
     content: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: number;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   }[];
 };
 
@@ -40,14 +56,23 @@ type AnswerType = {
   _id: string;
   questionId: string;
   content: string;
-  userId: string;
+  userId: {
+    nickName: string;
+    kakaoId: string;
+    githubId: string;
+    image: string;
+    _id: string;
+    __v: number;
+  };
   createdAt: string;
   updatedAt: string;
   __v: number;
+  isLike: boolean;
 };
 
 type PageNameType = {
   pageName: string;
+  questionId: string;
 };
 
 function QcontentPage() {
@@ -56,9 +81,9 @@ function QcontentPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [isMainPage, setisMainPage] = useState<boolean>(true);
-  const [isLike, setIsLike] = useState<boolean>(true);
   const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
+  const [isLike, setIsLike] = useState<boolean>(true);
 
   const handleQuestionIncreaseLikes = (updateData: DataType) => {
     updateData.question.like = updateData.question.like + 1;
@@ -90,7 +115,7 @@ function QcontentPage() {
     }
     updateData.like = updateData.like - 1;
 
-    onAnswerLike(updateData);
+    // onAnswerLike(updateData,true);
 
     setIsAnswerLike(() => !isAnswerLike);
     // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
@@ -105,7 +130,7 @@ function QcontentPage() {
 
     updateData.like = updateData.like + 1;
 
-    onAnswerLike(updateData);
+    // onAnswerLike(updateData);
 
     setIsAnswerLike(() => !isAnswerLike);
     // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
@@ -114,13 +139,13 @@ function QcontentPage() {
   const handleQuestionLike = (updateData: DataType) => {
     if (isLike === true) {
       updateData.question.like = updateData.question.like + 1;
-
+      updateData.question.isLike = updateData.question.isLike = false;
       console.log(updateData);
 
       onQuestionLike(updateData);
     } else {
       updateData.question.like = updateData.question.like - 1;
-
+      updateData.question.isLike = updateData.question.isLike = true;
       console.log(updateData);
 
       onQuestionLike(updateData);
@@ -130,17 +155,17 @@ function QcontentPage() {
   };
 
   const handleAnswerLike = (updateData: AnswerType, index: number) => {
-    if (isAnswerLike === true) {
+    if (updateData.isLike === true) {
+      console.log("clicked");
       updateData.like = updateData.like + 1;
-
+      updateData.isLike = false;
       onAnswerLike(updateData);
     } else {
       updateData.like = updateData.like - 1;
-
+      updateData.isLike = true;
       onAnswerLike(updateData);
+      // onAnswerLike(updateData);
     }
-
-    setIsAnswerLike(() => !isAnswerLike);
   };
 
   const handleAnswerBtn = () => {
@@ -151,21 +176,45 @@ function QcontentPage() {
     });
   };
 
-  useEffect(() => {
-    if (location.state === undefined) {
-      console.log("null");
-    } else if (location.state.pageName === "MyPage") {
-      setisMainPage(false);
-      console.log(location.state.pageName);
-    } else {
-      console.log(location.state.pageName);
-    }
-    onCurrentQData(QContentFakeData);
+  // useEffect(() => {
+  //   if(currentData) {
+  //     console.log(isLike.length)
+  //     if(isLike.length === 1) {
+  //       return
+  //     } else {
+  //       for(let i = 0; i < currentData?.comments.length; i++) {
+  //         console.log('state안에 답변의 갯수만큼 0을 넣어줌')
+  //         const newIsLike = [...isLike, 0]
+  //         setIsLike(newIsLike)
+  //         console.log(isLike)
+  //       }
+  //     }
+  //   } else {
+  //     console.log('currentData 없음')
+  //   }
+  // },[test])
 
-    console.log("쿼스천 함수 실행됨");
+  useEffect(() => {
+    let questionID: string = "";
+    if (location.state === undefined) {
+      // console.log("null");
+    } else if (location.state.pageName === "MyPage") {
+      questionID = location.state.questionId;
+      setisMainPage(false);
+      // console.log(location.state.pageName);
+    } else if (location.state.pageName === "HelpdeskPage") {
+      questionID = location.state.questionId;
+    } else if (location.state.pageName === "Searchpage") {
+      questionID = location.state.questionId;
+    }
+    // axios.get(`http://localhost:80/question/${questionID}`).then((res) => {
+    //   onCurrentQData(res.data);
+    dispatch(onCurrentQData(QContentFakeData));
+
+    // });
+    console.log("useEffect 실행후 Search Page 에서 아이디 가져옴 ===>> ", questionID);
   }, []);
 
-  console.log("myPage에서 전달받은 질문", currentData);
   return (
     <div>
       {currentData !== null && currentData !== undefined ? (
@@ -176,7 +225,7 @@ function QcontentPage() {
               <LikesPart onClick={() => handleQuestionLike(currentData)}>
                 <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span>
 
-                {isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
+                {currentData.question.isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
                 <LikesNum> {currentData.question.like}</LikesNum>
 
                 {/* <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes> */}
@@ -186,8 +235,8 @@ function QcontentPage() {
                 <Q>Q</Q>
                 <Title> {currentData.question.title}</Title>
                 <NameDate>
-                  <UserName>유저이름</UserName>
-                  <Date>{currentData.question.createdAt}</Date>
+                  <UserName>{currentData.question.userId.nickName}</UserName>
+                  <Date>{currentData.question.createdAt.substring(0, 10)}</Date>
                 </NameDate>
                 <Body>{currentData.question.body}</Body>
                 <div>
@@ -201,24 +250,21 @@ function QcontentPage() {
           </QuestionContainer>
 
           <AnswerContainer>
-            <LineArea> N개의 답변</LineArea>
+            <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
             {currentData.comments?.map((el, index: number) => (
               <EachAnswer key={index}>
                 <LikesPart onClick={() => handleAnswerLike(el, index)}>
                   <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
-                  {isAnswerLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" />}
-
+                  {el.isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
                   <LikesNum> {el.like}</LikesNum>
-
                   <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
                 </LikesPart>
                 <AnswerBox>
-                  <AnswerTitle> 김코딩 님의 답변 </AnswerTitle>
+                  <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle>
                   <Body>{el.content}</Body>
                   <NameDate>
                     <LikesNum onClick={() => handleAnswerLike(el, index)}> 좋아요: &nbsp; {el.like}</LikesNum>
-
-                    <Date>{el.createdAt}</Date>
+                    <Date>{el.createdAt.substring(0, 10)}</Date>
                   </NameDate>
                 </AnswerBox>
               </EachAnswer>
@@ -236,7 +282,7 @@ export default QcontentPage;
 
 const Container = styled.div`
   height: 100vh;
-  weidth: 100vw;
+  width: 85vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, auto);
@@ -283,11 +329,13 @@ const AnswerBox = styled.div`
   width: 80%;
 `;
 
-const LineArea = styled.div`
-  font-size: 1rem;
+const LineArea = styled.span`
+  font-size: 1.3rem;
   color: #1658d8;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin: 0 0 5rem 2.6rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 0.17rem solid #e0e0e0;
 `;
 
 const Title = styled.span`
@@ -297,6 +345,7 @@ const Title = styled.span`
 `;
 
 const AnswerTitle = styled.div`
+  padding-top: 2rem;
   font-weight: bold;
   font-size: 1rem;
   color: #686868;

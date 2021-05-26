@@ -10,7 +10,7 @@ import myPageFakeData from "../mypageFakeData";
 
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 type QuestionType = {
   tags: string[];
@@ -50,7 +50,7 @@ function MyPage() {
 
   useEffect(() => {
     // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
-    axios.get("http://localhost:80/helpdesk/me").then((res) => {
+    axios.get("http://localhost:80/helpdesk/me", { withCredentials: true }).then((res) => {
       console.log(res);
       dispatch(allDataAction(res.data));
     });

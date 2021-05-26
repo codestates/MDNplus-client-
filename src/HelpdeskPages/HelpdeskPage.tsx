@@ -4,9 +4,9 @@ import fakeData2 from "../FakeData2";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import ideaIcon from "../img/idea.png";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { currentQData } from "../Redux/QcontentData";
+import axios from "axios";
 
 type Question = {
   id: number;
@@ -36,40 +36,39 @@ type HelpData = {
 
 const HelpdeskPage = () => {
   const [isSelected, setIsSelected] = useState("최신순");
-  const { helpData, onStoreData, onFilterFast, onFilterPopular, onClickQuestion } = useHelpData();
+  const { helpData, onStoreData, onClickQuestion } = useHelpData();
   const { allQuestions }: any = helpData;
   const history = useHistory();
   const dispatch = useDispatch();
 
+  // const {latestQuestion, popularityQuestion} = allQuestions
+
   const handleFilter = (type: string) => {
-    if (type === "최신순") {
-      setIsSelected("최신순");
-      onFilterFast();
-    } else if (type === "인기순") {
-      setIsSelected("인기순");
-      onFilterPopular();
-    }
+    // if (type === "최신순") {
+    //   setIsSelected("최신순");
+    //   onFilterFast();
+    // } else if (type === "인기순") {
+    //   setIsSelected("인기순");
+    //   onFilterPopular();
+    // }
   };
 
   const handleClickQuestion = (question: any) => {
-    dispatch(currentQData(question));
-
-    axios.get("http://localhost:80/helpdesk").then((res) => onStoreData(res.data.allQuestions));
-
+    console.log(question._id);
+    // history.push('/QcontentPage')
     history.push({
-      pathname: "/Qcontentpage",
-      state: { pageName: "MainPage" },
+      pathname: "/QcontentPage",
+      state: { pageName: "HelpdeskPage", questionId: question._id },
     });
   };
 
   useEffect(() => {
     // 헬프데스크 메인페이지 렌더링에 필요한 데이터 받아오는 요청
-    axios.get("http://localhost:8080/helpdesk").then((res) => onStoreData(res.data.allQuestions));
+    axios.get("http://localhost:80/helpdesk").then((res) => {
+      console.log(res);
+      onStoreData(res.data);
+    });
   }, []);
-
-  if (allQuestions) {
-    console.log(allQuestions[0]._id);
-  }
 
   return (
     <>
@@ -130,7 +129,7 @@ const HelpdeskPage = () => {
             {allQuestions === null ? (
               <div>로딩 중입니다</div>
             ) : (
-              allQuestions.map((el: any, idx: any) => (
+              allQuestions.latestQuestion.map((el: any, idx: any) => (
                 <>
                   <QuestionBox
                     onClick={() => {

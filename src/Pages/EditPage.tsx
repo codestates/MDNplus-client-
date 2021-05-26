@@ -7,6 +7,8 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import {useHistory} from "react-router-dom"
 import useAllData from "../Hooks/useAllData"
+import useBooleanData from '../Hooks/useBooleanData';
+import {SubmitBtn, ExitBtn} from "../styled-components/Post"
 
 
 // type PropsOption = {
@@ -15,16 +17,13 @@ import useAllData from "../Hooks/useAllData"
 
 function EditPage() {
   const { contentState, onChangeContent } = useContentData();
+  const {allState} = useAllData()
+  const {onSetWriteMode} = useBooleanData()
   const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
-  const {allState, onSetWriteMode} = useAllData()
-  const {writeMode} = allState
   const [checkModal, setCheckModal] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const history = useHistory()
-  // if(!writeMode) {
-  //   onSetWriteMode()
-  // }
-  console.log(contentData)
+  
 
   //유저가 글을 수정하여 onchange 이벤트가 발생 시, contentData의 body를 수정하기 위한 함수
   const handleChange = (e: any) => {
@@ -42,11 +41,19 @@ function EditPage() {
 
   const handleExit = () => {
     history.push('/ContentPage')
-    onSetWriteMode()
+    onSetWriteMode(false)
+  }
+
+  window.onpageshow = (e:any) => {
+    console.log(e)
+    if(e.persisted) {
+      console.log(e.persisted)
+    }
   }
 
   useEffect(() => {
-    onSetWriteMode()
+    onSetWriteMode(true)
+    
   }, [])
   
   // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)
@@ -72,7 +79,7 @@ function EditPage() {
             ) : (
               <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>
             )}
-            <span onClick={handleExit}>나가기</span>
+            <ExitBtn onClick={handleExit}>나가기</ExitBtn>
             <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
           </LeftContainer>
           <RightContainer>
@@ -118,17 +125,22 @@ const Body = styled.textarea`
   font-size: 16px;
 `;
 
-const SubmitBtn = styled.button`
-  position: fixed;
-  top: 45rem;
-  left: 38rem;
-  // top: 900px;
-  // left: 800px;
-`;
-
 const RightContainer = styled.div`
   background: #f4f4f4;
   padding: 0px 30px 30px 30px;
+  line-height: 2rem;
+  word-spacing: 0.2rem;
+`;
+
+const MarDownBtns = styled.div`
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+`;
+
+const MarkDownBtn = styled.button`
+  text-size: 1.5rem;
+  margin: 0.2rem;
 `;
 
 

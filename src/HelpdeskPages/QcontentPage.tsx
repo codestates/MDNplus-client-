@@ -7,7 +7,7 @@ import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { answerLike } from "../Redux/QcontentData";
+import { answerLike, currentQData } from "../Redux/QcontentData";
 import axios from "axios";
 import QfakeData from "../QContentFakeData";
 
@@ -65,10 +65,11 @@ function QcontentPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [isMainPage, setisMainPage] = useState<boolean>(true);
-  const [isLike, setIsLike] = useState<boolean>(true);
   const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
   const [questionId, setQuestionId] = useState("");
+  const [isLike, setIsLike] = useState<any>([0]);
+  // const [test, setTest] = useState(false) // for문 돌리는 조건을 위해 currentData가 있는지 없는지 boolean 값으로 만든 state
 
   const handleQuestionIncreaseLikes = (updateData: DataType) => {
     updateData.question.like = updateData.question.like + 1;
@@ -161,28 +162,49 @@ function QcontentPage() {
     });
   };
 
+  // useEffect(() => {
+  //   if(currentData) {
+  //     console.log(isLike.length)
+  //     if(isLike.length === 1) {
+  //       return
+  //     } else {
+  //       for(let i = 0; i < currentData?.comments.length; i++) {
+  //         console.log('state안에 답변의 갯수만큼 0을 넣어줌')
+  //         const newIsLike = [...isLike, 0]
+  //         setIsLike(newIsLike)
+  //         console.log(isLike)
+  //       }   
+  //     }
+  //   } else {
+  //     console.log('currentData 없음')
+  //   }
+  // },[test])
+
   useEffect(() => {
     if (location.state === undefined) {
-      console.log("null");
+      // console.log("null");
     } else if (location.state.pageName === "MyPage") {
       setisMainPage(false);
-      console.log(location.state.pageName);
+      // console.log(location.state.pageName);
     } else if (location.state.pageName === "HelpdeskPage") {
-      console.log(location.state);
+      // console.log(location.state);
       // setQuestionId(location.state.questionId)
       const questionId = location.state.questionId;
       axios.get(`http://localhost:80/question/${questionId}`).then((res) => {
-        console.log(res);
+        // console.log(res);
         onCurrentQData(res.data);
+        // setTest(true)
       });
     }
 
-    console.log(location.state.questionId);
+    // console.log(location.state.questionId);
 
-    console.log("쿼스천 함수 실행됨");
+    // console.log("쿼스천 함수 실행됨");
+ 
   }, []);
 
-  console.log("myPage에서 전달받은 질문", currentData);
+  console.log(isLike)
+  // console.log("myPage에서 전달받은 질문", currentData);
   return (
     <div>
       {currentData !== null && currentData !== undefined ? (

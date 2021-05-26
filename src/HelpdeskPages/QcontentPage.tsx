@@ -19,7 +19,14 @@ type DataType = {
     _id: string;
     title: string;
     body: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: null;
+      image: null;
+      _id: string;
+      __v: 0;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -246,7 +253,7 @@ export default QcontentPage;
 
 const Container = styled.div`
   height: 100vh;
-  weidth: 100vw;
+  width: 100vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, auto);

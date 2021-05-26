@@ -8,12 +8,12 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import useAllData from "../Hooks/useAllData";
 import AnswerModal from "../Components/AnswerModal";
-import useBooleanData from '../Hooks/useBooleanData';
-import {ExitBtn, SubmitBtn} from "../styled-components/Post"
+import useBooleanData from "../Hooks/useBooleanData";
+import { ExitBtn, SubmitBtn } from "../styled-components/Post";
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
-  const {onSetWriteMode} = useBooleanData()
+  const { onSetWriteMode } = useBooleanData();
   const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
@@ -132,7 +132,7 @@ function AnswerPage() {
           </MarDownBtns>
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
-       
+
         {isOpen ? <AnswerModal btnName={btnName} setIsOpen={setIsOpen} /> : null}
         <SubmitBtn onClick={handleAnswerBtn}> 답변달기</SubmitBtn>
         <ExitBtn onClick={handleAnswerBtn}> 나가기 </ExitBtn>
@@ -214,7 +214,7 @@ const MarkDownBtn = styled.span`
   &:hover {
     color: #616161;
   }
-`
+`;
 const RightContainer = styled.div`
 background-color: #F5F5F5;
 width: 50%;

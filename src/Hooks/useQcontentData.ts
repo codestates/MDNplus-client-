@@ -11,7 +11,14 @@ type DataType = {
     _id: string;
     title: string;
     body: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: null;
+      image: null;
+      _id: string;
+      __v: 0;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;

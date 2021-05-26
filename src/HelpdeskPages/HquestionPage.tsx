@@ -89,16 +89,16 @@ const QuestionPage = () => {
     axios.post('http://localhost:80/question', {title, body, tags},{withCredentials:true})
     .then(res => console.log(res))
     history.push('/HelpdeskPage')
-    onSetWriteMode()
+    onSetWriteMode(false)
   };
 
   const handleExit = () => {
     history.push('/HelpdeskPage')
-    onSetWriteMode()
+    onSetWriteMode(false)
   }
 
   useEffect(() => {
-    onSetWriteMode()
+    onSetWriteMode(true)
   }, [])
 
   return (

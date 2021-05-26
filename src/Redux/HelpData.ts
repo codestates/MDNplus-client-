@@ -18,27 +18,27 @@ type HelpDataAction =
 | ReturnType<typeof clickQuestion>
 
 //answer 타입 설정
-type Answers = {
-    id: number;
-    userId: number;
-    userName: string;
-    qTitle: string;
-    body: string;
-    likes: number;
-    createdAt: string;
-}
+// type Answers = {
+//     id: number;
+//     userId: number;
+//     userName: string;
+//     qTitle: string;
+//     body: string;
+//     likes: number;
+//     createdAt: string;
+// }
 
 // question 타입 설정
 type Question = {
-    id: number;
-    userName: string;
-    userId: number;
+    id: string;
+    tags: string[];
+    like: number;
     title: string;
     body: string;
-    answers: Answers[];
-    likes: number;
-    tags: string[];
+    userId: string;
     createdAt: string;
+    updatedAt: string;
+    commentCount: number;
 }
 
 //initialState 타입 설정
@@ -67,7 +67,7 @@ function HelpDataReducer(state:HelpDataState = initialState, action: HelpDataAct
         case FILTERPOPULAR:
             console.log('인기순으로 필터')
             console.log(state.allQuestions)
-            const sorted = state.allQuestions?.sort((a:any, b:any) => b.like - a.like)
+            const sorted = state.allQuestions?.sort((a, b) => b.like - a.like)
             console.log(sorted)
             return {...state, allQuestions: sorted}
         case CLICKQUESTION:

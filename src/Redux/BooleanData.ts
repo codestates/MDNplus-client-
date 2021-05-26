@@ -1,10 +1,12 @@
+import { BaseOptions } from 'node:vm';
+
 const WRITEMODE = "ContentData/SETWRITEMODE" as const;
 const CONTENTPAGE = "ContentData/SETCONTENTPAGE" as const;
 
-export const setWriteMode = () => ({ type: WRITEMODE });
-export const setContentPage = (boolean:Boolean) => ({ type: CONTENTPAGE, payload: boolean });
+export const setWriteMode = (boolean: Boolean) => ({ type: WRITEMODE, payload: boolean });
+export const setContentPage = (boolean: Boolean) => ({ type: CONTENTPAGE, payload: boolean });
 
-type BooleanData = ReturnType<typeof setWriteMode> | ReturnType<typeof setContentPage>
+type BooleanData = ReturnType<typeof setWriteMode> | ReturnType<typeof setContentPage>;
 
 type InitState = {
   writeMode: Boolean;
@@ -19,14 +21,9 @@ const initialState = {
 function BooleanDataReducer(state: InitState = initialState, action: BooleanData) {
   switch (action.type) {
     case WRITEMODE:
-      console.log("writeMode 바껴짐");
-      if (state.writeMode) {
-        return { ...state, writeMode: false };
-      } else {
-        return { ...state, writeMode: true };
-      }
-      case CONTENTPAGE:
-          return {...state, contentPage: action.payload}
+      return {...state, writeMode: action.payload}
+    case CONTENTPAGE:
+      return { ...state, contentPage: action.payload };
     default:
       return state;
   }

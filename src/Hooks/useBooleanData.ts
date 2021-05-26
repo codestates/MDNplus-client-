@@ -10,7 +10,7 @@ import { setWriteMode, setContentPage } from "../Redux/BooleanData"
 function useBooleanData() {
   const BooleanState = useSelector((state: RootState) => state.BooleanDataReducer);
   const dispatch = useDispatch();
-  const onSetWriteMode = useCallback(() => dispatch(setWriteMode()), [dispatch])
+  const onSetWriteMode = useCallback((boolean:Boolean) => dispatch(setWriteMode(boolean)), [dispatch])
   const onsetContentPage = useCallback((boolean:Boolean) => dispatch(setContentPage(boolean)), [dispatch])
 
   return { BooleanState, onSetWriteMode, onsetContentPage };

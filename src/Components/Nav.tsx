@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { searchWord, searchSelect, searchResult } from "../Redux/SearchData";
 import LoginModal from "./LoginModal";
 import MenuModal from "./MenuModal";
-import FakeData from "../FakeData";
 import search from "../img/search.jpeg";
 import userIcon from "../img/userIcon_gray.png";
 import useBooleanData from "../Hooks/useBooleanData";
@@ -60,7 +59,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
 
       // 검색할 때 필요한 요청 코드
       // axios.post('http://localhost:80/section/search', {title: e.target.value, type: SearchDataState.type})
-      onSearching(FakeData);
+      // onSearching();
 
       history.push("/SearchPage");
       e.target.value = "";

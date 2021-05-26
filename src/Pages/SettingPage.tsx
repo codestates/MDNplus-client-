@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import loadingGif from "../img/R6bD.gif";
-import userIcon from "../img/userIcon_gray.png"
+import userIcon from "../img/userIcon_gray.png";
+import { useHistory } from 'react-router';
 
 // axios.defaults.withCredentials = true;
 
-function SettingPage({handleChangeMenuIcon}:any) {
+function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
   const [img, setImage] = useState<any>(null);
   const [newImg, setNewImg] = useState({
     url: "",
@@ -14,6 +15,7 @@ function SettingPage({handleChangeMenuIcon}:any) {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   const [username, setUsername] = useState("");
+  const history = useHistory()
 
   const url = "https://api.cloudinary.com/v1_1/dr4ka7tze/image/upload";
   const formData = new FormData();
@@ -25,7 +27,7 @@ function SettingPage({handleChangeMenuIcon}:any) {
 
   //유저 이름 수정 완료 버튼을 눌렀을 시, 서버에 수정된 이름을 업데이트 하기 위한 코드
   const handleNameSave = () => {
-    axios.patch("http://localhost:80/userinfo/nick", { nickName: username }, {withCredentials: true}).then((res) => console.log(res));
+    axios.patch("http://localhost:80/userinfo/nick", { nickName: username }, { withCredentials: true }).then((res) => console.log(res));
     setEditing(false);
   };
 
@@ -36,8 +38,18 @@ function SettingPage({handleChangeMenuIcon}:any) {
 
   //이미지 제거 클릭했을 시, 실행되는 코드
   const handleImgDelete = () => {
-    // axios.patch('http://localhost:80/section/setting', {image: ''})
+    axios.patch('http://localhost:80/userinfo/img', {img: ''}, {withCredentials:true})
+    .then(res => setImage(''))
   };
+
+  const handleCancelMembership = () => {
+    axios.delete('http://localhost:80/userinfo/membership', {withCredentials: true})
+    .then(res => console.log(res))
+
+    history.push('/')
+    handleLogin()
+
+  }
 
   // 유저가 이미지 업로드를 하였을 때, img state가 업데이트 되고난 후, 실행되는 코드
   // 아래 useEffect가 실행되는 조건
@@ -53,10 +65,9 @@ function SettingPage({handleChangeMenuIcon}:any) {
         .post(url, formData)
         .then((res) => {
           setNewImg({ url: res.data.url });
-          handleChangeMenuIcon(res.data.url)
+          handleChangeMenuIcon(res.data.url);
           console.log(res.data.url);
-          axios.patch('http://localhost:80/userinfo/img', {img: res.data.url}, {withCredentials:true})
-          .then(res => console.log(res))
+          axios.patch("http://localhost:80/userinfo/img", { img: res.data.url }, { withCredentials: true }).then((res) => console.log(res));
           setLoading(false); // newImg state가 업데이트 되고난 후, 로딩중 gif를 제거
         })
         .catch((err) => console.log(err));
@@ -64,13 +75,19 @@ function SettingPage({handleChangeMenuIcon}:any) {
   }, [img]);
 
   useEffect(() => {
-    axios.get("http://localhost:80/userinfo", { withCredentials: true }).then((res) => setUsername(res.data.nickName));
+    axios.get("http://localhost:80/userinfo", { withCredentials: true })
+    .then((res) => {
+      console.log(res)
+      setUsername(res.data.nickName)
+      setImage(res.data.image)
+      
+    });
   }, []);
 
   return (
     <Container>
       <Stage>
-        <ImgBox>{!loading && !newImg.url ? <Img src={userIcon}></Img> : loading && !newImg.url ? <Img src={userIcon}></Img> : !loading && newImg.url ? <Img src={newImg.url}></Img> : null}</ImgBox>
+        <ImgBox>{!loading && !newImg.url ? <Img src={img}></Img> : loading && !newImg.url ? <Img src={img}></Img> : !loading && newImg.url ? <Img src={newImg.url}></Img> : null}</ImgBox>
         {!editing ? (
           <UserNameBox>
             <UserName>{username}</UserName>
@@ -105,7 +122,7 @@ function SettingPage({handleChangeMenuIcon}:any) {
       </Stage>
       <DelAccountBox>
         <DelAccount>회원 탈퇴</DelAccount>
-        <DelAccountBtn>회원 탈퇴</DelAccountBtn>
+        <DelAccountBtn onClick={handleCancelMembership}>회원 탈퇴</DelAccountBtn>
       </DelAccountBox>
     </Container>
   );
@@ -186,7 +203,7 @@ const EditInput = styled.input`
   margin-left: 2.5rem;
   width: 15rem;
   font-size: 1.3rem;
-  outline: #BDBDBD;
+  outline: #bdbdbd;
 `;
 
 const SubmitBox = styled.div`

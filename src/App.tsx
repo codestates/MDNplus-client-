@@ -59,7 +59,7 @@ function App() {
           <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal}/>} />
           <Route path="/EditPage" render={() => <EditPage />} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
-          <Route path="/SettingPage" render={() => <SettingPage handleChangeMenuIcon={handleChangeMenuIcon}/>} />
+          <Route path="/SettingPage" render={() => <SettingPage handleLogin={handleLogin} handleChangeMenuIcon={handleChangeMenuIcon}/>} />
           <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />

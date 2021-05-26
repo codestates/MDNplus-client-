@@ -28,7 +28,7 @@ const NameSettingPage = () => {
   };
 
   useEffect(() => {
-    onSetWriteMode();
+    onSetWriteMode(true);
   }, []);
 
   return (

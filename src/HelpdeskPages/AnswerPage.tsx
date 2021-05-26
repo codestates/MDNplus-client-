@@ -17,16 +17,12 @@ function AnswerPage() {
   const [writing, setWriting] = useState<string>("");
   const history = useHistory();
 
-  useEffect(() => {
-    onSetWriteMode();
-  }, []);
-
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWriting(e.target.value);
   };
 
   const handleAnswerBtn = () => {
-    onSetWriteMode();
+    onSetWriteMode(false);
     window.history.back();
   };
 
@@ -61,6 +57,10 @@ function AnswerPage() {
     //   setWriting(writing + "\n");
     // }
   };
+
+  useEffect(() => {
+    onSetWriteMode(true);
+  }, []);
 
   return (
     <Container>

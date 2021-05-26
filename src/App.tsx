@@ -1,30 +1,31 @@
-import MainPage from "./Pages/MainPage";
-import React, { useEffect, useState } from "react";
-import Nav from "./Components/Nav";
-import { BrowserRouter, Switch, Route, useHistory, withRouter } from "react-router-dom";
-import ContentPage from "./Pages/ContentPage";
-import EditPage from "./Pages/EditPage";
-import MyPage from "./HelpdeskPages/MyPage";
-import SearchPage from "./Pages/SearchPage";
-import SettingPage from "./Pages/SettingPage";
-import QcontentPage from "./HelpdeskPages/QcontentPage";
-import AnswerPage from "./HelpdeskPages/AnswerPage";
-import NameSettingPage from "./Pages/NameSettingPage"
-
 import "./App.css";
-import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
-import HquestionPage from "./HelpdeskPages/HquestionPage";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Switch, Route, useHistory, withRouter } from "react-router-dom";
 import styled from "styled-components";
-import SideBar from "./Components/SideBar";
-import useAllData from "./Hooks/useAllData";
 import userIcon from "./img/userIcon_gray.png"
 import useBooleanData from './Hooks/useBooleanData';
+//공통
+import Nav from "./Components/Nav";
+import SideBar from "./Components/SideBar";
+import SearchPage from "./Pages/SearchPage";
+import NameSettingPage from "./Pages/NameSettingPage"
+import MyPage from "./HelpdeskPages/MyPage";
+// Wiki
+import ContentPage from "./Pages/ContentPage";
+import SettingPage from "./Pages/SettingPage";
+import EditPage from "./Pages/EditPage";
+import MainPage from "./Pages/MainPage";
+// helpDesk
+import QcontentPage from "./HelpdeskPages/QcontentPage";
+import AnswerPage from "./HelpdeskPages/AnswerPage";
+import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
+import HquestionPage from "./HelpdeskPages/HquestionPage";
 
 
 function App() {
-  const [userImg, setUserImg] = useState(userIcon)
   const [isLogin, setIsLogin] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
+  const [userImg, setUserImg] = useState(userIcon)
   const {BooleanState} = useBooleanData()
   const {writeMode} = BooleanState
 
@@ -41,8 +42,6 @@ function App() {
   const handleLogin = () => {
     setIsLogin(true)
   }
-
-  // console.log(userImg)
 
   return (
     <>

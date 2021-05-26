@@ -41,7 +41,7 @@ function EditPage() {
 
   const handleExit = () => {
     history.push('/ContentPage')
-    onSetWriteMode()
+    onSetWriteMode(false)
   }
 
   window.onpageshow = (e:any) => {
@@ -52,7 +52,7 @@ function EditPage() {
   }
 
   useEffect(() => {
-    onSetWriteMode()
+    onSetWriteMode(true)
     
   }, [])
   

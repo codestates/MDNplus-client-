@@ -5,26 +5,26 @@ import { useCallback } from "react";
 import {filterFast, filterPopular, storeData} from "../Redux/HelpData"
 
 type Question = {
-    id: number;
-    userName: string;
-    userId: number;
-    title: string;
-    body: string;
-    answers: Answers[];
-    likes: number;
-    tags: string[];
-    createdAt: string;
+  id: string;
+  tags: string[];
+  like: number;
+  title: string;
+  body: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+  commentCount: number;
 }
 
-type Answers = {
-    id: number;
-    userId: number;
-    userName: string;
-    qTitle: string;
-    body: string;
-    likes: number;
-    createdAt: string;
-}
+// type Answers = {
+//     id: number;
+//     userId: number;
+//     userName: string;
+//     qTitle: string;
+//     body: string;
+//     likes: number;
+//     createdAt: string;
+// }
 
 
 function useHelpData() {

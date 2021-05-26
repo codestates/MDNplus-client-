@@ -7,6 +7,7 @@ import { RootState } from "../Redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import useAllData from "../Hooks/useAllData";
+import AnswerModal from "../Components/AnswerModal";
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
@@ -14,6 +15,8 @@ function AnswerPage() {
   const history = useHistory();
   const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [btnName, setbtnName] = useState("");
 
   useEffect(() => {
     onSetWriteMode();
@@ -24,8 +27,15 @@ function AnswerPage() {
   };
 
   const handleAnswerBtn = () => {
-    onSetWriteMode();
-    window.history.back();
+    setbtnName("답변");
+    setIsOpen(() => !isOpen);
+    // onSetWriteMode();
+    // window.history.back();
+  };
+
+  const handleExitBtn = () => {
+    setbtnName("나가기");
+    setIsOpen(() => !isOpen);
   };
 
   const handleHeader = (mark: string) => {
@@ -64,11 +74,13 @@ function AnswerPage() {
     <Container>
       <LeftContainer>
         <QuestionPart>
+          <Q>Q</Q>
           <Title> {displayQuestion?.title}</Title>
-          <Date>{displayQuestion?.createdAt}</Date>
-          <UserName>유저네임</UserName>
+          <NameDate>
+            <UserName>유저네임</UserName>
+            <Date>{displayQuestion?.createdAt}</Date>
+          </NameDate>
           <QuestionBody>{displayQuestion?.body}</QuestionBody>
-          <Likes> 좋아요: {displayQuestion?.like}</Likes>
         </QuestionPart>
         <WritingArea>
           <WritingTitle> 나의 답변</WritingTitle>
@@ -112,14 +124,16 @@ function AnswerPage() {
           </MarDownBtns>
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
-        <SubmitBtn onClick={handleAnswerBtn}> 답변달기</SubmitBtn>
-        <BackBtn onClick={handleAnswerBtn}> 나가기 </BackBtn>
+        <SubmitButtons>
+          <SubmitBtn onClick={handleAnswerBtn}> 답변하기</SubmitBtn>
+          <BackBtn onClick={handleExitBtn}> 나가기 </BackBtn>
+        </SubmitButtons>
+        {isOpen ? <AnswerModal btnName={btnName} setIsOpen={setIsOpen} /> : null}
       </LeftContainer>
 
       <RightContainer>
-        <PrieviewTitle>Preview</PrieviewTitle>
+        <PrieviewTitle>ㅡㅡㅡㅡ 님의 답변</PrieviewTitle>
         <AnswerPart>
-          <Title> {displayQuestion?.title}</Title>
           <ReactMarkdown children={writing} components={Components} />
         </AnswerPart>
       </RightContainer>
@@ -137,28 +151,31 @@ export default AnswerPage;
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
   display: flex;
 `;
 
 const LeftContainer = styled.div`
+margin: 3rem;
+
   width:50%;
-  height:100%;
+  height:70%;
   padding 13px;
-  border-right: 1.5px solid black;
 `;
 
 const WritingTitle = styled.div`
   font-size: 25px;
   font-weight: 700;
   margin: 1em 0;
-  border-bottom: 1.5px solid black;
+  color: #686868;
 `;
 
 const MarDownBtns = styled.div`
-  margin: 1rem;
   display: flex;
+  justify-content: space-around;
   align-items: center;
+  background-color: #f5f5f5;
+  width: auto;
 `;
 
 const WritingArea = styled.div`
@@ -176,28 +193,40 @@ const Body = styled.textarea`
   outline: none;
   resize: none;
   font-size: 16px;
+  margin: 2em 0 0 0;
 `;
 
-const BackBtn = styled.button`
-  top: 45rem;
-  left: 38rem;
+const BackBtn = styled.span`
+  margin: 1rem;
+  cursor: pointer;
+  &:hover {
+    color: #005ce7;
+  }
 `;
-const SubmitBtn = styled.button`
-  top: 45rem;
-  left: 38rem;
-  // top: 900px;
-  // left: 800px;
+const SubmitBtn = styled.span`
+  margin: 1rem;
+  cursor: pointer;
+  &:hover {
+    color: #005ce7;
+  }
 `;
 
-const MarkDownBtn = styled.button`
-  text-size: 1.5rem;
-  margin: 0.2rem;
+const MarkDownBtn = styled.span`
+  font-size: 1.3rem;
+
+  color: #9e9e9e;
+  border: none;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  margin: 1rem 0 1rem 0;
+  &:hover {
+    color: #616161;
+  }
 `;
 
 const RightContainer = styled.div`
-position:fixed;
-right:0;
-width:50%;
+background-color: #F5F5F5;
+width: 50%;
 height:100%;
 padding 13px;
 
@@ -206,42 +235,67 @@ padding 13px;
 const PrieviewTitle = styled.div`
   font-size: 25px;
   font-weight: 700;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  border-bottom: 1.5px solid black;
+  margin: 3rem;
 `;
 
 const QuestionPart = styled.div`
-  margin: 3rem 0;
-  width: 100%;
+  width: auto;
   height: auto;
+  border-bottom: 0.05rem solid #e0e0e0;
 `;
 
 const AnswerPart = styled.div`
-  width: 100%;
+  font-size: 1rem;
+  width: 50%;
   height: 100%;
   border: none;
+  line-height: 2rem;
+  word-spacing: 0.5rem;
+  margin: 3rem;
 `;
 
 const AnswerBox = styled.div`
   width: 100%;
   height: 100%;
 `;
-const Title = styled.div`
+const Q = styled.span`
+  font-size: 3rem;
+  margin: 0.5rem;
+  color: #005ce7;
+`;
+
+const Title = styled.span`
   font-size: 25px;
   font-weight: bold;
+  color: #616161;
   margin-bottom: 1rem;
 `;
-const Date = styled.div`
-  text-align: right;
+const Date = styled.span`
+  margin-left: 1rem;
 `;
-const UserName = styled.div``;
+
+const UserName = styled.span`
+  margin-right: 1rem;
+`;
 const QuestionBody = styled.div`
-  margin-bottom: 1rem;
+  margin: 2em 0 4em 0;
+  line-height: 1.8rem;
 `;
-const Likes = styled.div``;
+const Likes = styled.span`
+  margin: 1rem;
+`;
 const Tags = styled.div``;
 const AnswerBtn = styled.div``;
+
+const NameDate = styled.div`
+  color: #686868;
+  margin: 1em 0 1em 0;
+  text-align: right;
+`;
+
+const SubmitButtons = styled.div`
+  text-align: right;
+`;
 
 // const Container = styled.div`
 //   display: grid;

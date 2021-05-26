@@ -54,6 +54,11 @@ const HelpdeskPage = () => {
   const handleClickQuestion = (question: any) => {
     dispatch(currentQData(question));
 
+<<<<<<< HEAD
+=======
+    axios.get("http://localhost:8080/helpdesk").then((res) => onStoreData(res.data.allQuestions));
+
+>>>>>>> 232b14dd098b0f16c2cddfcd70afdc56b9b65a02
     history.push({
       pathname: "/Qcontentpage",
       state: { pageName: "MainPage" },

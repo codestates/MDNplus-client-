@@ -11,8 +11,8 @@ type Data = {
 
 function SearchPage() {
   const { SearchDataState } = useSearchData();
-  const [MDNColor, setMDNColor] = useState("blue");
-  const [HelpDeskColor, setHelpDeskColor] = useState("black");
+  const [MDNColor, setMDNColor] = useState("#005ce7");
+  const [HelpDeskColor, setHelpDeskColor] = useState("#a7a3a3");
 
   console.log(SearchDataState.result);
 
@@ -21,13 +21,13 @@ function SearchPage() {
   };
 
   const HandleMDNClicked = () => {
-    setMDNColor("blue");
-    setHelpDeskColor("black");
+    setMDNColor("#005ce7");
+    setHelpDeskColor("#a7a3a3");
   };
 
   const HandleHelpDeckClicked = () => {
-    setHelpDeskColor("blue");
-    setMDNColor("black");
+    setHelpDeskColor("#005ce7");
+    setMDNColor("#a7a3a3");
   };
 
   return SearchDataState.contentData === null ? (

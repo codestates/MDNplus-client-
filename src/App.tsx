@@ -9,7 +9,11 @@ import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
 import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
+<<<<<<< HEAD
 import NameSettingPage from "./Pages/NameSettingPage"
+=======
+import FAQ from "./Pages/FAQ";
+>>>>>>> 232b14dd098b0f16c2cddfcd70afdc56b9b65a02
 
 import "./App.css";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
@@ -41,6 +45,7 @@ function App() {
           <Route path="/AnswerPage" render={() => <AnswerPage />} />
           <Route path="/HquestionPage" render={() => <HquestionPage />} />
           <Route path="/QcontentPage" render={() => <QcontentPage />} />
+          <Route path="/FAQ" render={() => <FAQ />} />
         </Switch>
       </Container>
     </>

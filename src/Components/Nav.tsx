@@ -72,7 +72,6 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
   const gitAccessToken = (authorizationCode: string) => {
     axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       console.log("요청 성공해서 들어옴");
-      // localStorage.setItem("sessionId", );
       const { nickName, _id } = res.data;
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
@@ -98,7 +97,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
   //서버로부터 카카오 accessToken 받아오는 요청
   const kakaoAccessToken = (authorizationCode: string) => {
     console.log("카카오 accessToken 받는 요청 보내짐");
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }).then((res) => {
+    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       const { nickName, _id } = res.data;
       console.log("로그인 요청 성공함");
       if (nickName) {
@@ -164,7 +163,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
       {isLogin ? (
         <NavButtons>
           <UserIconContainer src={userImg} onClick={handleMenuModal}></UserIconContainer>
-          {isMenuOpen ? <MenuModal getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
+          {isMenuOpen ? <MenuModal handleLogin={handleLogin} getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
         </NavButtons>
       ) : (
         <NavButtons>

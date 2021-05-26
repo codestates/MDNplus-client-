@@ -20,7 +20,7 @@ function AnswerPage() {
   const [btnName, setbtnName] = useState("");
 
   useEffect(() => {
-    onSetWriteMode();
+    onSetWriteMode(true);
   }, []);
   const history = useHistory();
 
@@ -214,12 +214,7 @@ const MarkDownBtn = styled.span`
   &:hover {
     color: #616161;
   }
-  
-const MarkDownBtn = styled.button`
-  text-size: 1.5rem;
-  margin: 0.2rem;
-`;
-
+`
 const RightContainer = styled.div`
 background-color: #F5F5F5;
 width: 50%;

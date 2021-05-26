@@ -34,7 +34,7 @@ function useHelpData() {
   const onFilterFast = useCallback(() => dispatch(filterFast()), [dispatch])
   const onFilterPopular = useCallback(() => dispatch(filterPopular()), [dispatch])
   const onClickQuestion = useCallback((data:Question) => dispatch(clickQuestion(data)), [dispatch])
-  return {helpData, onStoreData, onFilterFast, onFilterPopular, onClickQuestion}
+  return {helpData, onStoreData, onClickQuestion}
 }
 
 export default useHelpData;

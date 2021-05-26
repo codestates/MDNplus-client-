@@ -8,8 +8,8 @@ import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { answerLike } from "../Redux/QcontentData";
-import axios from 'axios';
-import QfakeData from '../QContentFakeData';
+import axios from "axios";
+import QfakeData from "../QContentFakeData";
 
 type DataType = {
   question: {
@@ -49,6 +49,7 @@ type AnswerType = {
 
 type PageNameType = {
   pageName: string;
+  questionId: string;
 };
 
 function QcontentPage() {
@@ -60,6 +61,7 @@ function QcontentPage() {
   const [isLike, setIsLike] = useState<boolean>(true);
   const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
+  const [questionId, setQuestionId] = useState("");
 
   const handleQuestionIncreaseLikes = (updateData: DataType) => {
     updateData.question.like = updateData.question.like + 1;
@@ -68,8 +70,7 @@ function QcontentPage() {
 
     onQuestionLike(updateData);
 
-    axios.post('http://localhost:80/question/like', {questionId: updateData.question._id, like: updateData.question.like})
-    .then(res => console.log(res))
+    axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }).then((res) => console.log(res));
   };
 
   const handleQuestionDecreaseLikes = (updateData: DataType) => {
@@ -159,10 +160,17 @@ function QcontentPage() {
     } else if (location.state.pageName === "MyPage") {
       setisMainPage(false);
       console.log(location.state.pageName);
-    } else {
-      console.log(location.state.pageName);
+    } else if (location.state.pageName === "HelpdeskPage") {
+      console.log(location.state);
+      // setQuestionId(location.state.questionId)
+      const questionId = location.state.questionId;
+      axios.get(`http://localhost:80/question/${questionId}`).then((res) => {
+        console.log(res);
+        onCurrentQData(res.data);
+      });
     }
-    onCurrentQData(QContentFakeData);
+
+    console.log(location.state.questionId);
 
     console.log("쿼스천 함수 실행됨");
   }, []);

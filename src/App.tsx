@@ -42,7 +42,11 @@ function App() {
   }
 
   const handleLogin = () => {
-    setIsLogin(true)
+    if(isLogin) {
+    setIsLogin(false)
+    } else {
+     setIsLogin(true)
+    }
   }
 
   return (

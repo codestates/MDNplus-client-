@@ -25,7 +25,7 @@ function SettingPage({handleChangeMenuIcon}:any) {
 
   //유저 이름 수정 완료 버튼을 눌렀을 시, 서버에 수정된 이름을 업데이트 하기 위한 코드
   const handleNameSave = () => {
-    axios.patch("http://localhost:80/userinfo/nick", { nickName: username }).then((res) => console.log(res));
+    axios.patch("http://localhost:80/userinfo/nick", { nickName: username }, {withCredentials: true}).then((res) => console.log(res));
     setEditing(false);
   };
 
@@ -55,6 +55,8 @@ function SettingPage({handleChangeMenuIcon}:any) {
           setNewImg({ url: res.data.url });
           handleChangeMenuIcon(res.data.url)
           console.log(res.data.url);
+          axios.patch('http://localhost:80/userinfo/img', {img: res.data.url}, {withCredentials:true})
+          .then(res => console.log(res))
           setLoading(false); // newImg state가 업데이트 되고난 후, 로딩중 gif를 제거
         })
         .catch((err) => console.log(err));

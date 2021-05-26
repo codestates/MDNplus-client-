@@ -10,8 +10,8 @@ type QuestionType = {
   userId: {
     nickName: string;
     kakaoId: string;
-    githubId: null;
-    image: null;
+    githubId: string;
+    image: string;
     _id: string;
     __v: 0;
   };

@@ -22,8 +22,8 @@ type DataType = {
     userId: {
       nickName: string;
       kakaoId: string;
-      githubId: null;
-      image: null;
+      githubId: string;
+      image: string;
       _id: string;
       __v: 0;
     };
@@ -36,7 +36,14 @@ type DataType = {
     _id: string;
     questionId: string;
     content: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: 0;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -48,7 +55,14 @@ type AnswerType = {
   _id: string;
   questionId: string;
   content: string;
-  userId: string;
+  userId: {
+    nickName: string;
+    kakaoId: string;
+    githubId: string;
+    image: string;
+    _id: string;
+    __v: 0;
+  };
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -225,7 +239,7 @@ function QcontentPage() {
                 <Q>Q</Q>
                 <Title> {currentData.question.title}</Title>
                 <NameDate>
-                  <UserName>유저이름</UserName>
+                  <UserName>{currentData.question.userId.nickName}</UserName>
                   <Date>{currentData.question.createdAt}</Date>
                 </NameDate>
                 <Body>{currentData.question.body}</Body>
@@ -240,23 +254,20 @@ function QcontentPage() {
           </QuestionContainer>
 
           <AnswerContainer>
-            <LineArea> N개의 답변</LineArea>
+            <LineArea> {currentData.question.commentCount}</LineArea>
             {currentData.comments?.map((el, index: number) => (
               <EachAnswer key={index}>
                 <LikesPart onClick={() => handleAnswerLike(el, index)}>
                   <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
                   {isAnswerLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" />}
-
                   <LikesNum> {el.like}</LikesNum>
-
                   <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
                 </LikesPart>
                 <AnswerBox>
-                  <AnswerTitle> 김코딩 님의 답변 </AnswerTitle>
+                  <AnswerTitle> {el.userId.nickName}</AnswerTitle>
                   <Body>{el.content}</Body>
                   <NameDate>
                     <LikesNum onClick={() => handleAnswerLike(el, index)}> 좋아요: &nbsp; {el.like}</LikesNum>
-
                     <Date>{el.createdAt}</Date>
                   </NameDate>
                 </AnswerBox>

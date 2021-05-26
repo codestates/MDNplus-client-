@@ -19,6 +19,7 @@ function AnswerPage() {
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
+  
 
   useEffect(() => {
     onSetWriteMode(true);

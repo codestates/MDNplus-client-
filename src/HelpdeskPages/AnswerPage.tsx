@@ -10,6 +10,7 @@ import useAllData from "../Hooks/useAllData";
 import AnswerModal from "../Components/AnswerModal";
 import useBooleanData from "../Hooks/useBooleanData";
 import { ExitBtn, SubmitBtn } from "../styled-components/Post";
+import axios from "axios";
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
@@ -31,8 +32,15 @@ function AnswerPage() {
   const handleAnswerBtn = () => {
     setbtnName("답변");
     setIsOpen(() => !isOpen);
-    // onSetWriteMode();
-    // window.history.back();
+
+    axios.get(`http://localhost:80/`).then((res) => {
+      console.log(res);
+    });
+
+    // onCurrentQData(res.data);
+
+    onSetWriteMode(true);
+    window.history.back();
   };
 
   const handleExitBtn = () => {

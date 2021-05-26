@@ -3,7 +3,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 type MenuProps = {
@@ -14,6 +14,7 @@ type MenuProps = {
 };
 
 function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
+  const [isHelpDesk, setIsHelpDesk] = useState(false);
   const overLay = useRef(null);
   const history = useHistory();
 
@@ -23,6 +24,17 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
     }
   };
 
+  const handleLogOutButton = () => {
+    console.log("logout");
+    onClose();
+  };
+
+  console.log("hi");
+
+  const handleMyPageButton = () => {
+    history.push("/MyPage");
+  };
+  
   const handleMypage = () => {
     history.push("/MyPage")
     onClose();
@@ -33,12 +45,6 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
     onClose();
   };
   
-  const handleLogOutButton = () => {
-    console.log("logout");
-    onClose();
-  };
-
-  console.log("hi");
 
   return (
     <ModalContainer>

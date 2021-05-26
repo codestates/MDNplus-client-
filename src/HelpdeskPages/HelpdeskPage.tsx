@@ -4,9 +4,9 @@ import fakeData2 from "../FakeData2";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import ideaIcon from "../img/idea.png";
+import { useDispatch } from "react-redux";
+import { currentQData } from "../Redux/QcontentData";
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import {currentQData} from "../Redux/QcontentData"
 
 type Question = {
   id: number;

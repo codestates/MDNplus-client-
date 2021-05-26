@@ -20,6 +20,8 @@ import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
 import HquestionPage from "./HelpdeskPages/HquestionPage";
+import FAQ from "./Pages/FAQ";
+import "./App.css";
 
 
 function App() {
@@ -60,6 +62,7 @@ function App() {
           <Route path="/AnswerPage" render={() => <AnswerPage />} />
           <Route path="/HquestionPage" render={() => <HquestionPage />} />
           <Route path="/QcontentPage" render={() => <QcontentPage />} />
+          <Route path="/FAQ" render={() => <FAQ />} />
         </Switch>
       </Container>
     </>

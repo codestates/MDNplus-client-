@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
 import axios from "axios";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { answerLike } from "../Redux/QcontentData";
 
 type DataType = {
   question: {
@@ -255,7 +253,15 @@ function QcontentPage() {
               <EachAnswer key={index}>
                 <LikesPart onClick={() => handleAnswerLike(el, index)}>
                   <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
-                  {el.isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
+                  {el.isLike === true ? (
+                    <HeartIcon>
+                      <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" />{" "}
+                    </HeartIcon>
+                  ) : (
+                    <AnimatedHeart>
+                      <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
+                    </AnimatedHeart>
+                  )}
                   <LikesNum> {el.like}</LikesNum>
                   <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
                 </LikesPart>
@@ -263,7 +269,6 @@ function QcontentPage() {
                   <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle>
                   <Body>{el.content}</Body>
                   <NameDate>
-                    <LikesNum onClick={() => handleAnswerLike(el, index)}> 좋아요: &nbsp; {el.like}</LikesNum>
                     <Date>{el.createdAt.substring(0, 10)}</Date>
                   </NameDate>
                 </AnswerBox>
@@ -279,6 +284,30 @@ function QcontentPage() {
 }
 
 export default QcontentPage;
+
+const heartAnimation = keyframes`
+0%
+{
+  transform: scale( 0.2 );
+}
+
+0%
+{
+  transform: scale( 0.5 );
+}
+
+100%
+{
+  transform: scale( 1.5 );
+}
+
+`;
+
+const HeartIcon = styled.span``;
+
+const AnimatedHeart = styled(HeartIcon)`
+  animation: ${heartAnimation} 1s infinite;
+`;
 
 const Container = styled.div`
   height: 100vh;

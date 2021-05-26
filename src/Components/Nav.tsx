@@ -48,8 +48,11 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
 
   //엔터를 치면 검색 결과와 select 태그 내용을 가져오게됨.
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>): void => {
+    let word: string = e.target.value;
+    let tag: string | null = SearchDataState.tag;
+
     if (e.key === "Enter") {
-      console.log(SearchDataState.word, "태그내용", SearchDataState.tag);
+      console.log(word, "태그내용", tag);
 
       if (SearchDataState.word === "" || SearchDataState.word === SearchDataState.result) {
         alert("입력해주세요");
@@ -60,7 +63,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
       //리덕스 훅스에가서 state 업데이트함.
 
       // 검색할 때 필요한 요청 코드
-      // axios.post('http://localhost:80/section/search', {title: e.target.value, type: SearchDataState.type})
+      // axios.post('http://localhost:80/section/search', {title: word, type: tag})
 
       onSearching(SearchDataDummy);
 

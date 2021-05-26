@@ -9,11 +9,8 @@ import SearchPage from "./Pages/SearchPage";
 import SettingPage from "./Pages/SettingPage";
 import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
-<<<<<<< HEAD
-import NameSettingPage from "./Pages/NameSettingPage"
-=======
+import NameSettingPage from "./Pages/NameSettingPage";
 import FAQ from "./Pages/FAQ";
->>>>>>> 232b14dd098b0f16c2cddfcd70afdc56b9b65a02
 
 import "./App.css";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
@@ -21,7 +18,6 @@ import HquestionPage from "./HelpdeskPages/HquestionPage";
 import styled from "styled-components";
 import SideBar from "./Components/SideBar";
 import useAllData from "./Hooks/useAllData";
-
 
 function App() {
   // const [ writeMode, setWriteMode ] = useState(false)

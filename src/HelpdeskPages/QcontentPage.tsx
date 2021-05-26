@@ -6,12 +6,9 @@ import styled from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
-<<<<<<< HEAD
-import axios from 'axios';
-=======
+import axios from "axios";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { answerLike } from "../Redux/QcontentData";
->>>>>>> 232b14dd098b0f16c2cddfcd70afdc56b9b65a02
 
 type DataType = {
   question: {
@@ -70,8 +67,7 @@ function QcontentPage() {
 
     onQuestionLike(updateData);
 
-    axios.post('http://localhost:80/question/like', {questionId: updateData.question._id, like: updateData.question.like})
-    .then(res => console.log(res))
+    axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }).then((res) => console.log(res));
   };
 
   const handleQuestionDecreaseLikes = (updateData: DataType) => {

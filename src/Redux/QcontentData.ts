@@ -16,7 +16,7 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
@@ -33,7 +33,7 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
@@ -54,7 +54,7 @@ type QuestionType = {
     githubId: string;
     image: string;
     _id: string;
-    __v: 0;
+    __v: number;
   };
   createdAt: string;
   updatedAt: string;
@@ -72,7 +72,7 @@ type AnswerType = {
     githubId: string;
     image: string;
     _id: string;
-    __v: 0;
+    __v: number;
   };
   createdAt: string;
   updatedAt: string;

@@ -6,10 +6,7 @@ import styled from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { answerLike, currentQData } from "../Redux/QcontentData";
 import axios from "axios";
-import QfakeData from "../QContentFakeData";
 
 type DataType = {
   question: {
@@ -25,7 +22,7 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
@@ -42,7 +39,7 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
@@ -61,7 +58,7 @@ type AnswerType = {
     githubId: string;
     image: string;
     _id: string;
-    __v: 0;
+    __v: number;
   };
   createdAt: string;
   updatedAt: string;
@@ -81,8 +78,9 @@ function QcontentPage() {
   const [isMainPage, setisMainPage] = useState<boolean>(true);
   const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
-  const [questionId, setQuestionId] = useState("");
-  const [isLike, setIsLike] = useState<any>([0]);
+  const [isLike, setIsLike] = useState<boolean>(true);
+
+  const [answerNum, setAnswerNum] = useState<Array<number>>([0, 1]);
   // const [test, setTest] = useState(false) // for문 돌리는 조건을 위해 currentData가 있는지 없는지 boolean 값으로 만든 state
 
   const handleQuestionIncreaseLikes = (updateData: DataType) => {
@@ -187,7 +185,7 @@ function QcontentPage() {
   //         const newIsLike = [...isLike, 0]
   //         setIsLike(newIsLike)
   //         console.log(isLike)
-  //       }   
+  //       }
   //     }
   //   } else {
   //     console.log('currentData 없음')
@@ -195,30 +193,27 @@ function QcontentPage() {
   // },[test])
 
   useEffect(() => {
+    let questionID: string = "";
     if (location.state === undefined) {
       // console.log("null");
     } else if (location.state.pageName === "MyPage") {
+      questionID = location.state.questionId;
       setisMainPage(false);
       // console.log(location.state.pageName);
     } else if (location.state.pageName === "HelpdeskPage") {
-      // console.log(location.state);
-      // setQuestionId(location.state.questionId)
-      const questionId = location.state.questionId;
-      axios.get(`http://localhost:80/question/${questionId}`).then((res) => {
-        // console.log(res);
-        onCurrentQData(res.data);
-        // setTest(true)
-      });
+      questionID = location.state.questionId;
+    } else if (location.state.pageName === "Searchpage") {
+      questionID = location.state.questionId;
     }
+    // axios.get(`http://localhost:80/question/${questionID}`).then((res) => {
+    //   onCurrentQData(res.data);
+    dispatch(onCurrentQData(QContentFakeData));
 
-    // console.log(location.state.questionId);
-
-    // console.log("쿼스천 함수 실행됨");
- 
+    // });
+    console.log("useEffect 실행후 Search Page 에서 아이디 가져옴 ===>> ", questionID);
   }, []);
 
-  console.log(isLike)
-  // console.log("myPage에서 전달받은 질문", currentData);
+  console.log(answerNum);
   return (
     <div>
       {currentData !== null && currentData !== undefined ? (
@@ -240,7 +235,7 @@ function QcontentPage() {
                 <Title> {currentData.question.title}</Title>
                 <NameDate>
                   <UserName>{currentData.question.userId.nickName}</UserName>
-                  <Date>{currentData.question.createdAt}</Date>
+                  <Date>{currentData.question.createdAt.substring(0, 10)}</Date>
                 </NameDate>
                 <Body>{currentData.question.body}</Body>
                 <div>
@@ -254,21 +249,21 @@ function QcontentPage() {
           </QuestionContainer>
 
           <AnswerContainer>
-            <LineArea> {currentData.question.commentCount}</LineArea>
+            <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
             {currentData.comments?.map((el, index: number) => (
               <EachAnswer key={index}>
                 <LikesPart onClick={() => handleAnswerLike(el, index)}>
                   <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
-                  {isAnswerLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" />}
+                  {isAnswerLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
                   <LikesNum> {el.like}</LikesNum>
                   <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
                 </LikesPart>
                 <AnswerBox>
-                  <AnswerTitle> {el.userId.nickName}</AnswerTitle>
+                  <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle>
                   <Body>{el.content}</Body>
                   <NameDate>
                     <LikesNum onClick={() => handleAnswerLike(el, index)}> 좋아요: &nbsp; {el.like}</LikesNum>
-                    <Date>{el.createdAt}</Date>
+                    <Date>{el.createdAt.substring(0, 10)}</Date>
                   </NameDate>
                 </AnswerBox>
               </EachAnswer>
@@ -286,7 +281,7 @@ export default QcontentPage;
 
 const Container = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 85vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, auto);
@@ -333,11 +328,13 @@ const AnswerBox = styled.div`
   width: 80%;
 `;
 
-const LineArea = styled.div`
-  font-size: 1rem;
+const LineArea = styled.span`
+  font-size: 1.3rem;
   color: #1658d8;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin: 0 0 5rem 2.6rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 0.17rem solid #e0e0e0;
 `;
 
 const Title = styled.span`
@@ -347,6 +344,7 @@ const Title = styled.span`
 `;
 
 const AnswerTitle = styled.div`
+  padding-top: 2rem;
   font-weight: bold;
   font-size: 1rem;
   color: #686868;

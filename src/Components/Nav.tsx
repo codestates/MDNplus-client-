@@ -12,6 +12,7 @@ import search from "../img/search.jpeg";
 import userIcon from "../img/userIcon_gray.png";
 import useBooleanData from "../Hooks/useBooleanData";
 import useContentData from "../Hooks/useContentData";
+import SearchDataDummy from "../SearchpageDummy";
 
 // axios.defaults.withCredentials = true;
 
@@ -60,7 +61,8 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
 
       // 검색할 때 필요한 요청 코드
       // axios.post('http://localhost:80/section/search', {title: e.target.value, type: SearchDataState.type})
-      // onSearching();
+
+      onSearching(SearchDataDummy);
 
       history.push("/SearchPage");
 
@@ -138,7 +140,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
   }, []);
 
   //태그를 선택할때 tag state 업데이트가 됨.
-  const option = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const option = (e: React.ChangeEvent<HTMLSelectElement> & React.MouseEvent<HTMLSelectElement>) => {
     dispatch(searchSelect(e.target.value));
   };
 

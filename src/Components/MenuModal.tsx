@@ -23,43 +23,36 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
       onClose();
     }
   };
-  //<Link to="/courses" replace />
-
-  useEffect(() => {
-    var pageName = "";
-
-    var tempPageName = window.location.href;
-    var strPageName = tempPageName.split("/");
-    pageName = strPageName[strPageName.length - 1];
-
-    if (pageName === "HelpdeskPage") {
-      setIsHelpDesk(true);
-    } else {
-      setIsHelpDesk(false);
-    }
-  }, []);
 
   const handleLogOutButton = () => {
     console.log("logout");
+    onClose();
   };
 
-  const handleEditInfoButton = () => {
-    history.push("/SettingPage");
-  };
+  console.log("hi");
 
   const handleMyPageButton = () => {
     history.push("/MyPage");
   };
+  
+  const handleMypage = () => {
+    history.push("/MyPage")
+    onClose();
+  }
+  
+  const handleEditInfoButton = () => {
+    history.push("/SettingPage");
+    onClose();
+  };
+  
 
   return (
     <ModalContainer>
       <Overlay onClick={handleOverLay} ref={overLay} />
       <ModalBox>
-        <MenuButtonContainer>
-          <LogOut onClick={handleLogOutButton}>로그아웃</LogOut>
-          <EditInfo onClick={handleEditInfoButton}>정보수정</EditInfo>
-          {isHelpDesk ? <div onClick={handleMyPageButton}>마이페이지</div> : null}
-        </MenuButtonContainer>
+        <ModalButton onClick={handleMypage}>마이페이지</ModalButton>
+        <ModalButton onClick={handleEditInfoButton}>정보수정</ModalButton>
+        <ModalButton onClick={handleLogOutButton}>로그아웃</ModalButton>
       </ModalBox>
     </ModalContainer>
   );
@@ -67,29 +60,10 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
 
 export default MenuModal;
 
-const LogOut = styled.div`
-  background-color: white;
-  margin: 10px;
-`;
-
-const MyPage = styled.div`
-  background-color: white;
-  margin: 10px;
-`;
-
-const EditInfo = styled.div`
-  background-color: white;
-  margin: 10px;
-`;
-
 const ModalContainer = styled.div`
-  height: 100%;
   width: 100%;
-  display: flex;
-  position: fixed;
-  top: 10%;
-  margin: 10px;
-  left: 80%;
+  height: 100%;
+  background: gray;
 `;
 
 const Overlay = styled.div`
@@ -98,26 +72,37 @@ const Overlay = styled.div`
   height: 100%;
   top: 0;
   left: 0;
-  cursor: pointer;
 `;
 
 const ModalBox = styled.div`
-  position: relative;
+  position: fixed;
+  top: 5rem;
+  right: 0rem;
   width: 10%;
   height: 20%;
-  padding: 10px;
   background-color: white;
-  border: 1.8px solid #a7a3a3;
-
-  border-radius: 34px;
-  box-sizing: border-box;
+  border-radius: 0.4rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
-const MenuButtonContainer = styled.div`
-  height: 100%;
+const ModalButton = styled.div`
+  background-color: white;
+  cursor: pointer;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 1.1rem;
+  text-align: center;
+  color: #424242;
+
+  &:hover {
+    background: #f5f5f5;
+  }
 `;
+
+// const MenuButtonContainer = styled.div`
+//   height: 100%;
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// `;

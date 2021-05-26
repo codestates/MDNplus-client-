@@ -1,8 +1,8 @@
 const CLICKMETHOD = "ContentData/CLICKMETHOD" as const;
 const CHANGECONTENT = "ContentData/CHANGCONTENT" as const;
 
-export const clickMethod = (data: Method) => ({ type: CLICKMETHOD, payload: data });
-export const changeContent = (data: string) => ({ type: CHANGECONTENT, payload: data });
+export const clickMethod = (data: any) => ({ type: CLICKMETHOD, payload: data });
+export const changeContent = (data: any) => ({ type: CHANGECONTENT, payload: data });
 
 type ContentDataAction = ReturnType<typeof clickMethod> | ReturnType<typeof changeContent>;
 
@@ -14,7 +14,7 @@ type Method = {
 };
 
 type InitState = {
-  contentData: null | Method;
+  contentData: any
 };
 
 const initialState = {

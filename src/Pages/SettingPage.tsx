@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import loadingGif from "../img/R6bD.gif";
+import userIcon from "../img/userIcon_gray.png"
 
-function SettingPage() {
+// axios.defaults.withCredentials = true;
+
+function SettingPage({handleChangeMenuIcon}:any) {
   const [img, setImage] = useState<any>(null);
   const [newImg, setNewImg] = useState({
     url: "",
   });
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [username, setUsername] = useState("Seong seok");
+  const [username, setUsername] = useState("");
 
   const url = "https://api.cloudinary.com/v1_1/dr4ka7tze/image/upload";
   const formData = new FormData();
@@ -22,17 +25,19 @@ function SettingPage() {
 
   //유저 이름 수정 완료 버튼을 눌렀을 시, 서버에 수정된 이름을 업데이트 하기 위한 코드
   const handleNameSave = () => {
-    console.log(username);
+    axios.patch("http://localhost:80/userinfo/nick", { nickName: username }).then((res) => console.log(res));
     setEditing(false);
   };
 
   // 유저가 file을 업로드하여 change 이벤트가 발생할 때, 실행되는 코드
-  const handleChange = async (e: any) => {
+  const handleChange = (e: any) => {
     setImage(e.target.files[0]);
   };
 
   //이미지 제거 클릭했을 시, 실행되는 코드
-  const handleImgDelete = () => {};
+  const handleImgDelete = () => {
+    // axios.patch('http://localhost:80/section/setting', {image: ''})
+  };
 
   // 유저가 이미지 업로드를 하였을 때, img state가 업데이트 되고난 후, 실행되는 코드
   // 아래 useEffect가 실행되는 조건
@@ -43,23 +48,27 @@ function SettingPage() {
       setLoading(true); // 아래 코드 실행 전에, 로딩중 상태를 true로 바꿔서 로딩중 gif가 뜨게 함
       formData.append("file", img);
       formData.append("upload_preset", "vzsh73vh");
-      // 서버의 upload API 호출
-      console.log(img);
+      // 클라우디너리 서버의 upload API 호출
       axios
         .post(url, formData)
         .then((res) => {
-          console.log(res);
           setNewImg({ url: res.data.url });
+          handleChangeMenuIcon(res.data.url)
+          console.log(res.data.url);
           setLoading(false); // newImg state가 업데이트 되고난 후, 로딩중 gif를 제거
         })
         .catch((err) => console.log(err));
     }
   }, [img]);
 
+  useEffect(() => {
+    axios.get("http://localhost:80/userinfo", { withCredentials: true }).then((res) => setUsername(res.data.nickName));
+  }, []);
+
   return (
     <Container>
       <Stage>
-        <ImgBox>{!loading && !newImg.url ? <Img></Img> : loading && !newImg.url ? <Img></Img> : !loading && newImg.url ? <Img src={newImg.url}></Img> : null}</ImgBox>
+        <ImgBox>{!loading && !newImg.url ? <Img src={userIcon}></Img> : loading && !newImg.url ? <Img src={userIcon}></Img> : !loading && newImg.url ? <Img src={newImg.url}></Img> : null}</ImgBox>
         {!editing ? (
           <UserNameBox>
             <UserName>{username}</UserName>
@@ -73,14 +82,14 @@ function SettingPage() {
           </UserNameBox>
         ) : (
           <UserNameBox>
-            <input onChange={handleInputChange} value={username} autoFocus></input>
-            <EditName
+            <EditInput onChange={handleInputChange} value={username} autoFocus></EditInput>
+            <EditName_save
               onClick={() => {
                 handleNameSave();
               }}
             >
               저장
-            </EditName>
+            </EditName_save>
           </UserNameBox>
         )}
 
@@ -108,7 +117,7 @@ export default SettingPage;
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 40rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +138,7 @@ const ImgBox = styled.div`
 `;
 
 const Img = styled.img`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 10em;
   height: 10em;
   border-radius: 50%;
@@ -137,26 +146,45 @@ const Img = styled.img`
 `;
 
 const UserNameBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 20rem;
+  padding-top: 3rem;
+  // border: 1px solid black;
 `;
 
 const UserName = styled.div`
   // border: 1px solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-left: 3rem;
+  margin-bottom: 0.5rem;
   font-size: 2rem;
   font-weight: bold;
+  color: #616161;
 `;
 
 const EditName = styled.span`
   // border: 1px solid black;
-  margin-top: 1rem;
-  padding-left: 2rem;
   color: #3b85f3;
+  margin-left: 3rem;
+  cursor: pointer;
+`;
+
+const EditName_save = styled.span`
+  display: inline-block;
+  float: right;
+  color: white;
+  margin-right: 2.4rem;
+  margin-top: 1rem;
+  background: #3b85f3;
+  padding: 0.3rem 0.7rem 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+`;
+
+const EditInput = styled.input`
+  margin-left: 2.5rem;
+  width: 15rem;
+  font-size: 1.3rem;
+  outline: #BDBDBD;
 `;
 
 const SubmitBox = styled.div`
@@ -167,7 +195,9 @@ const SubmitBox = styled.div`
   flex-direction: column;
   margin-top: 1rem;
 `;
-const ImgPickerBox = styled.div``;
+const ImgPickerBox = styled.div`
+  margin-top: 1rem;
+`;
 
 const ImgPicker = styled.input`
   position: absolute;
@@ -182,31 +212,40 @@ const ImgPicker = styled.input`
 
 const ImgPickerLetter = styled.label`
   display: inline-block;
-  padding: 0.5em 0.75em;
+  padding: 0.5rem 1.7rem 0.5rem 1.7rem;
   color: white;
-  background-color: #3f51b5;
+  background-color: #3b85f3;
   cursor: pointer;
-  border: 1px solid #ebebeb;
+  border-radius: 0.5rem;
 `;
 
 const ImgDelete = styled.div`
   display: inline-block;
-  padding: 0.5em 0.75em;
-  color: #999;
-  background-color: #fdfdfd;
+  color: #3b85f3;
   cursor: pointer;
-  border: 1px solid #ebebeb;
+  margin: 1rem 0rem 1rem 0rem;
 `;
 
 const DelAccountBox = styled.div`
-  // border: 1px solid black;
-  width: 37%;
   display: flex;
   justify-content: space-between;
+  width: 37%;
+  margin-top: 3rem;
 `;
 
-const DelAccount = styled.span``;
+const DelAccount = styled.span`
+  margin-left: 2rem;
+  font-weight: 600;
+`;
 
 const DelAccountBtn = styled.button`
-  margin-right: 7rem;
+  margin-right: 5rem;
+  margin-top: -0.5rem;
+  padding: 0.5rem 1.7rem 0.5rem 1.7rem;
+  color: white;
+  background-color: #ff5b5b;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
 `;

@@ -8,6 +8,8 @@ import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { answerLike } from "../Redux/QcontentData";
+import axios from 'axios';
+import QfakeData from '../QContentFakeData';
 
 type DataType = {
   question: {
@@ -65,6 +67,9 @@ function QcontentPage() {
     console.log(updateData);
 
     onQuestionLike(updateData);
+
+    axios.post('http://localhost:80/question/like', {questionId: updateData.question._id, like: updateData.question.like})
+    .then(res => console.log(res))
   };
 
   const handleQuestionDecreaseLikes = (updateData: DataType) => {
@@ -75,6 +80,7 @@ function QcontentPage() {
     onQuestionLike(updateData);
 
     setIsLike(() => !isLike);
+    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
 
   const handleAnswerDecreaseLikes = (updateData: AnswerType) => {
@@ -89,6 +95,7 @@ function QcontentPage() {
     onAnswerLike(updateData);
 
     setIsAnswerLike(() => !isAnswerLike);
+    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
 
   const handleAnswerIncreaseLikes = (updateData: AnswerType) => {
@@ -103,6 +110,7 @@ function QcontentPage() {
     onAnswerLike(updateData);
 
     setIsAnswerLike(() => !isAnswerLike);
+    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
   };
 
   const handleQuestionLike = (updateData: DataType) => {

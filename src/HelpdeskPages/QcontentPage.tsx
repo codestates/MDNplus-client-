@@ -7,9 +7,9 @@ import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { answerLike } from "../Redux/QcontentData";
-import axios from 'axios';
-import QfakeData from '../QContentFakeData';
+import { answerLike, currentQData } from "../Redux/QcontentData";
+import axios from "axios";
+import QfakeData from "../QContentFakeData";
 
 type DataType = {
   question: {
@@ -19,7 +19,14 @@ type DataType = {
     _id: string;
     title: string;
     body: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: 0;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -29,7 +36,14 @@ type DataType = {
     _id: string;
     questionId: string;
     content: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: 0;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -41,7 +55,14 @@ type AnswerType = {
   _id: string;
   questionId: string;
   content: string;
-  userId: string;
+  userId: {
+    nickName: string;
+    kakaoId: string;
+    githubId: string;
+    image: string;
+    _id: string;
+    __v: 0;
+  };
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -49,6 +70,7 @@ type AnswerType = {
 
 type PageNameType = {
   pageName: string;
+  questionId: string;
 };
 
 function QcontentPage() {
@@ -57,9 +79,11 @@ function QcontentPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [isMainPage, setisMainPage] = useState<boolean>(true);
-  const [isLike, setIsLike] = useState<boolean>(true);
   const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
+  const [questionId, setQuestionId] = useState("");
+  const [isLike, setIsLike] = useState<any>([0]);
+  // const [test, setTest] = useState(false) // for문 돌리는 조건을 위해 currentData가 있는지 없는지 boolean 값으로 만든 state
 
   const handleQuestionIncreaseLikes = (updateData: DataType) => {
     updateData.question.like = updateData.question.like + 1;
@@ -68,8 +92,7 @@ function QcontentPage() {
 
     onQuestionLike(updateData);
 
-    axios.post('http://localhost:80/question/like', {questionId: updateData.question._id, like: updateData.question.like})
-    .then(res => console.log(res))
+    axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }).then((res) => console.log(res));
   };
 
   const handleQuestionDecreaseLikes = (updateData: DataType) => {
@@ -153,21 +176,49 @@ function QcontentPage() {
     });
   };
 
+  // useEffect(() => {
+  //   if(currentData) {
+  //     console.log(isLike.length)
+  //     if(isLike.length === 1) {
+  //       return
+  //     } else {
+  //       for(let i = 0; i < currentData?.comments.length; i++) {
+  //         console.log('state안에 답변의 갯수만큼 0을 넣어줌')
+  //         const newIsLike = [...isLike, 0]
+  //         setIsLike(newIsLike)
+  //         console.log(isLike)
+  //       }   
+  //     }
+  //   } else {
+  //     console.log('currentData 없음')
+  //   }
+  // },[test])
+
   useEffect(() => {
     if (location.state === undefined) {
-      console.log("null");
+      // console.log("null");
     } else if (location.state.pageName === "MyPage") {
       setisMainPage(false);
-      console.log(location.state.pageName);
-    } else {
-      console.log(location.state.pageName);
+      // console.log(location.state.pageName);
+    } else if (location.state.pageName === "HelpdeskPage") {
+      // console.log(location.state);
+      // setQuestionId(location.state.questionId)
+      const questionId = location.state.questionId;
+      axios.get(`http://localhost:80/question/${questionId}`).then((res) => {
+        // console.log(res);
+        onCurrentQData(res.data);
+        // setTest(true)
+      });
     }
-    onCurrentQData(QContentFakeData);
 
-    console.log("쿼스천 함수 실행됨");
+    // console.log(location.state.questionId);
+
+    // console.log("쿼스천 함수 실행됨");
+ 
   }, []);
 
-  console.log("myPage에서 전달받은 질문", currentData);
+  console.log(isLike)
+  // console.log("myPage에서 전달받은 질문", currentData);
   return (
     <div>
       {currentData !== null && currentData !== undefined ? (
@@ -188,7 +239,7 @@ function QcontentPage() {
                 <Q>Q</Q>
                 <Title> {currentData.question.title}</Title>
                 <NameDate>
-                  <UserName>유저이름</UserName>
+                  <UserName>{currentData.question.userId.nickName}</UserName>
                   <Date>{currentData.question.createdAt}</Date>
                 </NameDate>
                 <Body>{currentData.question.body}</Body>
@@ -203,23 +254,20 @@ function QcontentPage() {
           </QuestionContainer>
 
           <AnswerContainer>
-            <LineArea> N개의 답변</LineArea>
+            <LineArea> {currentData.question.commentCount}</LineArea>
             {currentData.comments?.map((el, index: number) => (
               <EachAnswer key={index}>
                 <LikesPart onClick={() => handleAnswerLike(el, index)}>
                   <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
                   {isAnswerLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" />}
-
                   <LikesNum> {el.like}</LikesNum>
-
                   <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
                 </LikesPart>
                 <AnswerBox>
-                  <AnswerTitle> 김코딩 님의 답변 </AnswerTitle>
+                  <AnswerTitle> {el.userId.nickName}</AnswerTitle>
                   <Body>{el.content}</Body>
                   <NameDate>
                     <LikesNum onClick={() => handleAnswerLike(el, index)}> 좋아요: &nbsp; {el.like}</LikesNum>
-
                     <Date>{el.createdAt}</Date>
                   </NameDate>
                 </AnswerBox>
@@ -238,7 +286,7 @@ export default QcontentPage;
 
 const Container = styled.div`
   height: 100vh;
-  weidth: 100vw;
+  width: 100vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, auto);

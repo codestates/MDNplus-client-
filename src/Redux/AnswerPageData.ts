@@ -7,7 +7,14 @@ type QuestionType = {
   _id: string;
   title: string;
   body: string;
-  userId: string;
+  userId: {
+    nickName: string;
+    kakaoId: string;
+    githubId: string;
+    image: string;
+    _id: string;
+    __v: 0;
+  };
   createdAt: string;
   updatedAt: string;
   __v: number;

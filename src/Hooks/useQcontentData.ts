@@ -11,7 +11,14 @@ type DataType = {
     _id: string;
     title: string;
     body: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: 0;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -21,7 +28,14 @@ type DataType = {
     _id: string;
     questionId: string;
     content: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: 0;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -33,7 +47,14 @@ type AnswerType = {
   _id: string;
   questionId: string;
   content: string;
-  userId: string;
+  userId: {
+    nickName: string;
+    kakaoId: string;
+    githubId: string;
+    image: string;
+    _id: string;
+    __v: 0;
+  };
   createdAt: string;
   updatedAt: string;
   __v: number;

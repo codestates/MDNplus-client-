@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 import ideaIcon from "../img/idea.png";
 import { useDispatch } from "react-redux";
 import { currentQData } from "../Redux/QcontentData";
-import axios from 'axios';
+import axios from "axios";
 
 type Question = {
   id: number;
@@ -39,7 +39,7 @@ const HelpdeskPage = () => {
   const { helpData, onStoreData, onClickQuestion } = useHelpData();
   const { allQuestions }: any = helpData;
   const history = useHistory();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // const {latestQuestion, popularityQuestion} = allQuestions
 
@@ -53,23 +53,22 @@ const HelpdeskPage = () => {
     // }
   };
 
-  const handleClickQuestion = (question:any) => {
-    console.log(question._id)
+  const handleClickQuestion = (question: any) => {
+    console.log(question._id);
     // history.push('/QcontentPage')
     history.push({
       pathname: "/QcontentPage",
-      state: { pageName: "HelpdeskPage", questionId:question._id },
+      state: { pageName: "HelpdeskPage", questionId: question._id },
     });
-  }
+  };
 
   useEffect(() => {
     // 헬프데스크 메인페이지 렌더링에 필요한 데이터 받아오는 요청
-    axios.get('http://localhost:80/helpdesk')
-    .then(res => {
-      console.log(res)
-      onStoreData(res.data)})
+    axios.get("http://localhost:80/helpdesk").then((res) => {
+      console.log(res);
+      onStoreData(res.data);
+    });
   }, []);
-
 
   return (
     <>
@@ -130,11 +129,11 @@ const HelpdeskPage = () => {
             {allQuestions === null ? (
               <div>로딩 중입니다</div>
             ) : (
-              allQuestions.latestQuestion.map((el:any, idx:any) => (
+              allQuestions.latestQuestion.map((el: any, idx: any) => (
                 <>
                   <QuestionBox
                     onClick={() => {
-                      handleClickQuestion(el)
+                      handleClickQuestion(el);
                     }}
                     key={el._id}
                   >
@@ -155,7 +154,7 @@ const HelpdeskPage = () => {
                       </TitleBox>
                       <Body>{el.body}</Body>
                       <TagBox>
-                        {el.tags.map((el:any, idx:number) => (
+                        {el.tags.map((el: any, idx: number) => (
                           <Tag key={idx + 1}>{el}</Tag>
                         ))}
                       </TagBox>

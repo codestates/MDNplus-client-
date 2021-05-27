@@ -23,18 +23,14 @@ const SideBar = () => {
           MDN+ WiKi
         </Wiki>
       ) : (
-        <Wiki onClick={handleMoveToWiki}>
-          MDN+ WiKi
-        </Wiki>
+        <Wiki onClick={handleMoveToWiki}>MDN+ WiKi</Wiki>
       )}
       {sideBar === "helpdesk" ? (
         <HelpDesk color="isSelected" onClick={handleMoveToHelp}>
           HelpDesk
         </HelpDesk>
       ) : (
-        <HelpDesk onClick={handleMoveToHelp}>
-          HelpDesk
-        </HelpDesk>
+        <HelpDesk onClick={handleMoveToHelp}>HelpDesk</HelpDesk>
       )}
     </Container>
   );

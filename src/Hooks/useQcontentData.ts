@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux";
 import { useCallback } from "react";
 import { currentQData, questionLike, answerLike } from "../Redux/QcontentData";
+import { BooleanLiteral } from "typescript";
 
 type DataType = {
   question: {
@@ -17,11 +18,12 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   };
   comments: {
     like: number;
@@ -34,11 +36,12 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   }[];
 };
 
@@ -53,11 +56,12 @@ type AnswerType = {
     githubId: string;
     image: string;
     _id: string;
-    __v: 0;
+    __v: number;
   };
   createdAt: string;
   updatedAt: string;
   __v: number;
+  isLike: boolean;
 };
 
 function useQcontentData() {

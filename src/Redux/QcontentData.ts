@@ -16,11 +16,12 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   };
   comments: {
     like: number;
@@ -33,11 +34,12 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   }[];
 };
 
@@ -54,7 +56,7 @@ type QuestionType = {
     githubId: string;
     image: string;
     _id: string;
-    __v: 0;
+    __v: number;
   };
   createdAt: string;
   updatedAt: string;
@@ -72,11 +74,12 @@ type AnswerType = {
     githubId: string;
     image: string;
     _id: string;
-    __v: 0;
+    __v: number;
   };
   createdAt: string;
   updatedAt: string;
   __v: number;
+  isLike: boolean;
 };
 
 export const currentQData = (currentData: undefined | DataType) => ({
@@ -104,12 +107,14 @@ type InitState = {
   currentData: null | undefined | DataType;
   questionUpdate: null | DataType;
   answerUpdate: null | AnswerType;
+  isLike: null | boolean;
 };
 
 const initialState = {
   currentData: null,
   questionUpdate: null,
   answerUpdate: null,
+  isLike: null,
 };
 
 function QcontentDataReducer(state: InitState = initialState, action: CurrentQDataAction): InitState {

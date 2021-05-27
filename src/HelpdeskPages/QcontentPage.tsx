@@ -211,6 +211,12 @@ function QcontentPage() {
       });
     }
 
+    // window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
+    // console.log(history)
+    // if(history.location.pathname === '/ContentPage') {
+    //   onSetWriteMode(false)
+    // }
+
     // console.log(location.state.questionId);
 
     // console.log("쿼스천 함수 실행됨");
@@ -264,7 +270,7 @@ function QcontentPage() {
                   <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
                 </LikesPart>
                 <AnswerBox>
-                  <AnswerTitle> {el.userId.nickName}</AnswerTitle>
+                  {/* <AnswerTitle> {el.userId.nickName}</AnswerTitle> */}
                   <Body>{el.content}</Body>
                   <NameDate>
                     <LikesNum onClick={() => handleAnswerLike(el, index)}> 좋아요: &nbsp; {el.like}</LikesNum>

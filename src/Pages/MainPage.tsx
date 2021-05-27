@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
 import ideaIcon from "../img/idea.png";
+import thinkingIcon from "../img/thinking.png"
 import axios from 'axios';
 
 // type DataOption = {
@@ -64,9 +65,9 @@ function MainPage() {
   return (
     <Container>
       <IntroBox>
-        <Icon src={ideaIcon}></Icon>
+        <Icon src={thinkingIcon}></Icon>
         <IntroContents>
-          <IntroTitle>MDN+ WiKi</IntroTitle>
+          <IntroTitle>MDN+ 위키</IntroTitle>
           <IntroLetter>당신의 지식을 공유해주세요</IntroLetter>
         </IntroContents>
       </IntroBox>

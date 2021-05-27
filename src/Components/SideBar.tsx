@@ -20,20 +20,20 @@ const SideBar = () => {
     <Container>
       {sideBar === "wiki" ? (
         <Wiki color="isSelected" onClick={handleMoveToWiki}>
-          MDN+ WiKi
+          MDN+ 위키
         </Wiki>
       ) : (
         <Wiki onClick={handleMoveToWiki}>
-          MDN+ WiKi
+          MDN+ 위키
         </Wiki>
       )}
       {sideBar === "helpdesk" ? (
         <HelpDesk color="isSelected" onClick={handleMoveToHelp}>
-          HelpDesk
+          헬프데스크
         </HelpDesk>
       ) : (
         <HelpDesk onClick={handleMoveToHelp}>
-          HelpDesk
+          헬프데스크
         </HelpDesk>
       )}
     </Container>

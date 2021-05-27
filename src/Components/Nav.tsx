@@ -17,7 +17,7 @@ import useContentData from "../Hooks/useContentData";
 
 const { Kakao }: any = window;
 
-function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: any) {
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon }: any) {
   const { onSearching, SearchDataState } = useMyPageData();
   // const [isLogin, setIsLogin] = useState(false);
   // const [isLogInOpen, setIsLogInOpen] = useState(false);
@@ -75,7 +75,8 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
       const { nickName, _id } = res.data;
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
-        console.log(res);
+        console.log(res.data.image);
+        handleChangeMenuIcon(res.data.image);
         history.push("/");
         handleLogin();
       } else {
@@ -103,6 +104,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
         console.log(res);
+        handleChangeMenuIcon(res.data.image);
         history.push("/");
         handleLogin();
       } else {
@@ -259,4 +261,6 @@ const UserIconContainer = styled.img`
   height: 2rem;
   border-radius: 50%;
   object-fit: cover;
+  margin-right: 1.5rem;
+  cursor: pointer;
 `;

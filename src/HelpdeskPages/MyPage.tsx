@@ -115,7 +115,7 @@ function MyPage() {
           </div>
         ) : (
           <div>
-            <UserInfoImage>{mdnAllData.user.image}</UserInfoImage>
+            <UserInfoImage src={mdnAllData.user.image}></UserInfoImage>
             <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
           </div>
         )}
@@ -230,8 +230,12 @@ const UserInfoContainer = styled.div`
   border-bottom: 2px solid #a7a3a3;
 `;
 
-const UserInfoImage = styled.div`
+const UserInfoImage = styled.img`
   margin: 8rem;
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  object-fit: cover;
 `;
 
 const UserInfoName = styled.div`

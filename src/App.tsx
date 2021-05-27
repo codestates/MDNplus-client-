@@ -10,6 +10,7 @@ import SideBar from "./Components/SideBar";
 import SearchPage from "./Pages/SearchPage";
 import NameSettingPage from "./Pages/NameSettingPage";
 import MyPage from "./HelpdeskPages/MyPage";
+import Footer from "./Components/Footer";
 // Wiki
 import ContentPage from "./Pages/ContentPage";
 import SettingPage from "./Pages/SettingPage";
@@ -20,7 +21,6 @@ import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
 import FAQ from "./Pages/FAQ";
 
-import "./App.css";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
 import HquestionPage from "./HelpdeskPages/HquestionPage";
 import useAllData from "./Hooks/useAllData";
@@ -69,6 +69,7 @@ function App() {
           <Route path="/QcontentPage" render={() => <QcontentPage />} />
           <Route path="/FAQ" render={() => <FAQ />} />
         </Switch>
+        {/* {writeMode ? null : <Footer></Footer>} */}
       </Container>
     </>
   );

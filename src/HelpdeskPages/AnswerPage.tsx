@@ -10,7 +10,7 @@ import useAllData from "../Hooks/useAllData";
 import AnswerModal from "../Components/AnswerModal";
 import useBooleanData from "../Hooks/useBooleanData";
 import { ExitBtn, SubmitBtn } from "../styled-components/Post";
-import axios from 'axios';
+import axios from "axios";
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
@@ -19,7 +19,6 @@ function AnswerPage() {
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
-  
 
   useEffect(() => {
     onSetWriteMode(true);
@@ -30,20 +29,18 @@ function AnswerPage() {
     setWriting(e.target.value);
   };
 
-  const handleAnswerBtn = () => {
-    setbtnName("답변");
+  const handleBtns = (e: string) => {
+    console.log(e);
+    setbtnName(e);
     setIsOpen(() => !isOpen);
-    axios.post('http://localhost:80/comment', {questionId: displayQuestion?._id, content: writing}, {withCredentials:true})
-    .then(res => console.log(res))
-    onSetWriteMode(true);
-    window.history.back();
   };
 
-  const handleExitBtn = () => {
-    setbtnName("나가기");
+  const handleAnswerBtn = () => {
+    console.log("답변 달림");
     setIsOpen(() => !isOpen);
+    // axios.post("http://localhost:80/comment", { questionId: displayQuestion?._id, content: writing }, { withCredentials: true }).then((res) => console.log(res));
     onSetWriteMode(false);
-    window.history.back();
+    // window.history.back();
   };
 
   const handleHeader = (mark: string) => {
@@ -96,7 +93,7 @@ function AnswerPage() {
         </QuestionPart>
         <WritingArea>
           <WritingTitle> 나의 답변</WritingTitle>
-          <MarDownBtns>
+          {/* <MarDownBtns>
             <MarkDownBtn id="btn" onClick={() => handleHeader("H1")}>
               H1
             </MarkDownBtn>
@@ -133,17 +130,17 @@ function AnswerPage() {
             <MarkDownBtn id="btn" onClick={() => handleHeader("Horizontal")}>
               Horizontal
             </MarkDownBtn>
-          </MarDownBtns>
+          </MarDownBtns> */}
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
 
-        {isOpen ? <AnswerModal btnName={btnName} setIsOpen={setIsOpen} /> : null}
-        <SubmitBtn onClick={handleAnswerBtn}> 답변달기</SubmitBtn>
-        <ExitBtn onClick={handleAnswerBtn}> 나가기 </ExitBtn>
+        <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
+        <ExitBtn onClick={() => handleBtns("나가기")}> 나가기 </ExitBtn>
+        {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
       </LeftContainer>
 
       <RightContainer>
-        <PrieviewTitle>ㅡㅡㅡㅡ 님의 답변</PrieviewTitle>
+        <PrieviewTitle>{displayQuestion?.userId.nickName} 님의 답변</PrieviewTitle>
         <AnswerPart>
           <ReactMarkdown children={writing} components={Components} />
         </AnswerPart>
@@ -230,6 +227,7 @@ padding 13px;
 const PrieviewTitle = styled.div`
   font-size: 25px;
   font-weight: 700;
+  color: #686868;
   margin: 3rem;
 `;
 

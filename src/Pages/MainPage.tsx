@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
 import ideaIcon from "../img/idea.png";
-import axios from 'axios';
+import axios from "axios";
 
 // type DataOption = {
 //   arrayData: Method[];
@@ -30,7 +30,7 @@ function MainPage() {
   const history = useHistory();
 
   // 메인페이지 array, object 선택바가 변경이 되었을 때, 실행되는 코드
-  const handleFilter = (e:React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     // console.log(e.target.value);
     if (e.target.value === "object") {
       if (objectData) {
@@ -47,7 +47,7 @@ function MainPage() {
   };
 
   // 오른쪽에 렌더링된 하나의 메소드 박스를 클릭했을 시, ContentPage로 이동하기 위한 함수
-  const handleClickMethod = (method:Method) => {
+  const handleClickMethod = (method: Method) => {
     // console.log("컨텐츠 페이지에 뿌려줘야됨");
     onClickMethod(method); // ContentData 값을 변경하기 위한 dispatch 메소드
     history.push("/ContentPage");
@@ -57,8 +57,7 @@ function MainPage() {
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
     // console.log('데이터 가져오는 요청 보내짐')
-    axios.get('http://localhost:80/maincontent')
-    .then(res => onFilter(res.data))
+    axios.get("http://localhost:80/maincontent").then((res) => onFilter(res.data));
   }, []);
 
   return (

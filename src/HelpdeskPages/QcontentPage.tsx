@@ -378,6 +378,7 @@ const AnswerTitle = styled.div`
   font-weight: bold;
   font-size: 1rem;
   color: #686868;
+  margin: 0 0 0 3rem;
 `;
 
 const Date = styled.span`
@@ -394,7 +395,7 @@ const NameDate = styled.div`
 `;
 const Body = styled.div`
   font-size: 1rem;
-  margin: 3rem 0 5rem 0;
+  margin: 3rem 0 5rem 3rem;
   line-height: 1.8rem;
 `;
 const LikesPart = styled.span`

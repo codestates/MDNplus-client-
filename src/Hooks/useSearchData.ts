@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { searchData } from "../Redux/SearchData";
 
 type SearchDataType = {
-  mainContent: {
+  mainContent?: {
     count: number;
     _id: string;
     title: string;

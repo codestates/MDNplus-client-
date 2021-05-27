@@ -97,7 +97,7 @@ function SearchPage() {
     setMDNColor("#a7a3a3");
   };
 
-  return SearchDataState.contentData === null ? (
+  return !SearchDataState.contentData ? (
     <div>비어있음!</div>
   ) : (
     <Container>
@@ -107,21 +107,26 @@ function SearchPage() {
         </ResultText>
 
         <ResultNum>
-          총 &nbsp; {SearchDataState.contentData !== undefined ? SearchDataState.contentData?.mainContent.length + SearchDataState.contentData?.helpdeskContent.length : 0} 개의 검색결과 &nbsp; /
-          &nbsp; MDN+ &nbsp; {SearchDataState.contentData?.mainContent.length} 개 &nbsp; / &nbsp; Help Desk&nbsp; {SearchDataState.contentData?.helpdeskContent.length} 개
+          총 &nbsp; {SearchDataState.contentData?.mainContent !== undefined ? SearchDataState.contentData?.mainContent.length + SearchDataState.contentData?.helpdeskContent.length : 0} 개의 검색결과
+          &nbsp; /{SearchDataState.contentData?.mainContent !== undefined ? SearchDataState.contentData?.mainContent.length : 0}
+          &nbsp; / &nbsp; Help Desk&nbsp; {SearchDataState.contentData?.helpdeskContent.length} 개
         </ResultNum>
       </SearchResult>
       <FilterSearchResult>
-        <MDNPlus onClick={() => HandleMDNColor()} style={{ color: MDNColor }}>
-          MDN+
-        </MDNPlus>
+        {SearchDataState.contentData?.mainContent === undefined || SearchDataState.contentData.mainContent === null ? (
+          <> </>
+        ) : (
+          <MDNPlus onClick={() => HandleMDNColor()} style={{ color: MDNColor }}>
+            MDN+
+          </MDNPlus>
+        )}
         <HelpDesk onClick={() => HandleHelpDeckColor()} style={{ color: HelpDeskColor }}>
           HelpDesk
         </HelpDesk>
       </FilterSearchResult>
 
       <ContentContainer>
-        {CurrentPage === "MDN"
+        {CurrentPage === "MDN" && SearchDataState.contentData?.mainContent
           ? SearchDataState.contentData?.mainContent.map((el: mainContentType) => (
               <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
                 <Title>{el.title}</Title>

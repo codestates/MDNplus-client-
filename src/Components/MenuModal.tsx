@@ -5,14 +5,12 @@ import React from "react";
 import styled from "styled-components";
 import { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios"
-
+import axios from "axios";
 
 type MenuProps = {
   isOpen: boolean;
   checkMenu: React.Dispatch<React.SetStateAction<boolean>>;
   onClose: () => void;
-  getGitHubImage: React.Dispatch<React.SetStateAction<never[]>>;
   handleLogin: () => void;
 };
 
@@ -28,8 +26,7 @@ function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
   };
 
   const handleLogOutButton = () => {
-    axios.post('http://localhost:80/oauth/logout', null, {withCredentials: true})
-    .then(res => console.log(res))
+    axios.post("http://localhost:80/oauth/logout", null, { withCredentials: true }).then((res) => console.log(res));
     handleLogin();
     onClose();
   };
@@ -39,17 +36,16 @@ function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
   const handleMyPageButton = () => {
     history.push("/MyPage");
   };
-  
+
   const handleMypage = () => {
-    history.push("/MyPage")
+    history.push("/MyPage");
     onClose();
-  }
-  
+  };
+
   const handleEditInfoButton = () => {
     history.push("/SettingPage");
     onClose();
   };
-  
 
   return (
     <ModalContainer>
@@ -68,7 +64,9 @@ export default MenuModal;
 const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
-  background: gray;
+  display: flex;
+  position: fixed;
+  z-index: 1;
 `;
 
 const Overlay = styled.div`

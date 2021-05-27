@@ -1,34 +1,24 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useHistory } from "react-router";
 import useMyPageData from "../Hooks/useSearchData";
-import { useDispatch } from "react-redux";
-import { searchWord, searchSelect, searchResult } from "../Redux/SearchData";
 import LoginModal from "./LoginModal";
 import MenuModal from "./MenuModal";
 import search from "../img/search.jpeg";
-import userIcon from "../img/userIcon_gray.png";
 import useBooleanData from "../Hooks/useBooleanData";
 import useContentData from "../Hooks/useContentData";
 import SearchDataDummy from "../SearchpageDummy";
 
-// axios.defaults.withCredentials = true;
-
-const { Kakao }: any = window;
-
-function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: any) {
-  const { onSearching, SearchDataState } = useMyPageData();
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon }: any) {
+  const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useMyPageData();
   // const [isLogin, setIsLogin] = useState(false);
   // const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [gitHubImage, setGitHubImage] = useState([]);
   const { contentState } = useContentData();
   const { contentData } = contentState;
   const { BooleanState } = useBooleanData();
   const history = useHistory();
-  const dispatch = useDispatch();
 
   console.log(contentData);
 
@@ -42,8 +32,33 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
 
   // 검색창에 검색을 칠때마다 state를 업데이트함.
   const handleWritingState = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(searchWord(e.target.value));
+    onSearchingWord(e.target.value);
     console.log(e.target.value);
+  };
+
+  const handleIconClick = () => {
+    // let word: string = e.target.value;
+
+    let word: string | null = SearchDataState.word;
+    let tag: string | null = SearchDataState.tag;
+
+    if (SearchDataState.word === "" || SearchDataState.tag === null) {
+      alert("입력해주세요");
+      return;
+    }
+
+    onSearchingResult(word, tag);
+
+    axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
+      console.log(res);
+      onSearchingData(res.data);
+    });
+
+    onSearchingData(SearchDataDummy);
+
+    history.push("/SearchPage");
+
+    word = "";
   };
 
   //엔터를 치면 검색 결과와 select 태그 내용을 가져오게됨.
@@ -54,18 +69,21 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
     if (e.key === "Enter") {
       console.log(word, "태그내용", tag);
 
-      if (SearchDataState.word === "" || SearchDataState.word === SearchDataState.result) {
+      if (SearchDataState.word === "" || SearchDataState.tag === null) {
         alert("입력해주세요");
         return;
       }
 
-      dispatch(searchResult(e.target.value, SearchDataState.tag));
+      onSearchingResult(e.target.value, SearchDataState.tag);
       //리덕스 훅스에가서 state 업데이트함.
 
       // 검색할 때 필요한 요청 코드
-      // axios.post('http://localhost:80/section/search', {title: word, type: tag})
+      axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
+        console.log(res);
+        onSearchingData(res.data);
+      });
 
-      onSearching(SearchDataDummy);
+      // onSearching(SearchDataDummy);
 
       history.push("/SearchPage");
 
@@ -75,12 +93,13 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
 
   //깃허브 accessToken 받아오는 요청
   const gitAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       console.log("요청 성공해서 들어옴");
       const { nickName, _id } = res.data;
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
-        console.log(res);
+        console.log(res.data.image);
+        handleChangeMenuIcon(res.data.image);
         history.push("/");
         handleLogin();
       } else {
@@ -102,12 +121,13 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
   //서버로부터 카카오 accessToken 받아오는 요청
   const kakaoAccessToken = (authorizationCode: string) => {
     console.log("카카오 accessToken 받는 요청 보내짐");
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       const { nickName, _id } = res.data;
       console.log("로그인 요청 성공함");
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
         console.log(res);
+        handleChangeMenuIcon(res.data.image);
         history.push("/");
         handleLogin();
       } else {
@@ -144,7 +164,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
 
   //태그를 선택할때 tag state 업데이트가 됨.
   const option = (e: React.ChangeEvent<HTMLSelectElement> & React.MouseEvent<HTMLSelectElement>) => {
-    dispatch(searchSelect(e.target.value));
+    onSearchingTag(e.target.value);
   };
 
   console.log(userImg);
@@ -156,19 +176,19 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
         <Logo>MDN +</Logo>
         <SearchBar>
           <Search type="search" onKeyPress={handleKeyPress} onChange={handleWritingState} />
-          <SearchIcon src={search}></SearchIcon>
+          <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>
-          <option value="전체">전체</option>
-          <option value="제목">제목</option>
-          <option value="내용">내용</option>
-          <option value="태그">태그</option>
+          <option value="전체">-선택해주세요-</option>
+          <option value="title">title</option>
+          <option value="body">body</option>
+          <option value="tag">tag</option>
         </SearchFilter>
       </LeftBox>
       {isLogin ? (
         <NavButtons>
           <UserIconContainer src={userImg} onClick={handleMenuModal}></UserIconContainer>
-          {isMenuOpen ? <MenuModal handleLogin={handleLogin} getGitHubImage={setGitHubImage} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
+          {isMenuOpen ? <MenuModal handleLogin={handleLogin} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
         </NavButtons>
       ) : (
         <NavButtons>
@@ -226,6 +246,7 @@ const SearchIcon = styled.img`
   width: 10%;
   margin-bottom: -0.3rem;
   margin-left: -0.4rem;
+  cursor: pointer;
 `;
 
 const SearchFilter = styled.select`
@@ -264,4 +285,6 @@ const UserIconContainer = styled.img`
   height: 2rem;
   border-radius: 50%;
   object-fit: cover;
+  margin-right: 1.5rem;
+  cursor: pointer;
 `;

@@ -51,12 +51,12 @@ function MyPage() {
 
   useEffect(() => {
     // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
-    // axios.get("http://localhost:80/helpdesk/me", { withCredentials: true }).then((res) => {
-    //   console.log(res);
-    //   dispatch(allDataAction(res.data));
-    // });
+    axios.get("http://localhost:8080/helpdesk/me", { withCredentials: true }).then((res) => {
+      console.log(res);
+      dispatch(allDataAction(res.data));
+    });
 
-    dispatch(allDataAction(myPageFakeData));
+    // dispatch(allDataAction(myPageFakeData));
   }, []);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
@@ -67,10 +67,11 @@ function MyPage() {
 
     // 마이페이지에서 질문을 클릭했을 때, 해당하는 질문의 데이터들을 받아오는 요청(질문의 ID가 params로 필요)
     // axios.get('http://localhost:80')
+    console.log("QcontentPage로 이동할거");
 
     history.push({
-      pathname: "/Qcontentpage",
-      state: { pageName: "this is Question State" },
+      pathname: "/QcontentPage",
+      state: { pageName: "/MyPage", questionId: el._id },
     });
   };
 
@@ -96,13 +97,13 @@ function MyPage() {
     // });
   };
 
-  const HandleMDNClicked = () => {
+  const handleMDNClicked = () => {
     setQuestionColor("#005ce7");
     setAnswerColor("#a7a3a3");
     setIsQuestion(true);
   };
 
-  const HandleHelpDeckClicked = () => {
+  const handleHelpDeckClicked = () => {
     setAnswerColor("#005ce7");
     setQuestionColor("#a7a3a3");
     setIsQuestion(false);
@@ -113,16 +114,16 @@ function MyPage() {
   ) : (
     <Container>
       <UserInfoContainer>
-        {mdnAllData.user.image === "" ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
+        {!mdnAllData.user.image ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
         <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
 
         {/* userIcon */}
       </UserInfoContainer>
       <LeftContainer>
-        <QuestionList style={{ color: questionColor }} onClick={HandleMDNClicked}>
+        <QuestionList style={{ color: questionColor }} onClick={handleMDNClicked}>
           나의질문
         </QuestionList>
-        <AnswerList style={{ color: answerColor }} onClick={HandleHelpDeckClicked}>
+        <AnswerList style={{ color: answerColor }} onClick={handleHelpDeckClicked}>
           나의답변
         </AnswerList>
       </LeftContainer>

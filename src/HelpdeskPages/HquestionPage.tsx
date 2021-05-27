@@ -7,12 +7,11 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import autosize from "autosize";
 import QconfirmModal from "../Components/QconfirmModal";
-import useAllData from '../Hooks/useAllData';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import useBooleanData from '../Hooks/useBooleanData';
-import {SubmitBtn, ExitBtn} from "../styled-components/Post"
-
+import useAllData from "../Hooks/useAllData";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import useBooleanData from "../Hooks/useBooleanData";
+import { SubmitBtn, ExitBtn } from "../styled-components/Post";
 
 // axios.defaults.withCredentials = true;
 
@@ -32,9 +31,9 @@ const QuestionPage = () => {
     body: "",
     tags: [],
   });
-  const {onSetWriteMode} = useBooleanData()
+  const { onSetWriteMode } = useBooleanData();
   const { title, body, tags } = newQuestion;
-  const history = useHistory()
+  const history = useHistory();
 
   //유저가 왼쪽에 내용을 입력 시, title과 body 상태를 실시간으로 변경해주는 코드
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, type: string) => {
@@ -84,22 +83,23 @@ const QuestionPage = () => {
 
   // 모달에서 등록하기 버튼 누를 시, 서버에 새 질문 저장하는 요청 보내는 코드(모달에 props로 전달함)
   const handleSubmitQ = () => {
-    console.log('새 질문 등록 요청 보내짐')
+    console.log("새 질문 등록 요청 보내짐");
     console.log(title, body, tags);
-    axios.post('http://localhost:80/question', {title, body, tags},{withCredentials:true})
-    .then(res => console.log(res))
-    history.push('/HelpdeskPage')
-    onSetWriteMode(false)
+    axios.post("http://localhost:8080/question", { title, body, tags }, { withCredentials: true }).then((res) => console.log(res));
+    history.push("/HelpdeskPage");
+    onSetWriteMode(false);
   };
 
+  //나가기 버튼을 눌렀을 때, HelpdeskPage로 이동하는 코드
   const handleExit = () => {
-    history.push('/HelpdeskPage')
-    onSetWriteMode(false)
-  }
+    history.push("/HelpdeskPage");
+    onSetWriteMode(false);
+  };
 
+  //처음 질문 작성 페이지로 이동했을 때, Nav,SideBar 없애는 코드
   useEffect(() => {
-    onSetWriteMode(true)
-  }, [])
+    onSetWriteMode(true);
+  }, []);
 
   return (
     <>
@@ -111,13 +111,20 @@ const QuestionPage = () => {
               handleChange(e, "title");
             }}
             rows={2}
-            placeholder="제목을 입력하세요"
+            placeholder="질문 제목을 입력하세요"
           />
           <TagBox onKeyPress={handleEnter}>
             {tags.length === 0
               ? null
               : tags.map((el, idx) => (
-                  <Tag onClick={() => {handleDeleteTag(el)}} key={idx + 1}>{el}</Tag>
+                  <Tag
+                    onClick={() => {
+                      handleDeleteTag(el);
+                    }}
+                    key={idx + 1}
+                  >
+                    {el}
+                  </Tag>
                 ))}
             <TagInput value={tagValue} onChange={handleChangeTag} placeholder="태그를 입력해주세요" />
           </TagBox>
@@ -180,7 +187,7 @@ const Title = styled.textarea`
 
 const UnderLine = styled.div`
   width: 100%;
-  border-bottom: 1px solid gray;
+  border-bottom: 0.5px solid #e0e0e0;
   margin-top: 20px;
   margin-bottom: 20px;
 `;
@@ -195,11 +202,12 @@ const TagInput = styled.input`
 `;
 
 const Tag = styled.span`
-  border: 1px solid gray;
-  border-radius: 10px
-  padding: 5px;
+  border-radius: 1rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.7rem;
   margin-right: 10px;
   cursor: pointer;
+  background: #eeeeee;
+  color: #0055fa;
 `;
 
 const Body = styled.textarea`

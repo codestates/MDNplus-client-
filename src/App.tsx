@@ -10,7 +10,7 @@ import SideBar from "./Components/SideBar";
 import SearchPage from "./Pages/SearchPage";
 import NameSettingPage from "./Pages/NameSettingPage";
 import MyPage from "./HelpdeskPages/MyPage";
-import Footer from "./Components/Footer";
+import FAQ from "./Pages/FAQ";
 // Wiki
 import ContentPage from "./Pages/ContentPage";
 import SettingPage from "./Pages/SettingPage";
@@ -19,11 +19,9 @@ import MainPage from "./Pages/MainPage";
 // helpDesk
 import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
-import FAQ from "./Pages/FAQ";
-
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
 import HquestionPage from "./HelpdeskPages/HquestionPage";
-import useAllData from "./Hooks/useAllData";
+import TestEditPage from "./Pages/TestEditPage";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -39,7 +37,11 @@ function App() {
 
   const handleChangeMenuIcon = (url: string) => {
     console.log("이미지 바뀌는 요청 들어옴");
-    setUserImg(url);
+    if (url) {
+      setUserImg(url);
+    } else {
+      setUserImg(userIcon);
+    }
   };
 
   const handleLogin = () => {
@@ -52,7 +54,9 @@ function App() {
 
   return (
     <>
-      {writeMode ? null : <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal}></Nav>}
+      {writeMode ? null : (
+        <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
+      )}
       <Container>
         {writeMode ? null : <SideBar></SideBar>}
         <Switch>
@@ -68,6 +72,7 @@ function App() {
           <Route path="/HquestionPage" render={() => <HquestionPage />} />
           <Route path="/QcontentPage" render={() => <QcontentPage />} />
           <Route path="/FAQ" render={() => <FAQ />} />
+          <Route path="/TestEditPage" render={() => <TestEditPage />} />
         </Switch>
         {/* {writeMode ? null : <Footer></Footer>} */}
       </Container>

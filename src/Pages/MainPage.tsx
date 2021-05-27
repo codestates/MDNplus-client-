@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
 import ideaIcon from "../img/idea.png";
+import thinkingIcon from "../img/thinking.png";
 import axios from "axios";
 
 // type DataOption = {
@@ -57,15 +58,15 @@ function MainPage() {
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
     // console.log('데이터 가져오는 요청 보내짐')
-    axios.get("http://localhost:80/maincontent").then((res) => onFilter(res.data));
+    axios.get("http://localhost:8080/maincontent").then((res) => onFilter(res.data));
   }, []);
 
   return (
     <Container>
       <IntroBox>
-        <Icon src={ideaIcon}></Icon>
+        <Icon src={thinkingIcon}></Icon>
         <IntroContents>
-          <IntroTitle>MDN+ WiKi</IntroTitle>
+          <IntroTitle>MDN+ 위키</IntroTitle>
           <IntroLetter>당신의 지식을 공유해주세요</IntroLetter>
         </IntroContents>
       </IntroBox>
@@ -161,11 +162,11 @@ const UnderLine = styled.div`
 const Stage = styled.div`
   background: white;
   display: grid;
-  grid-template-columns: repeat(3, 21rem);
-  grid-auto-rows: 13rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 15rem;
   row-gap: 3.5rem;
   column-gap: 3.2rem;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 2rem;
   margin-left: 2rem;
   margin-top: 1rem;
 
@@ -204,12 +205,12 @@ const SecondFilter = styled.select`
 
 const MethodBox = styled.div`
   border-radius: 1rem;
-  padding: 0 1rem 1rem 1rem;
-  // padding: 1rem;
+  padding: 0 1rem 0rem 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: white;
   cursor: pointer;
   transition: 0.2s ease-in-out;
+  max-width: 25rem;
 
   &:hover {
     transform: translateY(-5px);
@@ -233,4 +234,5 @@ const MethodCount = styled.div`
   justify-content: flex-end;
   font-size: 0.8rem;
   color: #757575;
+  margin-top: 1.7rem;
 `;

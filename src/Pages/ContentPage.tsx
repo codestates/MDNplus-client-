@@ -18,7 +18,7 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
   const { allState } = useAllData();
   const { contentData } = contentState;
   const { currentData } = allState;
-  const { BooleanState, onsetContentPage } = useBooleanData();
+  const { BooleanState, onsetContentPage, onSetWriteMode } = useBooleanData();
   const history = useHistory();
 
   // 수정 버튼 눌렀을 시, 로그인 상태에 따라 EditPage로 이동 또는 로그인 모달창 띄움
@@ -37,6 +37,10 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
   useEffect(() => {
     // console.log('유즈 이펙트 실행됨')
     window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
+    console.log(history);
+    if (history.location.pathname === "/ContentPage") {
+      onSetWriteMode(false);
+    }
   }, []);
 
   return (

@@ -80,7 +80,7 @@ function SearchPage() {
 
     history.push({
       pathname: "/Qcontentpage",
-      state: { pageName: "Searchpage", questionId: el._id },
+      state: { pageName: "/Searchpage", questionId: el._id },
     });
   };
 
@@ -103,12 +103,12 @@ function SearchPage() {
     <Container>
       <SearchResult>
         <ResultText>
-          {SearchDataState.result},{SearchDataState.tagResult === null ? "전체" : SearchDataState.tagResult} <ResultTextColor>" (을)를 검색하셨습니다.</ResultTextColor>
+          {SearchDataState.result},{SearchDataState.tagResult === null && SearchDataState.tagResult === undefined ? "전체" : SearchDataState.tagResult} <ResultTextColor>" (을)를 검색하셨습니다.</ResultTextColor>
         </ResultText>
 
         <ResultNum>
-          총 &nbsp; {SearchDataState.contentData !== undefined ? SearchDataState.contentData?.mainContent.length + SearchDataState.contentData?.helpdeskContent.length : 0} 개의 검색결과 &nbsp; /
-          &nbsp; MDN+ &nbsp; {SearchDataState.contentData?.mainContent.length} 개 &nbsp; / &nbsp; Help Desk&nbsp; {SearchDataState.contentData?.helpdeskContent.length} 개
+          {/* 총 &nbsp; {SearchDataState.contentData !== undefined ? SearchDataState.contentData?.mainContent.length + SearchDataState.contentData?.helpdeskContent.length : 0} 개의 검색결과 &nbsp; / */}
+          {/* &nbsp; MDN+ &nbsp; {SearchDataState.contentData?.mainContent.length} 개 &nbsp; / &nbsp; Help Desk&nbsp; {SearchDataState.contentData?.helpdeskContent.length} 개 */}
         </ResultNum>
       </SearchResult>
       <FilterSearchResult>

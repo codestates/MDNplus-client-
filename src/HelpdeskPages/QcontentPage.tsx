@@ -83,56 +83,6 @@ function QcontentPage() {
   const location = useLocation<PageNameType>();
   const [isLike, setIsLike] = useState<boolean>(true);
 
-  const handleQuestionIncreaseLikes = (updateData: DataType) => {
-    updateData.question.like = updateData.question.like + 1;
-
-    console.log(updateData);
-
-    onQuestionLike(updateData);
-
-    axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }).then((res) => console.log(res));
-  };
-
-  const handleQuestionDecreaseLikes = (updateData: DataType) => {
-    updateData.question.like = updateData.question.like - 1;
-
-    console.log(updateData);
-
-    onQuestionLike(updateData);
-
-    setIsLike(() => !isLike);
-    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-  };
-
-  const handleAnswerDecreaseLikes = (updateData: AnswerType) => {
-    console.log("답변 좋아요 감소");
-
-    if (updateData.like <= 0) {
-      console.log("싫어요ㅠㅠ 맘이아픔니다");
-      return;
-    }
-    updateData.like = updateData.like - 1;
-
-    // onAnswerLike(updateData,true);
-
-    setIsAnswerLike(() => !isAnswerLike);
-    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-  };
-
-  const handleAnswerIncreaseLikes = (updateData: AnswerType) => {
-    console.log("답변 좋아요 증가");
-
-    setTimeout(() => {
-      console.log("실행");
-    }, 3000);
-
-    updateData.like = updateData.like + 1;
-
-    // onAnswerLike(updateData);
-
-    setIsAnswerLike(() => !isAnswerLike);
-    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-  };
 
   const handleQuestionLike = (updateData: DataType) => {
     if (isLike === true) {
@@ -148,8 +98,8 @@ function QcontentPage() {
 
       onQuestionLike(updateData);
     }
-
-    setIsLike(() => !isLike);
+    axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
+    // setIsLike(() => !isLike);
   };
 
   const handleAnswerLike = (updateData: AnswerType, index: number) => {
@@ -164,6 +114,9 @@ function QcontentPage() {
       onAnswerLike(updateData);
       // onAnswerLike(updateData);
     }
+
+    // axios.post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
+
   };
 
   const handleAnswerBtn = () => {
@@ -174,40 +127,38 @@ function QcontentPage() {
     });
   };
 
-  // useEffect(() => {
-  //   if(currentData) {
-  //     console.log(isLike.length)
-  //     if(isLike.length === 1) {
-  //       return
-  //     } else {
-  //       for(let i = 0; i < currentData?.comments.length; i++) {
-  //         console.log('state안에 답변의 갯수만큼 0을 넣어줌')
-  //         const newIsLike = [...isLike, 0]
-  //         setIsLike(newIsLike)
-  //         console.log(isLike)
-  //       }
-  //     }
-  //   } else {
-  //     console.log('currentData 없음')
-  //   }
-  // },[test])
-
   useEffect(() => {
+    //questionID 설정해주는 코드들
     let questionID: string = "";
     if (location.state === undefined) {
       // console.log("null");
-    } else if (location.state.pageName === "MyPage") {
+    } else if (location.state.pageName === "/MyPage") {
       questionID = location.state.questionId;
       setisMainPage(false);
       // console.log(location.state.pageName);
-    } else if (location.state.pageName === "HelpdeskPage") {
+    } else if (location.state.pageName === "/HelpdeskPage") {
       questionID = location.state.questionId;
-    } else if (location.state.pageName === "Searchpage") {
+    } else if (location.state.pageName === "/Searchpage") {
       questionID = location.state.questionId;
     }
-    // axios.get(`http://localhost:80/question/${questionID}`).then((res) => {
+
+    //바껴진 questionID를 이용하여 QcontentPage에 렌더링할 데이터를 가져오는 요청
+    axios.get(`http://localhost:80/question/${questionID}`).then((res) => {
+      console.log(res);
+      dispatch(onCurrentQData(res.data));
+    });
     //   onCurrentQData(res.data);
-    dispatch(onCurrentQData(QContentFakeData));
+    // dispatch(onCurrentQData(QContentFakeData));
+
+    // window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
+    // console.log(history)
+    // if(history.location.pathname === '/ContentPage') {
+    //   onSetWriteMode(false)
+    // }
+
+    // console.log(location.state.questionId);
+
+    // console.log("쿼스천 함수 실행됨");
 
     // });
     console.log("useEffect 실행후 Search Page 에서 아이디 가져옴 ===>> ", questionID);
@@ -221,13 +172,13 @@ function QcontentPage() {
             {/* <LineArea>질문</LineArea> */}
             <Question>
               <LikesPart onClick={() => handleQuestionLike(currentData)}>
-                <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span>
+                {/* <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span> */}
 
                 {currentData.question.isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
                 <LikesNum> {currentData.question.like}</LikesNum>
 
                 {/* <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes> */}
-                <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span>
+                {/* <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span> */}
               </LikesPart>
               <QuestionBox>
                 <Q>Q</Q>
@@ -252,7 +203,7 @@ function QcontentPage() {
             {currentData.comments?.map((el, index: number) => (
               <EachAnswer key={index}>
                 <LikesPart onClick={() => handleAnswerLike(el, index)}>
-                  <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
+                  {/* <span onClick={() => handleAnswerIncreaseLikes(el)}> </span> */}
                   {el.isLike === true ? (
                     <HeartIcon>
                       <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" />{" "}
@@ -263,9 +214,10 @@ function QcontentPage() {
                     </AnimatedHeart>
                   )}
                   <LikesNum> {el.like}</LikesNum>
-                  <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
+                  {/* <span onClick={() => handleAnswerDecreaseLikes(el)}></span> */}
                 </LikesPart>
                 <AnswerBox>
+                  {/* <AnswerTitle> {el.userId.nickName}</AnswerTitle> */}
                   <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle>
                   <Body>{el.content}</Body>
                   <NameDate>
@@ -449,3 +401,56 @@ const AnswerBtn = styled.button`
   box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 20px;
   }
 `;
+
+
+
+// const handleQuestionIncreaseLikes = (updateData: DataType) => {
+//   updateData.question.like = updateData.question.like + 1;
+
+//   console.log(updateData);
+
+//   onQuestionLike(updateData);
+
+//   axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }).then((res) => console.log(res));
+// };
+
+// const handleQuestionDecreaseLikes = (updateData: DataType) => {
+//   updateData.question.like = updateData.question.like - 1;
+
+//   console.log(updateData);
+
+//   onQuestionLike(updateData);
+
+//   setIsLike(() => !isLike);
+//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
+// };
+
+// const handleAnswerDecreaseLikes = (updateData: AnswerType) => {
+//   console.log("답변 좋아요 감소");
+
+//   if (updateData.like <= 0) {
+//     console.log("싫어요ㅠㅠ 맘이아픔니다");
+//     return;
+//   }
+//   updateData.like = updateData.like - 1;
+
+//   // onAnswerLike(updateData,true);
+
+//   setIsAnswerLike(() => !isAnswerLike);
+//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
+// };
+
+// const handleAnswerIncreaseLikes = (updateData: AnswerType) => {
+//   console.log("답변 좋아요 증가");
+
+//   setTimeout(() => {
+//     console.log("실행");
+//   }, 3000);
+
+//   updateData.like = updateData.like + 1;
+
+//   // onAnswerLike(updateData);
+
+//   setIsAnswerLike(() => !isAnswerLike);
+//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
+// };

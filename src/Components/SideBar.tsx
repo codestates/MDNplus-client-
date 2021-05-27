@@ -20,17 +20,17 @@ const SideBar = () => {
     <Container>
       {sideBar === "wiki" ? (
         <Wiki color="isSelected" onClick={handleMoveToWiki}>
-          MDN+ WiKi
+          MDN+ 위키
         </Wiki>
       ) : (
-        <Wiki onClick={handleMoveToWiki}>MDN+ WiKi</Wiki>
+        <Wiki onClick={handleMoveToWiki}>MDN+ 위키</Wiki>
       )}
       {sideBar === "helpdesk" ? (
         <HelpDesk color="isSelected" onClick={handleMoveToHelp}>
-          HelpDesk
+          헬프데스크
         </HelpDesk>
       ) : (
-        <HelpDesk onClick={handleMoveToHelp}>HelpDesk</HelpDesk>
+        <HelpDesk onClick={handleMoveToHelp}>헬프데스크</HelpDesk>
       )}
     </Container>
   );
@@ -50,6 +50,9 @@ const Container = styled.span`
   height: 150rem;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
+
+  max-width: 13rem;
+  min-width: 8rem;
 
   @media (max-width: 375px) {
     width: 100vw;

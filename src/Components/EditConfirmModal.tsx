@@ -31,11 +31,11 @@ function EditConfirmModal({ handleConfirmModal }: EditProps) {
   return (
     <ModalContainer onClick={handleConfirmModal}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        <div>게시물을 수정하시겠습니까?</div>
-        <div>
-          <button onClick={handleSubmit}>수정하기</button>
-          <button onClick={handleConfirmModal}>취소하기</button>
-        </div>
+        <Message>게시물을 수정하시겠습니까?</Message>
+        <BtnBox>
+          <CancelBtn onClick={handleConfirmModal}>취소</CancelBtn>
+          <SubmitBtn onClick={handleSubmit}>수정</SubmitBtn>
+        </BtnBox>
       </ModalBox>
     </ModalContainer>
   );
@@ -62,15 +62,44 @@ const ModalBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 300px;
-  height: 200px;
+  width: 25rem;
+  height: 10rem;
   border: 1px solid #9e9e9e;
   border-radius: 10px;
   background: white;
   transition: 0.4s ease-in;
 `;
 
-const SubmitBtn = styled.button``;
+const Message = styled.div`
+  width: 100%;
+  padding-left: 2.5rem;
+  color: #616161;
+`
+const BtnBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 2rem;
+  margin-top: 2rem
+`
+
+const CancelBtn = styled.button`
+   border: none;
+   margin-right: 1rem;
+   background: none;
+   cursor: pointer;
+   color: #0055FA;
+   font-size: 1rem;
+`
+
+const SubmitBtn = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #0055FA;
+  font-size: 1rem;
+
+`;
 
 // # h1
 // ## h2

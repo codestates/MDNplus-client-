@@ -18,7 +18,7 @@ import SearchDataDummy from "../SearchpageDummy";
 
 const { Kakao }: any = window;
 
-function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: any) {
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon }: any) {
   const { onSearching, SearchDataState } = useMyPageData();
   // const [isLogin, setIsLogin] = useState(false);
   // const [isLogInOpen, setIsLogInOpen] = useState(false);
@@ -63,9 +63,13 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
       //리덕스 훅스에가서 state 업데이트함.
 
       // 검색할 때 필요한 요청 코드
-      // axios.post('http://localhost:80/section/search', {title: word, type: tag})
+      axios.post('http://localhost:80/search', {type: tag, content: word})
+      .then(res => {
+        console.log(res)
+        onSearching(res.data)
+      })
 
-      onSearching(SearchDataDummy);
+      // onSearching(SearchDataDummy);
 
       history.push("/SearchPage");
 
@@ -80,7 +84,8 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
       const { nickName, _id } = res.data;
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
-        console.log(res);
+        console.log(res.data.image);
+        handleChangeMenuIcon(res.data.image);
         history.push("/");
         handleLogin();
       } else {
@@ -108,6 +113,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
       if (nickName) {
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
         console.log(res);
+        handleChangeMenuIcon(res.data.image);
         history.push("/");
         handleLogin();
       } else {
@@ -160,9 +166,9 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal }: a
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>
           <option value="전체">전체</option>
-          <option value="제목">제목</option>
-          <option value="내용">내용</option>
-          <option value="태그">태그</option>
+          <option value="title">제목</option>
+          <option value="body">내용</option>
+          <option value="tag">태그</option>
         </SearchFilter>
       </LeftBox>
       {isLogin ? (
@@ -264,4 +270,6 @@ const UserIconContainer = styled.img`
   height: 2rem;
   border-radius: 50%;
   object-fit: cover;
+  margin-right: 1.5rem;
+  cursor: pointer;
 `;

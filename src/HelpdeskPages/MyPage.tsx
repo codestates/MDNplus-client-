@@ -64,10 +64,11 @@ function MyPage() {
 
     // 마이페이지에서 질문을 클릭했을 때, 해당하는 질문의 데이터들을 받아오는 요청(질문의 ID가 params로 필요)
     // axios.get('http://localhost:80')
+    console.log('QcontentPage로 이동할거')
 
     history.push({
-      pathname: "/Qcontentpage",
-      state: { pageName: "this is Question State" },
+      pathname: "/QcontentPage",
+      state: { pageName: "/MyPage",  questionId: el._id},
     });
   };
 
@@ -93,13 +94,13 @@ function MyPage() {
     // });
   };
 
-  const HandleMDNClicked = () => {
+  const handleMDNClicked = () => {
     setQuestionColor("#005ce7");
     setAnswerColor("#a7a3a3");
     setIsQuestion(true);
   };
 
-  const HandleHelpDeckClicked = () => {
+  const handleHelpDeckClicked = () => {
     setAnswerColor("#005ce7");
     setQuestionColor("#a7a3a3");
     setIsQuestion(false);
@@ -112,21 +113,21 @@ function MyPage() {
       <UserInfoContainer>
         {!mdnAllData ? (
           <div>
-            <UserInfoImage> 유저 사진</UserInfoImage>
+            <UserInfoImage></UserInfoImage>
             <UserInfoName> 유저 이름</UserInfoName>
           </div>
         ) : (
           <div>
-            <UserInfoImage>{mdnAllData.user.image}</UserInfoImage>
+            <UserInfoImage src={mdnAllData.user.image}></UserInfoImage>
             <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
           </div>
         )}
       </UserInfoContainer>
       <LeftContainer>
-        <QuestionList style={{ color: questionColor }} onClick={HandleMDNClicked}>
+        <QuestionList style={{ color: questionColor }} onClick={handleMDNClicked}>
           나의질문
         </QuestionList>
-        <AnswerList style={{ color: answerColor }} onClick={HandleHelpDeckClicked}>
+        <AnswerList style={{ color: answerColor }} onClick={handleHelpDeckClicked}>
           나의답변
         </AnswerList>
       </LeftContainer>
@@ -232,8 +233,12 @@ const UserInfoContainer = styled.div`
   border-bottom: 2px solid #a7a3a3;
 `;
 
-const UserInfoImage = styled.div`
+const UserInfoImage = styled.img`
   margin: 8rem;
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  object-fit: cover;
 `;
 
 const UserInfoName = styled.div`

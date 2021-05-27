@@ -11,6 +11,7 @@ export const SubmitBtn = styled.button`
     background: #5766B4;
     color: white;
     font-size: 1rem;
+    cursor: pointer;
 `
 
 export const ExitBtn = styled.button`
@@ -20,4 +21,5 @@ export const ExitBtn = styled.button`
     border: none;
     background: none;
     font-size: 1.3rem;
+    cursor: pointer;
 `

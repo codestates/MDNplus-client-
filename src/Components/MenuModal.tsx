@@ -68,7 +68,9 @@ export default MenuModal;
 const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
-  background: gray;
+  display: flex;
+  position: fixed;
+  z-index: 1;
 `;
 
 const Overlay = styled.div`
@@ -77,6 +79,7 @@ const Overlay = styled.div`
   height: 100%;
   top: 0;
   left: 0;
+
 `;
 
 const ModalBox = styled.div`

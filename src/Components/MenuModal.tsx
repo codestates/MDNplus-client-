@@ -70,6 +70,7 @@ const ModalContainer = styled.div`
   height: 100%;
   display: flex;
   position: fixed;
+  z-index: 1;
 `;
 
 const Overlay = styled.div`
@@ -78,6 +79,7 @@ const Overlay = styled.div`
   height: 100%;
   top: 0;
   left: 0;
+
 `;
 
 const ModalBox = styled.div`

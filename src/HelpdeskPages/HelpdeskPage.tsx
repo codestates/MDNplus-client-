@@ -57,7 +57,7 @@ const HelpdeskPage = () => {
   const handleClickQuestion = (question: Question) => {
     history.push({
       pathname: "/QcontentPage",
-      state: { pageName: "HelpdeskPage", questionId: question._id },
+      state: { pageName: "/HelpdeskPage", questionId: question._id },
     });
   };
 
@@ -180,14 +180,14 @@ const Container = styled.div`
 `;
 
 const IntroBox = styled.div`
+  position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-left: 4rem;
 `;
 
 const IntroContents = styled.div`
-  margin-left: -50rem;
+  margin-left: 1rem;
 `;
 
 const IntroTitle = styled.h1`
@@ -210,6 +210,8 @@ const Icon = styled.img`
 `;
 
 const QuestionBtn = styled.button`
+  position: absolute;
+  right: 0rem;
   margin-right: 2rem;
   font-size: 0.9rem;
   padding: 0.7rem 1.2rem 0.7rem 1.2rem;
@@ -218,22 +220,24 @@ const QuestionBtn = styled.button`
   background: #1976d2;
   color: white;
   cursor: pointer;
+  z-index: 0;
 `;
 
 const Questions = styled.div`
   // border: 1px solid blue;
   padding: 2rem;
 `;
+
 const FilterBox = styled.div`
-  width: 9%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
   margin: 2rem 0rem 1rem 3rem;
 `;
 
 const FilterFast = styled.span`
   color: #757575;
   cursor: pointer;
+  margin-right: 0.5rem;
 `;
 
 const FilterFast_Selected = styled.span`

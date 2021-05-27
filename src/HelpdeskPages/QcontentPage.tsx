@@ -2,14 +2,11 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { answerLike, currentQData } from "../Redux/QcontentData";
 import axios from "axios";
-import QfakeData from "../QContentFakeData";
 
 type DataType = {
   question: {
@@ -25,11 +22,12 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   };
   comments: {
     like: number;
@@ -42,11 +40,12 @@ type DataType = {
       githubId: string;
       image: string;
       _id: string;
-      __v: 0;
+      __v: number;
     };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   }[];
 };
 
@@ -61,11 +60,12 @@ type AnswerType = {
     githubId: string;
     image: string;
     _id: string;
-    __v: 0;
+    __v: number;
   };
   createdAt: string;
   updatedAt: string;
   __v: number;
+  isLike: boolean;
 };
 
 type PageNameType = {
@@ -81,91 +81,42 @@ function QcontentPage() {
   const [isMainPage, setisMainPage] = useState<boolean>(true);
   const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
-  const [questionId, setQuestionId] = useState("");
-  const [isLike, setIsLike] = useState<any>([0]);
-  // const [test, setTest] = useState(false) // for문 돌리는 조건을 위해 currentData가 있는지 없는지 boolean 값으로 만든 state
+  const [isLike, setIsLike] = useState<boolean>(true);
 
-  const handleQuestionIncreaseLikes = (updateData: DataType) => {
-    updateData.question.like = updateData.question.like + 1;
-
-    console.log(updateData);
-
-    onQuestionLike(updateData);
-
-    axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }).then((res) => console.log(res));
-  };
-
-  const handleQuestionDecreaseLikes = (updateData: DataType) => {
-    updateData.question.like = updateData.question.like - 1;
-
-    console.log(updateData);
-
-    onQuestionLike(updateData);
-
-    setIsLike(() => !isLike);
-    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-  };
-
-  const handleAnswerDecreaseLikes = (updateData: AnswerType) => {
-    console.log("답변 좋아요 감소");
-
-    if (updateData.like <= 0) {
-      console.log("싫어요ㅠㅠ 맘이아픔니다");
-      return;
-    }
-    updateData.like = updateData.like - 1;
-
-    onAnswerLike(updateData);
-
-    setIsAnswerLike(() => !isAnswerLike);
-    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-  };
-
-  const handleAnswerIncreaseLikes = (updateData: AnswerType) => {
-    console.log("답변 좋아요 증가");
-
-    setTimeout(() => {
-      console.log("실행");
-    }, 3000);
-
-    updateData.like = updateData.like + 1;
-
-    onAnswerLike(updateData);
-
-    setIsAnswerLike(() => !isAnswerLike);
-    // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-  };
 
   const handleQuestionLike = (updateData: DataType) => {
     if (isLike === true) {
       updateData.question.like = updateData.question.like + 1;
-
+      updateData.question.isLike = updateData.question.isLike = false;
       console.log(updateData);
 
       onQuestionLike(updateData);
     } else {
       updateData.question.like = updateData.question.like - 1;
-
+      updateData.question.isLike = updateData.question.isLike = true;
       console.log(updateData);
 
       onQuestionLike(updateData);
     }
-
-    setIsLike(() => !isLike);
+    axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
+    // setIsLike(() => !isLike);
   };
 
   const handleAnswerLike = (updateData: AnswerType, index: number) => {
-    if (isAnswerLike === true) {
+    if (updateData.isLike === true) {
+      console.log("clicked");
       updateData.like = updateData.like + 1;
-
+      updateData.isLike = false;
       onAnswerLike(updateData);
     } else {
       updateData.like = updateData.like - 1;
-
+      updateData.isLike = true;
       onAnswerLike(updateData);
+      // onAnswerLike(updateData);
     }
 
-    setIsAnswerLike(() => !isAnswerLike);
+    // axios.post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
+
   };
 
   const handleAnswerBtn = () => {
@@ -176,40 +127,28 @@ function QcontentPage() {
     });
   };
 
-  // useEffect(() => {
-  //   if(currentData) {
-  //     console.log(isLike.length)
-  //     if(isLike.length === 1) {
-  //       return
-  //     } else {
-  //       for(let i = 0; i < currentData?.comments.length; i++) {
-  //         console.log('state안에 답변의 갯수만큼 0을 넣어줌')
-  //         const newIsLike = [...isLike, 0]
-  //         setIsLike(newIsLike)
-  //         console.log(isLike)
-  //       }   
-  //     }
-  //   } else {
-  //     console.log('currentData 없음')
-  //   }
-  // },[test])
-
   useEffect(() => {
+    //questionID 설정해주는 코드들
+    let questionID: string = "";
     if (location.state === undefined) {
       // console.log("null");
-    } else if (location.state.pageName === "MyPage") {
+    } else if (location.state.pageName === "/MyPage") {
+      questionID = location.state.questionId;
       setisMainPage(false);
       // console.log(location.state.pageName);
-    } else if (location.state.pageName === "HelpdeskPage") {
-      // console.log(location.state);
-      // setQuestionId(location.state.questionId)
-      const questionId = location.state.questionId;
-      axios.get(`http://localhost:80/question/${questionId}`).then((res) => {
-        // console.log(res);
-        onCurrentQData(res.data);
-        // setTest(true)
-      });
+    } else if (location.state.pageName === "/HelpdeskPage") {
+      questionID = location.state.questionId;
+    } else if (location.state.pageName === "/Searchpage") {
+      questionID = location.state.questionId;
     }
+
+    //바껴진 questionID를 이용하여 QcontentPage에 렌더링할 데이터를 가져오는 요청
+    axios.get(`http://localhost:80/question/${questionID}`).then((res) => {
+      console.log(res);
+      dispatch(onCurrentQData(res.data));
+    });
+    //   onCurrentQData(res.data);
+    // dispatch(onCurrentQData(QContentFakeData));
 
     // window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
     // console.log(history)
@@ -220,11 +159,11 @@ function QcontentPage() {
     // console.log(location.state.questionId);
 
     // console.log("쿼스천 함수 실행됨");
- 
+
+    // });
+    console.log("useEffect 실행후 Search Page 에서 아이디 가져옴 ===>> ", questionID);
   }, []);
 
-  console.log(isLike)
-  // console.log("myPage에서 전달받은 질문", currentData);
   return (
     <div>
       {currentData !== null && currentData !== undefined ? (
@@ -233,20 +172,20 @@ function QcontentPage() {
             {/* <LineArea>질문</LineArea> */}
             <Question>
               <LikesPart onClick={() => handleQuestionLike(currentData)}>
-                <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span>
+                {/* <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span> */}
 
-                {isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
+                {currentData.question.isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
                 <LikesNum> {currentData.question.like}</LikesNum>
 
                 {/* <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes> */}
-                <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span>
+                {/* <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span> */}
               </LikesPart>
               <QuestionBox>
                 <Q>Q</Q>
                 <Title> {currentData.question.title}</Title>
                 <NameDate>
                   <UserName>{currentData.question.userId.nickName}</UserName>
-                  <Date>{currentData.question.createdAt}</Date>
+                  <Date>{currentData.question.createdAt.substring(0, 10)}</Date>
                 </NameDate>
                 <Body>{currentData.question.body}</Body>
                 <div>
@@ -260,21 +199,29 @@ function QcontentPage() {
           </QuestionContainer>
 
           <AnswerContainer>
-            <LineArea> {currentData.question.commentCount}</LineArea>
+            <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
             {currentData.comments?.map((el, index: number) => (
               <EachAnswer key={index}>
                 <LikesPart onClick={() => handleAnswerLike(el, index)}>
-                  <span onClick={() => handleAnswerIncreaseLikes(el)}> </span>
-                  {isAnswerLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" />}
+                  {/* <span onClick={() => handleAnswerIncreaseLikes(el)}> </span> */}
+                  {el.isLike === true ? (
+                    <HeartIcon>
+                      <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" />{" "}
+                    </HeartIcon>
+                  ) : (
+                    <AnimatedHeart>
+                      <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
+                    </AnimatedHeart>
+                  )}
                   <LikesNum> {el.like}</LikesNum>
-                  <span onClick={() => handleAnswerDecreaseLikes(el)}></span>
+                  {/* <span onClick={() => handleAnswerDecreaseLikes(el)}></span> */}
                 </LikesPart>
                 <AnswerBox>
                   {/* <AnswerTitle> {el.userId.nickName}</AnswerTitle> */}
+                  <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle>
                   <Body>{el.content}</Body>
                   <NameDate>
-                    <LikesNum onClick={() => handleAnswerLike(el, index)}> 좋아요: &nbsp; {el.like}</LikesNum>
-                    <Date>{el.createdAt}</Date>
+                    <Date>{el.createdAt.substring(0, 10)}</Date>
                   </NameDate>
                 </AnswerBox>
               </EachAnswer>
@@ -290,9 +237,33 @@ function QcontentPage() {
 
 export default QcontentPage;
 
+const heartAnimation = keyframes`
+0%
+{
+  transform: scale( 0.2 );
+}
+
+0%
+{
+  transform: scale( 0.5 );
+}
+
+100%
+{
+  transform: scale( 1.5 );
+}
+
+`;
+
+const HeartIcon = styled.span``;
+
+const AnimatedHeart = styled(HeartIcon)`
+  animation: ${heartAnimation} 1s infinite;
+`;
+
 const Container = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 85vw;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, auto);
@@ -339,11 +310,13 @@ const AnswerBox = styled.div`
   width: 80%;
 `;
 
-const LineArea = styled.div`
-  font-size: 1rem;
+const LineArea = styled.span`
+  font-size: 1.3rem;
   color: #1658d8;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin: 0 0 5rem 2.6rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 0.17rem solid #e0e0e0;
 `;
 
 const Title = styled.span`
@@ -353,6 +326,7 @@ const Title = styled.span`
 `;
 
 const AnswerTitle = styled.div`
+  padding-top: 2rem;
   font-weight: bold;
   font-size: 1rem;
   color: #686868;
@@ -427,3 +401,56 @@ const AnswerBtn = styled.button`
   box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 20px;
   }
 `;
+
+
+
+// const handleQuestionIncreaseLikes = (updateData: DataType) => {
+//   updateData.question.like = updateData.question.like + 1;
+
+//   console.log(updateData);
+
+//   onQuestionLike(updateData);
+
+//   axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }).then((res) => console.log(res));
+// };
+
+// const handleQuestionDecreaseLikes = (updateData: DataType) => {
+//   updateData.question.like = updateData.question.like - 1;
+
+//   console.log(updateData);
+
+//   onQuestionLike(updateData);
+
+//   setIsLike(() => !isLike);
+//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
+// };
+
+// const handleAnswerDecreaseLikes = (updateData: AnswerType) => {
+//   console.log("답변 좋아요 감소");
+
+//   if (updateData.like <= 0) {
+//     console.log("싫어요ㅠㅠ 맘이아픔니다");
+//     return;
+//   }
+//   updateData.like = updateData.like - 1;
+
+//   // onAnswerLike(updateData,true);
+
+//   setIsAnswerLike(() => !isAnswerLike);
+//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
+// };
+
+// const handleAnswerIncreaseLikes = (updateData: AnswerType) => {
+//   console.log("답변 좋아요 증가");
+
+//   setTimeout(() => {
+//     console.log("실행");
+//   }, 3000);
+
+//   updateData.like = updateData.like + 1;
+
+//   // onAnswerLike(updateData);
+
+//   setIsAnswerLike(() => !isAnswerLike);
+//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
+// };

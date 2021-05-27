@@ -163,11 +163,11 @@ const UnderLine = styled.div`
 const Stage = styled.div`
   background: white;
   display: grid;
-  grid-template-columns: repeat(3, 21rem);
-  grid-auto-rows: 13rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 15rem;
   row-gap: 3.5rem;
   column-gap: 3.2rem;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 2rem;
   margin-left: 2rem;
   margin-top: 1rem;
 
@@ -206,12 +206,12 @@ const SecondFilter = styled.select`
 
 const MethodBox = styled.div`
   border-radius: 1rem;
-  padding: 0 1rem 1rem 1rem;
-  // padding: 1rem;
+  padding: 0 1rem 0rem 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: white;
   cursor: pointer;
   transition: 0.2s ease-in-out;
+  max-width: 25rem;
 
   &:hover {
     transform: translateY(-5px);
@@ -235,4 +235,5 @@ const MethodCount = styled.div`
   justify-content: flex-end;
   font-size: 0.8rem;
   color: #757575;
+  margin-top: 1.7rem;
 `;

@@ -92,11 +92,13 @@ const QuestionPage = () => {
     onSetWriteMode(false)
   };
 
+  //나가기 버튼을 눌렀을 때, HelpdeskPage로 이동하는 코드
   const handleExit = () => {
     history.push('/HelpdeskPage')
     onSetWriteMode(false)
   }
 
+  //처음 질문 작성 페이지로 이동했을 때, Nav,SideBar 없애는 코드
   useEffect(() => {
     onSetWriteMode(true)
   }, [])
@@ -111,7 +113,7 @@ const QuestionPage = () => {
               handleChange(e, "title");
             }}
             rows={2}
-            placeholder="제목을 입력하세요"
+            placeholder="질문 제목을 입력하세요"
           />
           <TagBox onKeyPress={handleEnter}>
             {tags.length === 0
@@ -180,7 +182,7 @@ const Title = styled.textarea`
 
 const UnderLine = styled.div`
   width: 100%;
-  border-bottom: 1px solid gray;
+  border-bottom: 0.5px solid #E0E0E0;
   margin-top: 20px;
   margin-bottom: 20px;
 `;
@@ -195,11 +197,12 @@ const TagInput = styled.input`
 `;
 
 const Tag = styled.span`
-  border: 1px solid gray;
-  border-radius: 10px
-  padding: 5px;
+  border-radius: 1rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.7rem;
   margin-right: 10px;
   cursor: pointer;
+  background: #EEEEEE;
+  color: #0055FA;
 `;
 
 const Body = styled.textarea`

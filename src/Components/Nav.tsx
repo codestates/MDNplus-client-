@@ -12,6 +12,7 @@ import search from "../img/search.jpeg";
 import userIcon from "../img/userIcon_gray.png";
 import useBooleanData from "../Hooks/useBooleanData";
 import useContentData from "../Hooks/useContentData";
+import SearchDataDummy from "../SearchpageDummy";
 
 // axios.defaults.withCredentials = true;
 
@@ -47,8 +48,11 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
 
   //엔터를 치면 검색 결과와 select 태그 내용을 가져오게됨.
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>): void => {
+    let word: string = e.target.value;
+    let tag: string | null = SearchDataState.tag;
+
     if (e.key === "Enter") {
-      console.log(SearchDataState.word, "태그내용", SearchDataState.tag);
+      console.log(word, "태그내용", tag);
 
       if (SearchDataState.word === "" || SearchDataState.word === SearchDataState.result) {
         alert("입력해주세요");
@@ -59,8 +63,13 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       //리덕스 훅스에가서 state 업데이트함.
 
       // 검색할 때 필요한 요청 코드
-      // axios.post('http://localhost:80/section/search', {title: e.target.value, type: SearchDataState.type})
-      // onSearching();
+      axios.post('http://localhost:80/search', {type: tag, content: word})
+      .then(res => {
+        console.log(res)
+        onSearching(res.data)
+      })
+
+      // onSearching(SearchDataDummy);
 
       history.push("/SearchPage");
 
@@ -140,7 +149,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
   }, []);
 
   //태그를 선택할때 tag state 업데이트가 됨.
-  const option = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const option = (e: React.ChangeEvent<HTMLSelectElement> & React.MouseEvent<HTMLSelectElement>) => {
     dispatch(searchSelect(e.target.value));
   };
 
@@ -157,9 +166,9 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>
           <option value="전체">전체</option>
-          <option value="제목">제목</option>
-          <option value="내용">내용</option>
-          <option value="태그">태그</option>
+          <option value="title">제목</option>
+          <option value="body">내용</option>
+          <option value="tag">태그</option>
         </SearchFilter>
       </LeftBox>
       {isLogin ? (

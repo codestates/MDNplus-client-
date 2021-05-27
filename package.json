@@ -13,12 +13,14 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/react-redux": "^7.1.16",
     "@types/styled-components": "^5.1.9",
+    "@uiw/react-md-editor": "^3.3.1",
     "antd-mobile": "^2.3.4",
     "autosize": "^4.0.4",
     "axios": "^0.21.1",
     "browser-image-compression": "^1.0.14",
     "cloudinary": "^1.25.1",
     "dotenv": "^8.2.0",
+    "katex": "^0.13.11",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-kakao-login": "^2.1.0",
@@ -59,6 +61,7 @@
   },
   "devDependencies": {
     "@types/autosize": "^3.0.7",
+    "@types/katex": "^0.11.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-syntax-highlighter": "^13.5.0"
   }

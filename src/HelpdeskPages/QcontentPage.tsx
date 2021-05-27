@@ -218,7 +218,7 @@ function QcontentPage() {
                 </LikesPart>
                 <AnswerBox>
                   {/* <AnswerTitle> {el.userId.nickName}</AnswerTitle> */}
-                  <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle>
+                  {/* <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle> */}
                   <Body>{el.content}</Body>
                   <NameDate>
                     <Date>{el.createdAt.substring(0, 10)}</Date>

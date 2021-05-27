@@ -9,8 +9,8 @@ import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import useAllData from "../Hooks/useAllData";
 import AnswerModal from "../Components/AnswerModal";
 import useBooleanData from "../Hooks/useBooleanData";
-import { ExitBtn, SubmitBtn } from "../styled-components/Post";
-import axios from 'axios';
+import { ExitBtn, SubmitBtn, BtnBox } from "../styled-components/Post";
+import axios from "axios";
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
@@ -19,7 +19,6 @@ function AnswerPage() {
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
-  
 
   useEffect(() => {
     onSetWriteMode(true);
@@ -30,13 +29,9 @@ function AnswerPage() {
     setWriting(e.target.value);
   };
 
-  const handleAnswerBtn = () => {
+  const handleConfirmModal = () => {
     setbtnName("답변");
     setIsOpen(() => !isOpen);
-    axios.post('http://localhost:80/comment', {questionId: displayQuestion?._id, content: writing}, {withCredentials:true})
-    .then(res => console.log(res))
-    onSetWriteMode(true);
-    window.history.back();
   };
 
   const handleExitBtn = () => {
@@ -137,9 +132,11 @@ function AnswerPage() {
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
 
-        {isOpen ? <AnswerModal btnName={btnName} setIsOpen={setIsOpen} /> : null}
-        <SubmitBtn onClick={handleAnswerBtn}> 답변달기</SubmitBtn>
-        <ExitBtn onClick={handleAnswerBtn}> 나가기 </ExitBtn>
+        {isOpen ? <AnswerModal writing={writing} handleConfirmModal={handleConfirmModal} /> : null}
+        <BtnBox>
+          <SubmitBtn onClick={handleConfirmModal}> 답변달기</SubmitBtn>
+          <ExitBtn onClick={handleExitBtn}> 나가기 </ExitBtn>
+        </BtnBox>
       </LeftContainer>
 
       <RightContainer>

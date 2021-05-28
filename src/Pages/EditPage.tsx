@@ -11,6 +11,7 @@ import useBooleanData from "../Hooks/useBooleanData";
 import { SubmitBtn, ExitBtn, BtnBox, HelpBtn, GuideLine } from "../styled-components/Post";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import HelpModal from '../Components/HelpModal';
 
 function EditPage() {
   const { contentState, onChangeContent } = useContentData();
@@ -18,11 +19,16 @@ function EditPage() {
   const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
   const [checkModal, setCheckModal] = useState(false);
+  const [helpModal, setHelpModal] = useState(false)
+  const previewRef = useRef<any>(null)
   const history = useHistory();
 
   //유저가 글을 수정하여 onchange 이벤트가 발생 시, contentData의 body를 수정하기 위한 함수
   const handleChange = (e: any) => {
-    onChangeContent(e.target.value);
+    const previewValues = previewRef.current.innerText
+    onChangeContent({body: e.target.value, pureBody: previewValues});
+    // const previewValues = document.querySelector('.markdown')
+    console.log(typeof previewValues)
   };
 
   // 유저가 수정버튼 누를 시, 정말로 수정할 것인지 물어보는 모달의 상태(true, false)를 관리하는 함수
@@ -33,6 +39,15 @@ function EditPage() {
       setCheckModal(true);
     }
   };
+
+  //유저가 오른쪽 하단 도움말을 눌렀을 때 나오는 모달을 관리하는 함수
+  const handleHelpModal = () => {
+    if(helpModal) {
+      setHelpModal(false)
+    } else {
+      setHelpModal(true)
+    }
+  }
 
   //유저가 나가기 버튼 누를 시, ContentPage로 이동하는 코드
   const handleExit = () => {
@@ -46,6 +61,7 @@ function EditPage() {
 
   return (
     <>
+      {helpModal ? <HelpModal handleHelpModal={handleHelpModal}/> : null}
       {checkModal ? <EditConfirmModal handleConfirmModal={handleConfirmModal} /> : null}
       {!contentData ? (
         <div>로딩 중입니다</div>
@@ -66,10 +82,10 @@ function EditPage() {
               <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
             </BtnBox>
           </LeftContainer>
-          <RightContainer>
+          <RightContainer ref={previewRef}>
             <Title>{contentData.title}</Title>
             <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[gfm, { singleTilde: false }]]} components={Components} children={contentData.body} className="markdown" />
-            <HelpBtn>?</HelpBtn>
+            <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
           </RightContainer>
         </Container>
       )}

@@ -22,7 +22,7 @@ function EditConfirmModal({ handleConfirmModal }: EditProps) {
 
   // 모달창에 있는 수정 버튼 또는 O 버튼 누를 시, 서버에 글수정 요청을 보내는 코드
   const handleSubmit = () => {
-    axios.patch("http://localhost:80/maincontent", { mainContentId: contentData._id, body: contentData.body }, { withCredentials: true }).then((res) => console.log(res));
+    axios.patch("http://localhost:80/maincontent", { mainContentId: contentData._id, body: contentData.body, pureBody: contentData.pureBody}, { withCredentials: true }).then((res) => console.log(res));
     handleConfirmModal();
     history.push("/ContentPage");
     onSetWriteMode(false);

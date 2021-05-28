@@ -31,7 +31,7 @@ export const ModalBox = styled.div`
   border: 1px solid #9e9e9e;
   border-radius: 10px;
   background: white;
-  transition: 0.4s ease-in;
+  transition: 0.2s ease-in;
 `;
 
 export const Message = styled.div`

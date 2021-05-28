@@ -1,11 +1,10 @@
 import { useRef } from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { BtnBox, CancelBtn, Message, ModalBox, ModalContainer, SubmitBtn } from "../styled-components/ConfirmModal";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../Redux/";
 import useBooleanData from "../Hooks/useBooleanData";
+import { BtnBox, CancelBtn, Message, ModalBox, ModalContainer, SubmitBtn } from "../styled-components/ConfirmModal";
 
 type ModalProps = {
   writing: string;

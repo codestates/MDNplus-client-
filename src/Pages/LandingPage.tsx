@@ -94,7 +94,7 @@ const IntroBox = styled.div`
 
 const IntroBoxBody_Container = styled.div`
   margin-left: 4rem;
-  width: 20rem;
+  width: 25rem;
 `;
 
 const IntroBox_Body1 = styled.div`

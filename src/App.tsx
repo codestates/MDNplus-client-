@@ -60,7 +60,13 @@ function App() {
           <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
         )}
       </Header>
-      <SideArea>{writeMode ? null : <SideBar></SideBar>}</SideArea>
+
+      {writeMode ? null : (
+        <SideArea>
+          <SideBar></SideBar>
+        </SideArea>
+      )}
+
       <Body>
         <Switch>
           <Route exact path="/" render={() => <MainPage />} />
@@ -98,7 +104,7 @@ export default withRouter(App);
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 10% 1fr;
+  grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr 15%;
   height: 100vh;
   width: 100vw;
@@ -111,8 +117,8 @@ const Container = styled.div`
   @media (max-width: 375px) {
     grid-template-areas:
       "header header"
-      "side side"
-      "main main";
+      "side main"
+      "main footer";
   }
 `;
 const Header = styled.div`
@@ -120,8 +126,10 @@ const Header = styled.div`
 `;
 const SideArea = styled.div`
   grid-area: side;
+  width: 10rem;
   background: #f4f4f4;
 `;
+
 const Body = styled.div`
   grid-area: main;
 `;

@@ -7,6 +7,8 @@ import useAllData from "../Hooks/useAllData";
 import useBooleanData from "../Hooks/useBooleanData";
 import useContentData from "../Hooks/useContentData";
 import { Components } from "./EditPage";
+import gfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 type PropsOption = {
   isLogin: Boolean;
@@ -54,7 +56,7 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
               <Title>{contentData.title}</Title>
               <EditBtn onClick={handleClickEdit}>수정</EditBtn>
             </TitleBox>
-            <ReactMarkdown components={Components} children={contentData.body} />
+            <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[gfm, { singleTilde: false }]]} components={Components} children={contentData.body} className="markdown" />
           </ContentBox>
         )}
       </Container>

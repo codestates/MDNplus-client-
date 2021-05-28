@@ -5,29 +5,30 @@ import useContentData from "../Hooks/useContentData";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import {useHistory} from "react-router-dom"
-import useAllData from "../Hooks/useAllData"
-import useBooleanData from '../Hooks/useBooleanData';
-import {SubmitBtn, ExitBtn} from "../styled-components/Post"
-
-
-// type PropsOption = {
-//   setWriteMode: (boolean:boolean) => void;
-// }
+import { useHistory } from "react-router-dom";
+import useAllData from "../Hooks/useAllData";
+import useBooleanData from "../Hooks/useBooleanData";
+import { SubmitBtn, ExitBtn, BtnBox, HelpBtn, GuideLine } from "../styled-components/Post";
+import gfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import HelpModal from '../Components/HelpModal';
 
 function EditPage() {
   const { contentState, onChangeContent } = useContentData();
-  const {allState} = useAllData()
-  const {onSetWriteMode} = useBooleanData()
+  const { allState } = useAllData();
+  const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
   const [checkModal, setCheckModal] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const history = useHistory()
-  
+  const [helpModal, setHelpModal] = useState(false)
+  const previewRef = useRef<any>(null)
+  const history = useHistory();
 
   //유저가 글을 수정하여 onchange 이벤트가 발생 시, contentData의 body를 수정하기 위한 함수
   const handleChange = (e: any) => {
-    onChangeContent(e.target.value);
+    const previewValues = previewRef.current.innerText
+    onChangeContent({body: e.target.value, pureBody: previewValues});
+    // const previewValues = document.querySelector('.markdown')
+    console.log(typeof previewValues)
   };
 
   // 유저가 수정버튼 누를 시, 정말로 수정할 것인지 물어보는 모달의 상태(true, false)를 관리하는 함수
@@ -39,52 +40,52 @@ function EditPage() {
     }
   };
 
-  const handleExit = () => {
-    history.push('/ContentPage')
-    onSetWriteMode(false)
-  }
-
-  window.onpageshow = (e:any) => {
-    console.log(e)
-    if(e.persisted) {
-      console.log(e.persisted)
+  //유저가 오른쪽 하단 도움말을 눌렀을 때 나오는 모달을 관리하는 함수
+  const handleHelpModal = () => {
+    if(helpModal) {
+      setHelpModal(false)
+    } else {
+      setHelpModal(true)
     }
   }
 
+  //유저가 나가기 버튼 누를 시, ContentPage로 이동하는 코드
+  const handleExit = () => {
+    history.push("/ContentPage");
+    onSetWriteMode(false);
+  };
+
   useEffect(() => {
-    onSetWriteMode(true)
-    
-  }, [])
-  
-  // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)
-  // const handleGetIndex = () => {
-  //   const text = textareaRef.current;
-  //   const currentIndex = text?.selectionStart;
-  //   console.log(text)
-  //   console.log(currentIndex);
-  //   setCurrentIndex(currentIndex);
-  // };
+    onSetWriteMode(true);
+  }, []);
 
   return (
     <>
+      {helpModal ? <HelpModal handleHelpModal={handleHelpModal}/> : null}
       {checkModal ? <EditConfirmModal handleConfirmModal={handleConfirmModal} /> : null}
       {!contentData ? (
         <div>로딩 중입니다</div>
       ) : (
         <Container>
           <LeftContainer>
-            <Title>{contentData.title}</Title>
+            <TitleBox>
+              <Title>{contentData.title}</Title>
+              <GuideLine>* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.</GuideLine>
+            </TitleBox>
             {contentData.body ? (
-              <Body ref={textareaRef} defaultValue={contentData.body} onChange={handleChange} autoFocus></Body>
+              <Body defaultValue={contentData.body} onChange={handleChange} autoFocus></Body>
             ) : (
               <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>
             )}
-            <ExitBtn onClick={handleExit}>나가기</ExitBtn>
-            <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
+            <BtnBox>
+              <ExitBtn onClick={handleExit}>나가기</ExitBtn>
+              <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
+            </BtnBox>
           </LeftContainer>
-          <RightContainer>
+          <RightContainer ref={previewRef}>
             <Title>{contentData.title}</Title>
-            <ReactMarkdown components={Components} children={contentData.body} className="markdown"/>
+            <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[gfm, { singleTilde: false }]]} components={Components} children={contentData.body} className="markdown" />
+            <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
           </RightContainer>
         </Container>
       )}
@@ -100,7 +101,6 @@ export const Components = {
 
 export default EditPage;
 
-
 const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -112,8 +112,14 @@ const LeftContainer = styled.div`
   padding: 0px 30px 30px 30px;
 `;
 
-const Title = styled.h1`
+const TitleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
+const Title = styled.h1`
+  display: inline-block;
 `;
 
 const Body = styled.textarea`
@@ -132,30 +138,13 @@ const RightContainer = styled.div`
   word-spacing: 0.2rem;
 `;
 
-const MarDownBtns = styled.div`
-  margin: 1rem;
-  display: flex;
-  align-items: center;
-`;
-
-const MarkDownBtn = styled.button`
-  text-size: 1.5rem;
-  margin: 0.2rem;
-`;
-
-
-
-
-
-
-
 // const handleMarkdownH1 = () => {
 //   if (contentData) {
 //     const splitedArr = contentData.body.split("\n");
 //     const newContentBody = contentData.body.slice(0, currentIndex);
 //     const splitedNewArr = newContentBody.split("\n");
 //     const targetString = splitedNewArr[splitedNewArr.length - 1];
-//     const targetStringIdx = splitedNewArr.length - 1      
+//     const targetStringIdx = splitedNewArr.length - 1
 
 //     // splitedArr[targetStringIdx] = `# ${splitedArr[targetStringIdx]}`
 

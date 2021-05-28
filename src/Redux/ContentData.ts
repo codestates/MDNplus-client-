@@ -28,9 +28,11 @@ function ContentDataReducer(state: InitState = initialState, action: ContentData
         return { ...state, contentData: action.payload };
     case CHANGECONTENT:
         console.log('변경해줘야됨')
+        console.log(action.payload)
         const newState = {...state}
         if(newState.contentData) {
-            newState.contentData.body = action.payload
+            newState.contentData.body = action.payload.body
+            newState.contentData.pureBody = action.payload.pureBody
         }
         return newState
     default:

@@ -151,7 +151,7 @@ const HelpdeskPage = () => {
                       handleClickQuestion(el);
                     }}
                   >
-                    {el.body}
+                    {`${el.body.slice(0, 100)}`}
                   </Body>
                   <TagBox>
                     {el.tags.map((el: string, idx: number) => (

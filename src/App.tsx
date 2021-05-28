@@ -22,6 +22,7 @@ import AnswerPage from "./HelpdeskPages/AnswerPage";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
 import HquestionPage from "./HelpdeskPages/HquestionPage";
 import TestEditPage from "./Pages/TestEditPage";
+import LandingPage from "./Pages/LandingPage";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -75,6 +76,7 @@ function App() {
           <Route path="/QcontentPage" render={() => <QcontentPage />} />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/TestEditPage" render={() => <TestEditPage />} />
+          <Route path="/LandingPage" render={() => <LandingPage />} />
         </Switch>
         {/* {writeMode ? null : <Footer></Footer>} */}
       </Body>

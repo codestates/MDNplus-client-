@@ -11,7 +11,7 @@ import useAllData from "../Hooks/useAllData";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
-import { SubmitBtn, ExitBtn } from "../styled-components/Post";
+import { SubmitBtn, ExitBtn, BtnBox, GuideLine, HelpBtn } from "../styled-components/Post";
 
 // axios.defaults.withCredentials = true;
 
@@ -106,13 +106,16 @@ const QuestionPage = () => {
       {checkModal ? <QconfirmModal handleSubmitQ={handleSubmitQ} handleConfirmModal={handleConfirmModal} /> : null}
       <Container>
         <LeftContainer>
-          <Title
-            onChange={(e) => {
-              handleChange(e, "title");
-            }}
-            rows={2}
-            placeholder="질문 제목을 입력하세요"
-          />
+          <TitleBox>
+            <Title
+              onChange={(e) => {
+                handleChange(e, "title");
+              }}
+              rows={2}
+              placeholder="질문 제목을 입력하세요"
+              autoFocus
+            />
+          </TitleBox>
           <TagBox onKeyPress={handleEnter}>
             {tags.length === 0
               ? null
@@ -130,12 +133,13 @@ const QuestionPage = () => {
           </TagBox>
           <UnderLine></UnderLine>
           {guideLine ? (
-            <GuideLine
+            <GuideMessage
               onClick={() => {
                 setGuideLine(false);
               }}
-              value={`궁금한 내용을 적어주세요\n\n답변이 등록되면 질문 수정/삭제가 불가합니다`}
-            ></GuideLine>
+              value={`궁금한 내용을 적어주세요\n\n답변이 등록되면 질문 수정/삭제가 불가합니다\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+              `}
+            ></GuideMessage>
           ) : (
             <Body
               onChange={(e) => {
@@ -144,8 +148,10 @@ const QuestionPage = () => {
               autoFocus
             ></Body>
           )}
-          <ExitBtn onClick={handleExit}>나가기</ExitBtn>
-          <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
+          <BtnBox>
+            <ExitBtn onClick={handleExit}>나가기</ExitBtn>
+            <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
+          </BtnBox>
         </LeftContainer>
         <RightContainer>
           <h1>{title}</h1>
@@ -172,13 +178,19 @@ const Container = styled.div`
 `;
 
 const LeftContainer = styled.div`
-  padding: 0px 30px 30px 30px;
+  padding: 0px 2.8rem 2.8rem 2.8rem;
+`;
+
+const TitleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Title = styled.textarea`
   border: none;
-  font-size: 24px;
-  margin-top: 30px;
+  font-size: 1.6rem;
+  margin-top: 2rem;
   resize: none;
   outline: none;
   width: 100%;
@@ -188,23 +200,23 @@ const Title = styled.textarea`
 const UnderLine = styled.div`
   width: 100%;
   border-bottom: 0.5px solid #e0e0e0;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 1.3rem;
+  margin-bottom: 1.3rem;
 `;
 
 const TagBox = styled.div``;
 
 const TagInput = styled.input`
   border: none;
-  margin-top: 20px;
-  font-size: 18px;
+  margin-top: 1.2rem;
+  font-size: 1rem;
   outline: none;
 `;
 
 const Tag = styled.span`
   border-radius: 1rem;
   padding: 0.3rem 0.7rem 0.3rem 0.7rem;
-  margin-right: 10px;
+  margin-right: 0.7rem;
   cursor: pointer;
   background: #eeeeee;
   color: #0055fa;
@@ -216,25 +228,25 @@ const Body = styled.textarea`
   border: none;
   outline: none;
   resize: none;
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 1rem;
+  margin-top: 0.8rem;
   color: black;
 `;
 
-const GuideLine = styled.textarea`
+const GuideMessage = styled.textarea`
   width: 100%;
   height: 100%;
   border: none;
   outline: none;
   resize: none;
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 1rem;
+  margin-top: 0.7rem;
   color: gray;
 `;
 
 const RightContainer = styled.div`
   background: #f4f4f4;
-  padding: 0px 30px 30px 30px;
+  padding: 0.7rem 3rem 3rem 3rem;
 `;
 
 // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)

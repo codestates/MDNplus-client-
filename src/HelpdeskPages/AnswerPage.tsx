@@ -10,10 +10,17 @@ import useAllData from "../Hooks/useAllData";
 import AnswerModal from "../Components/AnswerModal";
 import useBooleanData from "../Hooks/useBooleanData";
 import { ExitBtn, SubmitBtn } from "../styled-components/Post";
+import useQcontentData from "../Hooks/useQcontentData";
+
 import axios from "axios";
 
 function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
+  const { QcontentState } = useQcontentData();
+  const UserState = useSelector((state: RootState) => state.MyPageReducer);
+
+  const { mdnAllData } = UserState;
+
   const { onSetWriteMode } = useBooleanData();
   const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");
@@ -86,7 +93,7 @@ function AnswerPage() {
           <Q>Q</Q>
           <Title> {displayQuestion?.title}</Title>
           <NameDate>
-            <UserName>유저네임</UserName>
+            <UserName>{QcontentState.currentData?.question.userId.nickName}</UserName>
             <Date>{displayQuestion?.createdAt}</Date>
           </NameDate>
           <QuestionBody>{displayQuestion?.body}</QuestionBody>
@@ -140,7 +147,7 @@ function AnswerPage() {
       </LeftContainer>
 
       <RightContainer>
-        <PrieviewTitle>{displayQuestion?.userId.nickName} 님의 답변</PrieviewTitle>
+        <PrieviewTitle>{mdnAllData?.user.nickName} 님의 답변</PrieviewTitle>
         <AnswerPart>
           <ReactMarkdown children={writing} components={Components} />
         </AnswerPart>

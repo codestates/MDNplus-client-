@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled, { keyframes } from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
+import ReactMarkdown from "react-markdown";
 import QContentFakeData from "../QContentFakeData";
 import useQcontentData from "../Hooks/useQcontentData";
 import axios from "axios";
@@ -81,29 +82,28 @@ function QcontentPage() {
   const [isMainPage, setisMainPage] = useState<boolean>(true);
   const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
-  const [isLike, setIsLike] = useState<boolean>(true);
+  // const [isLike, setIsLike] = useState<boolean>(true);
 
   const handleQuestionLike = (updateData: DataType) => {
-    if (isLike === true) {
+    if (updateData.question.isLike === true) {
       updateData.question.like = updateData.question.like + 1;
-      updateData.question.isLike = updateData.question.isLike = false;
-      console.log(updateData);
+      updateData.question.isLike = false;
 
       onQuestionLike(updateData);
     } else {
       updateData.question.like = updateData.question.like - 1;
-      updateData.question.isLike = updateData.question.isLike = true;
-      console.log(updateData);
-
+      updateData.question.isLike = true;
       onQuestionLike(updateData);
     }
+
     axios
       .post("http://localhost:8080/question/like", { questionId: updateData.question._id, like: updateData.question.like, isLike: updateData.question.isLike }, { withCredentials: true })
-      .then((res) => console.log(res));
-    // setIsLike(() => !isLike);
+      .then((res) => console.log("응답받은 질문에대한 좋아요 =", res));
   };
 
   const handleAnswerLike = (updateData: AnswerType, index: number) => {
+    console.log("대답에대한 좋아요 = ", updateData.isLike);
+
     if (updateData.isLike === true) {
       console.log("clicked");
       updateData.like = updateData.like + 1;
@@ -115,6 +115,9 @@ function QcontentPage() {
       onAnswerLike(updateData);
       // onAnswerLike(updateData);
     }
+    axios
+      .post("http://localhost:8080/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
+      .then((res) => console.log("응답받은 대답에대한 좋아요 =", res));
 
     // axios.post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
   };
@@ -167,6 +170,7 @@ function QcontentPage() {
     <div>
       {currentData !== null && currentData !== undefined ? (
         <Container>
+          ReactMarkdown
           <QuestionContainer>
             {/* <LineArea>질문</LineArea> */}
             <Question>
@@ -186,7 +190,10 @@ function QcontentPage() {
                   <UserName>{currentData.question.userId.nickName}</UserName>
                   <Date>{currentData.question.createdAt.substring(0, 10)}</Date>
                 </NameDate>
-                <Body>{currentData.question.body}</Body>
+
+                <Body>
+                  <ReactMarkdown children={currentData.question.body} />
+                </Body>
                 <div>
                   {currentData.question.tags?.map((el, index: number) => (
                     <Tags key={index}>{el}</Tags>
@@ -196,7 +203,6 @@ function QcontentPage() {
               </QuestionBox>
             </Question>
           </QuestionContainer>
-
           <AnswerContainer>
             <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
 
@@ -217,9 +223,8 @@ function QcontentPage() {
                   {/* <span onClick={() => handleAnswerDecreaseLikes(el)}></span> */}
                 </LikesPart>
                 <AnswerBox>
-                  {/* <AnswerTitle> {el.userId.nickName}</AnswerTitle>
-                  {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle> : <div>비공개</div>} */}
-                  {/* <div>{el.}</div> */}
+                  {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle> : <div>비공개</div>}
+
                   <Body>{el.content}</Body>
                   <NameDate>
                     <Date>{el.createdAt.substring(0, 10)}</Date>

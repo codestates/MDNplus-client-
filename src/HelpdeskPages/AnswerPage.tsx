@@ -171,8 +171,7 @@ const Container = styled.div`
 `;
 
 const LeftContainer = styled.div`
-margin: 3rem;
-
+  margin: 3rem;
   width:50%;
   height:70%;
   padding 13px;

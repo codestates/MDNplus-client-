@@ -97,7 +97,7 @@ export default withRouter(App);
 const Container = styled.div`
   display: grid;
   grid-template-columns: 10% 1fr;
-  grid-template-rows: auto 1fr 10%;
+  grid-template-rows: auto 1fr 15%;
   height: 100vh;
   width: 100vw;
 
@@ -107,7 +107,10 @@ const Container = styled.div`
     "footer footer";
 
   @media (max-width: 375px) {
-    flex-direction: column;
+    grid-template-areas:
+      "header header"
+      "side side"
+      "main main";
   }
 `;
 const Header = styled.div`

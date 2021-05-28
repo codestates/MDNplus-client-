@@ -201,7 +201,9 @@ function QcontentPage() {
                 {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
               </QuestionBox>
             </Question>
-            <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
+            <LineGap>
+              <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
+            </LineGap>
           </QuestionContainer>
           <AnswerContainer>
             {currentData.comments?.map((el, index: number) => (
@@ -222,7 +224,6 @@ function QcontentPage() {
                 </LikesPart>
                 <AnswerBox>
                   {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle> : <div>비공개</div>}
-
                   <Body>{el.content}</Body>
                   <NameDate>
                     <Date>{el.createdAt.substring(0, 10)}</Date>
@@ -267,15 +268,15 @@ const AnimatedHeart = styled(HeartIcon)`
 
 const Container = styled.div`
   height: 100%;
-  width: 85%;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 18%);
+  grid-template-rows: repeat(4, auto);
+  margin: 5rem;
 `;
 
 const QuestionContainer = styled.div`
   grid-area: 1/2 /2/6;
-  margin: 5rem 0 0 0;
 `;
 
 const Question = styled.div`
@@ -298,6 +299,7 @@ const QuestionBox = styled.div`
 
 const AnswerContainer = styled.div`
   grid-area: 3/2/5/6;
+  margin-top: 2rem;
 `;
 
 const EachAnswer = styled.div`
@@ -309,16 +311,18 @@ const EachAnswer = styled.div`
 
 const AnswerBox = styled.div`
   margin: 1rem 0 1rem 0;
-
   width: 80%;
+`;
+
+const LineGap = styled.div`
+  margin: 1rem 0 1rem 2.6rem;
 `;
 
 const LineArea = styled.span`
   font-size: 1.3rem;
   color: #1658d8;
   font-weight: bold;
-  margin: 0 0 5rem 2.6rem;
-  padding-bottom: 0.8rem;
+
   border-bottom: 0.17rem solid #e0e0e0;
 `;
 

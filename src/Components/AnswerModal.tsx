@@ -72,21 +72,20 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
 export default AnswerModal;
 
 const ModalContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
+  left: 0;
 `;
 
 const Overlay = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
   background-color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
 `;

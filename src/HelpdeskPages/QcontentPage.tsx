@@ -170,7 +170,6 @@ function QcontentPage() {
     <div>
       {currentData !== null && currentData !== undefined ? (
         <Container>
-          ReactMarkdown
           <QuestionContainer>
             {/* <LineArea>질문</LineArea> */}
             <Question>
@@ -202,10 +201,9 @@ function QcontentPage() {
                 {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
               </QuestionBox>
             </Question>
+            <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
           </QuestionContainer>
           <AnswerContainer>
-            <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
-
             {currentData.comments?.map((el, index: number) => (
               <EachAnswer key={index}>
                 <LikesPart onClick={() => handleAnswerLike(el, index)}>
@@ -268,8 +266,8 @@ const AnimatedHeart = styled(HeartIcon)`
 `;
 
 const Container = styled.div`
-  height: 100vh;
-  width: 85vw;
+  height: 100%;
+  width: 85%;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, 18%);

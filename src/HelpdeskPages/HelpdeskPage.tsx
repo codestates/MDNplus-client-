@@ -176,7 +176,8 @@ const HelpdeskPage = () => {
 export default HelpdeskPage;
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
+  height: 100%;
 `;
 
 const IntroBox = styled.div`

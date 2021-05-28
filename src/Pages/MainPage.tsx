@@ -122,7 +122,7 @@ export default MainPage;
 
 const Container = styled.div`
   display: grid;
-  width: 100vw;
+  width: 100%;
   height: 100%;
 `;
 

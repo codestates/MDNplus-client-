@@ -53,12 +53,14 @@ function App() {
   };
 
   return (
-    <>
-      {writeMode ? null : (
-        <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
-      )}
-      <Container>
-        {writeMode ? null : <SideBar></SideBar>}
+    <Container>
+      <Header>
+        {writeMode ? null : (
+          <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
+        )}
+      </Header>
+      <SideArea>{writeMode ? null : <SideBar></SideBar>}</SideArea>
+      <Body>
         <Switch>
           <Route exact path="/" render={() => <MainPage />} />
           <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
@@ -75,18 +77,50 @@ function App() {
           <Route path="/TestEditPage" render={() => <TestEditPage />} />
         </Switch>
         {/* {writeMode ? null : <Footer></Footer>} */}
-      </Container>
-    </>
+      </Body>
+      <Footer>푸터</Footer>
+    </Container>
   );
 }
 
 export default withRouter(App);
 
+// const Container = styled.div`
+//   display: flex;
+//   height: 100vh;
+
+//   @media (max-width: 375px) {
+//     flex-direction: column;
+//   }
+// `;
+
 const Container = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 10% 1fr;
+  grid-template-rows: auto 1fr 10%;
   height: 100vh;
+  width: 100vw;
+
+  grid-template-areas:
+    "header header"
+    "side main"
+    "footer footer";
 
   @media (max-width: 375px) {
     flex-direction: column;
   }
+`;
+const Header = styled.div`
+  grid-area: header;
+`;
+const SideArea = styled.div`
+  grid-area: side;
+  background: #f4f4f4;
+`;
+const Body = styled.div`
+  grid-area: main;
+`;
+const Footer = styled.div`
+  grid-area: footer;
+  background: #005ce7;
 `;

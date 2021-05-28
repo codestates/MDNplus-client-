@@ -46,8 +46,8 @@ const handleColorType = (color: any) => {
 };
 
 const Container = styled.span`
-  width: 17%;
-  height: 150rem;
+  width: 100%;
+  height: 100%;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
 

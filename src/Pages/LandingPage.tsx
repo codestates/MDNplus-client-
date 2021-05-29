@@ -57,7 +57,7 @@ const Nav = styled.div`
 `;
 
 const Logo = styled.span`
-  font-size: 1.7rem;
+  font-size: 2rem;
   color: #005ce7;
   font-weight: bold;
   width: 40%;
@@ -105,7 +105,7 @@ const IntroBox_Body1 = styled.div`
 
 const IntroBox_Body2 = styled.div`
   font-size: 3rem;
-  margin: 1rem 0 1rem 0;
+  margin: 2rem 0 1rem 0;
   color: black;
   font-weight: bold;
 `;

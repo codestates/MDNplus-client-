@@ -15,24 +15,68 @@ const LandingPage = () => {
 
   return (
     <Container>
-      <Nav>
-        <Logo>MDN+</Logo>
-        <Nav_RightBox>
-          <Intro>서비스 소개</Intro>
-          <Questions>자주 하는 질문</Questions>
-        </Nav_RightBox>
-      </Nav>
-      <IntroBox>
-        <IntroBoxBody_Container>
-          <IntroBox_Body1>개발이</IntroBox_Body1>
-          <IntroBox_Body2>편안해지는 공간</IntroBox_Body2>
-        </IntroBoxBody_Container>
-        <Img src={monitor}></Img>
-      </IntroBox>
-      {/* <StartBtn>시작하기</StartBtn> */}
-      <AppealBox></AppealBox>
-      <ReviewBox>리뷰</ReviewBox>
-      <NewsBox>MDN+ 뉴스</NewsBox>
+      <ContentsContainer>
+        <Nav>
+          <Logo>MDN+</Logo>
+          <Nav_RightBox>
+            <Intro>서비스 소개</Intro>
+            <Questions>자주 하는 질문</Questions>
+          </Nav_RightBox>
+        </Nav>
+        <IntroBoxContainer>
+          <IntroBox>
+            <IntroBox_Body1>개발이</IntroBox_Body1>
+            <IntroBox_Body2>편안해지는 공간</IntroBox_Body2>
+          </IntroBox>
+          <Img src={monitor}></Img>
+        </IntroBoxContainer>
+        {/* <StartBtn>시작하기</StartBtn> */}
+        <AppealBoxContainer>
+          <AppealBoxTitle>MDN+를 통해서 경험할 수 있는 서비스</AppealBoxTitle>
+          <AppealBoxStage>
+            <AppealBox>
+              <AppealTitle>보다 쉽게 번역이 되어진 정보들</AppealTitle>
+              <AppealBody>공식문서를 참고할 때, 번역이 매끄럽지 않거나 이해하기 힘든 부분들이 있지 않았었나요?</AppealBody>
+              <AppealBody>다른 개발자들이 자유롭게 수정한 MDN+를 확인하세요!</AppealBody>
+            </AppealBox>
+            <AppealBox>
+              <AppealTitle>자신의 개발 지식을 공유</AppealTitle>
+              <AppealBody>개발공부하면서 얻은 지식을 다른 개발자들에게 공유해보고 싶지 않으신가요.</AppealBody>
+              <AppealBody>MDN+를 이용하여 공유해주세요!</AppealBody>
+            </AppealBox>
+            <AppealBox>
+              <AppealTitle>영어가 아닌, 한글로 작성된 개발 관련 질문들과 답변들</AppealTitle>
+              <AppealBody>구글링하면서 영어 때문에 개발하기 어려우셨나요?</AppealBody>
+              <AppealBody>여러 개발자들이 한글로 공유한 지식들을 얻어가보세요!</AppealBody>
+            </AppealBox>
+          </AppealBoxStage>
+        </AppealBoxContainer>
+
+        <ReviewBoxTitle>리뷰 제목</ReviewBoxTitle>
+        <ReviewBoxContainer>
+          <ReviewBox>
+            <ReviewBody>
+              MDN 에서 한국말 번역기 제대로 안되어있어 힘들었는데 MDN+에서 어떤분이 제대로 정리해서 올리셨더라구요. 잘못된 정보들도 있었는데 공부할겸 정리해서 직접 수정 할 수도있고 공부하면서 정말
+              도움이 많이 되었습니다!!
+            </ReviewBody>
+            <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
+          </ReviewBox>
+          <ReviewBox>
+            <ReviewBody>
+              한국에도 웹 개발자들을 위해 이런 서비스가 있다니... 제가 남긴 질문을 시니어 개발자님이 답변해주셨습니다. 정말 든든하네요 ㅎㅎ 관리가 잘되어서 번창하셨으면 좋겠습니다.
+            </ReviewBody>
+            <Reviewer>주니어 개발자 문코딩</Reviewer>
+          </ReviewBox>
+          <ReviewBox>
+            <ReviewBody>
+              웹개발에 필요한 Javascript CSS 에대한 정보가 정말 많은 것 같습니다. 초보 개발자라 map method 을 어떻게 사용하는지 잘 몰랐는데 다른 분들이 남겨주신 다양한 예시들을 보고 겨우 이해했네요
+              감사합니다!
+            </ReviewBody>
+            <Reviewer>개발입문자 조코딩</Reviewer>
+          </ReviewBox>
+        </ReviewBoxContainer>
+        <NewsBox>MDN+ 뉴스</NewsBox>
+      </ContentsContainer>
     </Container>
   );
 };
@@ -40,33 +84,39 @@ const LandingPage = () => {
 export default LandingPage;
 
 const Container = styled.div`
+  // display: flex;
+  // flex-direction: column;
+`;
+
+//---------------여기서부터 컨텐츠들-------------------------------
+const ContentsContainer = styled.div`
   display: flex;
   width: 100vw;
-  height: 100vh;
+  // height: 100vw;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
 const Nav = styled.div`
+  width: 100%;
+  height: 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: white;
-  height: 16rem;
-  margin-top: 1rem;
-  width: 75%;
+  padding: 2rem;
 `;
 
 const Logo = styled.span`
   font-size: 1.7rem;
   color: #005ce7;
   font-weight: bold;
-  width: 40%;
+  margin-left: 10rem;
 `;
 
 const Nav_RightBox = styled.div`
-  // margin-right: -3rem;
+  margin-right: 5rem;
 `;
 
 const Intro = styled.span`
@@ -84,18 +134,17 @@ const Questions = styled.span`
   font-weight: bold;
 `;
 
-const IntroBox = styled.div`
-  width: 80%;
-  height: 30rem;
+const IntroBoxContainer = styled.div`
+  width: 100%;
+  height: 45rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   color: white;
-  margin-top: 5rem;
 `;
 
-const IntroBoxBody_Container = styled.div`
-  margin-left: 4rem;
+const IntroBox = styled.div`
+  margin-left: 12rem;
   width: 20rem;
   margin-top: -5rem;
 
@@ -146,25 +195,86 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const AppealBox = styled.div`
-  width: 100%;
-  height: 30rem;
+const AppealBoxContainer = styled.div`
+  width: 100vw;
+  height: 50rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //   background: #005ce7;
-  font-size: 5rem;
-  color: white;
+  font-size: 1rem;
+  background: #EEEEEE;
+`;
+
+const AppealBoxTitle = styled.div`
+  font-size: 2rem;
+  color: #616161;
+`;
+
+const AppealBoxStage = styled.div`
+  width: 50%;
+  padding: 4rem 0rem 4rem 4rem;
+`;
+
+const AppealBox = styled.div`
+  flex-direction: column;
+  margin: 2rem 0 2rem 0;
+  padding-left: 10rem;
+`;
+
+const AppealTitle = styled.h3`
+  color: #616161;
+`;
+
+const AppealBody = styled.div`
+  color: #616161;
+`;
+
+const ReviewBoxContainer = styled.div`
+  width: 100vw;
+  height: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ReviewBoxTitle = styled.div`
+  font-weight: bold;
+  font-size: 2.3rem;
+  margin-top: 4rem;
+  color: #424242;
+`;
+const ReviewBoxSubTitle = styled.div`
+  font-size: 1.2rem;
+  margin: 0.5rem 0 3rem 0;
+  color: #757575;
 `;
 
 const ReviewBox = styled.div`
-  width: 100%;
-  height: 30rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 23rem;
+  height: 25rem;
+  border-radius: 0.6rem;
+  border: none;
+  padding: 0 1rem 1rem 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+  margin: 2rem;
+  padding: 2rem;
+  position: relative;
+`;
+const ReviewBody = styled.div`
+  font-size: 1.2rem;
+  line-height: 2.3rem;
+  color: #757575;
+`;
+const Reviewer = styled.div`
+  position: absolute;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 0 2rem 0;
+  bottom: 0;
+  color: #424242;
 `;
 
 const NewsBox = styled.div`

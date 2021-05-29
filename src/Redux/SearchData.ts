@@ -4,7 +4,7 @@ const SEARCSELECT = "SearchSelect/SEARCSELECT" as const;
 const SEARCSHRESULT = "SearchResult/SEARCSHRESULT" as const;
 
 type SearchDataType = {
-  mainContent: {
+  mainContent?: {
     count: number;
     _id: string;
     title: string;

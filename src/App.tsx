@@ -19,10 +19,10 @@ import MainPage from "./Pages/MainPage";
 // helpDesk
 import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
-import HelpdeskPage from "./HelpdeskPages/HelpdeskPage"
-import HquestionPage from "./HelpdeskPages/HquestionPage"
-import TestEditPage from './Pages/TestEditPage';
-import LandingPage from './Pages/LandingPage';
+import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
+import HquestionPage from "./HelpdeskPages/HquestionPage";
+import TestEditPage from "./Pages/TestEditPage";
+import LandingPage from "./Pages/LandingPage";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -38,11 +38,10 @@ function App() {
 
   const handleChangeMenuIcon = (url: string) => {
     console.log("이미지 바뀌는 요청 들어옴");
-    if(url) {
+    if (url) {
       setUserImg(url);
     } else {
       setUserImg(userIcon);
-
     }
   };
 
@@ -55,12 +54,20 @@ function App() {
   };
 
   return (
-    <>
+    <Container>
+      <Header>
+        {writeMode ? null : (
+          <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
+        )}
+      </Header>
+
       {writeMode ? null : (
-        <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
+        <SideArea>
+          <SideBar></SideBar>
+        </SideArea>
       )}
-      <Container>
-        {writeMode ? null : <SideBar></SideBar>}
+
+      <Body>
         <Switch>
           <Route exact path="/" render={() => <MainPage />} />
           <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
@@ -77,18 +84,56 @@ function App() {
           <Route path="/TestEditPage" render={() => <TestEditPage />} />
           <Route path="/LandingPage" render={() => <LandingPage />} />
         </Switch>
-      </Container>
-    </>
+        {/* {writeMode ? null : <Footer></Footer>} */}
+      </Body>
+      <Footer>푸터</Footer>
+    </Container>
   );
 }
 
 export default withRouter(App);
 
+// const Container = styled.div`
+//   display: flex;
+//   height: 100vh;
+
+//   @media (max-width: 375px) {
+//     flex-direction: column;
+//   }
+// `;
+
 const Container = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr 15%;
   height: 100vh;
+  width: 100vw;
+
+  grid-template-areas:
+    "header header"
+    "side main"
+    "footer footer";
 
   @media (max-width: 375px) {
-    flex-direction: column;
+    grid-template-areas:
+      "header header"
+      "side main"
+      "main footer";
   }
+`;
+const Header = styled.div`
+  grid-area: header;
+`;
+const SideArea = styled.div`
+  grid-area: side;
+  width: 10rem;
+  background: #f4f4f4;
+`;
+
+const Body = styled.div`
+  grid-area: main;
+`;
+const Footer = styled.div`
+  grid-area: footer;
+  background: #005ce7;
 `;

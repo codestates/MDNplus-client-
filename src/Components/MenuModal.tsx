@@ -5,15 +5,13 @@ import React from "react";
 import styled from "styled-components";
 import { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios"
-
+import axios from "axios";
 
 
 type MenuProps = {
   isOpen: boolean;
   checkMenu: React.Dispatch<React.SetStateAction<boolean>>;
   onClose: () => void;
-  getGitHubImage: React.Dispatch<React.SetStateAction<never[]>>;
   handleLogin: () => void;
 };
 
@@ -29,8 +27,7 @@ function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
   };
 
   const handleLogOutButton = () => {
-    axios.post('http://localhost:80/oauth/logout', null, {withCredentials: true})
-    .then(res => console.log(res))
+    axios.post("http://localhost:80/oauth/logout", null, { withCredentials: true }).then((res) => console.log(res));
     handleLogin();
     onClose();
   };
@@ -40,17 +37,16 @@ function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
   const handleMyPageButton = () => {
     history.push("/MyPage");
   };
-  
+
   const handleMypage = () => {
-    history.push("/MyPage")
+    history.push("/MyPage");
     onClose();
-  }
-  
+  };
+
   const handleEditInfoButton = () => {
     history.push("/SettingPage");
     onClose();
   };
-  
 
   return (
     <ModalContainer>
@@ -80,7 +76,6 @@ const Overlay = styled.div`
   height: 100%;
   top: 0;
   left: 0;
-
 `;
 
 const ModalBox = styled.div`

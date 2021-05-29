@@ -35,34 +35,6 @@ const SearchDataDummy = {
       body: "Promise.any()반복 가능한 Promise객체를 취하고, 반복 가능한 약속 중 하나가 충족되는 즉시 해당 약속의 값으로 해결되는 단일 약속을 반환합니다. 반복 가능한 이행에 약속이없는 경우 (주어진 모든 약속이 거부 된 경우) 반환 된 약속은 개별 오류를 함께 그룹화 AggregateError하는 새 하위 클래스로 거부됩니다 Error. 기본적으로이 방법은 Promise.all().",
       updatedAt: "2019-07-05T15:00:00.000Z",
     },
-    // {
-    //   count: 0,
-    //   _id: "60ac809b4881a3084c98ea43",
-    //   title: "Promise.race()",
-    //   body: "이 Promise.race()메서드는 iterable의 약속 중 하나가 해당 약속의 값이나 이유를 충족하거나 거부하자마자 충족하거나 거부하는 약속을 반환합니다.",
-    //   updatedAt: "2019-07-05T15:00:00.000Z",
-    // },
-    // {
-    //   count: 0,
-    //   _id: "60ac80b44881a3084c98ea44",
-    //   title: "Promise.reject()",
-    //   body: "Promise.reject()메서드는 Promise주어진 이유로 거부 된 개체를 반환합니다 .",
-    //   updatedAt: "2019-07-05T15:00:00.000Z",
-    // },
-    // {
-    //   count: 0,
-    //   _id: "60ac81064881a3084c98ea45",
-    //   title: "Promise.resolve()",
-    //   body: "이 Promise.resolve()메서드는 Promise주어진 값으로 해결 되는 개체를 반환 합니다. 값이 promise이면 해당 promise가 반환됩니다. 값이 thenable이면 (즉 then method), 반환 된 promise는 thenable을 따라최종 상태를 채택합니다. 그렇지 않으면 반환 된 약속이 값으로 이행됩니다. 이 함수는 약속과 유사한 객체의 중첩 된 레이어 (예 : 무언가를 해결하는 약속으로 확인되는 약속)를 단일 레이어로 병합합니다.",
-    //   updatedAt: "2019-07-05T15:00:00.000Z",
-    // },
-    // {
-    //   count: 0,
-    //   _id: "60ac813b4881a3084c98ea46",
-    //   title: "Promise.then()",
-    //   body: "이 then()메서드는 Promise. 최대 두 개의 인수를 사용합니다. .NET Framework의 성공 및 실패 사례에 대한 콜백 함수입니다 Promise.",
-    //   updatedAt: "2019-07-05T15:00:00.000Z",
-    // },
   ],
   helpdeskContent: [
     {

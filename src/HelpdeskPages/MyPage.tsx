@@ -7,6 +7,7 @@ import { currentQData } from "../Redux/QcontentData";
 import styled from "styled-components";
 import FakeData2 from "../FakeData2";
 import myPageFakeData from "../mypageFakeData";
+import userIcon from "../img/userIcon_gray.png";
 
 import axios from "axios";
 
@@ -50,10 +51,12 @@ function MyPage() {
 
   useEffect(() => {
     // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
-    axios.get("http://localhost:80/helpdesk/me", { withCredentials: true }).then((res) => {
+    axios.get("http://localhost:8080/helpdesk/me", { withCredentials: true }).then((res) => {
       console.log(res);
       dispatch(allDataAction(res.data));
     });
+
+    // dispatch(allDataAction(myPageFakeData));
   }, []);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
@@ -64,11 +67,11 @@ function MyPage() {
 
     // 마이페이지에서 질문을 클릭했을 때, 해당하는 질문의 데이터들을 받아오는 요청(질문의 ID가 params로 필요)
     // axios.get('http://localhost:80')
-    console.log('QcontentPage로 이동할거')
+    console.log("QcontentPage로 이동할거");
 
     history.push({
       pathname: "/QcontentPage",
-      state: { pageName: "/MyPage",  questionId: el._id},
+      state: { pageName: "/MyPage", questionId: el._id },
     });
   };
 
@@ -106,22 +109,15 @@ function MyPage() {
     setIsQuestion(false);
   };
 
-  console.log("change");
-
-  return (
+  return mdnAllData === null || mdnAllData === undefined ? (
+    <div> 비어있습니다!</div>
+  ) : (
     <Container>
       <UserInfoContainer>
-        {!mdnAllData ? (
-          <div>
-            <UserInfoImage></UserInfoImage>
-            <UserInfoName> 유저 이름</UserInfoName>
-          </div>
-        ) : (
-          <div>
-            <UserInfoImage src={mdnAllData.user.image}></UserInfoImage>
-            <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
-          </div>
-        )}
+        {!mdnAllData.user.image ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
+        <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
+
+        {/* userIcon */}
       </UserInfoContainer>
       <LeftContainer>
         <QuestionList style={{ color: questionColor }} onClick={handleMDNClicked}>
@@ -141,13 +137,13 @@ function MyPage() {
                 <QuestionBody>{el.body}</QuestionBody>
                 <div>
                   {el.tags.map((el, index: number) => (
-                    <QuestionTag key={index}>{el}</QuestionTag>
+                    <QuestionTag key={index.toString()}>{el}</QuestionTag>
                   ))}
                 </div>
                 <QuestionLastLine>
                   <QuestionLikes> 좋아요: &nbsp; {el.like}</QuestionLikes>
                   <QuestionAnswersNum>답변수:&nbsp; {el.commentCount}</QuestionAnswersNum>
-                  <QuestionDate>{el.createdAt}</QuestionDate>
+                  <QuestionDate>{el.createdAt.substring(0, 10)}</QuestionDate>
                 </QuestionLastLine>
                 {/* <div>나의 질문에 대한 답변</div>
                   <div>
@@ -173,7 +169,7 @@ function MyPage() {
                 <QuestionBody>{el.content}</QuestionBody>
                 <QuestionLastLine>
                   <QuestionLikes> 좋아요: &nbsp;{el.like}</QuestionLikes>
-                  <QuestionDate>{el.createdAt}</QuestionDate>
+                  <QuestionDate>{el.createdAt.substring(0, 10)}</QuestionDate>
                 </QuestionLastLine>
               </QuestionBox>
             ))}
@@ -188,8 +184,8 @@ export default MyPage;
 
 const Container = styled.div`
   margin-top: 1rem;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: 300px auto;
@@ -229,12 +225,13 @@ const AnswerContainer = styled.div``;
 const UserInfoContainer = styled.div`
   grid-area: 1/2/2/8;
   display: flex;
+  justify-content: start;
   align-items: center;
   border-bottom: 2px solid #a7a3a3;
 `;
 
 const UserInfoImage = styled.img`
-  margin: 8rem;
+  margin: 3rem;
   width: 10em;
   height: 10em;
   border-radius: 50%;
@@ -242,7 +239,9 @@ const UserInfoImage = styled.img`
 `;
 
 const UserInfoName = styled.div`
-  margin: 3rem;
+  font-weight: bold;
+  font-size: 2.2rem;
+  color: #757575;
 `;
 
 const LeftContainer = styled.div`
@@ -271,7 +270,7 @@ const QuestionTitle = styled.span`
 
 const QuestionBody = styled.div`
 padding 0.7rem;
-margin: 1.5rem 0 2rem 2rem;
+margin: 1.5rem 0 2rem 2.7rem;
 line-height: 1.8rem;
 `;
 
@@ -294,7 +293,7 @@ const QuestionTag = styled.span`
   border-radius: 1.5rem;
   border: none;
   padding: 0.5rem;
-  margin: 0.5rem;
+  margin-left: 3.2rem;
   color: #1658d8;
   background-color: #f5f5f5;
 `;

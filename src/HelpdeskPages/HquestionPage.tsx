@@ -11,7 +11,7 @@ import useAllData from "../Hooks/useAllData";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
-import { SubmitBtn, ExitBtn, BtnBox, GuideLine, HelpBtn} from "../styled-components/Post";
+import { SubmitBtn, ExitBtn, BtnBox, GuideLine, HelpBtn } from "../styled-components/Post";
 
 // axios.defaults.withCredentials = true;
 
@@ -85,7 +85,7 @@ const QuestionPage = () => {
   const handleSubmitQ = () => {
     console.log("새 질문 등록 요청 보내짐");
     console.log(title, body, tags);
-    axios.post("http://localhost:80/question", { title, body, tags }, { withCredentials: true }).then((res) => console.log(res));
+    axios.post("http://localhost:8080/question", { title, body, tags }, { withCredentials: true }).then((res) => console.log(res));
     history.push("/HelpdeskPage");
     onSetWriteMode(false);
   };
@@ -107,14 +107,14 @@ const QuestionPage = () => {
       <Container>
         <LeftContainer>
           <TitleBox>
-          <Title
-            onChange={(e) => {
-              handleChange(e, "title");
-            }}
-            rows={2}
-            placeholder="질문 제목을 입력하세요"
-            autoFocus
-          />
+            <Title
+              onChange={(e) => {
+                handleChange(e, "title");
+              }}
+              rows={2}
+              placeholder="질문 제목을 입력하세요"
+              autoFocus
+            />
           </TitleBox>
           <TagBox onKeyPress={handleEnter}>
             {tags.length === 0
@@ -185,7 +185,7 @@ const TitleBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 const Title = styled.textarea`
   border: none;

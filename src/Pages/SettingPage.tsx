@@ -34,10 +34,9 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
 
   //이미지 제거 클릭했을 시, 실행되는 코드
   const handleImgDelete = () => {
-    axios.patch("http://localhost:80/userinfo/img", { img: "" }, { withCredentials: true })
-    .then((res) => {
-      setUserInfo({ ...userInfo, img: "" })
-      handleChangeMenuIcon('')
+    axios.patch("http://localhost:80/userinfo/img", { img: "" }, { withCredentials: true }).then((res) => {
+      setUserInfo({ ...userInfo, img: "" });
+      handleChangeMenuIcon("");
     });
   };
 
@@ -63,17 +62,17 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
       axios
         .post(url, formData)
         .then((res) => {
-          setUserInfo({...userInfo, img: res.data.url})
+          setUserInfo({ ...userInfo, img: res.data.url });
           handleChangeMenuIcon(res.data.url);
-          axios.patch("http://localhost:80/userinfo/img", { img: res.data.url }, { withCredentials: true }).then((res) => console.log(res));
+          axios.patch("http://localhost:8080/userinfo/img", { img: res.data.url }, { withCredentials: true }).then((res) => console.log(res));
         })
         .catch((err) => console.log(err));
     }
   }, [selectedImg]);
 
   useEffect(() => {
-    axios.get("http://localhost:80/userinfo", { withCredentials: true }).then((res) => {
-      setUserInfo({nickName: res.data.nickName, img: res.data.image})
+    axios.get("http://localhost:8080/userinfo", { withCredentials: true }).then((res) => {
+      setUserInfo({ nickName: res.data.nickName, img: res.data.image });
       handleChangeMenuIcon(res.data.image);
     });
   }, []);
@@ -81,9 +80,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
   return (
     <Container>
       <Stage>
-        <ImgBox>
-        {!userInfo.img ? <Img src={userIcon}></Img> : <Img src={userInfo.img}/>}
-        </ImgBox>
+        <ImgBox>{!userInfo.img ? <Img src={userIcon}></Img> : <Img src={userInfo.img} />}</ImgBox>
         {!editing ? (
           <UserNameBox>
             <UserName>{userInfo.nickName}</UserName>

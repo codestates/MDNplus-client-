@@ -11,9 +11,19 @@ export const fadeIn = keyframes`
 
 export const slideUp = keyframes`
   from {
-    transform: translateY(200px);
+    transform: translateY(20rem);
   }
   to {
     transform: translateY(0px)
+  }
+`
+
+// 랜딩페이지
+export const slideUp_Intro = keyframes`
+  from {
+    transform: translateY(5rem);
+  }
+  to {
+    transform: translateY(0rem)
   }
 `

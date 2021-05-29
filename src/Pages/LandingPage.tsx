@@ -4,8 +4,9 @@ import useBooleanData from "../Hooks/useBooleanData";
 import library from "../img/library.jpg";
 import monitor from "../img/monitor.png";
 import developer from "../img/developer.png";
+import { fadeIn, slideUp, slideUp_Intro } from "../styled-components/Animation";
 
-const RendingPage = () => {
+const LandingPage = () => {
   const { onSetWriteMode } = useBooleanData();
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const RendingPage = () => {
   );
 };
 
-export default RendingPage;
+export default LandingPage;
 
 const Container = styled.div`
   display: flex;
@@ -65,7 +66,7 @@ const Logo = styled.span`
 `;
 
 const Nav_RightBox = styled.div`
-    // margin-right: -3rem;
+  // margin-right: -3rem;
 `;
 
 const Intro = styled.span`
@@ -94,21 +95,40 @@ const IntroBox = styled.div`
 `;
 
 const IntroBoxBody_Container = styled.div`
-    margin-left: 4rem;
-    width: 20rem;
+  margin-left: 4rem;
+  width: 20rem;
+  margin-top: -5rem;
+
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
 `;
 
 const IntroBox_Body1 = styled.div`
   font-size: 3rem;
   margin: 1rem 0 1rem 0;
-  color: black;
+  color: #616161;
+  transition: 1s ease-in-out;
+
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-name: ${slideUp_Intro};
+  animation-fill-mode: forwards;
 `;
 
 const IntroBox_Body2 = styled.div`
   font-size: 3rem;
   margin: 1rem 0 1rem 0;
-  color: black;
+  color: #616161;
   font-weight: bold;
+
+  transition: 1s ease-in-out;
+
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-name: ${slideUp_Intro};
+  animation-fill-mode: forwards;
 `;
 
 const StartBtn = styled.span`
@@ -122,9 +142,9 @@ const StartBtn = styled.span`
 `;
 
 const Img = styled.img`
-    width: 40rem;
-    object-fit: cover;
-    `;
+  width: 40rem;
+  object-fit: cover;
+`;
 
 const AppealBox = styled.div`
   width: 100%;

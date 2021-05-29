@@ -16,6 +16,7 @@ const LandingPage = () => {
   return (
     <Container>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <Nav>
         <Logo>MDN+</Logo>
         <Nav_RightBox>
@@ -57,6 +58,8 @@ const LandingPage = () => {
               되었습니다!!
 =======
       <ContentsContainer>
+=======
+>>>>>>> 086b85a3139e18426e504f4a09b25629837454df
         <Nav>
           <Logo>MDN+</Logo>
           <Nav_RightBox>
@@ -93,8 +96,8 @@ const LandingPage = () => {
           </AppealBoxStage>
         </AppealBoxContainer>
 
-        <ReviewBoxTitle>리뷰 제목</ReviewBoxTitle>
         <ReviewBoxContainer>
+<<<<<<< HEAD
           <ReviewBox>
             <ReviewBody>
               MDN 에서 한국말 번역기 제대로 안되어있어 힘들었는데 MDN+에서 어떤분이 제대로 정리해서 올리셨더라구요. 잘못된 정보들도 있었는데 공부할겸 정리해서 직접 수정 할 수도있고 공부하면서 정말
@@ -133,19 +136,42 @@ const LandingPage = () => {
         <NewsBox>MDN+ 뉴스</NewsBox>
       </ContentsContainer>
 >>>>>>> f59329423eb715c6db93fab6e5754a0dba904c87
+=======
+          <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
+          <ReviewBoxSubTitle>언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이 없어졌어요.</ReviewBoxSubTitle>
+          <ReviewFlexBox>
+            <ReviewBox>
+              <ReviewBody>
+                MDN 에서 한국말 번역기 제대로 안되어있어 힘들었는데 MDN+에서 어떤분이 제대로 정리해서 올리셨더라구요. 잘못된 정보들도 있었는데 공부할겸 정리해서 직접 수정 할 수도있고 정말 도움이 많이
+                되었습니다!!
+              </ReviewBody>
+              <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
+            </ReviewBox>
+            <ReviewBox>
+              <ReviewBody>
+                한국에도 웹 개발자들을 위해 이런 서비스가 있다니... 제가 남긴 질문을 시니어 개발자님이 답변해주셨습니다. 정말 든든하네요 ㅎㅎ 관리가 잘되어서 번창하셨으면 좋겠습니다.
+              </ReviewBody>
+              <Reviewer>주니어 개발자 문코딩</Reviewer>
+            </ReviewBox>
+            <ReviewBox>
+              <ReviewBody>
+                웹개발에 필요한 Javascript CSS 에대한 정보가 정말 많은 것 같습니다. 초보 개발자라 map method 을 어떻게 사용하는지 잘 몰랐는데 다른 분들이 남겨주신 다양한 예시들을 보고 겨우 이해했네요
+                감사합니다!
+              </ReviewBody>
+              <Reviewer>개발입문자 조코딩</Reviewer>
+            </ReviewBox>
+          </ReviewFlexBox>
+        </ReviewBoxContainer>
+        <NewsBox>MDN+ 뉴스</NewsBox>
+>>>>>>> 086b85a3139e18426e504f4a09b25629837454df
     </Container>
   );
 };
 
 export default LandingPage;
 
-const Container = styled.div`
-  // display: flex;
-  // flex-direction: column;
-`;
-
 //---------------여기서부터 컨텐츠들-------------------------------
-const ContentsContainer = styled.div`
+const Container = styled.div`
   display: flex;
   width: 100vw;
   // height: 100vw;
@@ -259,7 +285,7 @@ const AppealBoxContainer = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-  background: #EEEEEE;
+  background: #eeeeee;
 `;
 
 const AppealBoxTitle = styled.div`
@@ -288,6 +314,7 @@ const AppealBody = styled.div`
 
 const ReviewBoxContainer = styled.div`
 <<<<<<< HEAD
+<<<<<<< HEAD
   width: 70%;
 
   height: 70rem;
@@ -295,6 +322,11 @@ const ReviewBoxContainer = styled.div`
   width: 100vw;
   height: 50rem;
 >>>>>>> f59329423eb715c6db93fab6e5754a0dba904c87
+=======
+  width: 70%;
+
+  height: 70rem;
+>>>>>>> 086b85a3139e18426e504f4a09b25629837454df
   display: flex;
   justify-content: center;
   align-items: center;
@@ -321,10 +353,14 @@ const ReviewBox = styled.div`
   display: flex;
   flex-direction: column;
 <<<<<<< HEAD
+<<<<<<< HEAD
   width: 50%;
 =======
   width: 23rem;
 >>>>>>> f59329423eb715c6db93fab6e5754a0dba904c87
+=======
+  width: 50%;
+>>>>>>> 086b85a3139e18426e504f4a09b25629837454df
   height: 25rem;
   border-radius: 0.6rem;
   border: none;

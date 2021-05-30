@@ -86,7 +86,7 @@ function App() {
         </Switch>
         {/* {writeMode ? null : <Footer></Footer>} */}
       </Body>
-      <Footer>푸터</Footer>
+      {/* <Footer>푸터</Footer> */}
     </Container>
   );
 }
@@ -135,5 +135,5 @@ const Body = styled.div`
 `;
 const Footer = styled.div`
   grid-area: footer;
-  background: #005ce7;
+  background: #283593;
 `;

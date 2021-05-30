@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled, { keyframes } from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import ReactMarkdown from "react-markdown";
-import QContentFakeData from "../QContentFakeData";
+import useBooleanData from "../Hooks/useBooleanData";
+
 import useQcontentData from "../Hooks/useQcontentData";
 import axios from "axios";
 
@@ -74,8 +75,14 @@ type PageNameType = {
   questionId: string;
 };
 
-function QcontentPage() {
+type LoginType = {
+  isLogin: boolean;
+  handleLoginModal: () => void;
+};
+
+function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } = useQcontentData();
+  const { onSetWriteMode } = useBooleanData();
   const { currentData } = QcontentState;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -123,6 +130,11 @@ function QcontentPage() {
   };
 
   const handleAnswerBtn = () => {
+    if (!isLogin) {
+      handleLoginModal();
+      return;
+    }
+
     dispatch(answerPageData(currentData?.question));
     history.push({
       pathname: "/AnswerPage",
@@ -132,6 +144,7 @@ function QcontentPage() {
 
   useEffect(() => {
     //questionID 설정해주는 코드들
+    onSetWriteMode(false);
     let questionID: string = "";
     if (location.state === undefined) {
       // console.log("null");
@@ -272,7 +285,6 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, auto);
-  margin: 5rem;
 `;
 
 const QuestionContainer = styled.div`

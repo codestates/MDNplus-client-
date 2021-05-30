@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import styled from "styled-components";
+import { fadeIn } from "../styled-components/Animation";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
@@ -44,23 +46,27 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
       <Overlay onClick={handleOverLay} ref={overLay} />
 
       <ModalBox>
-        <CloseIcon onClick={handleCloseIcon}>
+        {/* <CloseIcon onClick={handleCloseIcon}>
           <FontAwesomeIcon icon="times" size="lg" color="#005ce7" />
-        </CloseIcon>
+        </CloseIcon> */}
         {btnName === "답변" ? (
           <>
             <AskInfo>답변하시겠습니까?</AskInfo>
             <ContentContainer>
-              <Answer onClick={handleAnswerYes}>네</Answer>
-              <Answer onClick={handleAnswerNo}>아니요</Answer>
+              <BtnBox>
+                <CancelBtn onClick={handleAnswerYes}>네</CancelBtn>
+                <SubmitBtn onClick={handleAnswerNo}>아니요</SubmitBtn>
+              </BtnBox>
             </ContentContainer>
           </>
         ) : (
           <>
             <AskInfo>나가시겠습니까?</AskInfo>
             <ContentContainer>
-              <Answer onClick={handleExitYes}>네</Answer>
-              <Answer onClick={handleExitNo}>아니요</Answer>
+              <BtnBox>
+                <CancelBtn onClick={handleExitYes}>네</CancelBtn>
+                <SubmitBtn onClick={handleExitNo}>아니요</SubmitBtn>
+              </BtnBox>
             </ContentContainer>
           </>
         )}
@@ -80,24 +86,31 @@ const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
 `;
 
 const Overlay = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, 0.6);
   cursor: pointer;
 `;
 const ModalBox = styled.div`
   position: relative;
-  width: 28%;
-  height: 18%;
-  margin: 0 10%;
-  padding: 50px;
+  width: 25rem;
+  height: 10rem;
+  padding: 40px;
   background-color: white;
-  border-radius: 34px;
-  box-sizing: border-box;
+  border: 1px solid #9e9e9e;
+  transition: 0.2s ease-in;
+
+  border-radius: 10px;
 `;
 
 const CloseIcon = styled.div`
@@ -121,23 +134,32 @@ const ContentContainer = styled.div`
 `;
 
 const AskInfo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 1rem;
-  text-align: center;
-  color: #686868;
+  width: 100%;
+
+  left: 0;
+  color: #616161;
 `;
 
-const Answer = styled.button`
-  font-size: 1.2rem;
-  margin: 1rem;
+export const BtnBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 2rem;
+  margin-top: 2rem;
+`;
+export const CancelBtn = styled.button`
   border: none;
-  background-color: white;
+  margin-right: 1rem;
+  background: none;
   cursor: pointer;
-  color: #686868;
+  color: #616161;
+  font-size: 1rem;
+`;
 
-  &:hover {
-    font-weight: bold;
-    color: #005ce7;
-  }
+export const SubmitBtn = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #0055fa;
+  font-size: 1rem;
 `;

@@ -11,30 +11,46 @@ import MainNewsImage from "../img/MainNews.jpg";
 import PenImg from "../img/pen.jpg";
 import networkImg from "../img/network.jpg";
 import noteImg from "../img/note.jpg";
+import avatar1 from "../img/avatar1.png";
+import avatar2 from "../img/avatar2.png";
+import avatar3 from "../img/avatar3.png";
 
 const LandingPage = () => {
   const { onSetWriteMode } = useBooleanData();
+  const [height, setHeight] = useState(0);
+  const [currentY, setCurrentY] = useState(0);
   const [isSelected, setIsSelected] = useState({
-    firstBox: false,
+    firstBox: true,
     secondBox: false,
     thirdBox: false,
   });
   const { firstBox, secondBox, thirdBox } = isSelected;
 
-  const handleClickBox = (idx:number) => {
-    if(idx === 1) {
-      setIsSelected({firstBox: true, secondBox: false, thirdBox: false})
-    } else if(idx === 2){
-      setIsSelected({firstBox: false, secondBox: true, thirdBox: false})
-    } else if(idx === 3) {
-      setIsSelected({firstBox: false, secondBox: false, thirdBox: true})
+  const handleClickBox = (idx: number) => {
+    if (idx === 1) {
+      setIsSelected({ firstBox: true, secondBox: false, thirdBox: false });
+    } else if (idx === 2) {
+      setIsSelected({ firstBox: false, secondBox: true, thirdBox: false });
+    } else if (idx === 3) {
+      setIsSelected({ firstBox: false, secondBox: false, thirdBox: true });
     }
-  }
+  };
 
   useEffect(() => {
     onSetWriteMode(true);
+    const height = document.body.scrollHeight;
+    const currentY = window.scrollY;
+    setHeight(height);
+    setCurrentY(currentY);
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setCurrentY(window.scrollY);
+    });
+  }, [currentY]);
+
+  console.log(currentY);
   return (
     <Container>
       <Nav>
@@ -57,7 +73,9 @@ const LandingPage = () => {
         <AppealBoxSubTitle>개발 능력을 향상시키고 성장을 도와줄 서비스들을 제공합니다. </AppealBoxSubTitle>
         <AppealBoxStage>
           <LeftContainer>
-            <Preview src={preview}></Preview>
+            {firstBox && currentY >= 500 ? <Preview src={preview}></Preview> : null}
+            {secondBox ? <Preview src={MainNewsImage}></Preview> : null}
+            {thirdBox ? <Preview src={PenImg}></Preview> : null}
           </LeftContainer>
           <RightContainer>
             {firstBox ? (
@@ -67,7 +85,12 @@ const LandingPage = () => {
                 <AppealBody>재번역한 정보들을 확인하세요</AppealBody>
               </AppealBox_selected>
             ) : (
-              <AppealBox onClick={(() => {handleClickBox(1)})}>
+              <AppealBox
+                onClick={() => {
+                  handleClickBox(1);
+                  console.log(currentY);
+                }}
+              >
                 <AppealTitle>보다 쉽게 번역된 정보들</AppealTitle>
                 <AppealBody>공식 문서에서 이해하기 어려웠던 정보들을 다른 유저가</AppealBody>
                 <AppealBody>재번역한 정보들을 확인하세요</AppealBody>
@@ -80,7 +103,11 @@ const LandingPage = () => {
                 <AppealBody>문서 완성도에 기여해주세요</AppealBody>
               </AppealBox_selected>
             ) : (
-              <AppealBox onClick={(() => {handleClickBox(2)})}>
+              <AppealBox
+                onClick={() => {
+                  handleClickBox(2);
+                }}
+              >
                 <AppealTitle>문서 수정</AppealTitle>
                 <AppealBody>잘못된 정보나, 자신이 공부한 것들을 정리하여</AppealBody>
                 <AppealBody>문서 완성도에 기여해주세요</AppealBody>
@@ -93,7 +120,11 @@ const LandingPage = () => {
                 <AppealBody>자유롭게 한글로 궁금한 점들을 질문하세요</AppealBody>
               </AppealBox_selected>
             ) : (
-              <AppealBox onClick={(() => {handleClickBox(3)})}>
+              <AppealBox
+                onClick={() => {
+                  handleClickBox(3);
+                }}
+              >
                 <AppealTitle>개발 관련 질문</AppealTitle>
                 <AppealBody>구글링하면서 영어 때문에 개발하기 어려우셨나요?</AppealBody>
                 <AppealBody>자유롭게 한글로 궁금한 점들을 질문하세요</AppealBody>
@@ -109,23 +140,33 @@ const LandingPage = () => {
         <ReviewFlexBox>
           <ReviewBox>
             <ReviewBody>
-              MDN 에서 한국말 번역기 제대로 안되어있어 힘들었는데 MDN+에서 어떤분이 제대로 정리해서 올리셨더라구요. 잘못된 정보들도 있었는데 공부할겸 정리해서 직접 수정 할 수도있고 정말 도움이 많이
-              되었습니다!!
+              MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데 MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요. 잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서 동시에
+              공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
             </ReviewBody>
-            <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
+            <ReviewerBox>
+              <ReviewerImg src={avatar1}></ReviewerImg>
+              <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
+            </ReviewerBox>
           </ReviewBox>
           <ReviewBox>
             <ReviewBody>
-              한국에도 웹 개발자들을 위해 이런 서비스가 있다니... 제가 남긴 질문을 시니어 개발자님이 답변해주셨습니다. 정말 든든하네요 ㅎㅎ 관리가 잘되어서 번창하셨으면 좋겠습니다.
+              처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해 며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을 달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할 것
+              같습니다. 좋은 서비스 감사합니다 :)
             </ReviewBody>
-            <Reviewer>주니어 개발자 문코딩</Reviewer>
+            <ReviewerBox>
+              <ReviewerImg src={avatar2}></ReviewerImg>
+              <Reviewer>주니어 개발자 문코딩</Reviewer>
+            </ReviewerBox>
           </ReviewBox>
           <ReviewBox>
             <ReviewBody>
-              웹개발에 필요한 Javascript CSS 에대한 정보가 정말 많은 것 같습니다. 초보 개발자라 map method 을 어떻게 사용하는지 잘 몰랐는데 다른 분들이 남겨주신 다양한 예시들을 보고 겨우 이해했네요
-              감사합니다!
+              MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다. 나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니, 면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
+              있었습니다. 정말 감사합니다 !
             </ReviewBody>
-            <Reviewer>개발입문자 조코딩</Reviewer>
+            <ReviewerBox>
+              <ReviewerImg src={avatar3}></ReviewerImg>
+              <Reviewer>개발 3년차 조코딩</Reviewer>
+            </ReviewerBox>
           </ReviewBox>
         </ReviewFlexBox>
       </ReviewBoxContainer>
@@ -306,7 +347,7 @@ const AppealBoxSubTitle = styled.div`
 `;
 
 const AppealBoxStage = styled.div`
-  width: 60rem;
+  width: 70rem;
   // border: 1px solid black;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -317,6 +358,7 @@ const LeftContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  // border: 1px solid black;
 `;
 
 const Preview = styled.img`
@@ -324,34 +366,34 @@ const Preview = styled.img`
   height: 15rem;
   object-fit: cover;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
 `;
 
 const RightContainer = styled.div`
-  padding-left: 3rem;
+  padding-left: 4rem;
 `;
 
 const AppealBox = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 2rem 2rem 2rem 4.3rem;
+  padding: 2rem 2rem 2rem 5rem;
   cursor: pointer;
-  transition: 1s ease-in-out;
 `;
 
 const AppealBox_selected = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 2rem 2rem 2rem 4.3rem;
+  padding: 2rem 0rem 2rem 5rem;
   cursor: pointer;
   background: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 0.5rem;
-  animation-duration: 2s;
-  animation-timing-function: ease-out;
-  animation-name: ${fadeIn};
-  animation-fill-mode: forwards;  
 `;
 
 const AppealTitle = styled.div`
@@ -409,14 +451,26 @@ const ReviewBody = styled.div`
   line-height: 2.3rem;
   color: #757575;
 `;
-const Reviewer = styled.div`
+
+const ReviewerBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18rem;
   position: absolute;
+  bottom: 0.5rem;
+  left: 0rem;
+`;
+const ReviewerImg = styled.img`
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+`;
+const Reviewer = styled.span`
   font-weight: bold;
   font-size: 1.2rem;
-  margin: 0 0 2rem 0;
-  bottom: 0rem;
-  right: 3rem;
   color: #424242;
+  margin-left: 1rem;
 `;
 
 //----------------------------뉴스 컨테이너------------------------//

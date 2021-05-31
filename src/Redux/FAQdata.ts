@@ -1,27 +1,13 @@
-import FAQData from "../FAQData";
+import FAQFakeData from "../FAQFakeData";
 const FAQDATA = "faqData/FAQDATA" as const;
 
 type FAQdata = {
-  frequent: {
-    tagName: string;
-    info: { title: string; body: string }[];
-  };
-  service: {
-    tagName: string;
-    info: { title: string; body: string }[];
-  };
-  login: {
-    tagName: string;
-    info: { title: string; body: string }[];
-  };
-  howToUse: {
-    tagName: string;
-    info: { title: string; body: string }[];
-  };
-  support: {
-    tagName: string;
-    info: { title: string; body: string }[];
-  };
+  AllFAQdata: {
+    label: {
+      tagName: string;
+      info: { title: string; body: string }[];
+    };
+  }[];
 };
 
 export const faqData = (data: FAQdata) => ({ type: FAQDATA, payload: data });
@@ -33,7 +19,7 @@ type InitialState = {
 };
 
 const initialData = {
-  data: FAQData,
+  data: FAQFakeData,
 };
 
 function FAQdataReducer(state: InitialState = initialData, action: faqDataType): InitialState {

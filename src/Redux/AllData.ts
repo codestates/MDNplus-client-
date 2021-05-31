@@ -14,6 +14,7 @@ type Method = {
   _id: string;
   title: string;
   body: string;
+  pureBody: string;
   count: number;
   updatedAt: string;
   createdAt: string;

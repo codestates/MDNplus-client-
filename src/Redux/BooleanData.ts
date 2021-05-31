@@ -1,7 +1,8 @@
-import { BaseOptions } from 'node:vm';
+import { BaseOptions } from "node:vm";
 
 const WRITEMODE = "ContentData/SETWRITEMODE" as const;
 const CONTENTPAGE = "ContentData/SETCONTENTPAGE" as const;
+const FOOTERMODE = "ContentData/FOOTERMODE" as const;
 
 export const setWriteMode = (boolean: Boolean) => ({ type: WRITEMODE, payload: boolean });
 export const setContentPage = (boolean: Boolean) => ({ type: CONTENTPAGE, payload: boolean });
@@ -21,9 +22,10 @@ const initialState = {
 function BooleanDataReducer(state: InitState = initialState, action: BooleanData) {
   switch (action.type) {
     case WRITEMODE:
-      return {...state, writeMode: action.payload}
+      return { ...state, writeMode: action.payload };
     case CONTENTPAGE:
       return { ...state, contentPage: action.payload };
+
     default:
       return state;
   }

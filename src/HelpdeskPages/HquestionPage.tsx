@@ -85,7 +85,7 @@ const QuestionPage = () => {
   const handleSubmitQ = () => {
     console.log("새 질문 등록 요청 보내짐");
     console.log(title, body, tags);
-    axios.post("http://localhost:8080/question", { title, body, tags }, { withCredentials: true }).then((res) => console.log(res));
+    axios.post("http://localhost:80/question", { title, body, tags }, { withCredentials: true }).then((res) => console.log(res));
     history.push("/HelpdeskPage");
     onSetWriteMode(false);
   };

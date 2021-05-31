@@ -45,9 +45,9 @@ function AnswerPage() {
   const handleAnswerBtn = () => {
     console.log("답변 달림");
     setIsOpen(() => !isOpen);
-    axios.post("http://localhost:8080/comment", { questionId: displayQuestion?._id, content: writing }, { withCredentials: true }).then((res) => console.log(res));
-    onSetWriteMode(false);
-    // window.history.back();
+    axios.post("http://localhost:80/comment", { questionId: displayQuestion?._id, content: writing }, { withCredentials: true }).then((res) => console.log(res));
+
+    window.history.back();
   };
 
   const handleHeader = (mark: string) => {

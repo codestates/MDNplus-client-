@@ -22,7 +22,6 @@ function EditConfirmModal({ handleConfirmModal }: EditProps) {
 
   // 모달창에 있는 수정 버튼 또는 O 버튼 누를 시, 서버에 글수정 요청을 보내는 코드
   const handleSubmit = () => {
-    console.log(contentData.pureBody.split('()'))
     const pureBodyArr = contentData.pureBody.split('()').slice(1)
     let pureBody = ''
     for(let i = 0; i < pureBodyArr.length; i++) {

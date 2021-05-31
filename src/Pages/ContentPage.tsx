@@ -67,8 +67,8 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
 export default ContentPage;
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vw;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
 `;

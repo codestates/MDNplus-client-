@@ -58,7 +58,15 @@ function App() {
     <Container>
       <Header>
         {writeMode ? null : (
-          <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
+          <Nav
+            setIsLogin={setIsLogin}
+            userImg={userImg}
+            isLogin={isLogin}
+            isLogInOpen={isLogInOpen}
+            handleLogin={handleLogin}
+            handleLoginModal={handleLoginModal}
+            handleChangeMenuIcon={handleChangeMenuIcon}
+          ></Nav>
         )}
       </Header>
 
@@ -102,7 +110,6 @@ const Container = styled.div`
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
-  width: 100vw;
 
   grid-template-areas:
     "header header"
@@ -121,15 +128,15 @@ const Header = styled.div`
 `;
 const SideArea = styled.div`
   grid-area: side;
-  width: 10rem;
+  width: 13rem;
   background: #f4f4f4;
 `;
 
 const Body = styled.div`
   grid-area: main;
-  margin: 3rem 0 5rem 2rem;
+  margin: 0;
+  width: 100%;
 `;
 const Footer = styled.div`
   grid-area: footer;
-  background: #283593;
 `;

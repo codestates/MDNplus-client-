@@ -11,7 +11,7 @@ import useContentData from "../Hooks/useContentData";
 import SearchDataDummy from "../SearchpageDummy";
 import useAllData from "../Hooks/useAllData";
 
-function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon }: any) {
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon, setIsLogin }: any) {
   const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useMyPageData();
   const { onUserNickName } = useAllData();
   // const [isLogin, setIsLogin] = useState(false);
@@ -37,25 +37,19 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
 
   const handleIconClick = () => {
     // let word: string = e.target.value;
-
     let word: string | null = SearchDataState.word;
     let tag: string = SearchDataState.tag;
-
     if (SearchDataState.word === "") {
       alert("입력해주세요");
       return;
     }
-
     onSearchingResult(word, tag);
-    console.log("지금보내지는 단어하고 태그", word, tag);
-
+    // console.log("지금보내지는 단어하고 태그", word, tag);
     axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
       console.log(res);
       onSearchingData(res.data);
     });
-
     history.push("/SearchPage");
-
     word = "";
   };
 
@@ -63,30 +57,21 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>): void => {
     let word: string = e.target.value;
     let tag: string = SearchDataState.tag;
-
     if (e.key === "Enter") {
       console.log(word, "태그내용", tag);
-
       if (SearchDataState.word === "") {
         alert("입력해주세요");
         return;
       }
-
       onSearchingResult(e.target.value, SearchDataState.tag);
       //리덕스 훅스에가서 state 업데이트함.
-
       console.log("지금보내지는 단어하고 태그", word, tag);
-
       // 검색할 때 필요한 요청 코드
       axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
         console.log(res);
         onSearchingData(res.data);
       });
-
-      // onSearching(SearchDataDummy);
-
       history.push("/SearchPage");
-
       e.target.value = "";
     }
   };
@@ -108,6 +93,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         handleLogin();
         history.push("/NameSettingPage");
       }
+      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
 
       onUserNickName(res.data.nickName);
     });
@@ -131,7 +117,8 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         handleLogin();
         history.push("/NameSettingPage");
       }
-      // onUserNickName(res.data.)
+      console.log(res.data);
+      // window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
       onUserNickName(res.data.nickName);
     });
   };
@@ -147,10 +134,13 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       }
     } else {
       if (authorizationCode) {
-        console.log(authorizationCode);
         //만약 깃허브에서 로그인이 성공하여 code를 받아왔다면, client(서버)에 accessToken 받아오는 요청을 보냄
         gitAccessToken(authorizationCode);
       }
+    }
+
+    if (window.localStorage.getItem("sessionId")) {
+      setIsLogin(true);
     }
   }, []);
 

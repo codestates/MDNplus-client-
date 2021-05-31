@@ -80,94 +80,96 @@ const HelpdeskPage = () => {
   return (
     <>
       <Container>
-        <IntroBox>
-          <Icon src={helpIcon}></Icon>
-          <IntroContents>
-            <IntroTitle>헬프데스크</IntroTitle>
-            <IntroLetter>궁금한 점들을 질문하세요</IntroLetter>
-          </IntroContents>
-          <QuestionBtn
-            onClick={() => {
-              history.push("/HquestionPage");
-            }}
-          >
-            질문하기
-          </QuestionBtn>
-        </IntroBox>
-        <Questions>
-          <FilterBox>
-            {isSelected === "최신순" ? (
-              <FilterFast_Selected
-                onClick={() => {
-                  handleFilter("최신순");
-                }}
-              >
-                최신순
-              </FilterFast_Selected>
-            ) : (
-              <FilterFast
-                onClick={() => {
-                  handleFilter("최신순");
-                }}
-              >
-                최신순
-              </FilterFast>
-            )}
-            {isSelected === "인기순" ? (
-              <FilterPopular_Selected
-                onClick={() => {
-                  handleFilter("인기순");
-                }}
-              >
-                인기순
-              </FilterPopular_Selected>
-            ) : (
-              <FilterPopular
-                onClick={() => {
-                  handleFilter("인기순");
-                }}
-              >
-                인기순
-              </FilterPopular>
-            )}
-          </FilterBox>
+        <Stage>
+          <IntroBox>
+            <Icon src={helpIcon}></Icon>
+            <IntroContents>
+              <IntroTitle>헬프데스크</IntroTitle>
+              <IntroLetter>궁금한 점들을 질문하세요</IntroLetter>
+            </IntroContents>
+            <QuestionBtn
+              onClick={() => {
+                history.push("/HquestionPage");
+              }}
+            >
+              질문하기
+            </QuestionBtn>
+          </IntroBox>
+          <Questions>
+            <FilterBox>
+              {isSelected === "최신순" ? (
+                <FilterFast_Selected
+                  onClick={() => {
+                    handleFilter("최신순");
+                  }}
+                >
+                  최신순
+                </FilterFast_Selected>
+              ) : (
+                <FilterFast
+                  onClick={() => {
+                    handleFilter("최신순");
+                  }}
+                >
+                  최신순
+                </FilterFast>
+              )}
+              {isSelected === "인기순" ? (
+                <FilterPopular_Selected
+                  onClick={() => {
+                    handleFilter("인기순");
+                  }}
+                >
+                  인기순
+                </FilterPopular_Selected>
+              ) : (
+                <FilterPopular
+                  onClick={() => {
+                    handleFilter("인기순");
+                  }}
+                >
+                  인기순
+                </FilterPopular>
+              )}
+            </FilterBox>
 
-          <BoxContainer>
-            {selectedQuestions === null ? (
-              <div>로딩 중입니다</div>
-            ) : (
-              selectedQuestions.map((el: any, idx: number) => (
-                <QuestionBox key={el._id}>
-                  <TitleBox
-                    onClick={() => {
-                      handleClickQuestion(el);
-                    }}
-                  >
-                    <FixedLetter>Q</FixedLetter>
-                    <Title>{el.title}</Title>
-                  </TitleBox>
-                  <Body
-                    onClick={() => {
-                      handleClickQuestion(el);
-                    }}
-                  >
-                    {`${el.pureBody}`}
-                  </Body>
-                  <TagBox>
-                    {el.tags.map((el: string, idx: number) => (
-                      <Tag key={idx + 1}>{el}</Tag>
-                    ))}
-                  </TagBox>
-                  <NumberBox>
-                    <LikesNum>좋아요 {el.like}</LikesNum>
-                    <AnswersNum>답변 {el.commentCount}</AnswersNum>
-                    <CreatedAt>날짜 {el.createdAt.slice(0, 10)}</CreatedAt>
-                  </NumberBox>
-                </QuestionBox>
-              ))
-            )}
-          </BoxContainer>
-        </Questions>
+            <BoxContainer>
+              {selectedQuestions === null ? (
+                <div>로딩 중입니다</div>
+              ) : (
+                selectedQuestions.map((el: any, idx: number) => (
+                  <QuestionBox key={el._id}>
+                    <TitleBox
+                      onClick={() => {
+                        handleClickQuestion(el);
+                      }}
+                    >
+                      <FixedLetter>Q</FixedLetter>
+                      <Title>{el.title}</Title>
+                    </TitleBox>
+                    <Body
+                      onClick={() => {
+                        handleClickQuestion(el);
+                      }}
+                    >
+                      {`${el.pureBody}`}
+                    </Body>
+                    <TagBox>
+                      {el.tags.map((el: string, idx: number) => (
+                        <Tag key={idx + 1}>{el}</Tag>
+                      ))}
+                    </TagBox>
+                    <NumberBox>
+                      <LikesNum>좋아요 {el.like}</LikesNum>
+                      <AnswersNum>답변 {el.commentCount}</AnswersNum>
+                      <CreatedAt>날짜 {el.createdAt.slice(0, 10)}</CreatedAt>
+                    </NumberBox>
+                  </QuestionBox>
+                ))
+              )}
+            </BoxContainer>
+          </Questions>
+        </Stage>
       </Container>
     </>
   );
@@ -176,8 +178,15 @@ const HelpdeskPage = () => {
 export default HelpdeskPage;
 
 const Container = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
   width: 100%;
   height: 100%;
+`;
+
+const Stage = styled.div`
+  width: 93%;
 `;
 
 const IntroBox = styled.div`

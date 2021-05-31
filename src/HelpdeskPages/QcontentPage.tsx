@@ -229,9 +229,9 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                       <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" />{" "}
                     </HeartIcon>
                   ) : (
-                    <AnimatedHeart>
+                    <HeartIcon>
                       <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
-                    </AnimatedHeart>
+                    </HeartIcon>
                   )}
                   <LikesNum> {el.like}</LikesNum>
                   {/* <span onClick={() => handleAnswerDecreaseLikes(el)}></span> */}
@@ -258,29 +258,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
 
 export default QcontentPage;
 
-const heartAnimation = keyframes`
-0%
-{
-  transform: scale( 0.2 );
-}
-
-0%
-{
-  transform: scale( 0.5 );
-}
-
-100%
-{
-  transform: scale( 1.5 );
-}
-
-`;
-
 const HeartIcon = styled.span``;
-
-const AnimatedHeart = styled(HeartIcon)`
-  animation: ${heartAnimation} 1s infinite;
-`;
 
 const Container = styled.div`
   height: 100%;

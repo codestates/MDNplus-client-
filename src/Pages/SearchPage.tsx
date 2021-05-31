@@ -93,7 +93,7 @@ function SearchPage() {
         ) : (
           <>
             <MDNPlus onClick={() => HandleMDNColor()} style={{ color: MDNColor }}>
-              MDN+
+              MDN+ 위키
             </MDNPlus>
             <HelpDesk onClick={() => HandleHelpDeckColor()} style={{ color: HelpDeskColor }}>
               HelpDesk
@@ -106,17 +106,17 @@ function SearchPage() {
         {SearchDataState.contentData.mainContent?.length === 0 || SearchDataState.contentData.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
         ) : CurrentPage === "MDN" && SearchDataState.contentData?.mainContent ? (
-          SearchDataState.contentData.mainContent?.map((el: mainContentType) => (
+          SearchDataState.contentData.mainContent?.map((el: any) => (
             <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
               <Title>{el.title}</Title>
-              <Body>{el.body}</Body>
+              <Body>{el.pureBody}</Body>
             </Content>
           ))
         ) : (
-          SearchDataState.contentData?.helpdeskContent.map((el: helpDeskContentType) => (
+          SearchDataState.contentData?.helpdeskContent.map((el: any) => (
             <Content key={el._id} onClick={() => HandleHelpDeckClicked(el)}>
               <Title>{el.title}</Title>
-              <Body>{el.body}</Body>
+              <Body>{el.pureBody}</Body>
             </Content>
           ))
         )}
@@ -128,8 +128,6 @@ function SearchPage() {
 export default SearchPage;
 
 const Container = styled.div`
-  height: 100vh;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,11 +135,10 @@ const Container = styled.div`
 `;
 
 const SearchResult = styled.div`
+  align-self: start;
   font-weight: bold;
-  height: 2rem;
-  width: 100%;
   font-size: 2rem;
-  margin: 3em 0 2em 8em;
+  margin: 1rem 0 2rem 11rem;
 `;
 
 const ResultText = styled.span`
@@ -205,8 +202,7 @@ const Body = styled.div`
 `;
 
 const AlertResult = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 50vh;
   display: flex;
   justify-content: center;
   align-items: center;

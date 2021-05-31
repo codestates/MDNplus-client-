@@ -5,49 +5,20 @@ import { RootState } from "../Redux";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-type InfoType = {
-  title: string;
-  body: string;
-};
-
 type TagType = {
-  tagName: string;
-  info: {
-    title: string;
-    body: string;
-  }[];
+  label: {
+    tagName: string;
+    info: { title: string; body: string }[];
+  };
 };
 
 function FAQ() {
   const FAQstate = useSelector((state: RootState) => state.FAQdataReducer);
   const { data } = FAQstate;
-  const [currentTitle, setCurrentTitle] = useState<TagType>(data.frequent);
-  const [currentInfo, setCurrentInfo] = useState<InfoType>();
-  const [clickedTitle, setClickedTitle] = useState(true);
+  const [currentTitle, setCurrentTitle] = useState<TagType>(data.AllFAQdata[0]);
 
-  const handleQuestion = (data: TagType) => {
-    setCurrentTitle(data);
-  };
-
-  const handleServer = (data: TagType) => {
-    setCurrentTitle(data);
-  };
-
-  const handleHowtoUse = (data: TagType) => {
-    setCurrentTitle(data);
-  };
-
-  const handleSupport = (data: TagType) => {
-    setCurrentTitle(data);
-  };
-
-  const handleLogin = (data: TagType) => {
-    setCurrentTitle(data);
-  };
-
-  const handleAnswer = (info: InfoType) => {
-    setCurrentInfo(info);
-    setClickedTitle(() => !clickedTitle);
+  const handleLabel = (el: TagType) => {
+    setCurrentTitle(el);
   };
 
   return (
@@ -57,17 +28,17 @@ function FAQ() {
         <FAQsub>MDN + 에게 궁금한 점이 있으신가요?</FAQsub>
       </TitleContainer>
       <QuestionTags>
-        <Tag onClick={() => handleQuestion(data.frequent)}>{data.frequent.tagName}</Tag>
-        <Tag onClick={() => handleServer(data.service)}>{data.service.tagName}</Tag>
-        <Tag onClick={() => handleHowtoUse(data.howToUse)}>{data.howToUse.tagName}</Tag>
-        <Tag onClick={() => handleSupport(data.support)}>{data.support.tagName}</Tag>
-        <Tag onClick={() => handleLogin(data.login)}>{data.login.tagName}</Tag>
+        {data.AllFAQdata.map((el) => (
+          <Tag key={el.label.tagName} onClick={() => handleLabel(el)}>
+            {el.label.tagName}
+          </Tag>
+        ))}
       </QuestionTags>
 
       <TagInfo>
-        <TagTitle>{currentTitle.tagName}</TagTitle>
+        <TagTitle>{currentTitle.label.tagName}</TagTitle>
 
-        {currentTitle.info.map((el, index: number) => (
+        {currentTitle.label.info.map((el, index: number) => (
           <QuestionContainer key={index.toString()}>
             <Input type="checkbox" id={index.toString()} />
             <DataTitle htmlFor={index.toString()}>
@@ -79,27 +50,9 @@ function FAQ() {
             </DataTitle>
 
             <DataBody>{el.body}</DataBody>
-
-            {/* {clickedTitle === true ? <div>{currentInfo?.body}</div> : null} */}
           </QuestionContainer>
         ))}
-        {/* <AnswerContainer>
-            <Answer>
-
-            </Answer>
-        </AnswerContainer> */}
       </TagInfo>
-      {/* 
-      <InfoContainer>
-            <InfoTitle>
-            {el.title}
-            </InfoTitle>
-        
-       <InfoBody>
-       {el.body}
-           </InfoBody>
-       
-        </InfoContainer> */}
     </Container>
   );
 }
@@ -107,8 +60,6 @@ function FAQ() {
 export default FAQ;
 
 const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, auto);

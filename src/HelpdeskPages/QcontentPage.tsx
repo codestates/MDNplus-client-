@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled, { keyframes } from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import ReactMarkdown from "react-markdown";
-import QContentFakeData from "../QContentFakeData";
+import useBooleanData from "../Hooks/useBooleanData";
+
 import useQcontentData from "../Hooks/useQcontentData";
 import axios from "axios";
 
@@ -74,15 +75,19 @@ type PageNameType = {
   questionId: string;
 };
 
-function QcontentPage() {
+type LoginType = {
+  isLogin: boolean;
+  handleLoginModal: () => void;
+};
+
+function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } = useQcontentData();
+  const { onSetWriteMode } = useBooleanData();
   const { currentData } = QcontentState;
   const history = useHistory();
   const dispatch = useDispatch();
   const [isMainPage, setisMainPage] = useState<boolean>(true);
-  const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
-  // const [isLike, setIsLike] = useState<boolean>(true);
 
   const handleQuestionLike = (updateData: DataType) => {
     if (updateData.question.isLike === true) {
@@ -97,12 +102,12 @@ function QcontentPage() {
     }
 
     axios
-      .post("http://localhost:8080/question/like", { questionId: updateData.question._id, like: updateData.question.like, isLike: updateData.question.isLike }, { withCredentials: true })
+      .post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like, isLike: updateData.question.isLike }, { withCredentials: true })
       .then((res) => console.log("응답받은 질문에대한 좋아요 =", res));
   };
 
   const handleAnswerLike = (updateData: AnswerType, index: number) => {
-    console.log("대답에대한 좋아요 = ", updateData.isLike);
+    console.log("대답에대한 좋아요 = ", updateData);
 
     if (updateData.isLike === true) {
       console.log("clicked");
@@ -116,13 +121,18 @@ function QcontentPage() {
       // onAnswerLike(updateData);
     }
     axios
-      .post("http://localhost:8080/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
+      .post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
       .then((res) => console.log("응답받은 대답에대한 좋아요 =", res));
 
     // axios.post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
   };
 
   const handleAnswerBtn = () => {
+    if (!isLogin) {
+      handleLoginModal();
+      return;
+    }
+
     dispatch(answerPageData(currentData?.question));
     history.push({
       pathname: "/AnswerPage",
@@ -132,6 +142,7 @@ function QcontentPage() {
 
   useEffect(() => {
     //questionID 설정해주는 코드들
+    onSetWriteMode(false);
     let questionID: string = "";
     if (location.state === undefined) {
       // console.log("null");
@@ -146,8 +157,8 @@ function QcontentPage() {
     }
 
     //바껴진 questionID를 이용하여 QcontentPage에 렌더링할 데이터를 가져오는 요청
-    axios.get(`http://localhost:8080/question/${questionID}`).then((res) => {
-      console.log(res);
+    axios.get(`http://localhost:80/question/${questionID}`).then((res) => {
+      console.log("데이터 처음으로 랜더링함", res);
       onCurrentQData(res.data);
     });
     //   onCurrentQData(res.data);
@@ -224,7 +235,9 @@ function QcontentPage() {
                 </LikesPart>
                 <AnswerBox>
                   {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle> : <div>비공개</div>}
-                  <Body>{el.content}</Body>
+                  <Body>
+                  <ReactMarkdown children={el.content}></ReactMarkdown>
+                  </Body>
                   <NameDate>
                     <Date>{el.createdAt.substring(0, 10)}</Date>
                   </NameDate>
@@ -272,7 +285,6 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, auto);
-  margin: 5rem;
 `;
 
 const QuestionContainer = styled.div`

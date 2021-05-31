@@ -1,6 +1,5 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { fadeIn, slideUp } from "../styled-components/Animation";
-
 
 export const ModalContainer = styled.div`
   position: fixed;
@@ -38,30 +37,29 @@ export const Message = styled.div`
   width: 100%;
   padding-left: 2.5rem;
   color: #616161;
-`
+`;
 
 export const BtnBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
   margin-right: 2rem;
-  margin-top: 2rem
-`
+  margin-top: 2rem;
+`;
 
 export const CancelBtn = styled.button`
-   border: none;
-   margin-right: 1rem;
-   background: none;
-   cursor: pointer;
-   color: #616161;
-   font-size: 1rem;
-`
+  border: none;
+  margin-right: 1rem;
+  background: none;
+  cursor: pointer;
+  color: #616161;
+  font-size: 1rem;
+`;
 
 export const SubmitBtn = styled.button`
   border: none;
   background: none;
   cursor: pointer;
-  color: #0055FA;
+  color: #0055fa;
   font-size: 1rem;
-
 `;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -18,6 +18,7 @@ function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
   const { QcontentState } = useQcontentData();
   const UserState = useSelector((state: RootState) => state.MyPageReducer);
+  const { PickUserName } = useAllData();
 
   const { mdnAllData } = UserState;
 
@@ -26,6 +27,7 @@ function AnswerPage() {
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
+  const previewRef = useRef<any>(null)
 
   useEffect(() => {
     onSetWriteMode(true);
@@ -43,11 +45,21 @@ function AnswerPage() {
   };
 
   const handleAnswerBtn = () => {
+    const previewValues = previewRef.current.innerText
+    console.log(previewValues)
+    const pureContentArr = previewValues.split('님의 답변').slice(1)
+    console.log(pureContentArr)
+    let pureContent = ''
+    for(let i = 0; i < pureContentArr.length; i++) {
+      pureContent = pureContent + pureContentArr[i]
+    }
+    console.log(pureContent)
     console.log("답변 달림");
-    setIsOpen(() => !isOpen);
-    axios.post("http://localhost:8080/comment", { questionId: displayQuestion?._id, content: writing }, { withCredentials: true }).then((res) => console.log(res));
-    onSetWriteMode(false);
-    // window.history.back();
+    axios.post("http://localhost:80/comment", { questionId: displayQuestion?._id, content: writing, pureContent }, { withCredentials: true }).then((res) => {
+      console.log(res)
+          setIsOpen(() => !isOpen);
+          window.history.back();
+      });
   };
 
   const handleHeader = (mark: string) => {
@@ -86,7 +98,9 @@ function AnswerPage() {
     onSetWriteMode(true);
   }, []);
 
-  return (
+  return displayQuestion === undefined || displayQuestion === null ? (
+    <div>비어있는 질문</div>
+  ) : (
     <Container>
       <LeftContainer>
         <QuestionPart>
@@ -94,50 +108,14 @@ function AnswerPage() {
           <Title> {displayQuestion?.title}</Title>
           <NameDate>
             <UserName>{QcontentState.currentData?.question.userId.nickName}</UserName>
-            <Date>{displayQuestion?.createdAt}</Date>
+            <Date>{displayQuestion?.createdAt.substring(0, 10)}</Date>
           </NameDate>
-          <QuestionBody>{displayQuestion?.body}</QuestionBody>
+          <QuestionBody>
+            <ReactMarkdown children={displayQuestion?.body} components={Components} />
+          </QuestionBody>
         </QuestionPart>
         <WritingArea>
           <WritingTitle> 나의 답변</WritingTitle>
-          {/* <MarDownBtns>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H1")}>
-              H1
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H2")}>
-              H2
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H3")}>
-              H3
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H4")}>
-              H4
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Code")}>
-              Code
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Bold")}>
-              Bold
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Italic")}>
-              Italic
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Link")}>
-              Link
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("List")}>
-              List
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Horizontal")}>
-              Horizontal
-            </MarkDownBtn>
-          </MarDownBtns> */}
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
 
@@ -146,8 +124,8 @@ function AnswerPage() {
         {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
       </LeftContainer>
 
-      <RightContainer>
-        <PrieviewTitle>{mdnAllData?.user.nickName} 님의 답변</PrieviewTitle>
+      <RightContainer ref={previewRef}>
+        <PrieviewTitle>{PickUserName} 님의 답변</PrieviewTitle>
         <AnswerPart>
           <ReactMarkdown children={writing} components={Components} />
         </AnswerPart>
@@ -235,6 +213,7 @@ const PrieviewTitle = styled.div`
   font-weight: 700;
   color: #686868;
   margin: 3rem;
+  border-bottom: 0.05rem solid #e0e0e0;
 `;
 
 const QuestionPart = styled.div`

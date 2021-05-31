@@ -11,6 +11,8 @@ import SearchPage from "./Pages/SearchPage";
 import NameSettingPage from "./Pages/NameSettingPage";
 import MyPage from "./HelpdeskPages/MyPage";
 import FAQ from "./Pages/FAQ";
+import FooterComponent from "./Components/FooterComponent";
+import LandingPage from "./Pages/LandingPage"
 // Wiki
 import ContentPage from "./Pages/ContentPage";
 import SettingPage from "./Pages/SettingPage";
@@ -22,7 +24,6 @@ import AnswerPage from "./HelpdeskPages/AnswerPage";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
 import HquestionPage from "./HelpdeskPages/HquestionPage";
 import TestEditPage from "./Pages/TestEditPage";
-import LandingPage from "./Pages/LandingPage";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -79,14 +80,19 @@ function App() {
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
           <Route path="/AnswerPage" render={() => <AnswerPage />} />
           <Route path="/HquestionPage" render={() => <HquestionPage />} />
-          <Route path="/QcontentPage" render={() => <QcontentPage />} />
+          <Route path="/QcontentPage" render={() => <QcontentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/TestEditPage" render={() => <TestEditPage />} />
           <Route path="/LandingPage" render={() => <LandingPage />} />
+
         </Switch>
-        {/* {writeMode ? null : <Footer></Footer>} */}
       </Body>
       {/* <Footer>푸터</Footer> */}
+      {writeMode ? null : (
+        <Footer>
+          <FooterComponent />
+        </Footer>
+      )}
     </Container>
   );
 }
@@ -105,7 +111,7 @@ export default withRouter(App);
 const Container = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr 15%;
+  grid-template-rows: auto 1fr auto;
   height: 100vh;
   width: 100vw;
 
@@ -132,8 +138,12 @@ const SideArea = styled.div`
 
 const Body = styled.div`
   grid-area: main;
+  margin: 3rem 0 5rem 2rem;
 `;
 const Footer = styled.div`
   grid-area: footer;
+<<<<<<< HEAD
   background: #283593;
+=======
+>>>>>>> 23fac38fc79244471aaddec44ec6beb54704c981
 `;

@@ -11,7 +11,7 @@ import AnswerModal from "../Components/AnswerModal";
 import useBooleanData from "../Hooks/useBooleanData";
 import { ExitBtn, SubmitBtn } from "../styled-components/Post";
 import useQcontentData from "../Hooks/useQcontentData";
-
+import userImg from "../img/userIcon_gray.png";
 import axios from "axios";
 
 function AnswerPage() {
@@ -19,9 +19,7 @@ function AnswerPage() {
   const { QcontentState } = useQcontentData();
   const UserState = useSelector((state: RootState) => state.MyPageReducer);
   const { PickUserName } = useAllData();
-
   const { mdnAllData } = UserState;
-
   const { onSetWriteMode } = useBooleanData();
   const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");
@@ -103,19 +101,23 @@ function AnswerPage() {
   ) : (
     <Container>
       <LeftContainer>
-        <QuestionPart>
-          <Q>Q</Q>
-          <Title> {displayQuestion?.title}</Title>
-          <NameDate>
-            <UserName>{QcontentState.currentData?.question.userId.nickName}</UserName>
-            <Date>{displayQuestion?.createdAt.substring(0, 10)}</Date>
-          </NameDate>
-          <QuestionBody>
-            <ReactMarkdown children={displayQuestion?.body} components={Components} />
-          </QuestionBody>
-        </QuestionPart>
+          <QuestionBox>
+              <QuestionTitleBox>
+                <TitleIcon>질문</TitleIcon>
+                <QuestionTitle> {displayQuestion.title}</QuestionTitle>
+              </QuestionTitleBox>
+              <QuestionBody>
+                <ReactMarkdown children={displayQuestion.body} />
+              </QuestionBody>
+              <InfoBox_Q>
+                {displayQuestion.userId.image}
+                {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
+                <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
+                <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
+              </InfoBox_Q>
+            </QuestionBox>
         <WritingArea>
-          <WritingTitle>{`${PickUserName} 님의 답변`}</WritingTitle>
+          <WritingTitle>나의 답변</WritingTitle>
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
 
@@ -125,7 +127,7 @@ function AnswerPage() {
       </LeftContainer>
 
       <RightContainer ref={previewRef}>
-        <PrieviewTitle>{PickUserName} 님의 답변</PrieviewTitle>
+        <PrieviewTitle>나의 답변</PrieviewTitle>
         <ReactMarkdown children={writing} components={Components} />
       </RightContainer>
     </Container>
@@ -147,24 +149,78 @@ const Container = styled.div`
 `;
 
 const LeftContainer = styled.div`
-  padding: 3rem;
+  // padding: 3rem;
 `;
 
-const WritingTitle = styled.div`
-  font-size: 25px;
-  font-weight: 700;
-  margin: 1em 0;
-  color: #686868;
+const QuestionBox = styled.div`
+  width: 100%;
+  padding: 3rem 3rem 1.5rem 3rem;
+  border-bottom: 1px solid #E0E0E0
+`;
+
+const QuestionTitleBox = styled.div`
+`;
+
+const TitleIcon = styled.span`
+  border: none;
+  padding: 0.7rem;
+  background: #90a4ae;
+  color: white;
+  font-weight: bold;
+  margin-right: 0.5rem;
+`;
+
+const QuestionTitle = styled.span`
+  font-size: 1.2rem;
+`;
+
+const QuestionBody = styled.div`
+  margin: 2em 0 2em 0;
+  line-height: 1.5rem;
+`;
+
+const InfoBox_Q = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const UserImg_Q = styled.img`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.4rem;
+  border: none;
+`;
+
+const UserName_Q = styled.span`
+  margin-right: 0.4rem;
+  color: black;
+  font-size: 0.9rem;
+`;
+
+const Date_Q = styled.span`
+  color: #757575;
+  font-size: 0.8rem;
+  padding-bottom: 0.1rem;
 `;
 
 const WritingArea = styled.div`
   width: 100%;
   height: 100%;
   resize: none;
-  border: none;
   outline: none;
   font-size: 1.3rem;
+  margin: 1.5rem 0rem 3rem 3rem;
 `;
+
+const WritingTitle = styled.div`
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #686868;
+  margin-bottom: 1rem;
+`;
+
 
 const Body = styled.textarea`
   width: 100%;
@@ -172,146 +228,21 @@ const Body = styled.textarea`
   border: none;
   outline: none;
   resize: none;
-  font-size: 16px;
-  margin: 2em 0 0 0;
+  font-size: 1rem;
 `;
 
 const RightContainer = styled.div`
   background-color: #f5f5f5;
   padding: 1.3rem 3rem 3rem 3rem;
+  height: 100vw;
 `;
 
 const PrieviewTitle = styled.div`
-  font-size: 25px;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #686868;
-  margin: 3rem;
+  margin: 3rem 0rem 3rem 0rem;
+  padding-bottom: 1rem;
   border-bottom: 0.05rem solid #e0e0e0;
-`;
-
-const QuestionPart = styled.div`
-  width: auto;
-  height: auto;
-  border-bottom: 0.05rem solid #e0e0e0;
-`;
-
-// const AnswerPart = styled.div`
-//   font-size: 1rem;
-//   width: 100%;
-//   height: 100%;
-//   border: none;
-//   line-height: 2rem;
-//   word-spacing: 0.5rem;
-//   margin: 3rem;
-// `;
-
-const AnswerBox = styled.div`
   width: 100%;
-  height: 100%;
 `;
-
-const Q = styled.span`
-  font-size: 3rem;
-  margin: 0.5rem;
-  color: #005ce7;
-`;
-
-const Title = styled.span`
-  font-size: 25px;
-  font-weight: bold;
-  color: #616161;
-  margin-bottom: 1rem;
-`;
-const Date = styled.span`
-  margin-left: 1rem;
-`;
-
-const UserName = styled.span`
-  margin-right: 1rem;
-`;
-const QuestionBody = styled.div`
-  margin: 2em 0 4em 0;
-  line-height: 1.8rem;
-`;
-const Likes = styled.span`
-  margin: 1rem;
-`;
-const Tags = styled.div``;
-const AnswerBtn = styled.div``;
-
-const NameDate = styled.div`
-  color: #686868;
-  margin: 1em 0 1em 0;
-  text-align: right;
-`;
-
-const SubmitButtons = styled.div`
-  text-align: right;
-`;
-
-// const Container = styled.div`
-//   display: grid;
-//   grid-template-columns: repeat(2, 1fr);
-//   width: 100vw;
-//   height: 100vh;
-// `;
-
-// const LeftContainer = styled.div`
-//   padding: 0px 30px 30px 30px;
-// `;
-
-// const MarDownBtns = styled.div``;
-
-// const WritingArea = styled.div`
-//   border: 2px solid #a7a3a3;
-//   height: 50%;
-// `;
-// const Body = styled.textarea`
-//   width: 100%;
-//   height: 100%;
-//   border: none;
-//   outline: none;
-//   resize: none;
-//   font-size: 16px;
-// `;
-
-// const SubmitBtn = styled.button`
-//   position: fixed;
-//   top: 45rem;
-//   left: 38rem;
-//   // top: 900px;
-//   // left: 800px;
-// `;
-
-// const RightContainer = styled.div`
-//   background: #f4f4f4;
-//   padding: 0px 30px 30px 30px;
-// `;
-
-// const QuestionPart = styled.div`
-//   width: 100%;
-//   height: auto;
-//   border: 2px solid #a7a3a3;
-// `;
-
-// const AnswerPart = styled.div`
-//   width: 100%;
-//   height: 50%;
-//   border: 2px solid #a7a3a3;
-// `;
-
-// const AnswerBox = styled.div`
-//   width: 100%;
-//   height: 100%;
-// `;
-// const Title = styled.div`
-//   font-size: 25px;
-//   font-weight: bold;
-//   margin: 10px;
-// `;
-// const Date = styled.div``;
-// const UserName = styled.div``;
-// const QuestionBody = styled.div``;
-// const Likes = styled.div``;
-// const Tags = styled.div``;
-// const AnswerBtn = styled.div``;

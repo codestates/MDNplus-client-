@@ -11,7 +11,8 @@ import useBooleanData from "../Hooks/useBooleanData";
 import { SubmitBtn, ExitBtn, BtnBox, HelpBtn, GuideLine } from "../styled-components/Post";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import HelpModal from '../Components/HelpModal';
+import HelpModal from "../Components/HelpModal";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 function EditPage() {
   const { contentState, onChangeContent } = useContentData();
@@ -19,16 +20,16 @@ function EditPage() {
   const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
   const [checkModal, setCheckModal] = useState(false);
-  const [helpModal, setHelpModal] = useState(false)
-  const previewRef = useRef<any>(null)
+  const [helpModal, setHelpModal] = useState(false);
+  const previewRef = useRef<any>(null);
   const history = useHistory();
 
   //유저가 글을 수정하여 onchange 이벤트가 발생 시, contentData의 body를 수정하기 위한 함수
   const handleChange = (e: any) => {
-    const previewValues = previewRef.current.innerText
-    onChangeContent({body: e.target.value, pureBody: previewValues});
+    const previewValues = previewRef.current.innerText;
+    onChangeContent({ body: e.target.value, pureBody: previewValues });
     // const previewValues = document.querySelector('.markdown')
-    console.log(typeof previewValues)
+    console.log(typeof previewValues);
   };
 
   // 유저가 수정버튼 누를 시, 정말로 수정할 것인지 물어보는 모달의 상태(true, false)를 관리하는 함수
@@ -42,12 +43,12 @@ function EditPage() {
 
   //유저가 오른쪽 하단 도움말을 눌렀을 때 나오는 모달을 관리하는 함수
   const handleHelpModal = () => {
-    if(helpModal) {
-      setHelpModal(false)
+    if (helpModal) {
+      setHelpModal(false);
     } else {
-      setHelpModal(true)
+      setHelpModal(true);
     }
-  }
+  };
 
   //유저가 나가기 버튼 누를 시, ContentPage로 이동하는 코드
   const handleExit = () => {
@@ -57,11 +58,12 @@ function EditPage() {
 
   useEffect(() => {
     onSetWriteMode(true);
+    // document.body.style.overflow = "hidden";
   }, []);
 
   return (
     <>
-      {helpModal ? <HelpModal handleHelpModal={handleHelpModal}/> : null}
+      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
       {checkModal ? <EditConfirmModal handleConfirmModal={handleConfirmModal} /> : null}
       {!contentData ? (
         <div>로딩 중입니다</div>
@@ -72,11 +74,7 @@ function EditPage() {
               <Title>{contentData.title}</Title>
               <GuideLine>* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.</GuideLine>
             </TitleBox>
-            {contentData.body ? (
-              <Body defaultValue={contentData.body} onChange={handleChange} autoFocus></Body>
-            ) : (
-              <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>
-            )}
+            {contentData.body ? <Body defaultValue={contentData.body} onChange={handleChange} autoFocus></Body> : <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>}
             <BtnBox>
               <ExitBtn onClick={handleExit}>나가기</ExitBtn>
               <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
@@ -109,7 +107,9 @@ const Container = styled.div`
 `;
 
 const LeftContainer = styled.div`
-  padding: 0px 30px 30px 30px;
+  // padding: 0px 30px 30px 30px;
+  padding: 1.5rem;
+  height: 100vw;
 `;
 
 const TitleBox = styled.div`
@@ -132,10 +132,12 @@ const Body = styled.textarea`
 `;
 
 const RightContainer = styled.div`
+  overflow: scroll;
   background: #f4f4f4;
   padding: 0px 30px 30px 30px;
   line-height: 2rem;
   word-spacing: 0.2rem;
+  padding: 1.5rem;
 `;
 
 // const handleMarkdownH1 = () => {

@@ -14,13 +14,17 @@ import rehypeRaw from "rehype-raw";
 import HelpModal from "../Components/HelpModal";
 import { Scrollbars } from "react-custom-scrollbars-2";
 
-function EditPage() {
+type PropsOption = {
+  helpModal: Boolean;
+  handleHelpModal: () => void;
+}
+
+function EditPage({helpModal, handleHelpModal}:PropsOption) {
   const { contentState, onChangeContent } = useContentData();
   const { allState } = useAllData();
   const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
   const [checkModal, setCheckModal] = useState(false);
-  const [helpModal, setHelpModal] = useState(false);
   const previewRef = useRef<any>(null);
   const history = useHistory();
 
@@ -38,15 +42,6 @@ function EditPage() {
       setCheckModal(false);
     } else {
       setCheckModal(true);
-    }
-  };
-
-  //유저가 오른쪽 하단 도움말을 눌렀을 때 나오는 모달을 관리하는 함수
-  const handleHelpModal = () => {
-    if (helpModal) {
-      setHelpModal(false);
-    } else {
-      setHelpModal(true);
     }
   };
 
@@ -110,7 +105,7 @@ const LeftContainer = styled.div`
   // padding: 0px 30px 30px 30px;
   padding: 1.5rem;
   height: 100vw;
-`;
+s`;
 
 const TitleBox = styled.div`
   display: flex;

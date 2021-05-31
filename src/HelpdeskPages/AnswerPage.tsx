@@ -6,30 +6,27 @@ import ReactMarkdown from "react-markdown";
 import { RootState } from "../Redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import useAllData from "../Hooks/useAllData";
 import AnswerModal from "../Components/AnswerModal";
 import useBooleanData from "../Hooks/useBooleanData";
-import { ExitBtn, SubmitBtn } from "../styled-components/Post";
-import useQcontentData from "../Hooks/useQcontentData";
+import { ExitBtn, SubmitBtn, HelpBtn } from "../styled-components/Post";
 import userImg from "../img/userIcon_gray.png";
 import axios from "axios";
+import HelpModal from "../Components/HelpModal";
 
-function AnswerPage() {
+type PropsOption = {
+  helpModal: Boolean;
+  handleHelpModal: () => void;
+};
+
+function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
-  const { QcontentState } = useQcontentData();
-  const UserState = useSelector((state: RootState) => state.MyPageReducer);
-  const { PickUserName } = useAllData();
-  const { mdnAllData } = UserState;
   const { onSetWriteMode } = useBooleanData();
   const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
+  const [guideLine, setGuideLine] = useState(true);
   const previewRef = useRef<any>(null);
-
-  useEffect(() => {
-    onSetWriteMode(true);
-  }, []);
   const history = useHistory();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -60,32 +57,6 @@ function AnswerPage() {
     });
   };
 
-  const handleHeader = (mark: string) => {
-    if (mark === "H1") {
-      setWriting(writing + "\n" + "# ");
-    } else if (mark === "H2") {
-      setWriting(writing + "\n" + "## ");
-    } else if (mark === "H3") {
-      setWriting(writing + "\n" + "### ");
-    } else if (mark === "H4") {
-      setWriting(writing + "\n" + "#### ");
-    } else if (mark === "Code") {
-      setWriting(writing + " \n ```" + "\n 코드를 입력해주세요 \n" + "\n ```");
-    } else if (mark === "Bold") {
-      setWriting(writing + "**" + "**");
-    } else if (mark === "Italic") {
-      setWriting(writing + "*" + "*");
-    } else if (mark === "Link") {
-      setWriting(writing + "[Name](http://)");
-    } else if (mark === "List") {
-      setWriting(writing + "\n" + "* ");
-    } else if (mark === "Horizontal") {
-      setWriting(writing + "\n" + "---" + " \n");
-    }
-
-    const input = document.getElementById("text")?.focus();
-  };
-
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // if (e.key === "Enter") {
     //   setWriting(writing + "\n");
@@ -100,25 +71,37 @@ function AnswerPage() {
     <div>비어있는 질문</div>
   ) : (
     <Container>
+      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
+
       <LeftContainer>
-          <QuestionBox>
-              <QuestionTitleBox>
-                <TitleIcon>질문</TitleIcon>
-                <QuestionTitle> {displayQuestion.title}</QuestionTitle>
-              </QuestionTitleBox>
-              <QuestionBody>
-                <ReactMarkdown children={displayQuestion.body} />
-              </QuestionBody>
-              <InfoBox_Q>
-                {displayQuestion.userId.image}
-                {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
-                <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
-                <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
-              </InfoBox_Q>
-            </QuestionBox>
+        <QuestionBox>
+          <QuestionTitleBox>
+            <TitleIcon>질문</TitleIcon>
+            <QuestionTitle> {displayQuestion.title}</QuestionTitle>
+          </QuestionTitleBox>
+          <QuestionBody>
+            <ReactMarkdown children={displayQuestion.body} />
+          </QuestionBody>
+          <InfoBox_Q>
+            {displayQuestion.userId.image}
+            {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
+            <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
+            <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
+          </InfoBox_Q>
+        </QuestionBox>
         <WritingArea>
           <WritingTitle>나의 답변</WritingTitle>
-          <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
+          {guideLine ? (
+            <GuideMessage
+              onClick={() => {
+                setGuideLine(false);
+              }}
+              value={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+              `}
+            ></GuideMessage>
+          ) : (
+            <Body autoFocus id="text" value={writing} placeholder="" onChange={handleChange} onKeyPress={handleEnter}></Body>
+          )}
         </WritingArea>
 
         <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
@@ -127,8 +110,9 @@ function AnswerPage() {
       </LeftContainer>
 
       <RightContainer ref={previewRef}>
-        <PrieviewTitle>나의 답변</PrieviewTitle>
+        <PreviewTitle>나의 답변</PreviewTitle>
         <ReactMarkdown children={writing} components={Components} />
+        <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
       </RightContainer>
     </Container>
   );
@@ -155,11 +139,10 @@ const LeftContainer = styled.div`
 const QuestionBox = styled.div`
   width: 100%;
   padding: 3rem 3rem 1.5rem 3rem;
-  border-bottom: 1px solid #E0E0E0
+  border-bottom: 1px solid #e0e0e0;
 `;
 
-const QuestionTitleBox = styled.div`
-`;
+const QuestionTitleBox = styled.div``;
 
 const TitleIcon = styled.span`
   border: none;
@@ -221,6 +204,16 @@ const WritingTitle = styled.div`
   margin-bottom: 1rem;
 `;
 
+const GuideMessage = styled.textarea`
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 1rem;
+  margin-top: 0.7rem;
+  color: gray;
+`;
 
 const Body = styled.textarea`
   width: 100%;
@@ -237,7 +230,7 @@ const RightContainer = styled.div`
   height: 100vw;
 `;
 
-const PrieviewTitle = styled.div`
+const PreviewTitle = styled.div`
   font-size: 1.8rem;
   font-weight: 700;
   color: #686868;
@@ -246,3 +239,35 @@ const PrieviewTitle = styled.div`
   border-bottom: 0.05rem solid #e0e0e0;
   width: 100%;
 `;
+
+// const handleHeader = (mark: string) => {
+//   if (mark === "H1") {
+//     setWriting(writing + "\n" + "# ");
+//   } else if (mark === "H2") {
+//     setWriting(writing + "\n" + "## ");
+//   } else if (mark === "H3") {
+//     setWriting(writing + "\n" + "### ");
+//   } else if (mark === "H4") {
+//     setWriting(writing + "\n" + "#### ");
+//   } else if (mark === "Code") {
+//     setWriting(writing + " \n ```" + "\n 코드를 입력해주세요 \n" + "\n ```");
+//   } else if (mark === "Bold") {
+//     setWriting(writing + "**" + "**");
+//   } else if (mark === "Italic") {
+//     setWriting(writing + "*" + "*");
+//   } else if (mark === "Link") {
+//     setWriting(writing + "[Name](http://)");
+//   } else if (mark === "List") {
+//     setWriting(writing + "\n" + "* ");
+//   } else if (mark === "Horizontal") {
+//     setWriting(writing + "\n" + "---" + " \n");
+//   }
+
+//   const input = document.getElementById("text")?.focus();
+// };
+
+// const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+//   // if (e.key === "Enter") {
+//   //   setWriting(writing + "\n");
+//   // }
+// };

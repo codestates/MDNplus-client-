@@ -69,7 +69,7 @@ const HelpdeskPage = () => {
       onSetWriteMode(false);
     }
 
-    axios.get("http://localhost:80/helpdesk").then((res) => {
+    axios.get("http://localhost:8080/helpdesk").then((res) => {
       console.log(res);
       onStoreData(res.data);
     });

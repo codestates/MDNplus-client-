@@ -103,7 +103,7 @@ function SearchPage() {
       </FilterSearchResult>
 
       <ContentContainer>
-        {SearchDataState.contentData.mainContent?.length === 0 || SearchDataState.contentData.helpdeskContent.length === 0 ? (
+        {SearchDataState.contentData?.mainContent?.length === 0 && SearchDataState.contentData?.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
         ) : CurrentPage === "MDN" && SearchDataState.contentData?.mainContent ? (
           SearchDataState.contentData.mainContent?.map((el: any) => (
@@ -112,6 +112,8 @@ function SearchPage() {
               <Body>{el.pureBody}</Body>
             </Content>
           ))
+        ) : SearchDataState.contentData.helpdeskContent.length === 0 ? (
+          <AlertResult>검색결과 없음</AlertResult>
         ) : (
           SearchDataState.contentData?.helpdeskContent.map((el: any) => (
             <Content key={el._id} onClick={() => HandleHelpDeckClicked(el)}>

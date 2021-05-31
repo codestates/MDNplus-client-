@@ -35,12 +35,12 @@ const QuestionPage = () => {
   });
   const { onSetWriteMode } = useBooleanData();
   const { title, body, pureBody, tags } = newQuestion;
-  const previewRef = useRef<any>(null)
+  const previewRef = useRef<any>(null);
   const history = useHistory();
 
   //유저가 왼쪽에 내용을 입력 시, title과 body 상태를 실시간으로 변경해주는 코드
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, type: string) => {
-        const previewValues = previewRef.current.innerText
+    const previewValues = previewRef.current.innerText;
     if (type === "title") {
       setNewQuestion({ ...newQuestion, title: e.target.value });
     } else if (type === "body") {
@@ -89,14 +89,13 @@ const QuestionPage = () => {
   const handleSubmitQ = () => {
     console.log("새 질문 등록 요청 보내짐");
     // console.log(title, body, pureBody, tags);
-    console.log('여기는 바디' + body)
-    console.log('여기는 퓨어바디' + pureBody)
-    axios.post("http://localhost:80/question", { title, body, pureBody, tags }, { withCredentials: true }).then((res) => {
-      console.log(res)
-    history.push("/HelpdeskPage");
-    onSetWriteMode(false);
-      
-      });
+    console.log("여기는 바디" + body);
+    console.log("여기는 퓨어바디" + pureBody);
+    axios.post("http://localhost:8080/question", { title, body, pureBody, tags }, { withCredentials: true }).then((res) => {
+      console.log(res);
+      history.push("/HelpdeskPage");
+      onSetWriteMode(false);
+    });
   };
 
   //나가기 버튼을 눌렀을 때, HelpdeskPage로 이동하는 코드
@@ -110,7 +109,7 @@ const QuestionPage = () => {
     onSetWriteMode(true);
   }, []);
 
-  console.log(pureBody)
+  console.log(pureBody);
   return (
     <>
       {checkModal ? <QconfirmModal handleSubmitQ={handleSubmitQ} handleConfirmModal={handleConfirmModal} /> : null}

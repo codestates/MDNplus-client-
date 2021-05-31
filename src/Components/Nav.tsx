@@ -49,7 +49,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
     onSearchingResult(word, tag);
     console.log("지금보내지는 단어하고 태그", word, tag);
 
-    axios.post("http://localhost:80/search", { type: tag, content: word }).then((res) => {
+    axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
       console.log(res);
       onSearchingData(res.data);
     });
@@ -80,7 +80,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       console.log("지금보내지는 단어하고 태그", word, tag);
 
       // 검색할 때 필요한 요청 코드
-      axios.post("http://localhost:80/search", { type: tag, content: word }).then((res) => {
+      axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
         console.log(res);
         onSearchingData(res.data);
       });
@@ -95,7 +95,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
 
   //깃허브 accessToken 받아오는 요청
   const gitAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       console.log("요청 성공해서 들어옴");
       const { nickName, _id } = res.data;
       if (nickName) {
@@ -118,7 +118,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
   //서버로부터 카카오 accessToken 받아오는 요청
   const kakaoAccessToken = (authorizationCode: string) => {
     console.log("카카오 accessToken 받는 요청 보내짐");
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       const { nickName, _id } = res.data;
       console.log("로그인 요청 성공함");
       if (nickName) {

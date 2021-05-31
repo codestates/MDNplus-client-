@@ -118,7 +118,7 @@ const TitleContainer = styled.div`
   grid-area: 1/2/2/8;
   align-self: end;
   margin: 2rem 0 1rem 0;
-  padding-bottom: 2rem;
+  padding-bottom: 1.5rem;
   border-bottom: 0.2rem solid black;
 `;
 
@@ -137,7 +137,7 @@ const QuestionTags = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 0.5rem 0 0.5rem 0;
+  margin: 0.5rem 0 2rem 0;
 `;
 
 const Tag = styled.div`
@@ -192,9 +192,10 @@ const DataTitle = styled.label`
 
 const DataBody = styled.div`
   max-height: 0px;
+  width: 90%;
   overflow: hidden;
   font-size: 1rem;
-  margin: 2rem 0 2rem 0;
+  margin: 2rem 0 2rem 2.5rem;
   padding-left: 1.5rem;
   line-height: 2rem;
 `;

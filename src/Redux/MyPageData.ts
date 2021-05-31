@@ -166,7 +166,7 @@ export const allDataAction = (mdnAllData: AllData | null) => ({
 type MyPageDataAction = ReturnType<typeof allDataAction>;
 
 type InitState = {
-  mdnAllData: null | AllData;
+  mdnAllData: null | undefined | AllData;
   // myPageData: null | DataType;
   // questionData: QuestionType | undefined;
   // answerData: AnswerType | undefined;

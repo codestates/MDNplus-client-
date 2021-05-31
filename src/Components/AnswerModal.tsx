@@ -1,14 +1,16 @@
 import { useRef } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 type ModalProps = {
   // handleCloseModal: () => void;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   btnName: string;
+  handleAnswerBtn: () => void;
 };
 
-function AnswerModal({ setIsOpen, btnName }: ModalProps) {
+function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   const overLay = useRef(null);
 
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -21,7 +23,8 @@ function AnswerModal({ setIsOpen, btnName }: ModalProps) {
   const handleAnswerYes = () => {
     console.log("click");
 
-    //요청보내야함
+    handleAnswerBtn();
+
     window.history.back();
   };
 
@@ -69,21 +72,20 @@ function AnswerModal({ setIsOpen, btnName }: ModalProps) {
 export default AnswerModal;
 
 const ModalContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
+  left: 0;
 `;
 
 const Overlay = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
   background-color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
 `;

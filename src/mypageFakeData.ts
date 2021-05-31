@@ -1,7 +1,7 @@
 const myPageFakeData = {
   user: {
     nickName: "김승용",
-    image: "URL",
+    image: "",
     _id: "60a5aa8ad96cdef21153faec",
   },
   questions: [

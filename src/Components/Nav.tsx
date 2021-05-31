@@ -192,6 +192,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
 export default Nav;
 
 const NavBar = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

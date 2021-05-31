@@ -135,11 +135,11 @@ const Container = styled.div`
 const IntroBox = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 4rem;
+  // margin-left: 4rem;
 `;
 
 const IntroContents = styled.div`
-  margin-left: 1rem;
+  // margin-left: 1rem;
 `;
 
 const IntroTitle = styled.h1`
@@ -149,7 +149,7 @@ const IntroTitle = styled.h1`
 
 const IntroLetter = styled.div`
   margin-top: -1rem;
-  margin-left: 0.1rem;
+  // margin-left: 0.1rem;
   color: #9e9e9e;
   font-weight: bold;
 `;
@@ -173,7 +173,7 @@ const Stage = styled.div`
   row-gap: 3.5rem;
   column-gap: 3.2rem;
   padding: 2rem 2rem 2rem 2rem;
-  margin-left: 2rem;
+  // margin-left: 2rem;
   margin-top: 1rem;
 
   @media (max-width: 375px) {
@@ -204,7 +204,7 @@ const SecondFilter = styled.select`
   width: 10rem;
   border: none;
   outline: none;
-  margin-left: 2rem;
+  // margin-left: 2rem;
   color: #616161;
   background-color: white;
 `;

@@ -184,11 +184,11 @@ const IntroBox = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  margin-left: 4rem;
+  // margin-left: 4rem;
 `;
 
 const IntroContents = styled.div`
-  margin-left: 1rem;
+  // margin-left: 1rem;
 `;
 
 const IntroTitle = styled.h1`
@@ -198,7 +198,7 @@ const IntroTitle = styled.h1`
 
 const IntroLetter = styled.div`
   margin-top: -1rem;
-  margin-left: 0.1rem;
+  // margin-left: 0.1rem;
   color: #9e9e9e;
   font-weight: bold;
 `;
@@ -206,14 +206,14 @@ const IntroLetter = styled.div`
 const Icon = styled.img`
   width: 6rem;
   margin-top: 1rem;
-  margin-left: -1.5rem;
-  margin-right: -1.3rem;
+  // margin-left: -1.5rem;
+  // margin-right: -1.3rem;
 `;
 
 const QuestionBtn = styled.button`
   position: absolute;
   right: 0rem;
-  margin-right: 2rem;
+  // margin-right: 2rem;
   font-size: 0.9rem;
   padding: 0.7rem 1.2rem 0.7rem 1.2rem;
   border-radius: 1.2rem;
@@ -232,19 +232,19 @@ const Questions = styled.div`
 const FilterBox = styled.div`
   width: 100%;
   display: flex;
-  margin: 2rem 0rem 1rem 3rem;
+  // margin: 2rem 0rem 1rem 3rem;
 `;
 
 const FilterFast = styled.span`
   color: #757575;
   cursor: pointer;
-  margin-right: 0.5rem;
+  // margin-right: 0.5rem;
 `;
 
 const FilterFast_Selected = styled.span`
   font-weight: bold;
   cursor: pointer;
-  margin-right: 0.5rem;
+  // margin-right: 0.5rem;
   color: #3f51b5;
 `;
 
@@ -301,7 +301,7 @@ const TagBox = styled.div`
 `;
 
 const Tag = styled.span`
-  margin-left: 0.3rem;
+  // margin-left: 0.3rem;
   background: #f6f6f6;
   color: #686868;
   border-radius: 2rem;
@@ -317,8 +317,8 @@ const NumberBox = styled.div`
 const LikesNum = styled.span`
   color: #686868;
   font-size: 0.8rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  // margin-left: 1rem;
+  // margin-right: 1rem;
   margin-top: 1rem;
 `;
 
@@ -330,5 +330,5 @@ const AnswersNum = styled.span`
 const CreatedAt = styled.span`
   font-size: 0.8rem;
   color: #686868;
-  margin-left: 1rem;
+  // margin-left: 1rem;
 `;

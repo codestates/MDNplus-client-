@@ -8,6 +8,7 @@ type SearchDataType = {
     count: number;
     _id: string;
     title: string;
+    pureBody: string;
     body: string;
     updatedAt: string;
   }[];
@@ -15,6 +16,7 @@ type SearchDataType = {
     tags: string[];
     commentCount: number;
     like: number;
+    pureBody: string;
     _id: string;
     title: string;
     body: string;

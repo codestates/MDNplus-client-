@@ -76,7 +76,7 @@ function MyPage() {
   const handleMyAnswers = (el: AnswerType) => {
     history.push({
       pathname: "/QcontentPage",
-      state: { pageName: "/MyPage", questionId: el.questionId },
+      state: { pageName: "/MyPage", questionId: el.questionId._id },
     });
   };
 

@@ -9,6 +9,7 @@ type helpDeskContentType = {
   commentCount: number;
   like: number;
   _id: string;
+  pureBody: string;
   title: string;
   body: string;
   userId: {
@@ -27,6 +28,7 @@ type helpDeskContentType = {
 type mainContentType = {
   count: number;
   _id: string;
+  pureBody: string;
   title: string;
   body: string;
   updatedAt: string;
@@ -106,7 +108,7 @@ function SearchPage() {
         {SearchDataState.contentData?.mainContent?.length === 0 && SearchDataState.contentData?.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
         ) : CurrentPage === "MDN" && SearchDataState.contentData?.mainContent ? (
-          SearchDataState.contentData.mainContent?.map((el: any) => (
+          SearchDataState.contentData.mainContent?.map((el) => (
             <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
               <Title>{el.title}</Title>
               <Body>{el.pureBody}</Body>
@@ -115,7 +117,7 @@ function SearchPage() {
         ) : SearchDataState.contentData.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
         ) : (
-          SearchDataState.contentData?.helpdeskContent.map((el: any) => (
+          SearchDataState.contentData?.helpdeskContent.map((el) => (
             <Content key={el._id} onClick={() => HandleHelpDeckClicked(el)}>
               <Title>{el.title}</Title>
               <Body>{el.pureBody}</Body>

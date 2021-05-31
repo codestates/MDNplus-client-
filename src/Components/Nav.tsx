@@ -54,8 +54,6 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       onSearchingData(res.data);
     });
 
-    onSearchingData(SearchDataDummy);
-
     history.push("/SearchPage");
 
     word = "";

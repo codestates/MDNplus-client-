@@ -12,6 +12,7 @@ import NameSettingPage from "./Pages/NameSettingPage";
 import MyPage from "./HelpdeskPages/MyPage";
 import FAQ from "./Pages/FAQ";
 import FooterComponent from "./Components/FooterComponent";
+import LandingPage from "./Pages/LandingPage"
 // Wiki
 import ContentPage from "./Pages/ContentPage";
 import SettingPage from "./Pages/SettingPage";
@@ -82,9 +83,11 @@ function App() {
           <Route path="/QcontentPage" render={() => <QcontentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/TestEditPage" render={() => <TestEditPage />} />
+          <Route path="/LandingPage" render={() => <LandingPage />} />
+
         </Switch>
       </Body>
-
+      {/* <Footer>푸터</Footer> */}
       {writeMode ? null : (
         <Footer>
           <FooterComponent />
@@ -139,4 +142,8 @@ const Body = styled.div`
 `;
 const Footer = styled.div`
   grid-area: footer;
+<<<<<<< HEAD
+  background: #283593;
+=======
+>>>>>>> 23fac38fc79244471aaddec44ec6beb54704c981
 `;

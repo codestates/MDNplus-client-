@@ -15,7 +15,7 @@ const NameSettingPage = () => {
   const handleSubmit = () => {
     console.log(nickname);
     axios
-      .post("http://localhost:8080/oauth/nick", { nickName: nickname }, { withCredentials: true })
+      .post("http://localhost:80/oauth/nick", { nickName: nickname }, { withCredentials: true })
       .then((res) => {
         history.push("/");
       })

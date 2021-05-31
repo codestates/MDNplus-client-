@@ -102,7 +102,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     }
 
     axios
-      .post("http://localhost:8080/question/like", { questionId: updateData.question._id, like: updateData.question.like, isLike: updateData.question.isLike }, { withCredentials: true })
+      .post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like, isLike: updateData.question.isLike }, { withCredentials: true })
       .then((res) => console.log("응답받은 질문에대한 좋아요 =", res));
   };
 
@@ -121,7 +121,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
       // onAnswerLike(updateData);
     }
     axios
-      .post("http://localhost:8080/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
+      .post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
       .then((res) => console.log("응답받은 대답에대한 좋아요 =", res));
 
     // axios.post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
@@ -157,7 +157,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     }
 
     //바껴진 questionID를 이용하여 QcontentPage에 렌더링할 데이터를 가져오는 요청
-    axios.get(`http://localhost:8080/question/${questionID}`).then((res) => {
+    axios.get(`http://localhost:80/question/${questionID}`).then((res) => {
       console.log("데이터 처음으로 랜더링함", res);
       onCurrentQData(res.data);
     });
@@ -235,7 +235,9 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                 </LikesPart>
                 <AnswerBox>
                   {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle> : <div>비공개</div>}
-                  <Body>{el.content}</Body>
+                  <Body>
+                  <ReactMarkdown children={el.content}></ReactMarkdown>
+                  </Body>
                   <NameDate>
                     <Date>{el.createdAt.substring(0, 10)}</Date>
                   </NameDate>

@@ -93,7 +93,7 @@ function SearchPage() {
         ) : (
           <>
             <MDNPlus onClick={() => HandleMDNColor()} style={{ color: MDNColor }}>
-              MDN+
+              MDN+ 위키
             </MDNPlus>
             <HelpDesk onClick={() => HandleHelpDeckColor()} style={{ color: HelpDeskColor }}>
               HelpDesk
@@ -106,17 +106,17 @@ function SearchPage() {
         {SearchDataState.contentData.mainContent?.length === 0 || SearchDataState.contentData.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
         ) : CurrentPage === "MDN" && SearchDataState.contentData?.mainContent ? (
-          SearchDataState.contentData.mainContent?.map((el: mainContentType) => (
+          SearchDataState.contentData.mainContent?.map((el: any) => (
             <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
               <Title>{el.title}</Title>
-              <Body>{el.body}</Body>
+              <Body>{el.pureBody}</Body>
             </Content>
           ))
         ) : (
-          SearchDataState.contentData?.helpdeskContent.map((el: helpDeskContentType) => (
+          SearchDataState.contentData?.helpdeskContent.map((el: any) => (
             <Content key={el._id} onClick={() => HandleHelpDeckClicked(el)}>
               <Title>{el.title}</Title>
-              <Body>{el.body}</Body>
+              <Body>{el.pureBody}</Body>
             </Content>
           ))
         )}

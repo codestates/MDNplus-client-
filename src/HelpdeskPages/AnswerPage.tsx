@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -27,6 +27,7 @@ function AnswerPage() {
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
+  const previewRef = useRef<any>(null)
 
   useEffect(() => {
     onSetWriteMode(true);
@@ -44,11 +45,21 @@ function AnswerPage() {
   };
 
   const handleAnswerBtn = () => {
+    const previewValues = previewRef.current.innerText
+    console.log(previewValues)
+    const pureContentArr = previewValues.split('님의 답변').slice(1)
+    console.log(pureContentArr)
+    let pureContent = ''
+    for(let i = 0; i < pureContentArr.length; i++) {
+      pureContent = pureContent + pureContentArr[i]
+    }
+    console.log(pureContent)
     console.log("답변 달림");
-    setIsOpen(() => !isOpen);
-    axios.post("http://localhost:8080/comment", { questionId: displayQuestion?._id, content: writing }, { withCredentials: true }).then((res) => console.log(res));
-
-    window.history.back();
+    axios.post("http://localhost:80/comment", { questionId: displayQuestion?._id, content: writing, pureContent }, { withCredentials: true }).then((res) => {
+      console.log(res)
+          setIsOpen(() => !isOpen);
+          window.history.back();
+      });
   };
 
   const handleHeader = (mark: string) => {
@@ -113,7 +124,7 @@ function AnswerPage() {
         {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
       </LeftContainer>
 
-      <RightContainer>
+      <RightContainer ref={previewRef}>
         <PrieviewTitle>{PickUserName} 님의 답변</PrieviewTitle>
         <AnswerPart>
           <ReactMarkdown children={writing} components={Components} />

@@ -76,8 +76,7 @@ function MyPage() {
   };
 
   const handleMyAnswers = (el: AnswerType) => {
-    //해당 답변을 클릭했을시 질문에 해당하는 ID를 요청보내주면됨
-    // axios.get('http://localhost:80/') //내가 답변한 질문을 클릭했을 시, 해당하는 질문의 데이터들을 받아오는 요청 (해당 질문 ID 필요)
+    // axios.get('http://localhost:8080/') //내가 답변한 질문을 클릭했을 시, 해당하는 질문의 데이터들을 받아오는 요청 (해당 질문 ID 필요)
     // el.questionId;
     // const findData = questionData?.allData.filter((questionTitle) => questionTitle.title == answerTitle);
     // const findData = questionData?.allData.filter((el) => (el.answers.filter((questionTitle) => questionTitle.qTitle === answerTitle)));

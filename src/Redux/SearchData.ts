@@ -57,7 +57,7 @@ type InitStateType = {
 const initialState = {
   contentData: null,
   word: null,
-  tag: "all",
+  tag: "전체",
   result: null,
   tagResult: null,
 };

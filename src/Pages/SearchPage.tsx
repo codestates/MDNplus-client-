@@ -74,11 +74,11 @@ function SearchPage() {
     <Container>
       <SearchResult>
         <ResultTextColor>
-          "
+          " &nbsp;
           <ResultText>
-            {SearchDataState.result} &nbsp; , &nbsp; {SearchDataState.tagResult === null && SearchDataState.tagResult === undefined ? "전체" : SearchDataState.tagResult}
+            {SearchDataState.result} &nbsp; , &nbsp; {SearchDataState.tagResult === null && SearchDataState.tagResult === undefined ? "전체" : SearchDataState.tagResult}&nbsp;
           </ResultText>
-          "(을)를 검색하셨습니다.
+          " &nbsp; (을)를 검색하셨습니다.
         </ResultTextColor>
 
         <ResultNum>
@@ -158,7 +158,7 @@ const ResultTextColor = styled.span`
 const ResultNum = styled.div`
   color: #9e9e9e;
   font-weight: bold;
-  width: 70%;
+  width: 80%;
   font-size: 1rem;
   margin-top: 1em;
 `;

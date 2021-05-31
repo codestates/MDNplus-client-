@@ -171,10 +171,10 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
           <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>
-          <option value="all">all</option>
-          <option value="title">title</option>
-          <option value="body">body</option>
-          <option value="tag">tag</option>
+          <option value="전체">전체</option>
+          <option value="제목">제목</option>
+          <option value="내용">내용</option>
+          <option value="태그">태그</option>
         </SearchFilter>
       </LeftBox>
       {isLogin ? (

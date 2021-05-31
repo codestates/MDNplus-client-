@@ -104,7 +104,7 @@ function AnswerPage() {
           </QuestionBody>
         </QuestionPart>
         <WritingArea>
-          <WritingTitle> 나의 답변</WritingTitle>
+          <WritingTitle> {PickUserName}님의 답변</WritingTitle>
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
 

@@ -15,6 +15,7 @@ type DataType = {
     tags: string[];
     commentCount: number;
     like: number;
+    pureBody: string;
     _id: string;
     title: string;
     body: string;
@@ -33,6 +34,7 @@ type DataType = {
   };
   comments: {
     like: number;
+    pureBody: string;
     _id: string;
     questionId: string;
     content: string;
@@ -56,6 +58,7 @@ type AnswerType = {
   _id: string;
   questionId: string;
   content: string;
+  pureBody: string;
   userId: {
     nickName: string;
     kakaoId: string;
@@ -86,7 +89,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   const { currentData } = QcontentState;
   const history = useHistory();
   const dispatch = useDispatch();
-  const [isMainPage, setisMainPage] = useState<boolean>(true);
+  const [isMainPage, setisMainPage] = useState<boolean>(false);
   const location = useLocation<PageNameType>();
 
   const handleQuestionLike = (updateData: DataType) => {
@@ -102,7 +105,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     }
 
     axios
-      .post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like, isLike: updateData.question.isLike }, { withCredentials: true })
+      .post("http://localhost:8080/question/like", { questionId: updateData.question._id, like: updateData.question.like, isLike: updateData.question.isLike }, { withCredentials: true })
       .then((res) => console.log("응답받은 질문에대한 좋아요 =", res));
   };
 
@@ -121,7 +124,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
       // onAnswerLike(updateData);
     }
     axios
-      .post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
+      .post("http://localhost:8080/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
       .then((res) => console.log("응답받은 대답에대한 좋아요 =", res));
 
     // axios.post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
@@ -148,16 +151,16 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
       // console.log("null");
     } else if (location.state.pageName === "/MyPage") {
       questionID = location.state.questionId;
-      setisMainPage(false);
       // console.log(location.state.pageName);
     } else if (location.state.pageName === "/HelpdeskPage") {
+      setisMainPage(true);
       questionID = location.state.questionId;
     } else if (location.state.pageName === "/Searchpage") {
       questionID = location.state.questionId;
     }
 
     //바껴진 questionID를 이용하여 QcontentPage에 렌더링할 데이터를 가져오는 요청
-    axios.get(`http://localhost:80/question/${questionID}`).then((res) => {
+    axios.get(`http://localhost:8080/question/${questionID}`).then((res) => {
       console.log("데이터 처음으로 랜더링함", res);
       onCurrentQData(res.data);
     });
@@ -226,9 +229,9 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                       <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" />{" "}
                     </HeartIcon>
                   ) : (
-                    <AnimatedHeart>
+                    <HeartIcon>
                       <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
-                    </AnimatedHeart>
+                    </HeartIcon>
                   )}
                   <LikesNum> {el.like}</LikesNum>
                   {/* <span onClick={() => handleAnswerDecreaseLikes(el)}></span> */}
@@ -255,29 +258,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
 
 export default QcontentPage;
 
-const heartAnimation = keyframes`
-0%
-{
-  transform: scale( 0.2 );
-}
-
-0%
-{
-  transform: scale( 0.5 );
-}
-
-100%
-{
-  transform: scale( 1.5 );
-}
-
-`;
-
 const HeartIcon = styled.span``;
-
-const AnimatedHeart = styled(HeartIcon)`
-  animation: ${heartAnimation} 1s infinite;
-`;
 
 const Container = styled.div`
   height: 100%;

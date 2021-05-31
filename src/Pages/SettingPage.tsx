@@ -128,7 +128,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
 export default SettingPage;
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 40rem;
   display: flex;
   justify-content: center;

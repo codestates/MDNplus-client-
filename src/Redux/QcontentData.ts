@@ -7,6 +7,7 @@ type DataType = {
     tags: string[];
     commentCount: number;
     like: number;
+    pureBody: string;
     _id: string;
     title: string;
     body: string;
@@ -25,6 +26,7 @@ type DataType = {
   };
   comments: {
     like: number;
+    pureBody: string;
     _id: string;
     questionId: string;
     content: string;
@@ -47,6 +49,7 @@ type QuestionType = {
   tags: string[];
   commentCount: number;
   like: number;
+  pureBody: string;
   _id: string;
   title: string;
   body: string;
@@ -68,6 +71,7 @@ type AnswerType = {
   _id: string;
   questionId: string;
   content: string;
+  pureBody: string;
   userId: {
     nickName: string;
     kakaoId: string;

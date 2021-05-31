@@ -72,7 +72,7 @@ function MainPage() {
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
     // console.log('데이터 가져오는 요청 보내짐')
-    axios.get("http://localhost:80/maincontent").then((res) => {
+    axios.get("http://localhost:8080/maincontent").then((res) => {
       console.log(res);
       onFilter(res.data);
     });

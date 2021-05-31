@@ -3,6 +3,7 @@ const ANSWERPAGEDATA = "AnswerPageData/ANSWERPAGEDATA" as const;
 type QuestionType = {
   tags: string[];
   commentCount: number;
+  pureBody: string;
   like: number;
   _id: string;
   title: string;

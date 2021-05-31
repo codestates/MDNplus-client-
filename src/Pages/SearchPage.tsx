@@ -74,11 +74,11 @@ function SearchPage() {
     <Container>
       <SearchResult>
         <ResultTextColor>
-          "
+          " &nbsp;
           <ResultText>
-            {SearchDataState.result} &nbsp; , &nbsp; {SearchDataState.tagResult === null && SearchDataState.tagResult === undefined ? "전체" : SearchDataState.tagResult}
+            {SearchDataState.result} &nbsp; , &nbsp; {SearchDataState.tagResult === null && SearchDataState.tagResult === undefined ? "전체" : SearchDataState.tagResult}&nbsp;
           </ResultText>
-          "(을)를 검색하셨습니다.
+          " &nbsp; (을)를 검색하셨습니다.
         </ResultTextColor>
 
         <ResultNum>
@@ -103,15 +103,17 @@ function SearchPage() {
       </FilterSearchResult>
 
       <ContentContainer>
-        {SearchDataState.contentData.mainContent?.length === 0 || SearchDataState.contentData.helpdeskContent.length === 0 ? (
+        {SearchDataState.contentData?.mainContent?.length === 0 && SearchDataState.contentData?.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
         ) : CurrentPage === "MDN" && SearchDataState.contentData?.mainContent ? (
-          SearchDataState.contentData.mainContent?.map((el: any) => (
+          SearchDataState.contentData.mainContent?.map((el:any) => (
             <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
               <Title>{el.title}</Title>
               <Body>{el.pureBody}</Body>
             </Content>
           ))
+        ) : SearchDataState.contentData.helpdeskContent.length === 0 ? (
+          <AlertResult>검색결과 없음</AlertResult>
         ) : (
           SearchDataState.contentData?.helpdeskContent.map((el: any) => (
             <Content key={el._id} onClick={() => HandleHelpDeckClicked(el)}>
@@ -158,7 +160,7 @@ const ResultTextColor = styled.span`
 const ResultNum = styled.div`
   color: #9e9e9e;
   font-weight: bold;
-  width: 70%;
+  width: 80%;
   font-size: 1rem;
   margin-top: 1em;
 `;

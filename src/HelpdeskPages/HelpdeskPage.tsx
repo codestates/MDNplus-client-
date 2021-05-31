@@ -69,7 +69,7 @@ const HelpdeskPage = () => {
       onSetWriteMode(false);
     }
 
-    axios.get("http://localhost:80/helpdesk").then((res) => {
+    axios.get("http://localhost:8080/helpdesk").then((res) => {
       console.log(res);
       onStoreData(res.data);
     });
@@ -80,6 +80,7 @@ const HelpdeskPage = () => {
   return (
     <>
       <Container>
+        <Stage>
         <IntroBox>
           <Icon src={helpIcon}></Icon>
           <IntroContents>
@@ -168,6 +169,7 @@ const HelpdeskPage = () => {
             )}
           </BoxContainer>
         </Questions>
+        </Stage>
       </Container>
     </>
   );
@@ -176,15 +178,24 @@ const HelpdeskPage = () => {
 export default HelpdeskPage;
 
 const Container = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
   width: 100%;
   height: 100%;
 `;
+
+const Stage = styled.div`
+  width: 93%;
+
+`
 
 const IntroBox = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   margin-left: 4rem;
+  width: 100%;
 `;
 
 const IntroContents = styled.div`

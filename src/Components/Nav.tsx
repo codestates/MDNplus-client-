@@ -45,7 +45,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
     }
     onSearchingResult(word, tag);
     // console.log("지금보내지는 단어하고 태그", word, tag);
-    axios.post("http://localhost:80/search", { type: tag, content: word }).then((res) => {
+    axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
       console.log(res);
       onSearchingData(res.data);
     });
@@ -68,7 +68,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       //리덕스 훅스에가서 state 업데이트함.
       console.log("지금보내지는 단어하고 태그", word, tag);
       // 검색할 때 필요한 요청 코드
-      axios.post("http://localhost:80/search", { type: tag, content: word }).then((res) => {
+      axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
         console.log(res);
         onSearchingData(res.data);
       });
@@ -79,7 +79,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
 
   //깃허브 accessToken 받아오는 요청
   const gitAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       console.log("요청 성공해서 들어옴");
       const { nickName, _id } = res.data;
       if (nickName) {
@@ -102,7 +102,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
   //서버로부터 카카오 accessToken 받아오는 요청
   const kakaoAccessToken = (authorizationCode: string) => {
     console.log("카카오 accessToken 받는 요청 보내짐");
-    axios.post("http://localhost:80/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
       const { nickName, _id } = res.data;
       console.log("로그인 요청 성공함");
       if (nickName) {
@@ -154,10 +154,10 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
           <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>
-          <option value="all">all</option>
-          <option value="title">title</option>
-          <option value="body">body</option>
-          <option value="tag">tag</option>
+          <option value="전체">전체</option>
+          <option value="제목">제목</option>
+          <option value="내용">내용</option>
+          <option value="태그">태그</option>
         </SearchFilter>
       </LeftBox>
       {isLogin ? (

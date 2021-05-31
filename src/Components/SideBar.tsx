@@ -49,8 +49,8 @@ const Container = styled.span`
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
 
-  max-width: 13rem;
-  min-width: 8rem;
+  max-width: 16rem;
+  min-width: 13rem;
 
   @media (max-width: 375px) {
     width: 100vw;

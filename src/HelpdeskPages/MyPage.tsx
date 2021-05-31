@@ -130,13 +130,13 @@ function MyPage() {
       <RightContainer>
         {isQuestion ? (
           <QuestionContainer>
-            {mdnAllData?.questions.map((el) => (
+            {mdnAllData?.questions.map((el:any) => (
               <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
                 <Q>Q</Q>
                 <QuestionTitle>{el.title}</QuestionTitle>
-                <QuestionBody>{el.body}</QuestionBody>
+                <QuestionBody>{el.pureBody}</QuestionBody>
                 <div>
-                  {el.tags.map((el, index: number) => (
+                  {el.tags.map((el:any, index: number) => (
                     <QuestionTag key={index.toString()}>{el}</QuestionTag>
                   ))}
                 </div>
@@ -162,11 +162,11 @@ function MyPage() {
           </QuestionContainer>
         ) : (
           <QuestionContainer>
-            {mdnAllData?.comments.map((el) => (
+            {mdnAllData?.comments.map((el:any) => (
               <QuestionBox key={el._id} onClick={() => handleMyAnswers(el)}>
                 <Q>Q</Q>
-                <QuestionTitle>{el.questionId.title}</QuestionTitle>
-                <QuestionBody>{el.content}</QuestionBody>
+                <QuestionTitle>{el.title}</QuestionTitle>
+                <QuestionBody>{el.pureContent}</QuestionBody>
                 <QuestionLastLine>
                   <QuestionLikes> 좋아요: &nbsp;{el.like}</QuestionLikes>
                   <QuestionDate>{el.createdAt.substring(0, 10)}</QuestionDate>

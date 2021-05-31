@@ -19,6 +19,7 @@ const date = new Date();
 type NewQuestion = {
   title: string;
   body: string;
+  pureBody: string;
   tags: string[];
 };
 
@@ -29,18 +30,21 @@ const QuestionPage = () => {
   const [newQuestion, setNewQuestion] = useState<NewQuestion>({
     title: "",
     body: "",
+    pureBody: "",
     tags: [],
   });
   const { onSetWriteMode } = useBooleanData();
-  const { title, body, tags } = newQuestion;
+  const { title, body, pureBody, tags } = newQuestion;
+  const previewRef = useRef<any>(null)
   const history = useHistory();
 
   //유저가 왼쪽에 내용을 입력 시, title과 body 상태를 실시간으로 변경해주는 코드
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, type: string) => {
+        const previewValues = previewRef.current.innerText
     if (type === "title") {
       setNewQuestion({ ...newQuestion, title: e.target.value });
     } else if (type === "body") {
-      setNewQuestion({ ...newQuestion, body: e.target.value });
+      setNewQuestion({ ...newQuestion, body: e.target.value, pureBody: previewValues });
     }
   };
 
@@ -84,10 +88,15 @@ const QuestionPage = () => {
   // 모달에서 등록하기 버튼 누를 시, 서버에 새 질문 저장하는 요청 보내는 코드(모달에 props로 전달함)
   const handleSubmitQ = () => {
     console.log("새 질문 등록 요청 보내짐");
-    console.log(title, body, tags);
-    axios.post("http://localhost:80/question", { title, body, tags }, { withCredentials: true }).then((res) => console.log(res));
+    // console.log(title, body, pureBody, tags);
+    console.log('여기는 바디' + body)
+    console.log('여기는 퓨어바디' + pureBody)
+    axios.post("http://localhost:80/question", { title, body, pureBody, tags }, { withCredentials: true }).then((res) => {
+      console.log(res)
     history.push("/HelpdeskPage");
     onSetWriteMode(false);
+      
+      });
   };
 
   //나가기 버튼을 눌렀을 때, HelpdeskPage로 이동하는 코드
@@ -101,6 +110,7 @@ const QuestionPage = () => {
     onSetWriteMode(true);
   }, []);
 
+  console.log(pureBody)
   return (
     <>
       {checkModal ? <QconfirmModal handleSubmitQ={handleSubmitQ} handleConfirmModal={handleConfirmModal} /> : null}
@@ -153,7 +163,7 @@ const QuestionPage = () => {
             <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
           </BtnBox>
         </LeftContainer>
-        <RightContainer>
+        <RightContainer ref={previewRef}>
           <h1>{title}</h1>
           <ReactMarkdown components={Components} children={body} className="markdown" />
         </RightContainer>

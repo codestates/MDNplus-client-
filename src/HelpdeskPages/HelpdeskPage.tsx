@@ -75,7 +75,7 @@ const HelpdeskPage = () => {
     });
   }, []);
 
-  console.log(selectedQuestions);
+  console.log(allQuestions);
 
   return (
     <>
@@ -136,7 +136,7 @@ const HelpdeskPage = () => {
             {selectedQuestions === null ? (
               <div>로딩 중입니다</div>
             ) : (
-              selectedQuestions.map((el: Question, idx: number) => (
+              selectedQuestions.map((el: any, idx: number) => (
                 <QuestionBox key={el._id}>
                   <TitleBox
                     onClick={() => {
@@ -151,7 +151,7 @@ const HelpdeskPage = () => {
                       handleClickQuestion(el);
                     }}
                   >
-                    {`${el.body.slice(0, 100)}`}
+                    {`${el.pureBody}`}
                   </Body>
                   <TagBox>
                     {el.tags.map((el: string, idx: number) => (

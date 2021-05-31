@@ -87,9 +87,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [isMainPage, setisMainPage] = useState<boolean>(true);
-  const [isAnswerLike, setIsAnswerLike] = useState<boolean>(true);
   const location = useLocation<PageNameType>();
-  // const [isLike, setIsLike] = useState<boolean>(true);
 
   const handleQuestionLike = (updateData: DataType) => {
     if (updateData.question.isLike === true) {
@@ -109,7 +107,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   };
 
   const handleAnswerLike = (updateData: AnswerType, index: number) => {
-    console.log("대답에대한 좋아요 = ", updateData.isLike);
+    console.log("대답에대한 좋아요 = ", updateData);
 
     if (updateData.isLike === true) {
       console.log("clicked");
@@ -160,7 +158,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
 
     //바껴진 questionID를 이용하여 QcontentPage에 렌더링할 데이터를 가져오는 요청
     axios.get(`http://localhost:8080/question/${questionID}`).then((res) => {
-      console.log(res);
+      console.log("데이터 처음으로 랜더링함", res);
       onCurrentQData(res.data);
     });
     //   onCurrentQData(res.data);

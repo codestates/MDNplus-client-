@@ -26,8 +26,6 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
     console.log("click");
 
     handleAnswerBtn();
-
-    window.history.back();
   };
 
   const handleAnswerNo = () => {

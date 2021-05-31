@@ -18,6 +18,7 @@ function AnswerPage() {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
   const { QcontentState } = useQcontentData();
   const UserState = useSelector((state: RootState) => state.MyPageReducer);
+  const { PickUserName } = useAllData();
 
   const { mdnAllData } = UserState;
 
@@ -86,7 +87,9 @@ function AnswerPage() {
     onSetWriteMode(true);
   }, []);
 
-  return (
+  return displayQuestion === undefined || displayQuestion === null ? (
+    <div>비어있는 질문</div>
+  ) : (
     <Container>
       <LeftContainer>
         <QuestionPart>
@@ -94,50 +97,14 @@ function AnswerPage() {
           <Title> {displayQuestion?.title}</Title>
           <NameDate>
             <UserName>{QcontentState.currentData?.question.userId.nickName}</UserName>
-            <Date>{displayQuestion?.createdAt}</Date>
+            <Date>{displayQuestion?.createdAt.substring(0, 10)}</Date>
           </NameDate>
-          <QuestionBody>{displayQuestion?.body}</QuestionBody>
+          <QuestionBody>
+            <ReactMarkdown children={displayQuestion?.body} components={Components} />
+          </QuestionBody>
         </QuestionPart>
         <WritingArea>
           <WritingTitle> 나의 답변</WritingTitle>
-          {/* <MarDownBtns>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H1")}>
-              H1
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H2")}>
-              H2
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H3")}>
-              H3
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H4")}>
-              H4
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Code")}>
-              Code
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Bold")}>
-              Bold
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Italic")}>
-              Italic
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Link")}>
-              Link
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("List")}>
-              List
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Horizontal")}>
-              Horizontal
-            </MarkDownBtn>
-          </MarDownBtns> */}
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
 
@@ -147,7 +114,7 @@ function AnswerPage() {
       </LeftContainer>
 
       <RightContainer>
-        <PrieviewTitle>{mdnAllData?.user.nickName} 님의 답변</PrieviewTitle>
+        <PrieviewTitle>{PickUserName} 님의 답변</PrieviewTitle>
         <AnswerPart>
           <ReactMarkdown children={writing} components={Components} />
         </AnswerPart>
@@ -235,6 +202,7 @@ const PrieviewTitle = styled.div`
   font-weight: 700;
   color: #686868;
   margin: 3rem;
+  border-bottom: 0.05rem solid #e0e0e0;
 `;
 
 const QuestionPart = styled.div`

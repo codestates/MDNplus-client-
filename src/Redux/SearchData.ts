@@ -49,7 +49,7 @@ type SearchDataAction = ReturnType<typeof searchData> | ReturnType<typeof search
 type InitStateType = {
   contentData: null | undefined | SearchDataType;
   word: null | string;
-  tag: null | string;
+  tag: string;
   result: null | string;
   tagResult: null | string;
 };
@@ -57,7 +57,7 @@ type InitStateType = {
 const initialState = {
   contentData: null,
   word: null,
-  tag: null,
+  tag: "all",
   result: null,
   tagResult: null,
 };

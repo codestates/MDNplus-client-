@@ -236,7 +236,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                 <AnswerBox>
                   {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle> : <div>비공개</div>}
                   <Body>
-                  <ReactMarkdown children={el.content}></ReactMarkdown>
+                    <ReactMarkdown children={el.content}></ReactMarkdown>
                   </Body>
                   <NameDate>
                     <Date>{el.createdAt.substring(0, 10)}</Date>

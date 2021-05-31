@@ -20,7 +20,7 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
   const { allState } = useAllData();
   const { contentData } = contentState;
   const { currentData } = allState;
-  const { BooleanState, onsetContentPage, onSetWriteMode } = useBooleanData();
+  const { BooleanState, onSetWriteMode } = useBooleanData();
   const history = useHistory();
 
   // 수정 버튼 눌렀을 시, 로그인 상태에 따라 EditPage로 이동 또는 로그인 모달창 띄움
@@ -30,7 +30,6 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
     if (isLogin) {
       history.push("/EditPage");
     } else {
-      onsetContentPage(true);
       localStorage.setItem("contentPage", "true");
       handleLoginModal();
     }

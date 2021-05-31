@@ -30,7 +30,7 @@ function App() {
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [userImg, setUserImg] = useState(userIcon);
   const { BooleanState } = useBooleanData();
-  const { writeMode } = BooleanState;
+  const { writeMode, contentPageMode } = BooleanState;
 
   const handleLoginModal = () => {
     console.log("로그인 모달 다루는 코드 실행됨");
@@ -57,12 +57,23 @@ function App() {
   return (
     <Container>
       <Header>
-        {writeMode ? null : (
+        {/* {writeMode && !contentPageMode ? null : (
           <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
         )}
+        {contentPageMode ? (
+          <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
+        ) : null} */}
+
+        {writeMode ? null : <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>}
       </Header>
 
-      {writeMode ? null : (
+      {/* {writeMode ? null : (
+        <SideArea>
+          <SideBar></SideBar>
+        </SideArea>
+      )} */}
+
+      {writeMode ? null : contentPageMode ? null : (
         <SideArea>
           <SideBar></SideBar>
         </SideArea>

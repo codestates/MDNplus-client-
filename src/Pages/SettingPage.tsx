@@ -23,7 +23,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
 
   //유저 이름 수정 완료 버튼을 눌렀을 시, 서버에 수정된 이름을 업데이트 하기 위한 코드
   const handleNameSave = () => {
-    axios.patch("http://localhost:80/userinfo/nick", { nickName: userInfo.nickName }, { withCredentials: true }).then((res) => console.log(res));
+    axios.patch("http://localhost:8080/userinfo/nick", { nickName: userInfo.nickName }, { withCredentials: true }).then((res) => console.log(res));
     setEditing(false);
   };
 
@@ -34,7 +34,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
 
   //이미지 제거 클릭했을 시, 실행되는 코드
   const handleImgDelete = () => {
-    axios.patch("http://localhost:80/userinfo/img", { img: "" }, { withCredentials: true }).then((res) => {
+    axios.patch("http://localhost:8080/userinfo/img", { img: "" }, { withCredentials: true }).then((res) => {
       setUserInfo({ ...userInfo, img: "" });
       handleChangeMenuIcon("");
     });

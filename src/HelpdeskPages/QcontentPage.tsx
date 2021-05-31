@@ -6,9 +6,9 @@ import styled, { keyframes } from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import ReactMarkdown from "react-markdown";
 import useBooleanData from "../Hooks/useBooleanData";
-
 import useQcontentData from "../Hooks/useQcontentData";
 import axios from "axios";
+import userImg from "../img/userIcon_gray.png";
 
 type DataType = {
   question: {
@@ -85,13 +85,14 @@ type LoginType = {
 
 function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } = useQcontentData();
-  const { onSetWriteMode } = useBooleanData();
+  const { onSetWriteMode, onContentPageMode } = useBooleanData();
   const { currentData } = QcontentState;
   const history = useHistory();
   const dispatch = useDispatch();
   const [isMainPage, setisMainPage] = useState<boolean>(false);
   const location = useLocation<PageNameType>();
 
+  // 질문에 대한 좋아요 처리하는 코드
   const handleQuestionLike = (updateData: DataType) => {
     if (updateData.question.isLike === true) {
       updateData.question.like = updateData.question.like + 1;
@@ -130,12 +131,13 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     // axios.post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
   };
 
+  //답변하기 버튼 눌렀을 때, 실행되는 코드
   const handleAnswerBtn = () => {
+    //비로그인 유저라면 로그인하게 유도하는 코드
     if (!isLogin) {
       handleLoginModal();
       return;
     }
-
     dispatch(answerPageData(currentData?.question));
     history.push({
       pathname: "/AnswerPage",
@@ -145,7 +147,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
 
   useEffect(() => {
     //questionID 설정해주는 코드들
-    onSetWriteMode(false);
+    onContentPageMode(true);
     let questionID: string = "";
     if (location.state === undefined) {
       // console.log("null");
@@ -164,20 +166,6 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
       console.log("데이터 처음으로 랜더링함", res);
       onCurrentQData(res.data);
     });
-    //   onCurrentQData(res.data);
-    // dispatch(onCurrentQData(QContentFakeData));
-
-    // window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
-    // console.log(history)
-    // if(history.location.pathname === '/ContentPage') {
-    //   onSetWriteMode(false)
-    // }
-
-    // console.log(location.state.questionId);
-
-    // console.log("쿼스천 함수 실행됨");
-
-    // });
   }, []);
 
   return (
@@ -185,67 +173,65 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
       {currentData !== null && currentData !== undefined ? (
         <Container>
           <QuestionContainer>
-            {/* <LineArea>질문</LineArea> */}
-            <Question>
-              <LikesPart onClick={() => handleQuestionLike(currentData)}>
-                {/* <span onClick={() => handleQuestionIncreaseLikes(currentData)}></span> */}
-
-                {currentData.question.isLike === true ? <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" /> : <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />}
-                <LikesNum> {currentData.question.like}</LikesNum>
-
-                {/* <Likes onClick={() => handleQuestionLike(currentData)}>좋아요</Likes> */}
-                {/* <span onClick={() => handleQuestionDecreaseLikes(currentData)}></span> */}
-              </LikesPart>
-              <QuestionBox>
-                <Q>Q</Q>
-                <Title> {currentData.question.title}</Title>
-                <NameDate>
-                  <UserName>{currentData.question.userId.nickName}</UserName>
-                  <Date>{currentData.question.createdAt.substring(0, 10)}</Date>
-                </NameDate>
-
-                <Body>
-                  <ReactMarkdown children={currentData.question.body} />
-                </Body>
-                <div>
-                  {currentData.question.tags?.map((el, index: number) => (
-                    <Tags key={index}>{el}</Tags>
-                  ))}
-                </div>
+            <LikeBox_Q>
+              {currentData.question.isLike === true ? (
+                <FontAwesomeIcon onClick={() => handleQuestionLike(currentData)} icon={["far", "heart"]} color="#686868" size="lg" />
+              ) : (
+                <FontAwesomeIcon onClick={() => handleQuestionLike(currentData)} icon={["fas", "heart"]} color="#ef5350" size="lg" />
+              )}
+              <LikeNum_Q> {currentData.question.like}</LikeNum_Q>
+            </LikeBox_Q>
+            <QuestionBox>
+              <QuestionTitleBox>
+                <TitleIcon>질문</TitleIcon>
+                <QuestionTitle> {currentData.question.title}</QuestionTitle>
+              </QuestionTitleBox>
+              <QuestionBody>
+                <ReactMarkdown children={currentData.question.body} />
+              </QuestionBody>
+              <TagBox>
+                {currentData.question.tags?.map((el, index: number) => (
+                  <Tag key={index}>{el}</Tag>
+                ))}
+              </TagBox>
+              <InfoBox_Q>
+                {currentData.question.userId.image ? <UserImg_Q src={currentData.question.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
+                <UserName_Q>{currentData.question.userId.nickName}</UserName_Q>
+                <Date_Q>{`${currentData.question.createdAt.substring(0, 4)}.${currentData.question.createdAt.substring(5, 7)}.${currentData.question.createdAt.substring(8, 10)}`}</Date_Q>
                 {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
-              </QuestionBox>
-            </Question>
-            <LineGap>
-              <LineArea> {currentData.question.commentCount} 개의 답변</LineArea>
-            </LineGap>
+              </InfoBox_Q>
+            </QuestionBox>
           </QuestionContainer>
           <AnswerContainer>
+            {/* <AnswersNumBox> */}
+            {/* <AnswersNum color="#3949AB">답변 </AnswersNum>
+            <AnswersNum>{currentData.question.commentCount}개</AnswersNum> */}
+            {/* </AnswersNumBox> */}
             {currentData.comments?.map((el, index: number) => (
-              <EachAnswer key={index}>
-                <LikesPart onClick={() => handleAnswerLike(el, index)}>
-                  {/* <span onClick={() => handleAnswerIncreaseLikes(el)}> </span> */}
+              <AnswerBox key={index}>
+                <LikeBox_A>
                   {el.isLike === true ? (
                     <HeartIcon>
-                      <FontAwesomeIcon icon={["far", "heart"]} color="#686868" size="lg" />{" "}
+                      <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["far", "heart"]} color="#686868" size="lg" />{" "}
                     </HeartIcon>
                   ) : (
                     <HeartIcon>
                       <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
                     </HeartIcon>
                   )}
-                  <LikesNum> {el.like}</LikesNum>
-                  {/* <span onClick={() => handleAnswerDecreaseLikes(el)}></span> */}
-                </LikesPart>
-                <AnswerBox>
-                  {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님의 답변</AnswerTitle> : <div>비공개</div>}
-                  <Body>
+                  <LikeNum_A> {el.like}</LikeNum_A>
+                </LikeBox_A>
+                <Answer>
+                  <AnswerTitleBox>
+                    {el.userId.image ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
+                    <Date_A>{`${el.createdAt.substring(0, 4)}.${el.createdAt.substring(5, 7)}.${el.createdAt.substring(8, 10)}`}</Date_A>
+                    {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : <div>비공개</div>}
+                  </AnswerTitleBox>
+                  <AnswerBody>
                     <ReactMarkdown children={el.content}></ReactMarkdown>
-                  </Body>
-                  <NameDate>
-                    <Date>{el.createdAt.substring(0, 10)}</Date>
-                  </NameDate>
-                </AnswerBox>
-              </EachAnswer>
+                  </AnswerBody>
+                </Answer>
+              </AnswerBox>
             ))}
           </AnswerContainer>
         </Container>
@@ -263,144 +249,170 @@ const HeartIcon = styled.span``;
 const Container = styled.div`
   height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, auto);
 `;
 
 const QuestionContainer = styled.div`
-  grid-area: 1/2 /2/6;
-`;
-
-const Question = styled.div`
-  grid-area: 1/2/3/6;
   display: flex;
-  padding-bottom: 2rem;
+  justify-content: center;
   align-items: center;
-  border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.03) 10px 10px 20px;
+  // padding-left: 2rem;
 `;
 
-const Q = styled.span`
-  font-size: 3rem;
-  color: #005ce7;
+const LikeBox_Q = styled.div`
+  display: flex;
+  justity-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 2rem;
 `;
+
+const LikeNum_Q = styled.span``;
 
 const QuestionBox = styled.div`
-  width: 80%;
+  // border: 1px solid black;
+  width: 50%;
+  padding: 3rem;
 `;
 
-const AnswerContainer = styled.div`
-  grid-area: 3/2/5/6;
-  margin-top: 2rem;
+const QuestionTitleBox = styled.div`
+  padding-bottom: 1rem;
 `;
 
-const EachAnswer = styled.div`
+const TitleIcon = styled.span`
+  border: none;
+  padding: 0.7rem;
+  background: #90a4ae;
+  color: white;
+  font-weight: bold;
+  margin-right: 0.5rem;
+`;
+
+const QuestionTitle = styled.span`
+  font-size: 1.2rem;
+`;
+
+const QuestionBody = styled.div``;
+
+const TagBox = styled.div`
+  height: 3rem;
+`;
+
+const Tag = styled.span`
+  color: #78909c;
+  margin-right: 0.5rem;
+  cursor: pointer;
+`;
+
+const InfoBox_Q = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const UserImg_Q = styled.img`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.4rem;
+  border: none;
+`;
+
+const UserName_Q = styled.span`
+  margin-right: 0.4rem;
+  color: black;
+  font-size: 0.9rem;
+`;
+
+const Date_Q = styled.span`
+  color: #757575;
+  font-size: 0.8rem;
+  padding-bottom: 0.1rem;
+`;
+const AnswerBtn = styled.button`
+  margin-left: auto;
+  padding: 0.7rem 1rem 0.7rem 1rem;
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.03) 10px 10px 20px;
+  border: none;
+`;
+
+//-----------------------------------답변 섹션-------------------------------------//
+
+// const AnswersNumBox = styled.div`
+// margin-left: 3rem;
+// border: 1px solid black;
+// width: 80%;
+// `;
+
+// const AnswersNum = styled.span`
+//   font-size: 1.5rem;
+//   font-weight: bold;
+
+//   color: ${props => props.color || 'black'}
+// `;
+
+const AnswerContainer = styled.div`
+  // padding: 3rem 5rem 5rem 5rem;
+  background: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 5rem;
 `;
 
 const AnswerBox = styled.div`
-  margin: 1rem 0 1rem 0;
-  width: 80%;
+  background: white;
+  padding: 5rem 1rem 5rem 1rem;
+  width: 60%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
 `;
 
-const LineGap = styled.div`
-  margin: 1rem 0 1rem 2.6rem;
-`;
-
-const LineArea = styled.span`
-  font-size: 1.3rem;
-  color: #1658d8;
-  font-weight: bold;
-
-  border-bottom: 0.17rem solid #e0e0e0;
-`;
-
-const Title = styled.span`
-  font-weight: bold;
-  font-size: 2rem;
-  padding: 1rem;
-`;
-
-const AnswerTitle = styled.div`
-  padding-top: 2rem;
-  font-weight: bold;
-  font-size: 1rem;
-  color: #686868;
-  margin: 0 0 0 3rem;
-`;
-
-const Date = styled.span`
-  padding: 1rem;
-`;
-const UserName = styled.span`
-  padding: 1rem;
-`;
-
-const NameDate = styled.div`
-  margin: 2rem 0 2rem 0;
-  color: #686868;
-  text-align: right;
-`;
-const Body = styled.div`
-  font-size: 1rem;
-  margin: 3rem 0 5rem 3rem;
-  line-height: 1.8rem;
-`;
-const LikesPart = styled.span`
+const LikeBox_A = styled.div`
+  // border: 1px solid black;
   display: flex;
   flex-direction: column;
-  justify-contents: center;
   align-items: center;
-  margin: 0 1.5rem 0 0;
-  cursor: pointer;
+  padding-right: 2.5rem;
+  margin: 3rem 0.5rem 0rem -2rem;
 `;
 
-const LikesNum = styled.span`
-  text-align: center;
-  color: #686868;
-  font-weight: 500;
-  margin-top 0.4rem;
+const LikeNum_A = styled.div``;
 
+const Answer = styled.div`
+  margin-top: -3rem;
+  position: relative;
+  width: 75%;
 `;
 
-const Likes = styled.span`
-  text-align: center;
-  color: #686868;
-  font-weight: 500;
-  padding: 0.5rem;
-  cursor: pointer;
-  &:hover {
-    color: #1658d8;
-    font-weight: bold;
-  }
+const AnswerTitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
 `;
 
-const Tags = styled.span`
-  font-size: 0.8rem;
-  border-radius: 1.5rem;
-  border: none;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  color: #1658d8;
-  background-color: #f5f5f5;
+const AnswerUserImg = styled.img`
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+  object-fit: cover;
 `;
 
-const AnswerBtn = styled.button`
-  border: none;
-  font-size: 0.8rem;
-  border-radius: 0.8rem;
-  padding: 0.5rem 1.5rem;
-  margin: 0.5rem;
-  color: white;
-  background-color: #ef5350;
-  float: right;
-  cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 20px;
-  }
+const AnswerTitle = styled.span`
+  font-weight: bold;
+`;
+
+const AnswerBody = styled.div``;
+
+const Date_A = styled.div`
+  color: #757575;
+  position: absolute;
+  bottom: -3rem;
+  right: 0rem;
 `;
 
 // const handleQuestionIncreaseLikes = (updateData: DataType) => {
@@ -453,3 +465,18 @@ const AnswerBtn = styled.button`
 //   setIsAnswerLike(() => !isAnswerLike);
 //   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
 // };
+
+//   onCurrentQData(res.data);
+// dispatch(onCurrentQData(QContentFakeData));
+
+// window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
+// console.log(history)
+// if(history.location.pathname === '/ContentPage') {
+//   onSetWriteMode(false)
+// }
+
+// console.log(location.state.questionId);
+
+// console.log("쿼스천 함수 실행됨");
+
+// });

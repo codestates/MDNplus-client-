@@ -115,7 +115,7 @@ function AnswerPage() {
           </QuestionBody>
         </QuestionPart>
         <WritingArea>
-          <WritingTitle> {PickUserName}님의 답변</WritingTitle>
+          <WritingTitle>{`${PickUserName} 님의 답변`}</WritingTitle>
           <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
         </WritingArea>
 
@@ -126,9 +126,7 @@ function AnswerPage() {
 
       <RightContainer ref={previewRef}>
         <PrieviewTitle>{PickUserName} 님의 답변</PrieviewTitle>
-        <AnswerPart>
-          <ReactMarkdown children={writing} components={Components} />
-        </AnswerPart>
+        <ReactMarkdown children={writing} components={Components} />
       </RightContainer>
     </Container>
   );
@@ -143,16 +141,13 @@ export const Components = {
 export default AnswerPage;
 
 const Container = styled.div`
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   height: 100%;
-  display: flex;
 `;
 
 const LeftContainer = styled.div`
-  margin: 3rem;
-  width:50%;
-  height:70%;
-  padding 13px;
+  padding: 3rem;
 `;
 
 const WritingTitle = styled.div`
@@ -162,22 +157,15 @@ const WritingTitle = styled.div`
   color: #686868;
 `;
 
-const MarDownBtns = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #f5f5f5;
-  width: auto;
-`;
-
 const WritingArea = styled.div`
   width: 100%;
   height: 100%;
   resize: none;
   border: none;
   outline: none;
-  font-size: 17px;
+  font-size: 1.3rem;
 `;
+
 const Body = styled.textarea`
   width: 100%;
   height: 100%;
@@ -188,24 +176,9 @@ const Body = styled.textarea`
   margin: 2em 0 0 0;
 `;
 
-const MarkDownBtn = styled.span`
-  font-size: 1.3rem;
-
-  color: #9e9e9e;
-  border: none;
-  background-color: #f5f5f5;
-  cursor: pointer;
-  margin: 1rem 0 1rem 0;
-  &:hover {
-    color: #616161;
-  }
-`;
 const RightContainer = styled.div`
-background-color: #F5F5F5;
-width: 50%;
-height:100%;
-padding 13px;
-
+  background-color: #f5f5f5;
+  padding: 1.3rem 3rem 3rem 3rem;
 `;
 
 const PrieviewTitle = styled.div`
@@ -222,20 +195,21 @@ const QuestionPart = styled.div`
   border-bottom: 0.05rem solid #e0e0e0;
 `;
 
-const AnswerPart = styled.div`
-  font-size: 1rem;
-  width: 50%;
-  height: 100%;
-  border: none;
-  line-height: 2rem;
-  word-spacing: 0.5rem;
-  margin: 3rem;
-`;
+// const AnswerPart = styled.div`
+//   font-size: 1rem;
+//   width: 100%;
+//   height: 100%;
+//   border: none;
+//   line-height: 2rem;
+//   word-spacing: 0.5rem;
+//   margin: 3rem;
+// `;
 
 const AnswerBox = styled.div`
   width: 100%;
   height: 100%;
 `;
+
 const Q = styled.span`
   font-size: 3rem;
   margin: 0.5rem;

@@ -12,7 +12,7 @@ import NameSettingPage from "./Pages/NameSettingPage";
 import MyPage from "./HelpdeskPages/MyPage";
 import FAQ from "./Pages/FAQ";
 import FooterComponent from "./Components/FooterComponent";
-import LandingPage from "./Pages/LandingPage"
+import LandingPage from "./Pages/LandingPage";
 // Wiki
 import ContentPage from "./Pages/ContentPage";
 import SettingPage from "./Pages/SettingPage";
@@ -28,9 +28,10 @@ import TestEditPage from "./Pages/TestEditPage";
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
+  const [helpModal, setHelpModal] = useState(false);
   const [userImg, setUserImg] = useState(userIcon);
   const { BooleanState } = useBooleanData();
-  const { writeMode } = BooleanState;
+  const { writeMode, contentPageMode } = BooleanState;
 
   const handleLoginModal = () => {
     console.log("로그인 모달 다루는 코드 실행됨");
@@ -54,6 +55,15 @@ function App() {
     }
   };
 
+  //유저가 오른쪽 하단 도움말을 눌렀을 때 나오는 모달을 관리하는 함수
+  const handleHelpModal = () => {
+    if (helpModal) {
+      setHelpModal(false);
+    } else {
+      setHelpModal(true);
+    }
+  };
+
   return (
     <Container>
       <Header>
@@ -62,7 +72,7 @@ function App() {
         )}
       </Header>
 
-      {writeMode ? null : (
+      {writeMode ? null : contentPageMode ? null : (
         <SideArea>
           <SideBar></SideBar>
         </SideArea>
@@ -72,19 +82,18 @@ function App() {
         <Switch>
           <Route exact path="/" render={() => <MainPage />} />
           <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
-          <Route path="/EditPage" render={() => <EditPage />} />
+          <Route path="/EditPage" render={() => <EditPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
           <Route path="/SettingPage" render={() => <SettingPage handleLogin={handleLogin} handleChangeMenuIcon={handleChangeMenuIcon} />} />
           <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-          <Route path="/AnswerPage" render={() => <AnswerPage />} />
-          <Route path="/HquestionPage" render={() => <HquestionPage />} />
+          <Route path="/AnswerPage" render={() => <AnswerPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
+          <Route path="/HquestionPage" render={() => <HquestionPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
           <Route path="/QcontentPage" render={() => <QcontentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/TestEditPage" render={() => <TestEditPage />} />
           <Route path="/LandingPage" render={() => <LandingPage />} />
-
         </Switch>
       </Body>
       {/* <Footer>푸터</Footer> */}
@@ -113,7 +122,6 @@ const Container = styled.div`
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
-  width: 100vw;
 
   grid-template-areas:
     "header header"
@@ -132,18 +140,15 @@ const Header = styled.div`
 `;
 const SideArea = styled.div`
   grid-area: side;
-  width: 10rem;
+  width: 13rem;
   background: #f4f4f4;
 `;
 
 const Body = styled.div`
   grid-area: main;
-  margin: 3rem 0 5rem 2rem;
+  margin: 0;
+  width: 100%;
 `;
 const Footer = styled.div`
   grid-area: footer;
-<<<<<<< HEAD
-  background: #283593;
-=======
->>>>>>> 23fac38fc79244471aaddec44ec6beb54704c981
 `;

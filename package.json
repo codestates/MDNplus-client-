@@ -22,6 +22,8 @@
     "dotenv": "^8.2.0",
     "katex": "^0.13.11",
     "react": "^17.0.2",
+    "react-custom-scrollbar": "^1.0.0",
+    "react-custom-scrollbars-2": "^4.4.0",
     "react-dom": "^17.0.2",
     "react-kakao-login": "^2.1.0",
     "react-markdown": "^6.0.2",

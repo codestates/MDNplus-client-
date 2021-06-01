@@ -9,11 +9,6 @@ import ideaIcon from "../img/idea.png";
 import thinkingIcon from "../img/thinking.png";
 import axios from "axios";
 
-// type DataOption = {
-//   arrayData: Method[];
-//   objectData: Method[];
-// };
-
 type Method = {
   _id: string;
   title: string;
@@ -27,13 +22,13 @@ type Method = {
 function MainPage() {
   const [firstOption, setFirstOption] = useState("javascript");
   const { allState, onFilter, onChangeFilter } = useAllData();
-  const { arrayData, objectData, currentData } = allState;
+  const { arrayData, objectData, mathData, stringData, promiseData, currentData } = allState;
   const { onClickMethod } = useContentData();
   const history = useHistory();
 
   // 메인페이지 array, object 선택바가 변경이 되었을 때, 실행되는 코드
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // console.log(e.target.value);
+    console.log(e.target.value);
     if (e.target.value === "object") {
       if (objectData) {
         onChangeFilter(objectData);
@@ -43,6 +38,24 @@ function MainPage() {
     if (e.target.value === "array") {
       if (arrayData) {
         onChangeFilter(arrayData);
+        return;
+      }
+    }
+    if (e.target.value === "math") {
+      if (mathData) {
+        onChangeFilter(mathData)
+        return;
+      }
+    }
+    if (e.target.value === "string") {
+      if (stringData) {
+        onChangeFilter(stringData);
+        return;
+      }
+    }
+    if (e.target.value === "promise") {
+      if (promiseData) {
+        onChangeFilter(promiseData);
         return;
       }
     }
@@ -59,15 +72,13 @@ function MainPage() {
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
     // console.log('데이터 가져오는 요청 보내짐')
-    axios.get("http://localhost:80/maincontent").then((res) => {
-      console.log(res)
-      onFilter(res.data)
-      
-      });
+    axios.get("http://localhost:8080/maincontent").then((res) => {
+      console.log(res);
+      onFilter(res.data);
+    });
   }, []);
 
-  console.log(arrayData)
-
+  console.log(mathData)
 
   return (
     <Container>
@@ -92,8 +103,8 @@ function MainPage() {
             <option value="array">Array</option>
             <option value="object">Object</option>
             <option value="math">Math</option>
-            <option value="math">String</option>
-            <option value="math">Promise</option>
+            <option value="string">String</option>
+            <option value="promise">Promise</option>
           </SecondFilter>
         ) : (
           <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
@@ -106,7 +117,7 @@ function MainPage() {
         {currentData === null ? (
           <div>로딩중입니다</div>
         ) : (
-          currentData.map((el:any) => (
+          currentData.map((el: any) => (
             <MethodBox key={el._id}>
               <div>
                 <MethodContents
@@ -115,7 +126,7 @@ function MainPage() {
                   }}
                 >
                   <MethodTitle>{el.title}</MethodTitle>
-                  {el.pureBody ? <MethodBody>{el.pureBody.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
+                  {el.body ? <MethodBody>{el.body.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
                 </MethodContents>
               </div>
               <MethodCount>수정된 횟수 {el.count}</MethodCount>

@@ -51,12 +51,10 @@ function MyPage() {
 
   useEffect(() => {
     // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
-    axios.get("http://localhost:80/helpdesk/me", { withCredentials: true }).then((res) => {
+    axios.get("http://localhost:8080/helpdesk/me", { withCredentials: true }).then((res) => {
       console.log(res);
       dispatch(allDataAction(res.data));
     });
-
-    // dispatch(allDataAction(myPageFakeData));
   }, []);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
@@ -76,25 +74,10 @@ function MyPage() {
   };
 
   const handleMyAnswers = (el: AnswerType) => {
-    //해당 답변을 클릭했을시 질문에 해당하는 ID를 요청보내주면됨
-    // axios.get('http://localhost:80/') //내가 답변한 질문을 클릭했을 시, 해당하는 질문의 데이터들을 받아오는 요청 (해당 질문 ID 필요)
-    // el.questionId;
-    // const findData = questionData?.allData.filter((questionTitle) => questionTitle.title == answerTitle);
-    // const findData = questionData?.allData.filter((el) => (el.answers.filter((questionTitle) => questionTitle.qTitle === answerTitle)));
-    // const findData = mdnAllData?.filter((all) => all.title === el.qTitle);
-    // console.log(findData);
-    // if (findData !== undefined && findData !== null) {
-    //   dispatch(currentQData(findData[0]));
-    //   history.push({
-    //     pathname: "/Qcontentpage",
-    //     state: { pageName: "this is Answer State" },
-    //   });
-    // }
-    // dispatch(currentQData(findData));
-    // history.push({
-    //   pathname: "/Qcontentpage",
-    //   state: { pageName: "this is answer state" },
-    // });
+    history.push({
+      pathname: "/QcontentPage",
+      state: { pageName: "/MyPage", questionId: el.questionId._id },
+    });
   };
 
   const handleMDNClicked = () => {
@@ -130,13 +113,13 @@ function MyPage() {
       <RightContainer>
         {isQuestion ? (
           <QuestionContainer>
-            {mdnAllData?.questions.map((el:any) => (
+            {mdnAllData?.questions.map((el) => (
               <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
                 <Q>Q</Q>
                 <QuestionTitle>{el.title}</QuestionTitle>
                 <QuestionBody>{el.pureBody}</QuestionBody>
                 <div>
-                  {el.tags.map((el:any, index: number) => (
+                  {el.tags.map((el, index: number) => (
                     <QuestionTag key={index.toString()}>{el}</QuestionTag>
                   ))}
                 </div>
@@ -145,28 +128,16 @@ function MyPage() {
                   <QuestionAnswersNum>답변수:&nbsp; {el.commentCount}</QuestionAnswersNum>
                   <QuestionDate>{el.createdAt.substring(0, 10)}</QuestionDate>
                 </QuestionLastLine>
-                {/* <div>나의 질문에 대한 답변</div>
-                  <div>
-                    {el.answers.map((el) => (
-                      <div>
-                        <div>{el.userName}</div>
-                        <div>{el.qTitle}</div>
-                        <div>{el.body}</div>
-                        <div>{el.likes}</div>
-                        <div>{el.createdAt}</div>
-                      </div>
-                    ))}
-                  </div> */}
               </QuestionBox>
             ))}
           </QuestionContainer>
         ) : (
           <QuestionContainer>
-            {mdnAllData?.comments.map((el:any) => (
+            {mdnAllData?.comments.map((el) => (
               <QuestionBox key={el._id} onClick={() => handleMyAnswers(el)}>
                 <Q>Q</Q>
-                <QuestionTitle>{el.title}</QuestionTitle>
-                <QuestionBody>{el.pureContent}</QuestionBody>
+                <QuestionTitle>{el.questionId.title}</QuestionTitle>
+                <QuestionBody>{el.content}</QuestionBody>
                 <QuestionLastLine>
                   <QuestionLikes> 좋아요: &nbsp;{el.like}</QuestionLikes>
                   <QuestionDate>{el.createdAt.substring(0, 10)}</QuestionDate>

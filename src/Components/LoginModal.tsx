@@ -84,6 +84,7 @@ const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1;
 
   animation-duration: 0.3s;
   animation-timing-function: ease-out;
@@ -103,6 +104,7 @@ const ModalBox = styled.div`
   background: white;
   transition: 0.4s ease-in;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 99;
 
   animation-duration: 0.25s;
   animation-timing-function: ease-out;

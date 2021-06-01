@@ -11,6 +11,7 @@ import useAllData from "../Hooks/useAllData";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
+import HelpModal from "../Components/HelpModal";
 import { SubmitBtn, ExitBtn, BtnBox, GuideLine, HelpBtn } from "../styled-components/Post";
 
 // axios.defaults.withCredentials = true;
@@ -23,7 +24,12 @@ type NewQuestion = {
   tags: string[];
 };
 
-const QuestionPage = () => {
+type PropsOption = {
+  helpModal: Boolean;
+  handleHelpModal: () => void;
+}
+
+const HquestionPage = ({helpModal, handleHelpModal}:PropsOption) => {
   const [checkModal, setCheckModal] = useState(false);
   const [tagValue, setTagValue] = useState("");
   const [guideLine, setGuideLine] = useState(true);
@@ -112,6 +118,8 @@ const QuestionPage = () => {
   console.log(pureBody);
   return (
     <>
+      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
+
       {checkModal ? <QconfirmModal handleSubmitQ={handleSubmitQ} handleConfirmModal={handleConfirmModal} /> : null}
       <Container>
         <LeftContainer>
@@ -165,6 +173,7 @@ const QuestionPage = () => {
         <RightContainer ref={previewRef}>
           <h1>{title}</h1>
           <ReactMarkdown components={Components} children={body} className="markdown" />
+          <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
         </RightContainer>
       </Container>
     </>
@@ -177,7 +186,7 @@ export const Components = {
   },
 };
 
-export default QuestionPage;
+export default HquestionPage;
 
 const Container = styled.div`
   display: grid;

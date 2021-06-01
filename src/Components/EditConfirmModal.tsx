@@ -28,7 +28,7 @@ function EditConfirmModal({ handleConfirmModal }: EditProps) {
       pureBody = pureBody + pureBodyArr[i]
     }
     console.log(pureBody)
-    axios.patch("http://localhost:80/maincontent", { mainContentId: contentData._id, body: contentData.body, pureBody: pureBody}, { withCredentials: true }).then((res) => {console.log(res)});
+    axios.patch("http://localhost:8080/maincontent", { mainContentId: contentData._id, body: contentData.body, pureBody: pureBody}, { withCredentials: true }).then((res) => {console.log(res)});
     handleConfirmModal();
     history.push("/ContentPage");
     onSetWriteMode(false);

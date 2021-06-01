@@ -1,30 +1,30 @@
 import { BaseOptions } from "node:vm";
 
 const WRITEMODE = "ContentData/SETWRITEMODE" as const;
-const CONTENTPAGE = "ContentData/SETCONTENTPAGE" as const;
+const CONTENTPAGEMODE = "ContentData/CONTENTPAGEMODE" as const;
 const FOOTERMODE = "ContentData/FOOTERMODE" as const;
 
 export const setWriteMode = (boolean: Boolean) => ({ type: WRITEMODE, payload: boolean });
-export const setContentPage = (boolean: Boolean) => ({ type: CONTENTPAGE, payload: boolean });
+export const setContentPageMode = (boolean: Boolean) => ({ type: CONTENTPAGEMODE, payload: boolean });
 
-type BooleanData = ReturnType<typeof setWriteMode> | ReturnType<typeof setContentPage>;
+type BooleanData = ReturnType<typeof setWriteMode> | ReturnType<typeof setContentPageMode>;
 
 type InitState = {
   writeMode: Boolean;
-  contentPage: Boolean;
+  contentPageMode: Boolean;
 };
 
 const initialState = {
   writeMode: false,
-  contentPage: false, // 로그인 누르기 전 페이지가 contentPage인지 아닌지의 여부
+  contentPageMode: false,
 };
 
 function BooleanDataReducer(state: InitState = initialState, action: BooleanData) {
   switch (action.type) {
     case WRITEMODE:
       return { ...state, writeMode: action.payload };
-    case CONTENTPAGE:
-      return { ...state, contentPage: action.payload };
+    case CONTENTPAGEMODE:
+      return { ...state, contentPageMode: action.payload };
 
     default:
       return state;

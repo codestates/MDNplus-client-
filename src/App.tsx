@@ -28,9 +28,10 @@ import TestEditPage from "./Pages/TestEditPage";
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
+  const [helpModal, setHelpModal] = useState(false);
   const [userImg, setUserImg] = useState(userIcon);
   const { BooleanState } = useBooleanData();
-  const { writeMode } = BooleanState;
+  const { writeMode, contentPageMode } = BooleanState;
 
   const handleLoginModal = () => {
     console.log("로그인 모달 다루는 코드 실행됨");
@@ -54,6 +55,15 @@ function App() {
     }
   };
 
+  //유저가 오른쪽 하단 도움말을 눌렀을 때 나오는 모달을 관리하는 함수
+  const handleHelpModal = () => {
+    if (helpModal) {
+      setHelpModal(false);
+    } else {
+      setHelpModal(true);
+    }
+  };
+
   return (
     <Container>
       <Header>
@@ -70,7 +80,7 @@ function App() {
         )}
       </Header>
 
-      {writeMode ? null : (
+      {writeMode ? null : contentPageMode ? null : (
         <SideArea>
           <SideBar></SideBar>
         </SideArea>
@@ -80,14 +90,14 @@ function App() {
         <Switch>
           <Route exact path="/" render={() => <MainPage />} />
           <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
-          <Route path="/EditPage" render={() => <EditPage />} />
+          <Route path="/EditPage" render={() => <EditPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
           <Route path="/SettingPage" render={() => <SettingPage handleLogin={handleLogin} handleChangeMenuIcon={handleChangeMenuIcon} />} />
           <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-          <Route path="/AnswerPage" render={() => <AnswerPage />} />
-          <Route path="/HquestionPage" render={() => <HquestionPage />} />
+          <Route path="/AnswerPage" render={() => <AnswerPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
+          <Route path="/HquestionPage" render={() => <HquestionPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
           <Route path="/QcontentPage" render={() => <QcontentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/TestEditPage" render={() => <TestEditPage />} />

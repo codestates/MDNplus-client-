@@ -5,7 +5,7 @@ import { fadeIn, slideUp } from "../styled-components/Animation";
 import userIcon from "../img/userIcon_blue3.png";
 import kakao from "../img/kakao2.png";
 import github from "../img/github.png";
-import useBooleanData from '../Hooks/useBooleanData';
+import useBooleanData from "../Hooks/useBooleanData";
 
 type Props = {
   isOpen: boolean;
@@ -20,7 +20,7 @@ function LoginModal({ isOpen, onClose, handleLogin }: Props) {
   const REST_API_KEY = "144bf580b6a5f37255716facf6728b0d";
   const REDIRECT_URI = "http://localhost:3000/kakaoLogin";
   const { Kakao }: any = window;
-  
+
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === overLay.current) {
       onClose();
@@ -34,7 +34,7 @@ function LoginModal({ isOpen, onClose, handleLogin }: Props) {
   const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize/?client_id=6247a72ec8e51735ea34`;
 
   //카카오톡 URL 마크 해줘야함
-  const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=&redirect_uri=`;
+  const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=&redirect_uri=144bf580b6a5f37255716facf6728b0d`;
 
   const socialLoginHandler = () => {
     // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
@@ -51,6 +51,8 @@ function LoginModal({ isOpen, onClose, handleLogin }: Props) {
     });
   };
 
+  console.log("로그인 모달 뜸");
+
   return isOpen ? (
     <ModalContainer onClick={handleOverLay} ref={overLay}>
       <ModalBox>
@@ -60,10 +62,10 @@ function LoginModal({ isOpen, onClose, handleLogin }: Props) {
         <OauthContainer>
           <Title>MDN +</Title>
           <SocialBtnBox>
-          <KaKaoLogo src={kakao}></KaKaoLogo>
-          <KakaoBtn onClick={kakaoLoginHandler}>카카오 로그인</KakaoBtn>
-          <GithubLogo src={github}></GithubLogo>
-          <GithubBtn onClick={socialLoginHandler}>깃허브 로그인</GithubBtn>
+            <KaKaoLogo src={kakao}></KaKaoLogo>
+            <KakaoBtn onClick={kakaoLoginHandler}>카카오 로그인</KakaoBtn>
+            <GithubLogo src={github}></GithubLogo>
+            <GithubBtn onClick={socialLoginHandler}>깃허브 로그인</GithubBtn>
           </SocialBtnBox>
         </OauthContainer>
       </ModalBox>
@@ -138,7 +140,7 @@ const Title = styled.div`
 
 const SocialBtnBox = styled.div`
   margin-bottom: -2rem;
-`
+`;
 
 const KakaoBtn = styled.div`
   position: relative;
@@ -149,13 +151,12 @@ const KakaoBtn = styled.div`
   text-align: center;
   margin-bottom: 1rem;
   font-weight: bold;
-  background: #FCE300;
-  display:flex;
+  background: #fce300;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
   padding: 1.3rem 0rem 1.3rem 2rem;
-
 
   &:hover {
   }
@@ -167,19 +168,19 @@ const KaKaoLogo = styled.img`
   left: 8rem;
   width: 2rem;
   z-index: 1;
-  background: #ffeb3b
-`
+  background: #ffeb3b;
+`;
 
 const GithubBtn = styled.div`
   width: 17rem;
   height: 2.5rem;
   border-radius: 0.3rem;
   cursor: pointer;
-  border: 1px solid #BDBDBD;
+  border: 1px solid #bdbdbd;
   text-align: center;
   margin-bottom: 1rem;
   font-weight: bold;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
@@ -196,7 +197,7 @@ const GithubLogo = styled.img`
   left: 8rem;
   width: 2rem;
   z-index: 1;
-`
+`;
 // import axios from 'axios'
 // import React, { useState } from 'react'
 // // require('dotenv').config();

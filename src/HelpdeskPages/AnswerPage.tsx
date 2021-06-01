@@ -8,7 +8,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import AnswerModal from "../Components/AnswerModal";
 import useBooleanData from "../Hooks/useBooleanData";
-import { ExitBtn, SubmitBtn, HelpBtn } from "../styled-components/Post";
+import { ExitBtn, SubmitBtn, HelpBtn, BtnBox } from "../styled-components/Post";
 import userImg from "../img/userIcon_gray.png";
 import axios from "axios";
 import HelpModal from "../Components/HelpModal";
@@ -71,49 +71,53 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
     <div>비어있는 질문</div>
   ) : (
     <Container>
-      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
+      <PostContainer>
+        {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
 
-      <LeftContainer>
-        <QuestionBox>
-          <QuestionTitleBox>
-            <TitleIcon>질문</TitleIcon>
-            <QuestionTitle> {displayQuestion.title}</QuestionTitle>
-          </QuestionTitleBox>
-          <QuestionBody>
-            <ReactMarkdown children={displayQuestion.body} />
-          </QuestionBody>
-          <InfoBox_Q>
-            {displayQuestion.userId.image}
-            {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
-            <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
-            <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
-          </InfoBox_Q>
-        </QuestionBox>
-        <WritingArea>
-          <WritingTitle>나의 답변</WritingTitle>
-          {guideLine ? (
-            <GuideMessage
-              onClick={() => {
-                setGuideLine(false);
-              }}
-              value={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+        <LeftContainer>
+          <QuestionBox>
+            <QuestionTitleBox>
+              <TitleIcon>질문</TitleIcon>
+              <QuestionTitle> {displayQuestion.title}</QuestionTitle>
+            </QuestionTitleBox>
+            <QuestionBody>
+              <ReactMarkdown children={displayQuestion.body} />
+            </QuestionBody>
+            <InfoBox_Q>
+              {displayQuestion.userId.image}
+              {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
+              <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
+              <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
+            </InfoBox_Q>
+          </QuestionBox>
+          <WritingArea>
+            <WritingTitle>나의 답변</WritingTitle>
+            {guideLine ? (
+              <GuideMessage
+                onClick={() => {
+                  setGuideLine(false);
+                }}
+                value={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
               `}
-            ></GuideMessage>
-          ) : (
-            <Body autoFocus id="text" value={writing} placeholder="" onChange={handleChange} onKeyPress={handleEnter}></Body>
-          )}
-        </WritingArea>
+              ></GuideMessage>
+            ) : (
+              <Body autoFocus id="text" value={writing} placeholder="" onChange={handleChange} onKeyPress={handleEnter}></Body>
+            )}
+          </WritingArea>
 
-        <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
-        <ExitBtn onClick={() => handleBtns("나가기")}> 나가기 </ExitBtn>
-        {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
-      </LeftContainer>
+          {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
+        </LeftContainer>
 
-      <RightContainer ref={previewRef}>
-        <PreviewTitle>나의 답변</PreviewTitle>
-        <ReactMarkdown children={writing} components={Components} />
-        <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
-      </RightContainer>
+        <RightContainer ref={previewRef}>
+          <PreviewTitle>나의 답변</PreviewTitle>
+          <ReactMarkdown children={writing} components={Components} />
+        </RightContainer>
+      </PostContainer>
+          <BtnBox>
+            <ExitBtn onClick={() => handleBtns("나가기")}> 나가기 </ExitBtn>
+            <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
+            <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
+          </BtnBox>
     </Container>
   );
 }
@@ -127,8 +131,17 @@ export const Components = {
 export default AnswerPage;
 
 const Container = styled.div`
+  width: 100vw;
+  height: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const PostContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
   height: 100%;
 `;
 

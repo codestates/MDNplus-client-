@@ -57,32 +57,34 @@ function EditPage({helpModal, handleHelpModal}:PropsOption) {
   }, []);
 
   return (
-    <>
+    <Container>
       {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
       {checkModal ? <EditConfirmModal handleConfirmModal={handleConfirmModal} /> : null}
       {!contentData ? (
         <div>로딩 중입니다</div>
       ) : (
-        <Container>
+        <>
+        <PostContainer>
           <LeftContainer>
             <TitleBox>
               <Title>{contentData.title}</Title>
               <GuideLine>* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.</GuideLine>
             </TitleBox>
             {contentData.body ? <Body defaultValue={contentData.body} onChange={handleChange} autoFocus></Body> : <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>}
-            <BtnBox>
-              <ExitBtn onClick={handleExit}>나가기</ExitBtn>
-              <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
-            </BtnBox>
           </LeftContainer>
           <RightContainer ref={previewRef}>
             <Title>{contentData.title}</Title>
             <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[gfm, { singleTilde: false }]]} components={Components} children={contentData.body} className="markdown" />
-            <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
           </RightContainer>
-        </Container>
+        </PostContainer>
+            <BtnBox>
+              <ExitBtn onClick={handleExit}>나가기</ExitBtn>
+              <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
+            <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
+            </BtnBox>
+            </>
       )}
-    </>
+    </Container>
   );
 }
 
@@ -95,10 +97,18 @@ export const Components = {
 export default EditPage;
 
 const Container = styled.div`
+  width: 100%;
+  height: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const PostContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
-  height: 100vw;
+  height: 100%;
 `;
 
 const LeftContainer = styled.div`
@@ -127,7 +137,6 @@ const Body = styled.textarea`
 `;
 
 const RightContainer = styled.div`
-  overflow: scroll;
   background: #f4f4f4;
   padding: 0px 30px 30px 30px;
   line-height: 2rem;

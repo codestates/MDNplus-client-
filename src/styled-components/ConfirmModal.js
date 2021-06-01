@@ -7,12 +7,11 @@ export const ModalContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(3px);
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
 
   animation-duration: 0.2s;
   animation-timing-function: ease-out;
@@ -31,6 +30,7 @@ export const ModalBox = styled.div`
   border-radius: 10px;
   background: white;
   transition: 0.2s ease-in;
+  z-index: 99;
 `;
 
 export const Message = styled.div`

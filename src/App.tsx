@@ -148,6 +148,7 @@ const Body = styled.div`
   grid-area: main;
   margin: 0;
   width: 100%;
+  height: 100%;
 `;
 const Footer = styled.div`
   grid-area: footer;

@@ -17,13 +17,13 @@ function MyPage() {
       });
   };
 
-  // useEffect(() => {
-  //   console.log("useEffect 사용된 후" + userName);
-  //   getGitHubUserInfo();
-  // });
+  useEffect(() => {
+    console.log("useEffect 사용된 후" + userName);
+    getGitHubUserInfo();
+  });
 
-  // console.log("useEffect 사용되기 전" + userName);
-  // // console.log('hi')
+  console.log("useEffect 사용되기 전" + userName);
+  // console.log('hi')
 
   return (
     <div>

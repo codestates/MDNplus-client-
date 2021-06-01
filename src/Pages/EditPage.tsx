@@ -1,25 +1,39 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import EditConfirmModal from "../Components/EditConfirmModal";
 import useContentData from "../Hooks/useContentData";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { render } from "react-dom";
-import { text } from '@fortawesome/fontawesome-svg-core';
+import { useHistory } from "react-router-dom";
+import useAllData from "../Hooks/useAllData";
+import useBooleanData from "../Hooks/useBooleanData";
+import { SubmitBtn, ExitBtn, BtnBox, HelpBtn, GuideLine } from "../styled-components/Post";
+import gfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import HelpModal from "../Components/HelpModal";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
+type PropsOption = {
+  helpModal: Boolean;
+  handleHelpModal: () => void;
+}
 
-function EditPage() {
-  const { state, onChangeContent } = useContentData();
-  const { contentData } = state; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
+function EditPage({helpModal, handleHelpModal}:PropsOption) {
+  const { contentState, onChangeContent } = useContentData();
+  const { allState } = useAllData();
+  const { onSetWriteMode } = useBooleanData();
+  const { contentData } = contentState; // contentPage에서 수정 버튼 눌러 EditPage로 이동하므로, 같은 contentData 사용
   const [checkModal, setCheckModal] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  // const [currentIndex, setCurrentIndex] = useState<number | undefined>(0);
+  const previewRef = useRef<any>(null);
+  const history = useHistory();
 
   //유저가 글을 수정하여 onchange 이벤트가 발생 시, contentData의 body를 수정하기 위한 함수
   const handleChange = (e: any) => {
-    onChangeContent(e.target.value);
+    const previewValues = previewRef.current.innerText;
+    onChangeContent({ body: e.target.value, pureBody: previewValues });
+    // const previewValues = document.querySelector('.markdown')
+    console.log(typeof previewValues);
   };
 
   // 유저가 수정버튼 누를 시, 정말로 수정할 것인지 물어보는 모달의 상태(true, false)를 관리하는 함수
@@ -31,34 +45,40 @@ function EditPage() {
     }
   };
 
-  // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)
-  // const handleGetIndex = () => {
-  //   const text = textareaRef.current;
-  //   const currentIndex = text?.selectionStart;
-  //   console.log(text)
-  //   console.log(currentIndex);
-  //   setCurrentIndex(currentIndex);
-  // };
+  //유저가 나가기 버튼 누를 시, ContentPage로 이동하는 코드
+  const handleExit = () => {
+    history.push("/ContentPage");
+    onSetWriteMode(false);
+  };
+
+  useEffect(() => {
+    onSetWriteMode(true);
+    // document.body.style.overflow = "hidden";
+  }, []);
 
   return (
     <>
+      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
       {checkModal ? <EditConfirmModal handleConfirmModal={handleConfirmModal} /> : null}
       {!contentData ? (
         <div>로딩 중입니다</div>
       ) : (
         <Container>
           <LeftContainer>
-            <Title>{contentData.title}</Title>
-            {contentData.body ? (
-              <Body ref={textareaRef} defaultValue={contentData.body} onChange={handleChange} autoFocus></Body>
-            ) : (
-              <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>
-            )}
-            <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
+            <TitleBox>
+              <Title>{contentData.title}</Title>
+              <GuideLine>* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.</GuideLine>
+            </TitleBox>
+            {contentData.body ? <Body defaultValue={contentData.body} onChange={handleChange} autoFocus></Body> : <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>}
+            <BtnBox>
+              <ExitBtn onClick={handleExit}>나가기</ExitBtn>
+              <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
+            </BtnBox>
           </LeftContainer>
-          <RightContainer>
+          <RightContainer ref={previewRef}>
             <Title>{contentData.title}</Title>
-            <ReactMarkdown components={Components} children={contentData.body} />
+            <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[gfm, { singleTilde: false }]]} components={Components} children={contentData.body} className="markdown" />
+            <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
           </RightContainer>
         </Container>
       )}
@@ -74,52 +94,46 @@ export const Components = {
 
 export default EditPage;
 
-
 const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  width: 100vw;
+  width: 100%;
   height: 100vw;
 `;
 
 const LeftContainer = styled.div`
-  padding: 0px 30px 30px 30px;
+  // padding: 0px 30px 30px 30px;
+  padding: 1.5rem;
+  height: 100vw;
+s`;
+
+const TitleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-const Title = styled.h1``;
+const Title = styled.h1`
+  display: inline-block;
+`;
 
 const Body = styled.textarea`
   width: 100%;
   height: 100%;
-  font-size: 20px;
   border: none;
   outline: none;
   resize: none;
-`;
-
-const SubmitBtn = styled.button`
-  position: fixed;
-  top: 45rem;
-  left: 38rem;
-  // top: 900px;
-  // left: 800px;
+  font-size: 16px;
 `;
 
 const RightContainer = styled.div`
+  overflow: scroll;
   background: #f4f4f4;
   padding: 0px 30px 30px 30px;
+  line-height: 2rem;
+  word-spacing: 0.2rem;
+  padding: 1.5rem;
 `;
-
-const PreviewTitle = styled.h1``;
-
-const PreviewBody = styled.div`
-  font-size: 20px;
-`;
-
-
-
-
-
 
 // const handleMarkdownH1 = () => {
 //   if (contentData) {
@@ -127,7 +141,7 @@ const PreviewBody = styled.div`
 //     const newContentBody = contentData.body.slice(0, currentIndex);
 //     const splitedNewArr = newContentBody.split("\n");
 //     const targetString = splitedNewArr[splitedNewArr.length - 1];
-//     const targetStringIdx = splitedNewArr.length - 1      
+//     const targetStringIdx = splitedNewArr.length - 1
 
 //     // splitedArr[targetStringIdx] = `# ${splitedArr[targetStringIdx]}`
 

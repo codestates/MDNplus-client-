@@ -1,131 +1,265 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import axios from "axios";
-import LoginModal from "./LoginModal";
 import { useHistory } from "react-router";
-// axios.defaults.withCredentials = i;
+import useMyPageData from "../Hooks/useSearchData";
+import LoginModal from "./LoginModal";
+import MenuModal from "./MenuModal";
+import search from "../img/search.jpeg";
+import useBooleanData from "../Hooks/useBooleanData";
+import useContentData from "../Hooks/useContentData";
+import SearchDataDummy from "../SearchpageDummy";
+import useAllData from "../Hooks/useAllData";
 
-const { Kakao }: any = window;
-
-function Nav() {
-  const [isLogin, setIsLogin] = useState(false);
-  const [userName, setUserName] = useState("");
-  const accessToken = localStorage.getItem("accessToken");
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon }: any) {
+  const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useMyPageData();
+  const { onUserNickName } = useAllData();
+  // const [isLogin, setIsLogin] = useState(false);
+  // const [isLogInOpen, setIsLogInOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { contentState } = useContentData();
+  const { BooleanState } = useBooleanData();
   const history = useHistory();
+
+  const handleHomeBtn = () => {
+    history.push("/");
+  };
+
+  const handleMenuModal = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // 검색창에 검색을 칠때마다 state를 업데이트함.
+  const handleWritingState = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onSearchingWord(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleIconClick = () => {
+    // let word: string = e.target.value;
+    let word: string | null = SearchDataState.word;
+    let tag: string = SearchDataState.tag;
+    if (SearchDataState.word === "") {
+      alert("입력해주세요");
+      return;
+    }
+    onSearchingResult(word, tag);
+    // console.log("지금보내지는 단어하고 태그", word, tag);
+    axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
+      console.log(res);
+      onSearchingData(res.data);
+    });
+    onSearchingData(SearchDataDummy);
+    history.push("/SearchPage");
+    word = "";
+  };
+
+  //엔터를 치면 검색 결과와 select 태그 내용을 가져오게됨.
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>): void => {
+    let word: string = e.target.value;
+    let tag: string = SearchDataState.tag;
+    if (e.key === "Enter") {
+      console.log(word, "태그내용", tag);
+      if (SearchDataState.word === "") {
+        alert("입력해주세요");
+        return;
+      }
+      onSearchingResult(e.target.value, SearchDataState.tag);
+      //리덕스 훅스에가서 state 업데이트함.
+      console.log("지금보내지는 단어하고 태그", word, tag);
+      // 검색할 때 필요한 요청 코드
+      axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
+        console.log(res);
+        onSearchingData(res.data);
+      });
+      history.push("/SearchPage");
+      e.target.value = "";
+    }
+  };
 
   //깃허브 accessToken 받아오는 요청
   const gitAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:80/oauth/github", { authorizationCode: authorizationCode }).then((res) => {
-      if (res.data.accessToken) {
-        setIsLogin(true);
-        localStorage.setItem("accessToken", res.data.accessToken);
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+      console.log("요청 성공해서 들어옴");
+      const { nickName, _id } = res.data;
+      if (nickName) {
+        console.log("이미 가입했던 회원이므로 메인페이지로 이동");
+        console.log(res.data.image);
+        handleChangeMenuIcon(res.data.image);
+        history.push("/");
+        handleLogin();
+      } else {
+        console.log("처음 로그인한 유저이므로 닉네임 설정 페이지로 이동");
+        console.log(res);
+        handleLogin();
+        history.push("/NameSettingPage");
       }
+
+      onUserNickName(res.data.nickName);
     });
   };
 
-  // 깃허브 유저 정보 받아오는 요청
-  const gitUserInfo = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    // axios.patch("https://api.github.com/user/email")
-    // .then(res => console.log(res))
-    // .catch(err => console.log(err))
-    axios
-      .get("https://api.github.com/user", {
-        headers: { authorization: `token ${accessToken}` },
-      })
-      .then((res) => {
-        console.log("여기 깃허브 유저인포 가져옴");
-        console.log(res);
-        setUserName(res.data.login);
-      })
-      .catch((err) => console.log("에러 발생"));
-  };
-
-  //카카오 accessToken 받아오는 요청
+  //서버로부터 카카오 accessToken 받아오는 요청
   const kakaoAccessToken = (authorizationCode: string) => {
     console.log("카카오 accessToken 받는 요청 보내짐");
-    console.log(authorizationCode);
-    axios.post("http://localhost:80/oauth/kakao", { authorizationCode: authorizationCode }).then((res) => {
-      console.log(res);
-      const { accessToken, refreshToken } = res.data.data;
-      if (accessToken) {
-        setIsLogin(true);
-        Kakao.Auth.setAccessToken(accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        kakaoUserInfo();
-      }
-    });
-  };
-
-  //카카오 유저 정보 받아오는 요청
-  const kakaoUserInfo = () => {
-    console.log("hi");
-    Kakao.API.request({
-      url: "/v2/user/me",
-      success: function (res: any) {
-        const email = res.kakao_account.email;
-        const nickname = res.properties.nickname;
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+      const { nickName, _id } = res.data;
+      console.log("로그인 요청 성공함");
+      if (nickName) {
+        console.log("이미 가입했던 회원이므로 메인페이지로 이동");
         console.log(res);
-        console.log(email, nickname);
-      },
-      fail: function (err: any) {
-        console.log(err);
-      },
-    });
-  };
-
-  // 카카오 로그아웃 메소드
-  const handleLogout = () => {
-    if (!Kakao.Auth.getAccessToken()) {
-      console.log("Not logged in.");
-      return;
-    }
-    Kakao.Auth.logout(function () {
-      console.log(Kakao.Auth.getAccessToken());
-      setIsLogin(false);
-    });
-  };
-
-  //카카오 회원탈퇴 메소드
-  const handleCancelKakao = () => {
-    Kakao.API.request({
-      url: "/v1/user/unlink",
-      success: function (response: any) {
-        console.log(response);
-      },
-      fail: function (error: any) {
-        console.log(error);
-      },
+        handleChangeMenuIcon(res.data.image);
+        history.push("/");
+        handleLogin();
+      } else {
+        console.log("처음 로그인한 유저이므로 닉네임 설정 페이지로 이동");
+        console.log(res);
+        handleLogin();
+        history.push("/NameSettingPage");
+      }
+      // onUserNickName(res.data.)
+      onUserNickName(res.data.nickName);
     });
   };
 
   // loginModal에서 깃허브 로그인 성공 후, 리디렉션이 되어서 localhost로 돌아오면 실행되는 라이프사이클 코드
-  // useEffect(() => {
-  //   const url = new URL(window.location.href); // 현재 위치하는 웹사이트의 url을 가져옴
-  //   const authorizationCode = url.searchParams.get("code"); // 깃허브로부터 받은 인증코드를 가져옴 ex) http://localhost:3000/?code=5e52fb85d6a1ed46a51f 여기서 code 뒤의 숫자들이 인증코드
-  //   if (url.pathname === "/kakaoLogin") {
-  //     if (authorizationCode) {
-  //       //만약 깃허브에서 로그인이 성공하여 code를 받아왔다면, client(서버)에 accessToken 받아오는 요청을 보냄
-  //       kakaoAccessToken(authorizationCode);
-  //     }
-  //   } else {
-  //     if (authorizationCode) {
-  //       //만약 깃허브에서 로그인이 성공하여 code를 받아왔다면, client(서버)에 accessToken 받아오는 요청을 보냄
-  //       gitAccessToken(authorizationCode);
-  //       gitUserInfo();
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    const url = new URL(window.location.href); // 현재 위치하는 웹사이트의 url을 가져옴
+    const authorizationCode = url.searchParams.get("code"); // 깃허브로부터 받은 인증코드를 가져옴 ex) http://localhost:3000/?code=5e52fb85d6a1ed46a51f 여기서 code 뒤의 숫자들이 인증코드
+    if (url.pathname === "/kakaoLogin") {
+      if (authorizationCode) {
+        //만약 깃허브에서 로그인이 성공하여 code를 받아왔다면, client(서버)에 accessToken 받아오는 요청을 보냄
+        kakaoAccessToken(authorizationCode);
+      }
+    } else {
+      if (authorizationCode) {
+        console.log(authorizationCode);
+        //만약 깃허브에서 로그인이 성공하여 code를 받아왔다면, client(서버)에 accessToken 받아오는 요청을 보냄
+        gitAccessToken(authorizationCode);
+      }
+    }
+  }, []);
+
+  //태그를 선택할때 tag state 업데이트가 됨.
+  const option = (e: React.ChangeEvent<HTMLSelectElement> & React.MouseEvent<HTMLSelectElement>) => {
+    onSearchingTag(e.target.value);
+  };
 
   return (
-    <div>
-      <LoginModal />
-      <div></div>
-      {/* {isLogin ? <div>로그인 되어 있음</div> : <div>로그인 안되어 있음</div>}
-      {userName ? <div>{userName}</div> : <div>아직 깃허브에서 유저정보 안가져옴</div>} */}
-      <button onClick={handleLogout}>로그아웃</button>
-      <button onClick={handleCancelKakao}>회원탈퇴</button>
-    </div>
+    <NavBar>
+      <LeftBox>
+        <Logo>MDN +</Logo>
+        <SearchBar>
+          <Search type="search" onKeyPress={handleKeyPress} onChange={handleWritingState} />
+          <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
+        </SearchBar>
+        <SearchFilter name="filter" id="filter" onChange={option}>
+          <option value="전체">전체</option>
+          <option value="제목">제목</option>
+          <option value="내용">내용</option>
+          <option value="태그">태그</option>
+        </SearchFilter>
+      </LeftBox>
+      {isLogin ? (
+        <NavButtons>
+          <UserIconContainer src={userImg} onClick={handleMenuModal}></UserIconContainer>
+          {isMenuOpen ? <MenuModal handleLogin={handleLogin} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
+        </NavButtons>
+      ) : (
+        <NavButtons>
+          <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
+          <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal} handleLogin={handleLogin}></LoginModal>
+        </NavButtons>
+      )}
+    </NavBar>
   );
 }
 
 export default Nav;
+
+const NavBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f4f4f4;
+  font-family: "Archivo Black", sans-serif;
+  box-shadow: 0px 4px 5px #eeeeee;
+
+  @media (max-width: 375px) {
+    width: 375px;
+  }
+`;
+
+const LeftBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Logo = styled.div`
+  font-size: 2.5rem;
+  color: #005ce7;
+  margin: 1rem 1rem 1rem 3rem;
+`;
+
+const SearchBar = styled.div`
+  border: 1px solid #005ce7;
+  width: 37%;
+  background: white;
+  padding-left: 1rem;
+  margin-left: 2rem;
+`;
+
+const Search = styled.input`
+  border: none;
+  width: 90%;
+  font-size: 1rem;
+  outline: none;
+  height: 2rem;
+`;
+
+const SearchIcon = styled.img`
+  width: 10%;
+  margin-bottom: -0.3rem;
+  margin-left: -0.4rem;
+  cursor: pointer;
+`;
+
+const SearchFilter = styled.select`
+  margin-left: 1rem;
+  border: none;
+  background: #f4f4f4;
+  padding-right: 0.3rem;
+  outline: none;
+`;
+
+const NavButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LoginBtn = styled.button`
+  background-color: white;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 1rem;
+  border: 1px solid #a7a3a3;
+  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background: #616161;
+    color: white;
+  }
+`;
+
+const UserIconContainer = styled.img`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1.5rem;
+  cursor: pointer;
+`;

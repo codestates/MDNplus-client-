@@ -172,6 +172,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     <div>
       {currentData !== null && currentData !== undefined ? (
         <Container>
+          <BackBtn onClick={(() => window.history.back())}>{'< 돌아가기'}</BackBtn>
           <QuestionContainer>
             <LikeBox_Q>
               {currentData.question.isLike === true ? (
@@ -247,9 +248,19 @@ export default QcontentPage;
 const HeartIcon = styled.span``;
 
 const Container = styled.div`
+  position: relative;
   height: 100%;
   width: 100%;
 `;
+
+const BackBtn = styled.span`
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 1.3rem;
+  color: #78909C;
+  cursor: pointer;
+`
 
 const QuestionContainer = styled.div`
   display: flex;

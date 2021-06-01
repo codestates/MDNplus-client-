@@ -78,7 +78,7 @@ function MainPage() {
     });
   }, []);
 
-  console.log(mathData)
+  console.log(arrayData)
 
   return (
     <Container>

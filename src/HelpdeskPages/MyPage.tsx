@@ -10,6 +10,7 @@ import myPageFakeData from "../mypageFakeData";
 import userIcon from "../img/userIcon_gray.png";
 
 import axios from "axios";
+import useBooleanData from '../Hooks/useBooleanData';
 
 // axios.defaults.withCredentials = true;
 
@@ -48,10 +49,7 @@ function MyPage() {
   const [isQuestion, setIsQuestion] = useState(true);
   const [questionColor, setQuestionColor] = useState("#005ce7");
   const [answerColor, setAnswerColor] = useState(" #a7a3a3");
-  const [isSelected, setIsSelected] = useState({
-    question: true,
-    answer: false,
-  });
+  const {onContentPageMode} = useBooleanData()
 
   useEffect(() => {
     // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
@@ -59,6 +57,8 @@ function MyPage() {
       console.log(res);
       dispatch(allDataAction(res.data));
     });
+
+    console.log(history)
   }, []);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
@@ -84,47 +84,42 @@ function MyPage() {
     });
   };
 
-  const handleQuestionClicked = () => {
+  const handleMDNClicked = () => {
     setQuestionColor("#005ce7");
     setAnswerColor("#a7a3a3");
     setIsQuestion(true);
   };
 
-  const handleAnswerClicked = () => {
+  const handleHelpDeckClicked = () => {
     setAnswerColor("#005ce7");
     setQuestionColor("#a7a3a3");
     setIsQuestion(false);
   };
 
+  useEffect(() => {
+    console.log(history)
+    if(history.location.pathname === "/MyPage") {
+      onContentPageMode(false)
+    }
+  },[])
+
   return mdnAllData === null || mdnAllData === undefined ? (
     <div> 비어있습니다!</div>
   ) : (
     <>
+      <Container>
       <UserInfoContainer>
         {!mdnAllData.user.image ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
         <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
       </UserInfoContainer>
-      <Container>
         <Stage>
           <LeftContainer>
-            {isSelected.question ? (
-              <QuestionBtn_selected style={{ color: questionColor }} onClick={handleQuestionClicked}>
-                나의 질문
-              </QuestionBtn_selected>
-            ) : (
-              <QuestionBtn style={{ color: "#a7a3a3" }} onClick={handleQuestionClicked}>
-                나의 질문
-              </QuestionBtn>
-            )}
-            {isSelected.answer ? (
-              <AnswerBtn_selected style={{ color: answerColor }} onClick={handleAnswerClicked}>
-                나의 답변
-              </AnswerBtn_selected>
-            ) : (
-              <AnswerBtn style={{ color: answerColor }} onClick={handleAnswerClicked}>
-                나의 답변
-              </AnswerBtn>
-            )}
+            <QuestionBtn style={{ color: questionColor }} onClick={handleMDNClicked}>
+              나의 질문
+            </QuestionBtn>
+            <AnswerBtn style={{ color: answerColor }} onClick={handleHelpDeckClicked}>
+              나의 답변
+            </AnswerBtn>
           </LeftContainer>
           <RightContainer>
             {isQuestion ? (
@@ -175,10 +170,11 @@ export default MyPage;
 
 const UserInfoContainer = styled.div`
   display: flex;
-  justify-content: start;
   align-items: center;
-  padding: 3rem 3rem 0rem 10rem;
   // border: 1px solid black;
+  margin-top: 5rem;
+  width: 72%;
+
 `;
 
 const UserInfoImage = styled.img`
@@ -219,17 +215,7 @@ const LeftContainer = styled.div`
   border-top: 1px solid #bdbdbd;
 `;
 
-const QuestionBtn_selected = styled.div`
-  margin: 2rem 0rem 1rem 0rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
 const QuestionBtn = styled.div`
-  margin: 2rem 0rem 1rem 0rem;
-  font-size: 1.5rem;
-`;
-
-const AnswerBtn_selected = styled.div`
   margin: 2rem 0rem 1rem 0rem;
   font-size: 1.5rem;
   font-weight: bold;
@@ -238,6 +224,7 @@ const AnswerBtn_selected = styled.div`
 const AnswerBtn = styled.div`
   margin: 1rem 0rem 1rem 0rem;
   font-size: 1.5rem;
+  font-weight: bold;
 `;
 
 const RightContainer = styled.div`
@@ -247,7 +234,7 @@ const RightContainer = styled.div`
 const QuestionContainer = styled.div``;
 
 const QuestionBox = styled.div`
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #E0E0E0;
   padding: 0 1rem 1rem 1rem;
   cursor: pointer;
   margin: 2rem 0 2rem 0;
@@ -256,7 +243,7 @@ const QuestionBox = styled.div`
 const AnswerContainer = styled.div``;
 
 const QuestionTitle = styled.span`
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1.3rem;
 `;
 

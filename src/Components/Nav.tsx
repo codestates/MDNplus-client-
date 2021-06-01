@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router";
-import useMyPageData from "../Hooks/useSearchData";
+import useSearchData from "../Hooks/useSearchData";
 import LoginModal from "./LoginModal";
 import MenuModal from "./MenuModal";
 import search from "../img/search.jpeg";
@@ -12,7 +12,7 @@ import SearchDataDummy from "../SearchpageDummy";
 import useAllData from "../Hooks/useAllData";
 
 function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon }: any) {
-  const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useMyPageData();
+  const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useSearchData();
   const { onUserNickName } = useAllData();
   // const [isLogin, setIsLogin] = useState(false);
   // const [isLogInOpen, setIsLogInOpen] = useState(false);
@@ -49,7 +49,6 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       console.log(res);
       onSearchingData(res.data);
     });
-    onSearchingData(SearchDataDummy);
     history.push("/SearchPage");
     word = "";
   };
@@ -94,7 +93,6 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         handleLogin();
         history.push("/NameSettingPage");
       }
-
       onUserNickName(res.data.nickName);
     });
   };
@@ -150,7 +148,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       <LeftBox>
         <Logo>MDN +</Logo>
         <SearchBar>
-          <Search type="search" onKeyPress={handleKeyPress} onChange={handleWritingState} />
+          <Search onKeyPress={handleKeyPress} onChange={handleWritingState} />
           <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>

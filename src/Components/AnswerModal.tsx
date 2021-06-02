@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import styled from "styled-components";
 import { fadeIn } from "../styled-components/Animation";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
@@ -44,16 +43,13 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
       <Overlay onClick={handleOverLay} ref={overLay} />
 
       <ModalBox>
-        {/* <CloseIcon onClick={handleCloseIcon}>
-          <FontAwesomeIcon icon="times" size="lg" color="#005ce7" />
-        </CloseIcon> */}
         {btnName === "답변" ? (
           <>
-            <AskInfo>답변하시겠습니까?</AskInfo>
+            <AskInfo>답변을 등록하시겠습니까?</AskInfo>
             <ContentContainer>
               <BtnBox>
-                <CancelBtn onClick={handleAnswerYes}>네</CancelBtn>
-                <SubmitBtn onClick={handleAnswerNo}>아니요</SubmitBtn>
+                <CancelBtn onClick={handleAnswerNo}>취소</CancelBtn>
+                <SubmitBtn onClick={handleAnswerYes}>등록</SubmitBtn>
               </BtnBox>
             </ContentContainer>
           </>
@@ -84,7 +80,7 @@ const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 2;
   animation-duration: 0.2s;
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
@@ -107,7 +103,6 @@ const ModalBox = styled.div`
   background-color: white;
   border: 1px solid #9e9e9e;
   transition: 0.2s ease-in;
-
   border-radius: 10px;
 `;
 
@@ -142,8 +137,9 @@ export const BtnBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-right: 2rem;
-  margin-top: 2rem;
+  margin-right: -2rem;
+  margin-top: 4rem;
+
 `;
 export const CancelBtn = styled.button`
   border: none;

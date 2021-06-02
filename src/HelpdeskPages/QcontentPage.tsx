@@ -111,19 +111,20 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   };
 
   const handleAnswerLike = (updateData: AnswerType, index: number) => {
-    console.log("대답에대한 좋아요 = ", updateData);
-
     if (updateData.isLike === true) {
       console.log("clicked");
       updateData.like = updateData.like + 1;
       updateData.isLike = false;
+
       onAnswerLike(updateData);
     } else {
       updateData.like = updateData.like - 1;
       updateData.isLike = true;
       onAnswerLike(updateData);
+
       // onAnswerLike(updateData);
     }
+
     axios
       .post("http://localhost:8080/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
       .then((res) => console.log("응답받은 대답에대한 좋아요 =", res));
@@ -210,14 +211,14 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                     </HeartIcon>
                   ) : (
                     <HeartIcon>
-                      <FontAwesomeIcon icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
+                      <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
                     </HeartIcon>
                   )}
                   <LikeNum_A> {el.like}</LikeNum_A>
                 </LikeBox_A>
                 <Answer>
                   <AnswerTitleBox>
-                    {el.userId.image ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
+                    {el.userId.image !== "" ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
                     <Date_A>{`${el.createdAt.substring(0, 4)}.${el.createdAt.substring(5, 7)}.${el.createdAt.substring(8, 10)}. ${" "} 
                     ${Number(el.createdAt.substring(11, 13)) - 3}: ${el.createdAt.substring(14, 16)}`}</Date_A>
                     {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : null}

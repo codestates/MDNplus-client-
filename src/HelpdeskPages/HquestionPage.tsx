@@ -117,11 +117,11 @@ const HquestionPage = ({helpModal, handleHelpModal}:PropsOption) => {
 
   console.log(pureBody);
   return (
-    <>
+    <Container>
       {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
 
       {checkModal ? <QconfirmModal handleSubmitQ={handleSubmitQ} handleConfirmModal={handleConfirmModal} /> : null}
-      <Container>
+      <PostContainer>
         <LeftContainer>
           <TitleBox>
             <Title
@@ -165,18 +165,18 @@ const HquestionPage = ({helpModal, handleHelpModal}:PropsOption) => {
               autoFocus
             ></Body>
           )}
-          <BtnBox>
-            <ExitBtn onClick={handleExit}>나가기</ExitBtn>
-            <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
-          </BtnBox>
         </LeftContainer>
         <RightContainer ref={previewRef}>
           <h1>{title}</h1>
           <ReactMarkdown components={Components} children={body} className="markdown" />
-          <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
         </RightContainer>
-      </Container>
-    </>
+      </PostContainer>
+        <BtnBox>
+            <ExitBtn onClick={handleExit}>나가기</ExitBtn>
+            <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
+          <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
+          </BtnBox>
+    </Container>
   );
 };
 
@@ -189,10 +189,18 @@ export const Components = {
 export default HquestionPage;
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   width: 100vw;
   height: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const PostContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  height: 100%;
 `;
 
 const LeftContainer = styled.div`
@@ -265,6 +273,7 @@ const GuideMessage = styled.textarea`
 const RightContainer = styled.div`
   background: #f4f4f4;
   padding: 0.7rem 3rem 3rem 3rem;
+  position: relative;
 `;
 
 // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)

@@ -8,7 +8,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import AnswerModal from "../Components/AnswerModal";
 import useBooleanData from "../Hooks/useBooleanData";
-import { ExitBtn, SubmitBtn, HelpBtn } from "../styled-components/Post";
+import { ExitBtn, SubmitBtn, HelpBtn, BtnBox } from "../styled-components/Post";
 import userImg from "../img/userIcon_gray.png";
 import axios from "axios";
 import HelpModal from "../Components/HelpModal";
@@ -141,8 +141,17 @@ export const Components = {
 export default AnswerPage;
 
 const Container = styled.div`
+  width: 100vw;
+  height: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const PostContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
   height: 100%;
 `;
 

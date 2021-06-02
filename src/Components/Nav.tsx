@@ -11,7 +11,7 @@ import useContentData from "../Hooks/useContentData";
 import SearchDataDummy from "../SearchpageDummy";
 import useAllData from "../Hooks/useAllData";
 
-function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon }: any) {
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon, setIsLogin }: any) {
   const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useSearchData();
   const { onUserNickName } = useAllData();
   // const [isLogin, setIsLogin] = useState(false);
@@ -93,6 +93,8 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         handleLogin();
         history.push("/NameSettingPage");
       }
+      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
+
       onUserNickName(res.data.nickName);
     });
   };
@@ -115,7 +117,8 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         handleLogin();
         history.push("/NameSettingPage");
       }
-      // onUserNickName(res.data.)
+      console.log(res.data);
+      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
       onUserNickName(res.data.nickName);
     });
   };
@@ -131,11 +134,14 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       }
     } else {
       if (authorizationCode) {
-        console.log(authorizationCode);
         //만약 깃허브에서 로그인이 성공하여 code를 받아왔다면, client(서버)에 accessToken 받아오는 요청을 보냄
         gitAccessToken(authorizationCode);
       }
     }
+
+    // if (window.localStorage.getItem("sessionId")) {
+    //   setIsLogin(true);
+    // }
   }, []);
 
   //태그를 선택할때 tag state 업데이트가 됨.
@@ -176,6 +182,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
 export default Nav;
 
 const NavBar = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

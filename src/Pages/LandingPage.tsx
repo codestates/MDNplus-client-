@@ -267,7 +267,7 @@ const IntroBoxContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  color: white;
+  background: #536DFE;
 `;
 
 const IntroBox = styled.div`
@@ -284,7 +284,7 @@ const IntroBox = styled.div`
 const IntroBox_Body1 = styled.div`
   font-size: 3rem;
   margin: 1rem 0 1rem 0;
-  color: black;
+  color: white;
   transition: 1s ease-in-out;
 
   animation-duration: 1s;
@@ -296,7 +296,7 @@ const IntroBox_Body1 = styled.div`
 const IntroBox_Body2 = styled.div`
   font-size: 3rem;
   margin: 1rem 0 1rem 0;
-  color: black;
+  color: white;
   font-weight: bold;
 
   transition: 1s ease-in-out;

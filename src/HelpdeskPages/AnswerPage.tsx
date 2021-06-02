@@ -12,6 +12,8 @@ import { ExitBtn, SubmitBtn, HelpBtn } from "../styled-components/Post";
 import userImg from "../img/userIcon_gray.png";
 import axios from "axios";
 import HelpModal from "../Components/HelpModal";
+import useAllData from "../Hooks/useAllData";
+import userIcon from "../img/userIcon_gray.png";
 
 type PropsOption = {
   helpModal: Boolean;
@@ -28,6 +30,11 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
   const [guideLine, setGuideLine] = useState(true);
   const previewRef = useRef<any>(null);
   const history = useHistory();
+  const { PickUserName } = useAllData();
+  const [userInfo, setUserInfo] = useState({
+    img: "",
+    nickName: "",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWriting(e.target.value);
@@ -64,6 +71,9 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
   };
 
   useEffect(() => {
+    axios.get("http://localhost:8080/userinfo", { withCredentials: true }).then((res) => {
+      setUserInfo({ img: res.data.image, nickName: res.data.nickName });
+    });
     onSetWriteMode(true);
   }, []);
 
@@ -93,10 +103,10 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
           <WritingTitle>나의 답변</WritingTitle>
           {guideLine ? (
             <GuideMessage
-              onClick={() => {
-                setGuideLine(false);
-              }}
-              value={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+              // onClick={() => {
+              //   setGuideLine(false);
+              // }}
+              placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
               `}
             ></GuideMessage>
           ) : (
@@ -110,7 +120,11 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
       </LeftContainer>
 
       <RightContainer ref={previewRef}>
-        <PreviewTitle>나의 답변</PreviewTitle>
+        <PreviewTitle>
+          {userInfo.img === "" ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={userInfo.img} />}
+
+          <UserInfoName>{userInfo.nickName} 님의 답변</UserInfoName>
+        </PreviewTitle>
         <ReactMarkdown children={writing} components={Components} />
         <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
       </RightContainer>
@@ -231,6 +245,8 @@ const RightContainer = styled.div`
 `;
 
 const PreviewTitle = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 1.8rem;
   font-weight: 700;
   color: #686868;
@@ -238,6 +254,17 @@ const PreviewTitle = styled.div`
   padding-bottom: 1rem;
   border-bottom: 0.05rem solid #e0e0e0;
   width: 100%;
+`;
+
+const UserInfoImage = styled.img`
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const UserInfoName = styled.span`
+  margin-left: 2rem;
 `;
 
 // const handleHeader = (mark: string) => {

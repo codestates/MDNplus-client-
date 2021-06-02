@@ -118,7 +118,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         history.push("/NameSettingPage");
       }
       console.log(res.data);
-      // window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
+      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
       onUserNickName(res.data.nickName);
     });
   };

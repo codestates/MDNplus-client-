@@ -99,8 +99,6 @@ function MyPage() {
       <UserInfoContainer>
         {!mdnAllData.user.image ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
         <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
-
-        {/* userIcon */}
       </UserInfoContainer>
       <LeftContainer>
         <QuestionList style={{ color: questionColor }} onClick={handleMDNClicked}>

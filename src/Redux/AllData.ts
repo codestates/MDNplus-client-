@@ -57,23 +57,23 @@ function AllDataReducer(state: any = initialState, action: AllDataAction) {
   switch (action.type) {
     case FILTER:
       console.log(action.payload);
-      const arrayData = action.payload.filter((el:any) => {
+      const arrayData = action.payload.filter((el: any) => {
         const methodTitle = el.title.split(".")[0];
         return methodTitle === "Array";
       });
-      const objectData = action.payload.filter((el:any) => {
+      const objectData = action.payload.filter((el: any) => {
         const methodTitle = el.title.split(".")[0];
         return methodTitle === "Object";
       });
-      const mathData = action.payload.filter((el:any) => {
+      const mathData = action.payload.filter((el: any) => {
         const methodTitle = el.title.split(".")[0];
         return methodTitle === "Math";
       });
-      const stringData = action.payload.filter((el:any) => {
+      const stringData = action.payload.filter((el: any) => {
         const methodTitle = el.title.split(".")[0];
         return methodTitle === "String";
       });
-      const promiseData = action.payload.filter((el:any) => {
+      const promiseData = action.payload.filter((el: any) => {
         const methodTitle = el.title.split(".")[0];
         return methodTitle === "Promise";
       });

@@ -150,10 +150,8 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     onContentPageMode(true);
     let questionID: string = "";
     if (location.state === undefined) {
-      // console.log("null");
     } else if (location.state.pageName === "/MyPage") {
       questionID = location.state.questionId;
-      // console.log(location.state.pageName);
     } else if (location.state.pageName === "/HelpdeskPage") {
       setisMainPage(true);
       questionID = location.state.questionId;
@@ -161,9 +159,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
       questionID = location.state.questionId;
     }
 
-    //바껴진 questionID를 이용하여 QcontentPage에 렌더링할 데이터를 가져오는 요청
     axios.get(`http://localhost:8080/question/${questionID}`).then((res) => {
-      console.log("데이터 처음으로 랜더링함", res);
       onCurrentQData(res.data);
     });
   }, []);
@@ -197,22 +193,20 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
               <InfoBox_Q>
                 {currentData.question.userId.image ? <UserImg_Q src={currentData.question.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
                 <UserName_Q>{currentData.question.userId.nickName}</UserName_Q>
-                <Date_Q>{`${currentData.question.createdAt.substring(0, 4)}.${currentData.question.createdAt.substring(5, 7)}.${currentData.question.createdAt.substring(8, 10)}`}</Date_Q>
+                <Date_Q>{`${currentData.question.createdAt.substring(0, 4)}.${currentData.question.createdAt.substring(5, 7)}.${currentData.question.createdAt.substring(8, 10)} . ${
+                  Number(currentData.question.createdAt.substring(11, 13)) - 3
+                }: ${currentData.question.createdAt.substring(14, 16)}`}</Date_Q>
                 {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
               </InfoBox_Q>
             </QuestionBox>
           </QuestionContainer>
           <AnswerContainer>
-            {/* <AnswersNumBox> */}
-            {/* <AnswersNum color="#3949AB">답변 </AnswersNum>
-            <AnswersNum>{currentData.question.commentCount}개</AnswersNum> */}
-            {/* </AnswersNumBox> */}
             {currentData.comments?.map((el, index: number) => (
               <AnswerBox key={index}>
                 <LikeBox_A>
                   {el.isLike === true ? (
                     <HeartIcon>
-                      <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["far", "heart"]} color="#686868" size="lg" />{" "}
+                      <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["far", "heart"]} color="#686868" size="lg" />
                     </HeartIcon>
                   ) : (
                     <HeartIcon>
@@ -224,8 +218,9 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                 <Answer>
                   <AnswerTitleBox>
                     {el.userId.image ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
-                    <Date_A>{`${el.createdAt.substring(0, 4)}.${el.createdAt.substring(5, 7)}.${el.createdAt.substring(8, 10)}`}</Date_A>
-                    {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : <div>비공개</div>}
+                    <Date_A>{`${el.createdAt.substring(0, 4)}.${el.createdAt.substring(5, 7)}.${el.createdAt.substring(8, 10)}. ${" "} 
+                    ${Number(el.createdAt.substring(11, 13)) - 3}: ${el.createdAt.substring(14, 16)}`}</Date_A>
+                    {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : null}
                   </AnswerTitleBox>
                   <AnswerBody>
                     <ReactMarkdown children={el.content}></ReactMarkdown>

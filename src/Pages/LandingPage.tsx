@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useBooleanData from "../Hooks/useBooleanData";
 import FooterComponent from "../Components/FooterComponent";
-import { fadeIn, slideUp, slideUp_Intro, slideUp_AppealBox } from "../styled-components/Animation";
+import { fadeIn, slideUp, slideUp_Intro, example } from "../styled-components/Animation";
 import library from "../img/library.jpg";
 import monitor4 from "../img/monitor4.png";
 import monitor3 from "../img/monitor3.png";
@@ -21,6 +21,7 @@ import appeal1 from "../img/appeal1.png";
 import appeal2 from "../img/appeal2.png";
 import appeal3 from "../img/appeal2-1.png";
 import clockIcon from "../img/clockIcon.png";
+import { useHistory } from 'react-router';
 
 const LandingPage = () => {
   const { onSetWriteMode } = useBooleanData();
@@ -32,6 +33,7 @@ const LandingPage = () => {
     thirdBox: false,
   });
   const { firstBox, secondBox, thirdBox } = isSelected;
+  const history = useHistory()
 
   const handleClickBox = (idx: number) => {
     if (idx === 1) {
@@ -70,10 +72,10 @@ const LandingPage = () => {
         </Nav2>
       ) : (
         <Nav>
-          <Logo>MDN+</Logo>
+          <Logo onClick={(() => {history.push('/LandingPage')})}>MDN+</Logo>
           <Nav_RightBox>
-            <QuestionsBtn>자주 하는 질문</QuestionsBtn>
-            <HomeBtn>시작하기</HomeBtn>
+            <QuestionsBtn onClick={(() => {history.push('/FAQ')})}>자주 하는 질문</QuestionsBtn>
+            <HomeBtn onClick={(() => {history.push('/')})}>시작하기</HomeBtn>
           </Nav_RightBox>
         </Nav>
       )}
@@ -118,119 +120,107 @@ const LandingPage = () => {
           <Time>153,352분</Time>
         </TimeBox>
       </TimeContainer> */}
-      {currentY >= 350 ? (
-        <AppealBox1Container>
-          <PreviewBox>
-            {/* <SubBox1></SubBox1> */}
-            <PreviewImg src={appeal1}></PreviewImg>
-          </PreviewBox>
-          <AppealBox>
-            <UnderLine1></UnderLine1>
-            <AppealTitle>MDN+ 위키</AppealTitle>
-            <AppealBody>개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!</AppealBody>
-          </AppealBox>
-        </AppealBox1Container>
-      ) : null}
+      
+      <AppealBox1Container>
+        <PreviewBox>
+          {/* <SubBox1></SubBox1> */}
+          <PreviewImg src={appeal1}></PreviewImg>
+        </PreviewBox>
+        <AppealBox>
+          <UnderLine1></UnderLine1>
+          <AppealTitle>MDN+ 위키</AppealTitle>
+          <AppealBody>개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!</AppealBody>
+        </AppealBox>
+      </AppealBox1Container>
       <EmptySpace></EmptySpace>
-
-      {currentY >= 1100 ? (
-        <AppealBox2Container>
-          <AppealBox>
-            <UnderLine2></UnderLine2>
-            <AppealTitle>헬프데스크</AppealTitle>
-            <AppealBody>개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?</AppealBody>
-            <AppealBody>헬프데스크에 질문하세요!</AppealBody>
-          </AppealBox>
-          <PreviewBox>
-            {/* <SubBox2></SubBox2> */}
-            <PreviewImg src={appeal2}></PreviewImg>
-          </PreviewBox>
-        </AppealBox2Container>
-      ) : null}
-
-      {currentY >= 1800 ? (
-        <ReviewBoxContainer>
-          <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
-          <ReviewBoxSubTitle>언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이 없어졌어요.</ReviewBoxSubTitle>
-          <ReviewFlexBox>
-            <ReviewBox>
-              <ReviewerBox>
-                <ReviewerImg src={avatar1}></ReviewerImg>
-                <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
-              </ReviewerBox>
-              <ReviewBody>
-                MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데 MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요. 잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서
-                동시에 공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
-              </ReviewBody>
-            </ReviewBox>
-            <ReviewBox>
-              <ReviewerBox>
-                <ReviewerImg src={avatar2}></ReviewerImg>
-                <Reviewer>주니어 개발자 문코딩</Reviewer>
-              </ReviewerBox>
-              <ReviewBody>
-                처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해 며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을 달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할
-                것 같습니다. 좋은 서비스 감사합니다 :)
-              </ReviewBody>
-            </ReviewBox>
-            <ReviewBox>
-              <ReviewerBox>
-                <ReviewerImg src={avatar3}></ReviewerImg>
-                <Reviewer>개발 3년차 조코딩</Reviewer>
-              </ReviewerBox>
-              <ReviewBody>
-                MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다. 나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니, 면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
-                있었습니다. 정말 감사합니다 !
-              </ReviewBody>
-            </ReviewBox>
-          </ReviewFlexBox>
-        </ReviewBoxContainer>
-      ) : null}
-
-      {currentY >= 2600 ? (
-        <>
-          <NewsContainer>
-            <NewsIntroBox>
-              <NewsIntro1>MDN+</NewsIntro1>
-              <NewsIntro2> 뉴스</NewsIntro2>
-            </NewsIntroBox>
-            <NewsBox>
-              <MainNews>
-                <MainNewsContents>
-                  <MainNewsTitle>개발 공부가 힘들 때</MainNewsTitle>
-                  <MainNewsTitle>'MDN+'를 이용해요</MainNewsTitle>
-                  <MainNewsBody>
-                    "개발 공부를 시작하면서 MDN을 많이 참고했는데 번역이 매끄럽지 않고 조금 어렵게 설명이 되어있는 부분들이 있더라구요. 그래서 이런 부분들을 현업에서 일하는 개발자들 또는 개발을
-                    공부하는 사람들이 자유롭게 수정을 하며 새롭게 MDN을 재구성한다면 어떨까 생각을 ...
-                  </MainNewsBody>
-                </MainNewsContents>
-                <MainNewsImg src={MainNewsImage}></MainNewsImg>
-                <MainNewsOverlay></MainNewsOverlay>
-              </MainNews>
-              <SubNews>
-                <SubNewsTitle1>사용자라면 누구든지 수정이 가능한</SubNewsTitle1>
-                <SubNewsTitle2>MDN판 위키백과</SubNewsTitle2>
-                <SubNewsOverlay></SubNewsOverlay>
-                <SubNewsImg src={PenImg}></SubNewsImg>
-              </SubNews>
-              <SubNews>
-                <SubNewsTitle1>MDN+,</SubNewsTitle1>
-                <SubNewsTitle2>누적 사용자 5만명 돌파</SubNewsTitle2>
-                <SubNewsOverlay></SubNewsOverlay>
-                <SubNewsImg src={networkImg}></SubNewsImg>
-              </SubNews>
-              <SubNews>
-                <SubNewsTitle1>예비 개발자라면</SubNewsTitle1>
-                <SubNewsTitle2>꼭 알아야 할 5가지</SubNewsTitle2>
-                <SubNewsOverlay></SubNewsOverlay>
-                <SubNewsImg src={noteImg}></SubNewsImg>
-              </SubNews>
-            </NewsBox>
-          </NewsContainer>
-          {/* <FooterComponent /> */}
-        </>
-      ) : null}
-      <EmptySpace></EmptySpace>
+      <AppealBox2Container>
+        <AppealBox>
+          <UnderLine2></UnderLine2>
+          <AppealTitle>헬프데스크</AppealTitle>
+          <AppealBody>개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?</AppealBody>
+          <AppealBody>헬프데스크에 질문하세요!</AppealBody>
+        </AppealBox>
+        <PreviewBox>
+          {/* <SubBox2></SubBox2> */}
+          <PreviewImg src={appeal2}></PreviewImg>
+        </PreviewBox>
+      </AppealBox2Container>
+      {/* <EmptySpace></EmptySpace> */}
+      <ReviewBoxContainer>
+        <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
+        <ReviewBoxSubTitle>언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이 없어졌어요.</ReviewBoxSubTitle>
+        <ReviewFlexBox>
+          <ReviewBox>
+            <ReviewerBox>
+              <ReviewerImg src={avatar1}></ReviewerImg>
+              <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
+            </ReviewerBox>
+            <ReviewBody>
+              MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데 MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요. 잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서 동시에
+              공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
+            </ReviewBody>
+          </ReviewBox>
+          <ReviewBox>
+            <ReviewerBox>
+              <ReviewerImg src={avatar2}></ReviewerImg>
+              <Reviewer>주니어 개발자 문코딩</Reviewer>
+            </ReviewerBox>
+            <ReviewBody>
+              처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해 며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을 달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할 것
+              같습니다. 좋은 서비스 감사합니다 :)
+            </ReviewBody>
+          </ReviewBox>
+          <ReviewBox>
+            <ReviewerBox>
+              <ReviewerImg src={avatar3}></ReviewerImg>
+              <Reviewer>개발 3년차 조코딩</Reviewer>
+            </ReviewerBox>
+            <ReviewBody>
+              MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다. 나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니, 면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
+              있었습니다. 정말 감사합니다 !
+            </ReviewBody>
+          </ReviewBox>
+        </ReviewFlexBox>
+      </ReviewBoxContainer>
+      <NewsContainer>
+        <NewsIntroBox>
+          <NewsIntro1>MDN+</NewsIntro1>
+          <NewsIntro2> 뉴스</NewsIntro2>
+        </NewsIntroBox>
+        <NewsBox>
+          <MainNews>
+            <MainNewsContents>
+              <MainNewsTitle>개발 공부가 힘들 때</MainNewsTitle>
+              <MainNewsTitle>'MDN+'를 이용해요</MainNewsTitle>
+              <MainNewsBody>
+                "개발 공부를 시작하면서 MDN을 많이 참고했는데 번역이 매끄럽지 않고 조금 어렵게 설명이 되어있는 부분들이 있더라구요. 그래서 이런 부분들을 현업에서 일하는 개발자들 또는 개발을 공부하는
+                사람들이 자유롭게 수정을 하며 새롭게 MDN을 재구성한다면 어떨까 생각을 ...
+              </MainNewsBody>
+            </MainNewsContents>
+            <MainNewsImg src={MainNewsImage}></MainNewsImg>
+            <MainNewsOverlay></MainNewsOverlay>
+          </MainNews>
+          <SubNews>
+            <SubNewsTitle1>사용자라면 누구든지 수정이 가능한</SubNewsTitle1>
+            <SubNewsTitle2>MDN판 위키백과</SubNewsTitle2>
+            <SubNewsOverlay></SubNewsOverlay>
+            <SubNewsImg src={PenImg}></SubNewsImg>
+          </SubNews>
+          <SubNews>
+            <SubNewsTitle1>MDN+,</SubNewsTitle1>
+            <SubNewsTitle2>누적 사용자 5만명 돌파</SubNewsTitle2>
+            <SubNewsOverlay></SubNewsOverlay>
+            <SubNewsImg src={networkImg}></SubNewsImg>
+          </SubNews>
+          <SubNews>
+            <SubNewsTitle1>예비 개발자라면</SubNewsTitle1>
+            <SubNewsTitle2>꼭 알아야 할 5가지</SubNewsTitle2>
+            <SubNewsOverlay></SubNewsOverlay>
+            <SubNewsImg src={noteImg}></SubNewsImg>
+          </SubNews>
+        </NewsBox>
+      </NewsContainer>
+      <FooterComponent />
     </Container>
   );
 };
@@ -322,7 +312,7 @@ const IntroBox = styled.div`
   width: 30rem;
   margin-top: -8rem;
 
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
@@ -493,11 +483,6 @@ const AppealBox1Container = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 0.4fr;
   background: #fafafa;
-
-  animation-duration: 2s;
-  animation-timing-function: ease-out;
-  animation-name: ${fadeIn};
-  animation-fill-mode: forwards;
 `;
 
 const AppealBox2Container = styled.div`
@@ -507,11 +492,6 @@ const AppealBox2Container = styled.div`
   display: grid;
   grid-template-columns: 0.4fr 0.6fr;
   background: white;
-
-  animation-duration: 2s;
-  animation-timing-function: ease-out;
-  animation-name: ${fadeIn};
-  animation-fill-mode: forwards;
 `;
 
 const PreviewBox = styled.div`
@@ -556,13 +536,7 @@ const AppealBox = styled.div`
   align-items: center;
   flex-direction: column;
   position: relative;
-
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
-  animation-name: ${slideUp_AppealBox};
-  animation-fill-mode: forwards;
 `;
-
 const UnderLine1 = styled.div`
   width: 4rem;
   border: 1px solid #bdbdbd;
@@ -604,11 +578,6 @@ const ReviewBoxContainer = styled.div`
   align-items: center;
   flex-direction: column;
   background: #eeeeee;
-
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
-  animation-name: ${fadeIn};
-  animation-fill-mode: forwards;
 `;
 
 const ReviewFlexBox = styled.div`
@@ -676,11 +645,6 @@ const NewsContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: #f0f1f5;
-
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
-  animation-name: ${fadeIn};
-  animation-fill-mode: forwards;
 `;
 
 const NewsIntroBox = styled.div`

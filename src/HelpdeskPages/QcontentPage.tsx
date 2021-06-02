@@ -172,7 +172,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     <div>
       {currentData !== null && currentData !== undefined ? (
         <Container>
-          <BackBtn onClick={(() => window.history.back())}>{'< 돌아가기'}</BackBtn>
+          <BackBtn onClick={() => window.history.back()}>{"< 돌아가기"}</BackBtn>
           <QuestionContainer>
             <LikeBox_Q>
               {currentData.question.isLike === true ? (
@@ -204,10 +204,11 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
             </QuestionBox>
           </QuestionContainer>
           <AnswerContainer>
-            {/* <AnswersNumBox> */}
-            {/* <AnswersNum color="#3949AB">답변 </AnswersNum>
-            <AnswersNum>{currentData.question.commentCount}개</AnswersNum> */}
-            {/* </AnswersNumBox> */}
+            {currentData.comments.length === 0 ? (
+              <AnswerBox>
+                <WaitingMessage>답변을 기다리는 중입니다.</WaitingMessage>
+              </AnswerBox>
+            ) : null}
             {currentData.comments?.map((el, index: number) => (
               <AnswerBox key={index}>
                 <LikeBox_A>
@@ -258,9 +259,9 @@ const BackBtn = styled.span`
   top: 2rem;
   left: 2rem;
   font-size: 1.3rem;
-  color: #78909C;
+  color: #78909c;
   cursor: pointer;
-`
+`;
 
 const QuestionContainer = styled.div`
   display: flex;
@@ -425,6 +426,10 @@ const Date_A = styled.div`
   bottom: -3rem;
   right: 0rem;
 `;
+
+const WaitingMessage = styled.div`
+  color: #757575
+`
 
 // const handleQuestionIncreaseLikes = (updateData: DataType) => {
 //   updateData.question.like = updateData.question.like + 1;

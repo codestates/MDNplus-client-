@@ -135,6 +135,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 3rem;
+  margin-bottom: 13rem;
 `;
 
 const SearchResult = styled.div`
@@ -168,7 +169,7 @@ const ResultNum = styled.div`
 
 const ContentContainer = styled.div`
   width: 90%;
-  height: 90%;
+  height: 100%;
 `;
 
 const FilterSearchResult = styled.div`
@@ -195,12 +196,8 @@ const Content = styled.div`
 
 const Title = styled.div`
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-style: italic;
-
-  &:hover {
-    color: #005ce7;
-  }
 `;
 
 const Body = styled.div`
@@ -209,7 +206,7 @@ const Body = styled.div`
 
 const HelpTitle = styled.div`
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 `;
 
 const HelpBody = styled.div`

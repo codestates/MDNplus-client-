@@ -8,6 +8,7 @@ import useContentData from "../Hooks/useContentData";
 import ideaIcon from "../img/idea.png";
 import thinkingIcon from "../img/thinking.png";
 import axios from "axios";
+import useBooleanData from '../Hooks/useBooleanData';
 
 type Method = {
   _id: string;
@@ -24,6 +25,7 @@ function MainPage() {
   const { allState, onFilter, onChangeFilter } = useAllData();
   const { arrayData, objectData, mathData, stringData, promiseData, currentData } = allState;
   const { onClickMethod } = useContentData();
+  const {onSetWriteMode, onContentPageMode} = useBooleanData()
   const history = useHistory();
 
   // 메인페이지 array, object 선택바가 변경이 되었을 때, 실행되는 코드
@@ -76,9 +78,13 @@ function MainPage() {
       console.log(res);
       onFilter(res.data);
     });
+
+    if(history.location.pathname === "/") {
+      onSetWriteMode(false)
+    }
   }, []);
 
-  console.log(mathData)
+  console.log(arrayData)
 
   return (
     <Container>

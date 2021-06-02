@@ -40,7 +40,7 @@ type HelpData = {
 const HelpdeskPage = () => {
   const [isSelected, setIsSelected] = useState("최신순");
   const { helpData, onStoreData, onFilter } = useHelpData();
-  const { onSetWriteMode } = useBooleanData();
+  const { onSetWriteMode, onContentPageMode } = useBooleanData();
   const { allQuestions, selectedQuestions }: HelpData = helpData;
   const history = useHistory();
 
@@ -67,6 +67,7 @@ const HelpdeskPage = () => {
     console.log(history);
     if (history.location.pathname === "/HelpdeskPage") {
       onSetWriteMode(false);
+      onContentPageMode(false)
     }
 
     axios.get("http://localhost:8080/helpdesk").then((res) => {
@@ -75,7 +76,7 @@ const HelpdeskPage = () => {
     });
   }, []);
 
-  console.log(allQuestions);
+  // console.log(allQuestions);
 
   return (
     <>

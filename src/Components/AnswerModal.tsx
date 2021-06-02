@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { fadeIn } from "../styled-components/Animation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import useBooleanData from '../Hooks/useBooleanData';
 
 type ModalProps = {
   // handleCloseModal: () => void;
@@ -13,6 +14,7 @@ type ModalProps = {
 
 function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   const overLay = useRef(null);
+  const {onContentPageMode, onSetWriteMode} = useBooleanData()
 
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(false);
@@ -32,7 +34,10 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   };
 
   const handleExitYes = () => {
+    console.log('뒤로 이동')
     window.history.back();
+    onSetWriteMode(false)
+    onContentPageMode(true)
   };
   const handleExitNo = () => {
     setIsOpen(false);

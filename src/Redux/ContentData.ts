@@ -14,7 +14,7 @@ type Method = {
 };
 
 type InitState = {
-  contentData: any
+  contentData: any;
 };
 
 const initialState = {
@@ -24,19 +24,16 @@ const initialState = {
 function ContentDataReducer(state: InitState = initialState, action: ContentDataAction) {
   switch (action.type) {
     case CLICKMETHOD:
-        console.log(action.payload)
-        return { ...state, contentData: action.payload };
+      return { ...state, contentData: action.payload };
     case CHANGECONTENT:
-        console.log('변경해줘야됨')
-        console.log(action.payload)
-        const newState = {...state}
-        if(newState.contentData) {
-            newState.contentData.body = action.payload.body
-            newState.contentData.pureBody = action.payload.pureBody
-        }
-        return newState
+      const newState = { ...state };
+      if (newState.contentData) {
+        newState.contentData.body = action.payload.body;
+        newState.contentData.pureBody = action.payload.pureBody;
+      }
+      return newState;
     default:
-        return state;
+      return state;
   }
 }
 

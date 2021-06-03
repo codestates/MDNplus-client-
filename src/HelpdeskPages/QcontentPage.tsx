@@ -9,6 +9,7 @@ import useBooleanData from "../Hooks/useBooleanData";
 import useQcontentData from "../Hooks/useQcontentData";
 import axios from "axios";
 import userImg from "../img/userIcon_gray.png";
+import Loading from "../styled-components/Loading";
 
 type DataType = {
   question: {
@@ -85,7 +86,7 @@ type LoginType = {
 
 function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } = useQcontentData();
-  const { onSetWriteMode, onContentPageMode } = useBooleanData();
+  const { onContentPageMode } = useBooleanData();
   const { currentData } = QcontentState;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -146,6 +147,13 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     });
   };
 
+  const handleSearchTag = (tagName: string) => {
+    history.push({
+      pathname: "/SearchPage",
+      state: { tagName },
+    });
+  };
+
   useEffect(() => {
     //questionID 설정해주는 코드들
     onContentPageMode(true);
@@ -189,15 +197,15 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
               </QuestionBody>
               <TagBox>
                 {currentData.question.tags?.map((el, index: number) => (
-                  <Tag key={index}>{el}</Tag>
+                  <Tag key={index} onClick={() => handleSearchTag(el)}>
+                    {el}
+                  </Tag>
                 ))}
               </TagBox>
               <InfoBox_Q>
-                {currentData.question.userId.image ? <UserImg_Q src={currentData.question.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
+                {currentData.question.userId.image ? <UserImg_Q src={currentData.question.userId.image} /> : <UserImg_Q src={userImg} />}
                 <UserName_Q>{currentData.question.userId.nickName}</UserName_Q>
-                <Date_Q>{`${currentData.question.createdAt.substring(0, 4)}.${currentData.question.createdAt.substring(5, 7)}.${currentData.question.createdAt.substring(8, 10)} . ${
-                  Number(currentData.question.createdAt.substring(11, 13)) - 3
-                }: ${currentData.question.createdAt.substring(14, 16)}`}</Date_Q>
+                <Date_Q>{`${currentData.question.createdAt.substring(0, 4)}년 ${currentData.question.createdAt.substring(5, 7)}월 ${currentData.question.createdAt.substring(8, 10)}일`}</Date_Q>
                 {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
               </InfoBox_Q>
             </QuestionBox>
@@ -236,7 +244,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
           )}
         </Container>
       ) : (
-        <div>empty</div>
+        <Loading />
       )}
     </>
   );
@@ -341,6 +349,10 @@ const Tag = styled.span`
   color: #78909c;
   margin-right: 0.5rem;
   cursor: pointer;
+
+  &:hover {
+    color: #2196f3;
+  }
 `;
 
 const InfoBox_Q = styled.div`
@@ -384,21 +396,6 @@ const AnswerBtn = styled.button`
     font-size: 0.6rem;
   }
 `;
-
-//-----------------------------------답변 섹션-------------------------------------//
-
-// const AnswersNumBox = styled.div`
-// margin-left: 3rem;
-// border: 1px solid black;
-// width: 80%;
-// `;
-
-// const AnswersNum = styled.span`
-//   font-size: 1.5rem;
-//   font-weight: bold;
-
-//   color: ${props => props.color || 'black'}
-// `;
 
 const AnswerContainer = styled.div`
   background: #f6f6f6;
@@ -462,7 +459,9 @@ const AnswerTitle = styled.span`
   font-weight: bold;
 `;
 
-const AnswerBody = styled.div``;
+const AnswerBody = styled.div`
+  line-height: 2rem;
+`;
 
 const Date_A = styled.div`
   color: #757575;
@@ -470,7 +469,3 @@ const Date_A = styled.div`
   bottom: -3rem;
   right: 0rem;
 `;
-
-const WaitingMessage = styled.div`
-  color: #757575
-`

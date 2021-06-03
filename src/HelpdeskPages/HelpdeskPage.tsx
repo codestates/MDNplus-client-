@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useHelpData from "../Hooks/useHelpData";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
-import ideaIcon from "../img/idea.png";
 import helpIcon from "../img/question.png";
-import spinGIF from "../img/spinGIF.gif";
+import Loading from "../styled-components/Loading";
 
 type UserData = {
   githubId: null;
@@ -63,6 +62,13 @@ const HelpdeskPage = () => {
     });
   };
 
+  const handleSearchTag = (tagName: string) => {
+    history.push({
+      pathname: "/SearchPage",
+      state: { tagName },
+    });
+  };
+
   useEffect(() => {
     // 헬프데스크 메인페이지 렌더링에 필요한 데이터 받아오는 요청
     window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
@@ -73,15 +79,11 @@ const HelpdeskPage = () => {
     }
 
     axios.get("http://localhost:8080/helpdesk").then((res) => {
-      console.log(res);
       onStoreData(res.data);
     });
   }, []);
 
-  if(selectedQuestions)
-  console.log(selectedQuestions[0].pureBody)
-
-  return (
+  return selectedQuestions ? (
     <>
       <Container>
         <Stage>
@@ -141,7 +143,7 @@ const HelpdeskPage = () => {
               {selectedQuestions === null ? (
                 <div>로딩 중입니다</div>
               ) : (
-                selectedQuestions.map((el: any, idx: number) => (
+                selectedQuestions.map((el, idx: number) => (
                   <QuestionBox key={el._id}>
                     <TitleBox
                       onClick={() => {
@@ -156,17 +158,19 @@ const HelpdeskPage = () => {
                         handleClickQuestion(el);
                       }}
                     >
-                      {`${el.pureBody}`}
+                      {el.pureBody.slice(0, 150)} .......
                     </Body>
                     <TagBox>
                       {el.tags.map((el: string, idx: number) => (
-                        <Tag key={idx + 1}>{el}</Tag>
+                        <Tag key={idx + 1} onClick={() => handleSearchTag(el)}>
+                          {el}
+                        </Tag>
                       ))}
                     </TagBox>
                     <NumberBox>
                       <LikesNum>좋아요 {el.like}</LikesNum>
                       <AnswersNum>답변 {el.commentCount}</AnswersNum>
-                      <CreatedAt>날짜 {el.createdAt.slice(0, 10)}</CreatedAt>
+                      <CreatedAt>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</CreatedAt>
                     </NumberBox>
                   </QuestionBox>
                 ))
@@ -176,6 +180,8 @@ const HelpdeskPage = () => {
         </Stage>
       </Container>
     </>
+  ) : (
+    <Loading />
   );
 };
 
@@ -321,6 +327,12 @@ const Tag = styled.span`
   border-radius: 2rem;
   padding: 0.5rem 1rem 0.5rem 1rem;
   font-size: 0.7rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2196f3;
+    color: white;
+  }
 `;
 
 const NumberBox = styled.div`

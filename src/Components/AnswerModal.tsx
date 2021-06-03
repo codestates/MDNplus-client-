@@ -19,13 +19,8 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(false);
   };
-  const handleCloseIcon = () => {
-    setIsOpen(false);
-  };
 
   const handleAnswerYes = () => {
-    console.log("click");
-
     handleAnswerBtn();
   };
 
@@ -34,7 +29,6 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   };
 
   const handleExitYes = () => {
-    console.log("뒤로 이동");
     window.history.back();
     onSetWriteMode(false);
     onContentPageMode(true);
@@ -116,18 +110,6 @@ const ModalBox = styled.div`
   @media (max-width: 375px) {
     height: 9rem;
     width: 18rem;
-  }
-`;
-
-const CloseIcon = styled.div`
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  cursor: pointer;
-  transition: transform 300ms ease-in-out;
-
-  &:hover {
-    transform: rotate(180deg);
   }
 `;
 

@@ -1,4 +1,4 @@
-import styled, {keyframes} from 'styled-components'
+import styled, { keyframes } from "styled-components";
 
 export const fadeIn = keyframes`
   from {
@@ -7,16 +7,16 @@ export const fadeIn = keyframes`
   to {
     opacity: 1
   }
-`
+`;
 
 export const slideUp = keyframes`
   from {
     transform: translateY(20rem);
   }
   to {
-    transform: translateY(0px)
+    transform: translateY(0rem)
   }
-`
+`;
 
 export const slideUp_AppealBox = keyframes`
   from {
@@ -25,26 +25,115 @@ export const slideUp_AppealBox = keyframes`
   to {
     transform: translateY(0px)
   }
-`
-
-
+`;
 
 // 랜딩페이지
 export const slideUp_Intro = keyframes`
   from {
-    transform: translateY(5rem);
+    opacity: 0;
+    transform: translateY(7rem);
   }
   to {
+    opacity: 1;
     transform: translateY(0rem)
   }
-`
+`;
 
-export const example = keyframes`
+export const slideUp_short = keyframes`
   0% {
-    transform: translateY(20rem);
+    opacity: 0;
+    transform: translateY(3rem)
+  }
+  25% {
+    opacity: 0;
+    transform: translateY(3rem)
+  }
+
+  50% {
+    opacity: 0;
+    transform: translateY(3rem)
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0rem)
+  }
+`;
+
+export const fadeIn_img = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
   }
   100% {
-    transform: translateY(0rem);
+    opacity: 1;
   }
+`;
 
+export const slideLeft = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-50rem)
+  }
+  25% {
+    opacity: 0;
+    transform: translateX(-50rem)
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(-50rem)
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0rem)
+  }
+`;
+
+export const slideLeft_line = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-3rem)
+  }
+  25% {
+    opacity: 0;
+    transform: translateX(-3rem)
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(-3rem)
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0rem)
+  }
+`;
+
+export const slideRight = keyframes`
+  from {
+    transform: translateX(20rem)
+  }
+  to {
+    transform: translateX(0rem)
+  }
 `
+
+export const slideRight_line = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(3rem)
+  }
+  25% {
+    opacity: 0;
+    transform: translateX(3rem)
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(3rem)
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0rem)
+  }
+`;

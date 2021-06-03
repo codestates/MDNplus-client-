@@ -122,8 +122,7 @@ function MainPage() {
       </FilterBox>
       <Stage>
         {currentData === null ? (
-          // <div>로딩 중입니다</div>
-          <Loding src={lodingGif}></Loding>
+          <div>로딩 중입니다</div>
         ) : (
           currentData.map((el: any) => (
             <MethodBox key={el._id}>

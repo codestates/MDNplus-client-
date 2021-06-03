@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useBooleanData from "../Hooks/useBooleanData";
 import FooterComponent from "../Components/FooterComponent";
-import { fadeIn, slideUp, slideUp_Intro, example } from "../styled-components/Animation";
+import { fadeIn, slideUp, slideUp_Intro, slideUp_short, fadeIn_img, slideLeft, slideLeft_line, slideRight_line } from "../styled-components/Animation";
 import library from "../img/library.jpg";
 import monitor4 from "../img/monitor4.png";
 import monitor3 from "../img/monitor3.png";
@@ -21,29 +21,14 @@ import appeal1 from "../img/appeal1.png";
 import appeal2 from "../img/appeal2.png";
 import appeal3 from "../img/appeal2-1.png";
 import clockIcon from "../img/clockIcon.png";
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 
 const LandingPage = () => {
   const { onSetWriteMode } = useBooleanData();
   const [height, setHeight] = useState(0);
   const [currentY, setCurrentY] = useState(0);
-  const [isSelected, setIsSelected] = useState({
-    firstBox: true,
-    secondBox: false,
-    thirdBox: false,
-  });
-  const { firstBox, secondBox, thirdBox } = isSelected;
-  const history = useHistory()
 
-  const handleClickBox = (idx: number) => {
-    if (idx === 1) {
-      setIsSelected({ firstBox: true, secondBox: false, thirdBox: false });
-    } else if (idx === 2) {
-      setIsSelected({ firstBox: false, secondBox: true, thirdBox: false });
-    } else if (idx === 3) {
-      setIsSelected({ firstBox: false, secondBox: false, thirdBox: true });
-    }
-  };
+  const history = useHistory();
 
   useEffect(() => {
     onSetWriteMode(true);
@@ -60,6 +45,7 @@ const LandingPage = () => {
   }, [currentY]);
 
   console.log(currentY);
+  console.log("전체 높이", height);
   return (
     <Container>
       {currentY >= 640 ? (
@@ -72,116 +58,222 @@ const LandingPage = () => {
         </Nav2>
       ) : (
         <Nav>
-          <Logo onClick={(() => {history.push('/LandingPage')})}>MDN+</Logo>
+          <Logo
+            onClick={() => {
+              history.push("/LandingPage");
+            }}
+          >
+            MDN+
+          </Logo>
           <Nav_RightBox>
-            <QuestionsBtn onClick={(() => {history.push('/FAQ')})}>자주 하는 질문</QuestionsBtn>
-            <HomeBtn onClick={(() => {history.push('/')})}>시작하기</HomeBtn>
+            <QuestionsBtn
+              onClick={() => {
+                history.push("/FAQ");
+              }}
+            >
+              자주 하는 질문
+            </QuestionsBtn>
+            <HomeBtn
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              시작하기
+            </HomeBtn>
           </Nav_RightBox>
         </Nav>
       )}
       <IntroBoxContainer>
-        <IntroBox>
-          <IntroBox_Body1>개발이</IntroBox_Body1>
-          <IntroBox_Body2>편안해지는 공간</IntroBox_Body2>
+        <LeftContainer>
+          <IntroBox>
+            <IntroBox_Body1>개발이</IntroBox_Body1>
+            <IntroBox_Body2>편안해지는 공간</IntroBox_Body2>
 
-          <AppBtnBox>
-            <GoogleBtn>
-              <AppLogo src={googleLogo}></AppLogo>
-              Google Play
-            </GoogleBtn>
-            <AppStoreBtn>
-              <AppLogo src={appleLogo}></AppLogo>
-              App Store
-            </AppStoreBtn>
-          </AppBtnBox>
-          <CountBox>
+            <AppBtnBox>
+              <GoogleBtn>
+                <AppLogo src={googleLogo}></AppLogo>
+                Google Play
+              </GoogleBtn>
+              <AppStoreBtn>
+                <AppLogo src={appleLogo}></AppLogo>
+                App Store
+              </AppStoreBtn>
+            </AppBtnBox>
             <CountBox>
-              <EditCountBox>
-                <CountTitle>누적 문서 수정 수</CountTitle>
-                <Count>35,072</Count>
-              </EditCountBox>
-              <HelpCountBox>
-                <CountTitle>누적 질문 / 답변 수</CountTitle>
-                <Count>3,590</Count>
-              </HelpCountBox>
+              <CountBox>
+                <EditCountBox>
+                  <CountTitle>누적 문서 수정 수</CountTitle>
+                  <Count>35,072</Count>
+                </EditCountBox>
+                <HelpCountBox>
+                  <CountTitle>누적 질문 / 답변 수</CountTitle>
+                  <Count>3,590</Count>
+                </HelpCountBox>
+              </CountBox>
             </CountBox>
-          </CountBox>
-        </IntroBox>
-        <ImgBox>
-          <Img src={monitor3}></Img>
-        </ImgBox>
+          </IntroBox>
+        </LeftContainer>
+        <RightContainer>
+          <ImgBox>
+            <Img src={monitor3}></Img>
+          </ImgBox>
+        </RightContainer>
       </IntroBoxContainer>
-      {/* <StartBtn>시작하기</StartBtn> */}
+
+      {currentY >= 260 ? (
+        <TimeContainer_ON>
+          <TimeBox>
+            <TimeImg src={clockIcon}></TimeImg>
+            <TimeBoxTitle>MDN+로 아낀 개발 검색 시간</TimeBoxTitle>
+            <Time>153,352분</Time>
+            <TimeSub>* 2021년 6월 설문조사 기준</TimeSub>
+          </TimeBox>
+        </TimeContainer_ON>
+      ) : (
+        <TimeContainer_OFF>
+          <TimeBox>
+            <TimeImg src={clockIcon}></TimeImg>
+            <TimeBoxTitle>MDN+로 아낀 개발 검색 시간</TimeBoxTitle>
+            <Time>153,352분</Time>
+            <TimeSub>* 2021년 6월 설문조사 기준</TimeSub>
+          </TimeBox>
+        </TimeContainer_OFF>
+      )}
+
+      {currentY >= 800 ? (
+        <AppealBox1Container_ON>
+          <PreviewBox>
+            {/* <SubBox1></SubBox1> */}
+            <PreviewImg src={appeal1}></PreviewImg>
+          </PreviewBox>
+          <AppealBox>
+            <UnderLine1></UnderLine1>
+            <AppealTitle>MDN+ 위키</AppealTitle>
+            <AppealBody>개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!</AppealBody>
+          </AppealBox>
+        </AppealBox1Container_ON>
+      ) : (
+        <AppealBox1Container_OFF>
+          <PreviewBox>
+            {/* <SubBox1></SubBox1> */}
+            <PreviewImg src={appeal1}></PreviewImg>
+          </PreviewBox>
+          <AppealBox>
+            <UnderLine1></UnderLine1>
+            <AppealTitle>MDN+ 위키</AppealTitle>
+            <AppealBody>개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!</AppealBody>
+          </AppealBox>
+        </AppealBox1Container_OFF>
+      )}
+
       <EmptySpace></EmptySpace>
-      {/* <TimeContainer>
-        <TimeBox>
-          <TimeImg src={clockIcon}></TimeImg>
-          <TimeBoxTitle>MDN+로 아낀 개발 검색 시간</TimeBoxTitle>
-          <Time>153,352분</Time>
-        </TimeBox>
-      </TimeContainer> */}
-      
-      <AppealBox1Container>
-        <PreviewBox>
-          {/* <SubBox1></SubBox1> */}
-          <PreviewImg src={appeal1}></PreviewImg>
-        </PreviewBox>
-        <AppealBox>
-          <UnderLine1></UnderLine1>
-          <AppealTitle>MDN+ 위키</AppealTitle>
-          <AppealBody>개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!</AppealBody>
-        </AppealBox>
-      </AppealBox1Container>
-      <EmptySpace></EmptySpace>
-      <AppealBox2Container>
-        <AppealBox>
-          <UnderLine2></UnderLine2>
-          <AppealTitle>헬프데스크</AppealTitle>
-          <AppealBody>개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?</AppealBody>
-          <AppealBody>헬프데스크에 질문하세요!</AppealBody>
-        </AppealBox>
-        <PreviewBox>
-          {/* <SubBox2></SubBox2> */}
-          <PreviewImg src={appeal2}></PreviewImg>
-        </PreviewBox>
-      </AppealBox2Container>
+
+      {currentY >= 1550 ? (
+        <AppealBox2Container_ON>
+          <AppealBox>
+            <UnderLine2></UnderLine2>
+            <AppealTitle>헬프데스크</AppealTitle>
+            <AppealBody>개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?</AppealBody>
+            <AppealBody>헬프데스크에 질문하세요!</AppealBody>
+          </AppealBox>
+          <PreviewBox>
+            {/* <SubBox2></SubBox2> */}
+            <PreviewImg src={appeal2}></PreviewImg>
+          </PreviewBox>
+        </AppealBox2Container_ON>
+      ) : (
+        <AppealBox2Container_OFF>
+          <AppealBox>
+            <UnderLine2></UnderLine2>
+            <AppealTitle>헬프데스크</AppealTitle>
+            <AppealBody>개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?</AppealBody>
+            <AppealBody>헬프데스크에 질문하세요!</AppealBody>
+          </AppealBox>
+          <PreviewBox>
+            {/* <SubBox2></SubBox2> */}
+            <PreviewImg src={appeal2}></PreviewImg>
+          </PreviewBox>
+        </AppealBox2Container_OFF>
+      )}
+
       {/* <EmptySpace></EmptySpace> */}
-      <ReviewBoxContainer>
-        <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
-        <ReviewBoxSubTitle>언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이 없어졌어요.</ReviewBoxSubTitle>
-        <ReviewFlexBox>
-          <ReviewBox>
-            <ReviewerBox>
-              <ReviewerImg src={avatar1}></ReviewerImg>
-              <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
-            </ReviewerBox>
-            <ReviewBody>
-              MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데 MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요. 잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서 동시에
-              공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
-            </ReviewBody>
-          </ReviewBox>
-          <ReviewBox>
-            <ReviewerBox>
-              <ReviewerImg src={avatar2}></ReviewerImg>
-              <Reviewer>주니어 개발자 문코딩</Reviewer>
-            </ReviewerBox>
-            <ReviewBody>
-              처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해 며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을 달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할 것
-              같습니다. 좋은 서비스 감사합니다 :)
-            </ReviewBody>
-          </ReviewBox>
-          <ReviewBox>
-            <ReviewerBox>
-              <ReviewerImg src={avatar3}></ReviewerImg>
-              <Reviewer>개발 3년차 조코딩</Reviewer>
-            </ReviewerBox>
-            <ReviewBody>
-              MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다. 나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니, 면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
-              있었습니다. 정말 감사합니다 !
-            </ReviewBody>
-          </ReviewBox>
-        </ReviewFlexBox>
-      </ReviewBoxContainer>
+
+      {currentY >= 2350 ? (
+        <ReviewBoxContainer_ON>
+          <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
+          <ReviewBoxSubTitle>언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이 없어졌어요.</ReviewBoxSubTitle>
+          <ReviewFlexBox>
+            <ReviewBox>
+              <ReviewerBox>
+                <ReviewerImg src={avatar1}></ReviewerImg>
+                <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
+              </ReviewerBox>
+              <ReviewBody>
+                MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데 MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요. 잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서
+                동시에 공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
+              </ReviewBody>
+            </ReviewBox>
+            <ReviewBox>
+              <ReviewerBox>
+                <ReviewerImg src={avatar2}></ReviewerImg>
+                <Reviewer>주니어 개발자 문코딩</Reviewer>
+              </ReviewerBox>
+              <ReviewBody>
+                처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해 며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을 달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할
+                것 같습니다. 좋은 서비스 감사합니다 :)
+              </ReviewBody>
+            </ReviewBox>
+            <ReviewBox>
+              <ReviewerBox>
+                <ReviewerImg src={avatar3}></ReviewerImg>
+                <Reviewer>개발 3년차 조코딩</Reviewer>
+              </ReviewerBox>
+              <ReviewBody>
+                MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다. 나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니, 면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
+                있었습니다. 정말 감사합니다 !
+              </ReviewBody>
+            </ReviewBox>
+          </ReviewFlexBox>
+        </ReviewBoxContainer_ON>
+      ) : (
+        <ReviewBoxContainer_OFF>
+          <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
+          <ReviewBoxSubTitle>언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이 없어졌어요.</ReviewBoxSubTitle>
+          <ReviewFlexBox>
+            <ReviewBox>
+              <ReviewerBox>
+                <ReviewerImg src={avatar1}></ReviewerImg>
+                <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
+              </ReviewerBox>
+              <ReviewBody>
+                MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데 MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요. 잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서
+                동시에 공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
+              </ReviewBody>
+            </ReviewBox>
+            <ReviewBox>
+              <ReviewerBox>
+                <ReviewerImg src={avatar2}></ReviewerImg>
+                <Reviewer>주니어 개발자 문코딩</Reviewer>
+              </ReviewerBox>
+              <ReviewBody>
+                처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해 며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을 달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할
+                것 같습니다. 좋은 서비스 감사합니다 :)
+              </ReviewBody>
+            </ReviewBox>
+            <ReviewBox>
+              <ReviewerBox>
+                <ReviewerImg src={avatar3}></ReviewerImg>
+                <Reviewer>개발 3년차 조코딩</Reviewer>
+              </ReviewerBox>
+              <ReviewBody>
+                MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다. 나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니, 면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
+                있었습니다. 정말 감사합니다 !
+              </ReviewBody>
+            </ReviewBox>
+          </ReviewFlexBox>
+        </ReviewBoxContainer_OFF>
+      )}
+
       <NewsContainer>
         <NewsIntroBox>
           <NewsIntro1>MDN+</NewsIntro1>
@@ -299,42 +391,36 @@ const HomeBtn = styled.span`
 const IntroBoxContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 44.5rem;
+  height: 48rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
-<<<<<<< HEAD
-  background: #536DFE;
-=======
-  color: white;
   background: #cfd8dc;
->>>>>>> e38a806de253f6345831569f312baa4fdc630b6b
+`;
+
+const LeftContainer = styled.div`
+  // border: 1px solid blue;
+  display: flex;
+  align-items: center;
+`;
+
+const RightContainer = styled.div`
+  // border: 1px solid
 `;
 
 const IntroBox = styled.div`
+  // border: 1px solid red;
   margin-left: 2rem;
   width: 30rem;
   margin-top: -8rem;
-
-  animation-duration: 2s;
-  animation-timing-function: ease-out;
-  animation-name: ${fadeIn};
-  animation-fill-mode: forwards;
 `;
 
 const IntroBox_Body1 = styled.div`
   font-size: 3rem;
   margin: 1rem 0 1rem 0;
-<<<<<<< HEAD
-  color: white;
-  transition: 1s ease-in-out;
-=======
   color: black;
-  // transition: 1s ease-in-out;
->>>>>>> e38a806de253f6345831569f312baa4fdc630b6b
 
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_Intro};
   animation-fill-mode: forwards;
 `;
@@ -342,13 +428,11 @@ const IntroBox_Body1 = styled.div`
 const IntroBox_Body2 = styled.div`
   font-size: 3rem;
   margin: 1rem 0 1rem 0;
-  color: white;
+  color: black;
   font-weight: bold;
 
-  transition: 1s ease-in-out;
-
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_Intro};
   animation-fill-mode: forwards;
 `;
@@ -359,6 +443,11 @@ const AppBtnBox = styled.div`
   margin-top: 3rem;
   display: flex;
   align-items: center;
+
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(0.91, 0.2, 0.83, 0.67);
+  animation-name: ${slideUp_short};
+  animation-fill-mode: forwards;
 `;
 
 const AppLogo = styled.img`
@@ -402,13 +491,30 @@ const CountBox = styled.div`
   grid-template-columns: 1fr 1fr;
   align-items: center;
   background: white;
+  z-index: 1;
+
+  animation-duration: 1.9s;
+  animation-timing-function: cubic-bezier(0.56, 0.14, 0.84, 0.76);
+  animation-name: ${slideLeft};
+  animation-fill-mode: forwards;
 `;
+
 const HelpCountBox = styled.div`
   text-align: center;
+
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.67, 0.07, 0.31, 0.95);
+  animation-name: ${slideUp_short};
+  animation-fill-mode: forwards;
 `;
 
 const EditCountBox = styled.div`
   text-align: center;
+
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.67, 0.07, 0.31, 0.95);
+  animation-name: ${slideUp_short};
+  animation-fill-mode: forwards;
 `;
 
 const CountTitle = styled.div`
@@ -429,12 +535,12 @@ const ImgBox = styled.div`
 
 const Img = styled.img`
   width: 40rem;
-  height: 44.5rem;
+  height: 48rem;
   object-fit: cover;
 
   animation-duration: 2s;
   animation-timing-function: ease-out;
-  animation-name: ${fadeIn};
+  animation-name: ${fadeIn_img};
   animation-fill-mode: forwards;
 `;
 
@@ -449,9 +555,25 @@ const StartBtn = styled.span`
 `;
 
 //------------------------시간 섹션-------------------------------//
-const TimeContainer = styled.div`
+const TimeContainer_ON = styled.div`
+  opacity: 1;
   width: 100%;
-  height: 18rem;
+  height: 30rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
+`;
+
+const TimeContainer_OFF = styled.div`
+  opacity: 0;
+  width: 100%;
+  height: 30rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -483,10 +605,28 @@ const Time = styled.div`
   font-weight: bold;
 `;
 
+const TimeSub = styled.div``;
+
 //------------------------사용하는 이유 섹션-------------------------//
 
-const AppealBox1Container = styled.div`
+const AppealBox1Container_ON = styled.div`
   // border: 1px solid blue;
+  opacity: 1;
+  width: 100%;
+  height: 45rem;
+  display: grid;
+  grid-template-columns: 0.6fr 0.4fr;
+  background: #fafafa;
+
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
+`;
+
+const AppealBox1Container_OFF = styled.div`
+  // border: 1px solid blue;
+  opacity: 0;
   width: 100%;
   height: 45rem;
   display: grid;
@@ -494,8 +634,24 @@ const AppealBox1Container = styled.div`
   background: #fafafa;
 `;
 
-const AppealBox2Container = styled.div`
+const AppealBox2Container_ON = styled.div`
   // border: 1px solid red;
+  opacity: 1;
+  width: 100%;
+  height: 45rem;
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
+  background: white;
+
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
+`;
+
+const AppealBox2Container_OFF = styled.div`
+  // border: 1px solid red;
+  opacity: 0;
   width: 100%;
   height: 45rem;
   display: grid;
@@ -518,6 +674,11 @@ const PreviewImg = styled.img`
   object-fit: cover;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   z-index: 1;
+
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-name: ${slideUp_short};
+  animation-fill-mode: forwards;
 `;
 
 // const SubBox1 = styled.div`
@@ -545,20 +706,37 @@ const AppealBox = styled.div`
   align-items: center;
   flex-direction: column;
   position: relative;
+
+  animation-duration: 1.7s;
+  animation-timing-function: ease-out;
+  animation-name: ${slideUp_short};
+  animation-fill-mode: forwards;
 `;
+
 const UnderLine1 = styled.div`
   width: 4rem;
   border: 1px solid #bdbdbd;
   position: absolute;
   top: 14rem;
   left: -2rem;
+
+  animation-duration: 2.5s;
+  animation-timing-function: ease-out;
+  animation-name: ${slideLeft_line};
+  animation-fill-mode: forwards;
 `;
+
 const UnderLine2 = styled.div`
   width: 4rem;
   border: 1px solid #bdbdbd;
   position: absolute;
   top: 14rem;
   right: -2rem;
+
+  animation-duration: 2.5s;
+  animation-timing-function: ease-out;
+  animation-name: ${slideRight_line};
+  animation-fill-mode: forwards;
 `;
 
 const AppealTitle = styled.div`
@@ -579,7 +757,24 @@ const AppealBody = styled.div`
 
 //---------------------------리뷰 섹션----------------------------//
 
-const ReviewBoxContainer = styled.div`
+const ReviewBoxContainer_ON = styled.div`
+  opacity: 1;
+  width: 100%;
+  height: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #eeeeee;
+
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
+`;
+
+const ReviewBoxContainer_OFF = styled.div`
+  opacity: 0;
   width: 100%;
   height: 50rem;
   display: flex;

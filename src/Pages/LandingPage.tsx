@@ -19,7 +19,7 @@ import googleLogo from "../img/googleLogo.png";
 import appleLogo from "../img/appleLogo.png";
 import appeal1 from "../img/appeal1.png";
 import appeal2 from "../img/appeal2.png";
-import appeal3 from "../img/appeal2-1.png";
+import appeal3 from "../img/appeal3.png";
 import clockIcon from "../img/clockIcon.png";
 import { useHistory } from 'react-router';
 
@@ -111,19 +111,20 @@ const LandingPage = () => {
           <Img src={monitor3}></Img>
         </ImgBox>
       </IntroBoxContainer>
-      {/* <StartBtn>시작하기</StartBtn> */}
       <EmptySpace></EmptySpace>
-      {/* <TimeContainer>
+      {/* <StartBtn>시작하기</StartBtn> */}
+      <TimeContainer>
         <TimeBox>
           <TimeImg src={clockIcon}></TimeImg>
           <TimeBoxTitle>MDN+로 아낀 개발 검색 시간</TimeBoxTitle>
           <Time>153,352분</Time>
+          <TimeSub>* 2021년 6월 설문조사 기준</TimeSub>
         </TimeBox>
-      </TimeContainer> */}
+      </TimeContainer>
       
       <AppealBox1Container>
         <PreviewBox>
-          {/* <SubBox1></SubBox1> */}
+          <SubBox1></SubBox1>
           <PreviewImg src={appeal1}></PreviewImg>
         </PreviewBox>
         <AppealBox>
@@ -141,8 +142,8 @@ const LandingPage = () => {
           <AppealBody>헬프데스크에 질문하세요!</AppealBody>
         </AppealBox>
         <PreviewBox>
-          {/* <SubBox2></SubBox2> */}
-          <PreviewImg src={appeal2}></PreviewImg>
+          <SubBox2></SubBox2>
+          <PreviewImg src={appeal3}></PreviewImg>
         </PreviewBox>
       </AppealBox2Container>
       {/* <EmptySpace></EmptySpace> */}
@@ -234,9 +235,10 @@ const EmptySpace = styled.div`
 `;
 
 const Container = styled.div`
+  // border: 1px solid red;
   display: flex;
   width: 100%;
-  // height: 100vw;
+  height: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -297,9 +299,10 @@ const HomeBtn = styled.span`
 `;
 
 const IntroBoxContainer = styled.div`
+  // border: 2px solid red;
   position: relative;
   width: 100%;
-  height: 44.5rem;
+  height: 50rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -420,7 +423,7 @@ const ImgBox = styled.div`
 
 const Img = styled.img`
   width: 40rem;
-  height: 44.5rem;
+  height: 50rem;
   object-fit: cover;
 
   animation-duration: 2s;
@@ -511,24 +514,28 @@ const PreviewImg = styled.img`
   z-index: 1;
 `;
 
-// const SubBox1 = styled.div`
-//   position: absolute;
-//   top: 0rem;
-//   left: 0rem;
-//   width: 13rem;
-//   height: 100%;
-//   background: #cfd8dc;
-// `;
+const SubBox1 = styled.div`
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 13rem;
+  height: 100%;
+  background: #cfd8dc;
+`;
 
-// const SubBox2 = styled.div`
-// position: absolute;
-// top: 0rem;
-// right: 0rem;
-// width: 13rem;
-// height: 100%;
-// background: #cfd8dc;
+const SubBox2 = styled.div`
+position: absolute;
+top: 0rem;
+right: 0rem;
+width: 13rem;
+height: 100%;
+background: #cfd8dc;
 
-// `;
+`;
+
+const TimeSub = styled.span`
+  margin-top: 1rem;
+`
 
 const AppealBox = styled.div`
   // border: 1px solid black;

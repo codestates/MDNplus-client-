@@ -154,9 +154,7 @@ const SideArea = styled.div`
 
 const Body = styled.div`
   grid-area: main;
-  margin: 0;
-  width: 100%;
-  height: 100%;
+  margin: 1rem 0 10rem 1rem;
 `;
 const Footer = styled.div`
   grid-area: footer;

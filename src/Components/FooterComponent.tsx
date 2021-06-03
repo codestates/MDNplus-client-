@@ -4,13 +4,8 @@ function FooterComponent() {
   return (
     <Container>
       <ContentContainer>
-        <TopContent>MDN+ </TopContent>
-        <BottomContent>
-          Front-End : 문성석 김준래
-          <br />
-          Back-End : 조은길 김승용
-          <br />
-        </BottomContent>
+        <TopContent>BO3 Company &nbsp; </TopContent>
+        <BottomContent>&nbsp;Front-End : 문성석 김준래 &nbsp; &nbsp;Back-End : 조은길 김승용</BottomContent>
       </ContentContainer>
     </Container>
   );
@@ -21,7 +16,7 @@ export default FooterComponent;
 const Container = styled.div`
   background: #1a237e;
   width: 100%;
-  height: 13rem;
+  height: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,19 +26,22 @@ const Container = styled.div`
 `;
 
 const ContentContainer = styled.div`
+  display: flex;
+
+  align-items: center;
   font-size: 1.3rem;
-  padding: 3rem 0 3rem 0;
+
   color: #e0e0e0;
   width: 70%;
   height: 100%;
 `;
 
-const TopContent = styled.div`
-  padding-bottom: 1rem;
-  font-size: 3rem;
+const TopContent = styled.span`
+  padding-bottom: 0.5rem;
+  font-size: 2rem;
 `;
 
-const BottomContent = styled.div`
+const BottomContent = styled.span`
   line-height: 2rem;
   font-size: 1rem;
 `;

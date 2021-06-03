@@ -268,9 +268,6 @@ const EmptySpace = styled.div`
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  width: 100%;
-  // height: 100vh;
-  // flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -503,10 +500,10 @@ const TimeContainer_OFF = styled.div`
   opacity: 0;
   width: 100%;
   height: 30rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // background: white;
 `;
 
 const TimeBox = styled.div`
@@ -534,7 +531,9 @@ const Time = styled.div`
   font-weight: bold;
 `;
 
-const TimeSub = styled.div``;
+const TimeSub = styled.div`
+  margin-top: 0.3rem;
+`;
 
 //------------------------사용하는 이유 섹션-------------------------//
 
@@ -554,13 +553,9 @@ const AppealBox1Container_ON = styled.div`
 `;
 
 const AppealBox1Container_OFF = styled.div`
-  // border: 1px solid blue;
   opacity: 0;
   width: 100%;
   height: 45rem;
-  display: grid;
-  grid-template-columns: 0.6fr 0.4fr;
-  background: #fafafa;
 `;
 
 const AppealBox2Container_ON = styled.div`
@@ -579,13 +574,9 @@ const AppealBox2Container_ON = styled.div`
 `;
 
 const AppealBox2Container_OFF = styled.div`
-  // border: 1px solid red;
   opacity: 0;
   width: 100%;
   height: 45rem;
-  display: grid;
-  grid-template-columns: 0.4fr 0.6fr;
-  background: white;
 `;
 
 const PreviewBox = styled.div`
@@ -614,7 +605,7 @@ const SubBox1 = styled.div`
   position: absolute;
   top: 0rem;
   left: 0rem;
-  width: 20rem;
+  width: 23vw;
   height: 100%;
   background: #cfd8dc;
 
@@ -628,7 +619,7 @@ const SubBox2 = styled.div`
   position: absolute;
   top: 0rem;
   right: 0rem;
-  width: 20rem;
+  width: 23vw;
   height: 100%;
   background: #cfd8dc;
 
@@ -715,11 +706,6 @@ const ReviewBoxContainer_OFF = styled.div`
   opacity: 0;
   width: 100%;
   height: 50rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background: #eeeeee;
 `;
 
 const ReviewFlexBox = styled.div`

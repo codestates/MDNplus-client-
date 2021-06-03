@@ -28,16 +28,9 @@ type InitState = {
   objectData: null | Method[];
   mathData: null | Method[];
   stringData: null | Method[];
-  promiseData: null | Method[]
+  promiseData: null | Method[];
   currentData: null | Method[];
   userNickName: null | string;
-  // allData: any;
-  // arrayData: any;
-  // objectData: any;
-  // mathData: any;
-  // stringData: any;
-  // currentData: any;
-  // userNickName: null | string;
 };
 
 // 초기 state 설정
@@ -55,7 +48,6 @@ const initialState = {
 function AllDataReducer(state: InitState = initialState, action: AllDataAction) {
   switch (action.type) {
     case FILTER:
-      console.log(action.payload);
       const arrayData = action.payload.filter((el) => {
         const methodTitle = el.title.split(".")[0];
         return methodTitle === "Array";

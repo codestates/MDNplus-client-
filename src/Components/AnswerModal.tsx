@@ -19,13 +19,8 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(false);
   };
-  const handleCloseIcon = () => {
-    setIsOpen(false);
-  };
 
   const handleAnswerYes = () => {
-    console.log("click");
-
     handleAnswerBtn();
   };
 
@@ -34,7 +29,6 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   };
 
   const handleExitYes = () => {
-    console.log("뒤로 이동");
     window.history.back();
     onSetWriteMode(false);
     onContentPageMode(true);
@@ -51,6 +45,7 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
         {btnName === "답변" ? (
           <>
             <AskInfo>답변을 등록하시겠습니까?</AskInfo>
+            {/* <ErrorMessage>* 답변을 완성해주세요.</ErrorMessage> */}
             <ContentContainer>
               <BtnBox>
                 <CancelBtn onClick={handleAnswerNo}>취소</CancelBtn>
@@ -104,6 +99,7 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.6);
   cursor: pointer;
 `;
+
 const ModalBox = styled.div`
   position: relative;
   width: 25rem;
@@ -116,18 +112,6 @@ const ModalBox = styled.div`
   @media (max-width: 375px) {
     height: 9rem;
     width: 18rem;
-  }
-`;
-
-const CloseIcon = styled.div`
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  cursor: pointer;
-  transition: transform 300ms ease-in-out;
-
-  &:hover {
-    transform: rotate(180deg);
   }
 `;
 
@@ -144,16 +128,20 @@ const AskInfo = styled.div`
 
   left: 0;
   color: #616161;
+  margin-bottom: 0.5rem;
+
 `;
 
-export const BtnBox = styled.div`
+const BtnBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
   margin-right: -2rem;
-  margin-top: 4rem;
+  margin-top: 2rem;
+  position: relative;
 `;
-export const CancelBtn = styled.button`
+
+const CancelBtn = styled.button`
   border: none;
   margin-right: 1rem;
   background: none;
@@ -162,10 +150,18 @@ export const CancelBtn = styled.button`
   font-size: 1rem;
 `;
 
-export const SubmitBtn = styled.button`
+const SubmitBtn = styled.button`
   border: none;
   background: none;
   cursor: pointer;
   color: #0055fa;
   font-size: 1rem;
 `;
+
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 5rem;
+  left: 2.5rem;
+`

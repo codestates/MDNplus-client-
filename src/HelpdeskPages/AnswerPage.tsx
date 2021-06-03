@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { RootState } from "../Redux";
@@ -12,7 +11,6 @@ import { ExitBtn, SubmitBtn, HelpBtn, BtnBox } from "../styled-components/Post";
 import userImg from "../img/userIcon_gray.png";
 import axios from "axios";
 import HelpModal from "../Components/HelpModal";
-import useAllData from "../Hooks/useAllData";
 import userIcon from "../img/userIcon_gray.png";
 
 type PropsOption = {
@@ -27,7 +25,6 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
   const previewRef = useRef<any>(null);
-  const history = useHistory();
   const [userInfo, setUserInfo] = useState({
     img: "",
     nickName: "",
@@ -39,24 +36,18 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
   };
 
   const handleBtns = (e: string) => {
-    console.log(e);
     setbtnName(e);
     setIsOpen(() => !isOpen);
   };
 
   const handleAnswerBtn = () => {
     const previewValues = previewRef.current.innerText;
-    console.log(previewValues);
     const pureContentArr = previewValues.split("님의 답변").slice(1);
-    console.log(pureContentArr);
     let pureContent = "";
     for (let i = 0; i < pureContentArr.length; i++) {
       pureContent = pureContent + pureContentArr[i];
     }
-    console.log(pureContent);
-    console.log("답변 달림");
     axios.post("http://localhost:8080/comment", { questionId: displayQuestion?._id, content: writing, pureContent }, { withCredentials: true }).then((res) => {
-      console.log(res);
       setIsOpen(() => !isOpen);
       window.history.back();
     });
@@ -84,7 +75,6 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
             <ReactMarkdown children={displayQuestion.body} />
           </QuestionBody>
           <InfoBox_Q>
-            {displayQuestion.userId.image}
             {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
             <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
             <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
@@ -92,13 +82,7 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
         </QuestionBox>
         <WritingArea>
           <WritingTitle>나의 답변</WritingTitle>
-          <Body
-            id="text"
-            value={writing}
-            placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
-              `}
-            onChange={handleChange}
-          ></Body>
+          <Body id="text" value={writing} placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.`} onChange={handleChange} />
         </WritingArea>
         {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
       </LeftContainer>
@@ -106,16 +90,15 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
       <RightContainer ref={previewRef}>
         <PreviewTitle>
           {userInfo.img === "" ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={userInfo.img} />}
-
           <UserInfoName>{userInfo.nickName} 님의 답변</UserInfoName>
         </PreviewTitle>
         <ReactMarkdown children={writing} components={Components} />
       </RightContainer>
-        <BtnBox>
+      <BtnBox>
         <ExitBtn onClick={() => handleBtns("나가기")}> 나가기 </ExitBtn>
         <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
         <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
-        </BtnBox>
+      </BtnBox>
     </Container>
   );
 }
@@ -135,7 +118,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   grid-template-columns: repeat(2, 1fr);
-
 
   @media (max-width: 375px) {
     display: grid;
@@ -228,7 +210,7 @@ const WritingTitle = styled.div`
 `;
 
 const Body = styled.textarea`
-  width: 100%;
+  width: 90%;
   height: 60%;
   border: none;
   outline: none;

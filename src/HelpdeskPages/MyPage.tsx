@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { allDataAction } from "../Redux/MyPageData";
 import { RootState } from "../Redux";
-import { useHistory, useLocation } from "react-router-dom";
-import { currentQData } from "../Redux/QcontentData";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import userIcon from "../img/userIcon_gray.png";
 import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
-
-// axios.defaults.withCredentials = true;
+import Loading from "../styled-components/Loading";
 
 type QuestionType = {
   tags: string[];
@@ -49,7 +47,6 @@ function MyPage() {
   const { onContentPageMode } = useBooleanData();
 
   useEffect(() => {
-    // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
     axios.get("http://localhost:8080/helpdesk/me", { withCredentials: true }).then((res) => {
       console.log(res);
       dispatch(allDataAction(res.data));
@@ -58,14 +55,7 @@ function MyPage() {
     console.log(history);
   }, []);
 
-  //나의 질문에는 질문자가 질문한 제목,내용,날짜
-  //나의 답변에는 답변된 질문의 제목과, 답변내용
   const handleMyQuestions = (el: QuestionType) => {
-    //myPage 에서 클릭한 question Id 값으로 요청보내면됨 Q컨텐트페이지에서 데이터 받게됨.
-    // dispatch(currentQData(el));
-
-    // 마이페이지에서 질문을 클릭했을 때, 해당하는 질문의 데이터들을 받아오는 요청(질문의 ID가 params로 필요)
-    // axios.get('http://localhost:80')
     console.log("QcontentPage로 이동할거");
 
     history.push({
@@ -101,7 +91,7 @@ function MyPage() {
   }, []);
 
   return mdnAllData === null || mdnAllData === undefined ? (
-    <EmptyComment> 비어있습니다</EmptyComment>
+    <Loading />
   ) : (
     <>
       <Container>
@@ -121,18 +111,13 @@ function MyPage() {
           <RightContainer>
             {isQuestion ? (
               mdnAllData.questions.length === 0 ? (
-                <EmptyComment>비어있습니다</EmptyComment>
+                <EmptyComment>질문이 없습니다</EmptyComment>
               ) : (
                 <QuestionContainer>
                   {mdnAllData.questions.map((el) => (
                     <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
                       <QuestionTitle>{el.title}</QuestionTitle>
                       <QuestionBody>{el.pureBody}</QuestionBody>
-                      {/* <div>
-                      {el.tags.map((el, index: number) => (
-                        <QuestionTag key={index.toString()}>{el}</QuestionTag>
-                      ))}
-                    </div> */}
                       <QuestionLastLine>
                         <QuestionDate>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
                         <QuestionAnswersNum>답변수 {el.commentCount}</QuestionAnswersNum>
@@ -143,17 +128,13 @@ function MyPage() {
                 </QuestionContainer>
               )
             ) : mdnAllData.comments.length === 0 ? (
-              <EmptyComment>비어있음</EmptyComment>
+              <EmptyComment>답변이 없습니다</EmptyComment>
             ) : (
               <QuestionContainer>
                 {mdnAllData?.comments.map((el) => (
                   <QuestionBox key={el._id} onClick={() => handleMyAnswers(el)}>
                     <QuestionTitle>{el.questionId.title}</QuestionTitle>
                     <QuestionBody>{el.content}</QuestionBody>
-                    {/* <QuestionLastLine>
-                      <QuestionLikes> 좋아요: &nbsp;{el.like}</QuestionLikes>
-                      <QuestionDate>{el.createdAt.substring(0, 10)}</QuestionDate>
-                    </QuestionLastLine> */}
                     <QuestionLastLine>
                       <QuestionDate>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
                       <QuestionLikes> 좋아요 {el.like}</QuestionLikes>

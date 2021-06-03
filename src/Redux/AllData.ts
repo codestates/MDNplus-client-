@@ -4,8 +4,6 @@ const CHANGEFILTER = "AllData/CHANGEFILTER" as const;
 const USERNICKNAME = "AllData/USERNICKNAME" as const;
 
 // 액션 생성 함수
-// export const filter = (data: any) => ({ type: FILTER, payload: data });
-// export const changeFilter = (data: any) => ({ type: CHANGEFILTER, payload: data });
 export const filter = (data: Method[]) => ({ type: FILTER, payload: data });
 export const changeFilter = (data: Method[]) => ({ type: CHANGEFILTER, payload: data });
 export const userNickName = (userNickName: string) => ({ type: USERNICKNAME, payload: userNickName });

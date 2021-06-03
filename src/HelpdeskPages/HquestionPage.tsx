@@ -27,9 +27,9 @@ type NewQuestion = {
 type PropsOption = {
   helpModal: Boolean;
   handleHelpModal: () => void;
-}
+};
 
-const HquestionPage = ({helpModal, handleHelpModal}:PropsOption) => {
+const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
   const [checkModal, setCheckModal] = useState(false);
   const [tagValue, setTagValue] = useState("");
   const [guideLine, setGuideLine] = useState(true);
@@ -149,33 +149,25 @@ const HquestionPage = ({helpModal, handleHelpModal}:PropsOption) => {
             <TagInput value={tagValue} onChange={handleChangeTag} placeholder="태그를 입력해주세요" />
           </TagBox>
           <UnderLine></UnderLine>
-          {guideLine ? (
-            <GuideMessage
-              onClick={() => {
-                setGuideLine(false);
-              }}
-              value={`궁금한 내용을 적어주세요\n\n답변이 등록되면 질문 수정/삭제가 불가합니다\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+
+          <Body
+            onChange={(e) => {
+              handleChange(e, "body");
+            }}
+            placeholder={`궁금한 내용을 적어주세요\n\n답변이 등록되면 질문 수정/삭제가 불가합니다\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
               `}
-            ></GuideMessage>
-          ) : (
-            <Body
-              onChange={(e) => {
-                handleChange(e, "body");
-              }}
-              autoFocus
-            ></Body>
-          )}
+          ></Body>
         </LeftContainer>
         <RightContainer ref={previewRef}>
           <h1>{title}</h1>
           <ReactMarkdown components={Components} children={body} className="markdown" />
         </RightContainer>
       </PostContainer>
-        <BtnBox>
-            <ExitBtn onClick={handleExit}>나가기</ExitBtn>
-            <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
-          <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
-          </BtnBox>
+      <BtnBox>
+        <ExitBtn onClick={handleExit}>나가기</ExitBtn>
+        <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
+        <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
+      </BtnBox>
     </Container>
   );
 };
@@ -189,12 +181,19 @@ export const Components = {
 export default HquestionPage;
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-`
+  @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    height: 100vh;
+    width: 100vw;
+  }
+`;
 
 const PostContainer = styled.div`
   display: grid;
@@ -274,6 +273,9 @@ const RightContainer = styled.div`
   background: #f4f4f4;
   padding: 0.7rem 3rem 3rem 3rem;
   position: relative;
+  @media (max-width: 375px) {
+    display: none;
+  }
 `;
 
 // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)

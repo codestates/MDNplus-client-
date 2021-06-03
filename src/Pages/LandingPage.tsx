@@ -303,8 +303,12 @@ const IntroBoxContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+<<<<<<< HEAD
+  background: #536DFE;
+=======
   color: white;
   background: #cfd8dc;
+>>>>>>> e38a806de253f6345831569f312baa4fdc630b6b
 `;
 
 const IntroBox = styled.div`
@@ -321,8 +325,13 @@ const IntroBox = styled.div`
 const IntroBox_Body1 = styled.div`
   font-size: 3rem;
   margin: 1rem 0 1rem 0;
+<<<<<<< HEAD
+  color: white;
+  transition: 1s ease-in-out;
+=======
   color: black;
   // transition: 1s ease-in-out;
+>>>>>>> e38a806de253f6345831569f312baa4fdc630b6b
 
   animation-duration: 1s;
   animation-timing-function: ease-out;
@@ -333,7 +342,7 @@ const IntroBox_Body1 = styled.div`
 const IntroBox_Body2 = styled.div`
   font-size: 3rem;
   margin: 1rem 0 1rem 0;
-  color: black;
+  color: white;
   font-weight: bold;
 
   transition: 1s ease-in-out;

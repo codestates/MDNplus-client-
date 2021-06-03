@@ -12,6 +12,8 @@ import { ExitBtn, SubmitBtn, HelpBtn, BtnBox } from "../styled-components/Post";
 import userImg from "../img/userIcon_gray.png";
 import axios from "axios";
 import HelpModal from "../Components/HelpModal";
+import useAllData from "../Hooks/useAllData";
+import userIcon from "../img/userIcon_gray.png";
 
 type PropsOption = {
   helpModal: Boolean;
@@ -21,13 +23,16 @@ type PropsOption = {
 function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
   const { onSetWriteMode } = useBooleanData();
-  const { displayQuestion } = allState;
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
-  const [guideLine, setGuideLine] = useState(true);
   const previewRef = useRef<any>(null);
   const history = useHistory();
+  const [userInfo, setUserInfo] = useState({
+    img: "",
+    nickName: "",
+  });
+  const { displayQuestion } = allState;
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWriting(e.target.value);
@@ -57,13 +62,10 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
     });
   };
 
-  const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // if (e.key === "Enter") {
-    //   setWriting(writing + "\n");
-    // }
-  };
-
   useEffect(() => {
+    axios.get("http://localhost:8080/userinfo", { withCredentials: true }).then((res) => {
+      setUserInfo({ img: res.data.image, nickName: res.data.nickName });
+    });
     onSetWriteMode(true);
   }, []);
 
@@ -71,53 +73,49 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
     <div>비어있는 질문</div>
   ) : (
     <Container>
-      <PostContainer>
-        {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
-
-        <LeftContainer>
-          <QuestionBox>
-            <QuestionTitleBox>
-              <TitleIcon>질문</TitleIcon>
-              <QuestionTitle> {displayQuestion.title}</QuestionTitle>
-            </QuestionTitleBox>
-            <QuestionBody>
-              <ReactMarkdown children={displayQuestion.body} />
-            </QuestionBody>
-            <InfoBox_Q>
-              {displayQuestion.userId.image}
-              {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
-              <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
-              <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
-            </InfoBox_Q>
-          </QuestionBox>
-          <WritingArea>
-            <WritingTitle>나의 답변</WritingTitle>
-            {guideLine ? (
-              <GuideMessage
-                onClick={() => {
-                  setGuideLine(false);
-                }}
-                value={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
+      <LeftContainer>
+        <QuestionBox>
+          <QuestionTitleBox>
+            <TitleIcon>질문</TitleIcon>
+            <QuestionTitle> {displayQuestion.title}</QuestionTitle>
+          </QuestionTitleBox>
+          <QuestionBody>
+            <ReactMarkdown children={displayQuestion.body} />
+          </QuestionBody>
+          <InfoBox_Q>
+            {displayQuestion.userId.image}
+            {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
+            <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
+            <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
+          </InfoBox_Q>
+        </QuestionBox>
+        <WritingArea>
+          <WritingTitle>나의 답변</WritingTitle>
+          <Body
+            id="text"
+            value={writing}
+            placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
               `}
-              ></GuideMessage>
-            ) : (
-              <Body autoFocus id="text" value={writing} placeholder="" onChange={handleChange} onKeyPress={handleEnter}></Body>
-            )}
-          </WritingArea>
+            onChange={handleChange}
+          ></Body>
+        </WritingArea>
+        {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
+      </LeftContainer>
 
-          {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
-        </LeftContainer>
+      <RightContainer ref={previewRef}>
+        <PreviewTitle>
+          {userInfo.img === "" ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={userInfo.img} />}
 
-        <RightContainer ref={previewRef}>
-          <PreviewTitle>나의 답변</PreviewTitle>
-          <ReactMarkdown children={writing} components={Components} />
-        </RightContainer>
-      </PostContainer>
-          <BtnBox>
-            <ExitBtn onClick={() => handleBtns("나가기")}> 나가기 </ExitBtn>
-            <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
-            <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
-          </BtnBox>
+          <UserInfoName>{userInfo.nickName} 님의 답변</UserInfoName>
+        </PreviewTitle>
+        <ReactMarkdown children={writing} components={Components} />
+      </RightContainer>
+        <BtnBox>
+        <ExitBtn onClick={() => handleBtns("나가기")}> 나가기 </ExitBtn>
+        <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
+        <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
+        </BtnBox>
     </Container>
   );
 }
@@ -131,26 +129,34 @@ export const Components = {
 export default AnswerPage;
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const PostContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   width: 100%;
   height: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(2, 1fr);
+
+
+  @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    height: 100vh;
+    width: 100vw;
+  }
 `;
 
 const LeftContainer = styled.div`
   // padding: 3rem;
+  height: 100%;
+  width: 100%;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const QuestionBox = styled.div`
-  width: 100%;
   padding: 3rem 3rem 1.5rem 3rem;
   border-bottom: 1px solid #e0e0e0;
 `;
@@ -203,11 +209,15 @@ const Date_Q = styled.span`
 
 const WritingArea = styled.div`
   width: 100%;
-  height: 100%;
+  height: 60%;
   resize: none;
   outline: none;
   font-size: 1.3rem;
   margin: 1.5rem 0rem 3rem 3rem;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const WritingTitle = styled.div`
@@ -217,33 +227,32 @@ const WritingTitle = styled.div`
   margin-bottom: 1rem;
 `;
 
-const GuideMessage = styled.textarea`
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-  resize: none;
-  font-size: 1rem;
-  margin-top: 0.7rem;
-  color: gray;
-`;
-
 const Body = styled.textarea`
   width: 100%;
-  height: 100%;
+  height: 60%;
   border: none;
   outline: none;
   resize: none;
   font-size: 1rem;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const RightContainer = styled.div`
   background-color: #f5f5f5;
   padding: 1.3rem 3rem 3rem 3rem;
-  height: 100vw;
+  height: 100%;
+  width: 100%;
+  @media (max-width: 375px) {
+    display: none;
+  }
 `;
 
 const PreviewTitle = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 1.8rem;
   font-weight: 700;
   color: #686868;
@@ -253,34 +262,13 @@ const PreviewTitle = styled.div`
   width: 100%;
 `;
 
-// const handleHeader = (mark: string) => {
-//   if (mark === "H1") {
-//     setWriting(writing + "\n" + "# ");
-//   } else if (mark === "H2") {
-//     setWriting(writing + "\n" + "## ");
-//   } else if (mark === "H3") {
-//     setWriting(writing + "\n" + "### ");
-//   } else if (mark === "H4") {
-//     setWriting(writing + "\n" + "#### ");
-//   } else if (mark === "Code") {
-//     setWriting(writing + " \n ```" + "\n 코드를 입력해주세요 \n" + "\n ```");
-//   } else if (mark === "Bold") {
-//     setWriting(writing + "**" + "**");
-//   } else if (mark === "Italic") {
-//     setWriting(writing + "*" + "*");
-//   } else if (mark === "Link") {
-//     setWriting(writing + "[Name](http://)");
-//   } else if (mark === "List") {
-//     setWriting(writing + "\n" + "* ");
-//   } else if (mark === "Horizontal") {
-//     setWriting(writing + "\n" + "---" + " \n");
-//   }
+const UserInfoImage = styled.img`
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  object-fit: cover;
+`;
 
-//   const input = document.getElementById("text")?.focus();
-// };
-
-// const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-//   // if (e.key === "Enter") {
-//   //   setWriting(writing + "\n");
-//   // }
-// };
+const UserInfoName = styled.span`
+  margin-left: 2rem;
+`;

@@ -7,7 +7,6 @@ import { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-
 type MenuProps = {
   isOpen: boolean;
   checkMenu: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,9 +26,11 @@ function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
   };
 
   const handleLogOutButton = () => {
-    axios.post("http://localhost:80/oauth/logout", null, { withCredentials: true }).then((res) => console.log(res));
+    axios.post("http://localhost:8080/oauth/logout", null, { withCredentials: true }).then((res) => console.log(res));
+    window.localStorage.removeItem("sessionId");
     handleLogin();
     onClose();
+    history.push("/");
   };
 
   console.log("hi");
@@ -87,6 +88,11 @@ const ModalBox = styled.div`
   background-color: white;
   border-radius: 0.4rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  @media (max-width: 375px) {
+    width: 100%;
+    height: auto;
+    font-size: 1rem;
+  }
 `;
 
 const ModalButton = styled.div`
@@ -99,6 +105,10 @@ const ModalButton = styled.div`
 
   &:hover {
     background: #f5f5f5;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 0.7rem;
   }
 `;
 

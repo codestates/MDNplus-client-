@@ -17,10 +17,10 @@ type Method = {
 function useAllData() {
   const allState = useSelector((state: RootState) => state.AllDataReducer);
   const dispatch = useDispatch();
-  const onFilter = useCallback((data: any) => dispatch(filter(data)), [dispatch]);
-  const onChangeFilter = useCallback((data: any) => dispatch(changeFilter(data)), [dispatch]);
-  // const onFilter = useCallback((data: Method[]) => dispatch(filter(data)), [dispatch]);
-  // const onChangeFilter = useCallback((data: Method[]) => dispatch(changeFilter(data)), [dispatch]);
+  // const onFilter = useCallback((data: any) => dispatch(filter(data)), [dispatch]);
+  // const onChangeFilter = useCallback((data: any) => dispatch(changeFilter(data)), [dispatch]);
+  const onFilter = useCallback((data: Method[]) => dispatch(filter(data)), [dispatch]);
+  const onChangeFilter = useCallback((data: Method[]) => dispatch(changeFilter(data)), [dispatch]);
   const onUserNickName = useCallback((data: string) => dispatch(userNickName(data)), [dispatch]);
   const PickUserName = allState.userNickName;
 

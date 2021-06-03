@@ -10,7 +10,7 @@ import myPageFakeData from "../mypageFakeData";
 import userIcon from "../img/userIcon_gray.png";
 
 import axios from "axios";
-import useBooleanData from '../Hooks/useBooleanData';
+import useBooleanData from "../Hooks/useBooleanData";
 
 // axios.defaults.withCredentials = true;
 
@@ -49,7 +49,7 @@ function MyPage() {
   const [isQuestion, setIsQuestion] = useState(true);
   const [questionColor, setQuestionColor] = useState("#005ce7");
   const [answerColor, setAnswerColor] = useState(" #a7a3a3");
-  const {onContentPageMode} = useBooleanData()
+  const { onContentPageMode } = useBooleanData();
 
   useEffect(() => {
     // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
@@ -58,7 +58,7 @@ function MyPage() {
       dispatch(allDataAction(res.data));
     });
 
-    console.log(history)
+    console.log(history);
   }, []);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
@@ -97,21 +97,21 @@ function MyPage() {
   };
 
   useEffect(() => {
-    console.log(history)
-    if(history.location.pathname === "/MyPage") {
-      onContentPageMode(false)
+    console.log(history);
+    if (history.location.pathname === "/MyPage") {
+      onContentPageMode(false);
     }
-  },[])
+  }, []);
 
   return mdnAllData === null || mdnAllData === undefined ? (
-    <div> 비어있습니다!</div>
+    <EmptyComment> 비어있습니다</EmptyComment>
   ) : (
     <>
       <Container>
-      <UserInfoContainer>
-        {!mdnAllData.user.image ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
-        <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
-      </UserInfoContainer>
+        <UserInfoContainer>
+          {!mdnAllData.user.image ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
+          <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
+        </UserInfoContainer>
         <Stage>
           <LeftContainer>
             <QuestionBtn style={{ color: questionColor }} onClick={handleMDNClicked}>
@@ -123,24 +123,30 @@ function MyPage() {
           </LeftContainer>
           <RightContainer>
             {isQuestion ? (
-              <QuestionContainer>
-                {mdnAllData?.questions.map((el) => (
-                  <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
-                    <QuestionTitle>{el.title}</QuestionTitle>
-                    <QuestionBody>{el.pureBody}</QuestionBody>
-                    {/* <div>
+              mdnAllData.questions.length === 0 ? (
+                <EmptyComment>비어있습니다</EmptyComment>
+              ) : (
+                <QuestionContainer>
+                  {mdnAllData.questions.map((el) => (
+                    <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
+                      <QuestionTitle>{el.title}</QuestionTitle>
+                      <QuestionBody>{el.pureBody}</QuestionBody>
+                      {/* <div>
                       {el.tags.map((el, index: number) => (
                         <QuestionTag key={index.toString()}>{el}</QuestionTag>
                       ))}
                     </div> */}
-                    <QuestionLastLine>
-                      <QuestionDate>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
-                      <QuestionAnswersNum>답변수 {el.commentCount}</QuestionAnswersNum>
-                      <QuestionLikes> 좋아요 {el.like}</QuestionLikes>
-                    </QuestionLastLine>
-                  </QuestionBox>
-                ))}
-              </QuestionContainer>
+                      <QuestionLastLine>
+                        <QuestionDate>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
+                        <QuestionAnswersNum>답변수 {el.commentCount}</QuestionAnswersNum>
+                        <QuestionLikes> 좋아요 {el.like}</QuestionLikes>
+                      </QuestionLastLine>
+                    </QuestionBox>
+                  ))}
+                </QuestionContainer>
+              )
+            ) : mdnAllData.comments.length === 0 ? (
+              <EmptyComment>비어있음</EmptyComment>
             ) : (
               <QuestionContainer>
                 {mdnAllData?.comments.map((el) => (
@@ -173,8 +179,9 @@ const UserInfoContainer = styled.div`
   align-items: center;
   // border: 1px solid black;
   margin-top: 5rem;
-  width: 72%;
-
+  width: 75%;
+  padding: 4rem 0 4rem 0;
+  border-bottom: 1px solid #bdbdbd;
 `;
 
 const UserInfoImage = styled.img`
@@ -182,20 +189,28 @@ const UserInfoImage = styled.img`
   height: 7em;
   border-radius: 50%;
   object-fit: cover;
+  @media (max-width: 375px) {
+    width: 5em;
+    height: 5em;
+  }
 `;
 
 const UserInfoName = styled.div`
   font-weight: bold;
   font-size: 2.2rem;
   margin-left: 3.5rem;
+  @media (max-width: 375px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
+  // margin-bottom: 3rem;
 `;
 
 const Stage = styled.div`
@@ -212,29 +227,32 @@ const LeftContainer = styled.div`
   flex-direction: column;
   cursor: pointer;
   height: 100%;
-  border-top: 1px solid #bdbdbd;
 `;
 
 const QuestionBtn = styled.div`
   margin: 2rem 0rem 1rem 0rem;
   font-size: 1.5rem;
   font-weight: bold;
+  @media (max-width: 375px) {
+    font-size: 1rem;
+  }
 `;
 
 const AnswerBtn = styled.div`
   margin: 1rem 0rem 1rem 0rem;
   font-size: 1.5rem;
   font-weight: bold;
+  @media (max-width: 375px) {
+    font-size: 1rem;
+  }
 `;
 
-const RightContainer = styled.div`
-  border-top: 1px solid #bdbdbd;
-`;
+const RightContainer = styled.div``;
 
 const QuestionContainer = styled.div``;
 
 const QuestionBox = styled.div`
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid #e0e0e0;
   padding: 0 1rem 1rem 1rem;
   cursor: pointer;
   margin: 2rem 0 2rem 0;
@@ -245,12 +263,18 @@ const AnswerContainer = styled.div``;
 const QuestionTitle = styled.span`
   font-weight: 600;
   font-size: 1.3rem;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const QuestionBody = styled.div`
   line-height: 1.8rem;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const QuestionLastLine = styled.div`
@@ -259,7 +283,11 @@ const QuestionLastLine = styled.div`
   font-size: 0.8rem;
 `;
 
-const QuestionDate = styled.span``;
+const QuestionDate = styled.span`
+  @media (max-width: 375px) {
+    font-size: 0.5rem;
+  }
+`;
 
 const QuestionAnswersNum = styled.span`
   margin-left: 0.8rem;
@@ -267,4 +295,14 @@ const QuestionAnswersNum = styled.span`
 
 const QuestionLikes = styled.span`
   margin-left: 0.8rem;
+  @media (max-width: 375px) {
+    font-size: 0.5rem;
+  }
+`;
+
+const EmptyComment = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
 `;

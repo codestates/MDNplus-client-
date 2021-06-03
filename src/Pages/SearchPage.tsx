@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useSearchData from "../Hooks/useSearchData";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import useContentData from "../Hooks/useContentData";
+import useBooleanData from "../Hooks/useBooleanData";
 
 type helpDeskContentType = {
   tags: string[];
@@ -36,6 +37,7 @@ type mainContentType = {
 
 function SearchPage() {
   const { SearchDataState } = useSearchData();
+  const { onContentPageMode } = useBooleanData();
   const { onClickMethod } = useContentData();
   const [CurrentPage, setCurrentPage] = useState("MDN");
   const [MDNColor, setMDNColor] = useState(" #005ce7");
@@ -69,6 +71,10 @@ function SearchPage() {
     setHelpDeskColor("#005ce7");
     setMDNColor("#a7a3a3");
   };
+
+  useEffect(() => {
+    onContentPageMode(false);
+  }, []);
 
   return !SearchDataState.contentData ? (
     <div>비어있음!</div>
@@ -111,7 +117,7 @@ function SearchPage() {
           SearchDataState.contentData.mainContent?.map((el) => (
             <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
               <Title>{el.title}</Title>
-              <Body>{el.pureBody}</Body>
+              <Body>{el.pureBody.slice(0, 200)} ...</Body>
             </Content>
           ))
         ) : SearchDataState.contentData.helpdeskContent.length === 0 ? (
@@ -119,7 +125,7 @@ function SearchPage() {
         ) : (
           SearchDataState.contentData?.helpdeskContent.map((el) => (
             <Content key={el._id} onClick={() => HandleHelpDeckClicked(el)}>
-              <Title>{el.title}</Title>
+              <HelpTitle>{el.title}</HelpTitle>
               <Body>{el.pureBody}</Body>
             </Content>
           ))
@@ -136,13 +142,14 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 3rem;
 `;
 
 const SearchResult = styled.div`
   align-self: start;
   font-weight: bold;
   font-size: 2rem;
-  margin: 1rem 0 2rem 11rem;
+  margin: 1rem 0 2rem 5.5rem;
 `;
 
 const ResultText = styled.span`
@@ -168,16 +175,8 @@ const ResultNum = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  width: 80%;
+  width: 90%;
   height: 90%;
-`;
-
-const Content = styled.div`
-  padding: 30px;
-  cursor: pointer;
-  &:hover {
-    color: #005ce7;
-  }
 `;
 
 const FilterSearchResult = styled.div`
@@ -187,22 +186,43 @@ const FilterSearchResult = styled.div`
 const MDNPlus = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  margin: 20px;
+  margin: 1rem;
   cursor: pointer;
 `;
 const HelpDesk = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  margin: 20px;
+  margin: 1.4rem;
+
+  cursor: pointer;
+`;
+
+const Content = styled.div`
+  padding: 30px;
   cursor: pointer;
 `;
 
 const Title = styled.div`
   font-weight: bold;
+  font-size: 1.8rem;
+  font-style: italic;
+
+  &:hover {
+    color: #005ce7;
+  }
 `;
+
 const Body = styled.div`
-  padding: 18px;
-  border-bottom: 0.15rem solid #e0e0e0;
+  margin-top: 1rem;
+`;
+
+const HelpTitle = styled.div`
+  font-weight: bold;
+  font-size: 1.8rem;
+`;
+
+const HelpBody = styled.div`
+  margin-top: 1rem;
 `;
 
 const AlertResult = styled.div`
@@ -210,5 +230,5 @@ const AlertResult = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 2rem;
 `;

@@ -6,6 +6,7 @@ import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
 import ideaIcon from "../img/idea.png";
 import helpIcon from "../img/question.png";
+import spinGIF from "../img/spinGIF.gif";
 
 type UserData = {
   githubId: null;
@@ -40,7 +41,7 @@ type HelpData = {
 const HelpdeskPage = () => {
   const [isSelected, setIsSelected] = useState("최신순");
   const { helpData, onStoreData, onFilter } = useHelpData();
-  const { onSetWriteMode } = useBooleanData();
+  const { onSetWriteMode, onContentPageMode } = useBooleanData();
   const { allQuestions, selectedQuestions }: HelpData = helpData;
   const history = useHistory();
 
@@ -64,9 +65,10 @@ const HelpdeskPage = () => {
   useEffect(() => {
     // 헬프데스크 메인페이지 렌더링에 필요한 데이터 받아오는 요청
     window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
-    console.log(history);
+
     if (history.location.pathname === "/HelpdeskPage") {
       onSetWriteMode(false);
+      onContentPageMode(false);
     }
 
     axios.get("http://localhost:8080/helpdesk").then((res) => {
@@ -75,7 +77,7 @@ const HelpdeskPage = () => {
     });
   }, []);
 
-  console.log(allQuestions);
+  // console.log(allQuestions);
 
   return (
     <>
@@ -193,12 +195,9 @@ const IntroBox = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  // margin-left: 4rem;
 `;
 
-const IntroContents = styled.div`
-  // margin-left: 1rem;
-`;
+const IntroContents = styled.div``;
 
 const IntroTitle = styled.h1`
   color: #757575;
@@ -207,7 +206,6 @@ const IntroTitle = styled.h1`
 
 const IntroLetter = styled.div`
   margin-top: -1rem;
-  // margin-left: 0.1rem;
   color: #9e9e9e;
   font-weight: bold;
 `;
@@ -215,8 +213,6 @@ const IntroLetter = styled.div`
 const Icon = styled.img`
   width: 6rem;
   margin-top: 1rem;
-  // margin-left: -1.5rem;
-  // margin-right: -1.3rem;
 `;
 
 const QuestionBtn = styled.button`
@@ -260,18 +256,25 @@ const FilterFast_Selected = styled.span`
 const FilterPopular = styled.span`
   color: #757575;
   cursor: pointer;
+  margin-left: 1.5rem;
 `;
 
 const FilterPopular_Selected = styled.span`
   font-weight: bold;
   cursor: pointer;
+  margin-left: 1.5rem;
+
   color: #3f51b5;
 `;
 
 const BoxContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  // border: 0.1px solid #E0E0E0;
+
+  @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+  }
 `;
 
 const QuestionBox = styled.div`
@@ -333,11 +336,12 @@ const LikesNum = styled.span`
 
 const AnswersNum = styled.span`
   font-size: 0.8rem;
+  margin-left: 1rem;
   color: #686868;
 `;
 
 const CreatedAt = styled.span`
   font-size: 0.8rem;
   color: #686868;
-  // margin-left: 1rem;
+  margin-left: 1rem;
 `;

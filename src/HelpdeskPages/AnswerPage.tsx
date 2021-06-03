@@ -103,9 +103,9 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
           <WritingTitle>나의 답변</WritingTitle>
           {guideLine ? (
             <GuideMessage
-              // onClick={() => {
-              //   setGuideLine(false);
-              // }}
+              onClick={() => {
+                setGuideLine(false);
+              }}
               placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
               `}
             ></GuideMessage>
@@ -141,11 +141,19 @@ export const Components = {
 export default AnswerPage;
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vw;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    height: 100vh;
+    width: 100vw;
+  }
 `;
 
 const PostContainer = styled.div`
@@ -157,10 +165,15 @@ const PostContainer = styled.div`
 
 const LeftContainer = styled.div`
   // padding: 3rem;
+  height: 100%;
+  width: 100%;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const QuestionBox = styled.div`
-  width: 100%;
   padding: 3rem 3rem 1.5rem 3rem;
   border-bottom: 1px solid #e0e0e0;
 `;
@@ -213,11 +226,15 @@ const Date_Q = styled.span`
 
 const WritingArea = styled.div`
   width: 100%;
-  height: 100%;
+  height: 60%;
   resize: none;
   outline: none;
   font-size: 1.3rem;
   margin: 1.5rem 0rem 3rem 3rem;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const WritingTitle = styled.div`
@@ -236,21 +253,33 @@ const GuideMessage = styled.textarea`
   font-size: 1rem;
   margin-top: 0.7rem;
   color: gray;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const Body = styled.textarea`
   width: 100%;
-  height: 100%;
+  height: 60%;
   border: none;
   outline: none;
   resize: none;
   font-size: 1rem;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const RightContainer = styled.div`
   background-color: #f5f5f5;
   padding: 1.3rem 3rem 3rem 3rem;
-  height: 100vw;
+  height: 100%;
+  width: 100%;
+  @media (max-width: 375px) {
+    display: none;
+  }
 `;
 
 const PreviewTitle = styled.div`

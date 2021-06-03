@@ -27,9 +27,9 @@ type NewQuestion = {
 type PropsOption = {
   helpModal: Boolean;
   handleHelpModal: () => void;
-}
+};
 
-const HquestionPage = ({helpModal, handleHelpModal}:PropsOption) => {
+const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
   const [checkModal, setCheckModal] = useState(false);
   const [tagValue, setTagValue] = useState("");
   const [guideLine, setGuideLine] = useState(true);
@@ -171,11 +171,11 @@ const HquestionPage = ({helpModal, handleHelpModal}:PropsOption) => {
           <ReactMarkdown components={Components} children={body} className="markdown" />
         </RightContainer>
       </PostContainer>
-        <BtnBox>
-            <ExitBtn onClick={handleExit}>나가기</ExitBtn>
-            <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
-          <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
-          </BtnBox>
+      <BtnBox>
+        <ExitBtn onClick={handleExit}>나가기</ExitBtn>
+        <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
+        <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
+      </BtnBox>
     </Container>
   );
 };
@@ -194,7 +194,14 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+  @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    height: 100vh;
+    width: 100vw;
+  }
+`;
 
 const PostContainer = styled.div`
   display: grid;
@@ -274,6 +281,9 @@ const RightContainer = styled.div`
   background: #f4f4f4;
   padding: 0.7rem 3rem 3rem 3rem;
   position: relative;
+  @media (max-width: 375px) {
+    display: none;
+  }
 `;
 
 // 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)

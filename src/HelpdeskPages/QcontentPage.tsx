@@ -166,9 +166,10 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   }, []);
 
   return (
-    <div>
+    <>
       {currentData !== null && currentData !== undefined ? (
         <Container>
+          <BackBtn onClick={() => window.history.back()}>{"< 돌아가기"}</BackBtn>
           <QuestionContainer>
             <LikeBox_Q>
               {currentData.question.isLike === true ? (
@@ -201,40 +202,44 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
               </InfoBox_Q>
             </QuestionBox>
           </QuestionContainer>
-          <AnswerContainer>
-            {currentData.comments?.map((el, index: number) => (
-              <AnswerBox key={index}>
-                <LikeBox_A>
-                  {el.isLike === true ? (
-                    <HeartIcon>
-                      <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["far", "heart"]} color="#686868" size="lg" />
-                    </HeartIcon>
-                  ) : (
-                    <HeartIcon>
-                      <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
-                    </HeartIcon>
-                  )}
-                  <LikeNum_A> {el.like}</LikeNum_A>
-                </LikeBox_A>
-                <Answer>
-                  <AnswerTitleBox>
-                    {el.userId.image !== "" ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
-                    <Date_A>{`${el.createdAt.substring(0, 4)}.${el.createdAt.substring(5, 7)}.${el.createdAt.substring(8, 10)}. ${" "} 
+          {currentData.comments.length !== 0 ? (
+            <AnswerContainer>
+              {currentData.comments?.map((el, index: number) => (
+                <AnswerBox key={index}>
+                  <LikeBox_A>
+                    {el.isLike === true ? (
+                      <HeartIcon>
+                        <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["far", "heart"]} color="#686868" size="lg" />
+                      </HeartIcon>
+                    ) : (
+                      <HeartIcon>
+                        <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
+                      </HeartIcon>
+                    )}
+                    <LikeNum_A> {el.like}</LikeNum_A>
+                  </LikeBox_A>
+                  <Answer>
+                    <AnswerTitleBox>
+                      {el.userId.image !== "" ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
+                      <Date_A>{`${el.createdAt.substring(0, 4)}.${el.createdAt.substring(5, 7)}.${el.createdAt.substring(8, 10)}. ${" "} 
                     ${Number(el.createdAt.substring(11, 13)) - 3}: ${el.createdAt.substring(14, 16)}`}</Date_A>
-                    {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : null}
-                  </AnswerTitleBox>
-                  <AnswerBody>
-                    <ReactMarkdown children={el.content}></ReactMarkdown>
-                  </AnswerBody>
-                </Answer>
-              </AnswerBox>
-            ))}
-          </AnswerContainer>
+                      {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : null}
+                    </AnswerTitleBox>
+                    <AnswerBody>
+                      <ReactMarkdown children={el.content}></ReactMarkdown>
+                    </AnswerBody>
+                  </Answer>
+                </AnswerBox>
+              ))}
+            </AnswerContainer>
+          ) : (
+            <AnswerContainer> 답변을 기다리고 있습니다. </AnswerContainer>
+          )}
         </Container>
       ) : (
         <div>empty</div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -243,15 +248,34 @@ export default QcontentPage;
 const HeartIcon = styled.span``;
 
 const Container = styled.div`
+  position: relative;
   height: 100%;
   width: 100%;
+  @media (max-width: 375px) {
+    height: 100vh;
+    width: 100vw;
+  }
+`;
+
+const BackBtn = styled.span`
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 1.3rem;
+  color: #78909c;
+  cursor: pointer;
+  @media (max-width: 375px) {
+    font-size: 1rem;
+    top: 0.2rem;
+    bottom: 0.5rem;
+    left: 0;
+  }
 `;
 
 const QuestionContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  // padding-left: 2rem;
 `;
 
 const LikeBox_Q = styled.div`
@@ -260,14 +284,22 @@ const LikeBox_Q = styled.div`
   align-items: center;
   flex-direction: column;
   margin-bottom: 2rem;
+  cursor: pointer;
+  @media (max-width: 375px) {
+    margin-left: 1rem;
+  }
 `;
 
 const LikeNum_Q = styled.span``;
 
 const QuestionBox = styled.div`
-  // border: 1px solid black;
   width: 50%;
   padding: 3rem;
+  @media (max-width: 375px) {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+  }
 `;
 
 const QuestionTitleBox = styled.div`
@@ -281,13 +313,26 @@ const TitleIcon = styled.span`
   color: white;
   font-weight: bold;
   margin-right: 0.5rem;
+
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+    padding: 0.15rem;
+  }
 `;
 
 const QuestionTitle = styled.span`
   font-size: 1.2rem;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
 `;
 
-const QuestionBody = styled.div``;
+const QuestionBody = styled.div`
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
+`;
 
 const TagBox = styled.div`
   height: 3rem;
@@ -317,18 +362,28 @@ const UserName_Q = styled.span`
   margin-right: 0.4rem;
   color: black;
   font-size: 0.9rem;
+  @media (max-width: 375px) {
+    font-size: 0.6rem;
+  }
 `;
 
 const Date_Q = styled.span`
   color: #757575;
   font-size: 0.8rem;
   padding-bottom: 0.1rem;
+  @media (max-width: 375px) {
+    font-size: 0.6rem;
+  }
 `;
 const AnswerBtn = styled.button`
   margin-left: auto;
   padding: 0.7rem 1rem 0.7rem 1rem;
   border-radius: 1rem;
   border: none;
+  cursor: pointer;
+  @media (max-width: 375px) {
+    font-size: 0.6rem;
+  }
 `;
 
 //-----------------------------------답변 섹션-------------------------------------//
@@ -347,7 +402,6 @@ const AnswerBtn = styled.button`
 // `;
 
 const AnswerContainer = styled.div`
-  // padding: 3rem 5rem 5rem 5rem;
   background: #f6f6f6;
   display: flex;
   justify-content: center;
@@ -364,6 +418,9 @@ const AnswerBox = styled.div`
   margin-top: 3rem;
   display: flex;
   justify-content: center;
+  @media (max-width: 375px) {
+    width: 100%;
+  }
 `;
 
 const LikeBox_A = styled.div`
@@ -373,6 +430,10 @@ const LikeBox_A = styled.div`
   align-items: center;
   padding-right: 2.5rem;
   margin: 3rem 0.5rem 0rem -2rem;
+  cursor: pointer;
+  @media (max-width: 375px) {
+    margin: 0;
+  }
 `;
 
 const LikeNum_A = styled.div``;

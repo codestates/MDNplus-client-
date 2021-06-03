@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
@@ -15,6 +15,21 @@ const SideBar = () => {
     setSideBar("wiki");
     history.push("/");
   };
+
+  // useEffect(() => {
+  //   console.log(history)
+  //   if(history.location.pathname === "/MyPage") {
+  //     onContentPageMode(false)
+  //   }
+  // },[])
+
+  useEffect(() => {
+    if (window.location.pathname === "/HelpdeskPage" || window.location.pathname === "/MyPage") {
+      setSideBar("helpdesk");
+    } else if (window.location.pathname === "/") {
+      setSideBar("wiki");
+    }
+  });
 
   return (
     <Container>
@@ -46,15 +61,10 @@ const handleColorType = (color: any) => {
 };
 
 const Container = styled.span`
+  width: 13rem;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
-
-  max-width: 16rem;
-  min-width: 13rem;
-
-  @media (max-width: 375px) {
-    width: 100vw;
-  }
+  height: 100%;
 `;
 
 const Wiki = styled.div`

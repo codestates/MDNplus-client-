@@ -4,6 +4,7 @@ import axios from "axios";
 import loadingGif from "../img/R6bD.gif";
 import userIcon from "../img/userIcon_gray.png";
 import { useHistory } from "react-router";
+import useBooleanData from "../Hooks/useBooleanData";
 
 // axios.defaults.withCredentials = true;
 
@@ -14,6 +15,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
   });
   const [selectedImg, setSelectedImg] = useState("");
   const [editing, setEditing] = useState(false);
+  const { onContentPageMode } = useBooleanData();
   const history = useHistory();
 
   // 유저가 이름을 수정할 시, 바뀌는 이름을 실시간으로 state에 업데이트하는 코드
@@ -75,6 +77,11 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
       setUserInfo({ nickName: res.data.nickName, img: res.data.image });
       handleChangeMenuIcon(res.data.image);
     });
+
+    console.log(history);
+    if (history.location.pathname === "/SettingPage") {
+      onContentPageMode(false);
+    }
   }, []);
 
   return (
@@ -134,6 +141,11 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-rows: auto;
+  }
 `;
 
 const Stage = styled.div`
@@ -141,6 +153,11 @@ const Stage = styled.div`
   width: 50%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-rows: auto;
+  }
 `;
 
 const ImgBox = styled.div`
@@ -170,6 +187,9 @@ const UserName = styled.div`
   font-size: 2rem;
   font-weight: bold;
   color: #616161;
+  @media (max-width: 375px) {
+    font-size: 1rem;
+  }
 `;
 
 const EditName = styled.span`
@@ -243,11 +263,22 @@ const DelAccountBox = styled.div`
   justify-content: space-between;
   width: 37%;
   margin-top: 3rem;
+  @media (max-width: 375px) {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-left: 2.5rem;
+  }
 `;
 
 const DelAccount = styled.span`
   margin-left: 2rem;
   font-weight: 600;
+  @media (max-width: 375px) {
+    display: none;
+  }
 `;
 
 const DelAccountBtn = styled.button`

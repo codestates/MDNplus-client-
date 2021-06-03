@@ -88,6 +88,11 @@ const ModalBox = styled.div`
   background-color: white;
   border-radius: 0.4rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  @media (max-width: 375px) {
+    width: 100%;
+    height: auto;
+    font-size: 1rem;
+  }
 `;
 
 const ModalButton = styled.div`
@@ -100,6 +105,10 @@ const ModalButton = styled.div`
 
   &:hover {
     background: #f5f5f5;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 0.7rem;
   }
 `;
 

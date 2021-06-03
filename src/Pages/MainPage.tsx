@@ -43,7 +43,7 @@ function MainPage() {
     }
     if (e.target.value === "math") {
       if (mathData) {
-        onChangeFilter(mathData)
+        onChangeFilter(mathData);
         return;
       }
     }
@@ -78,7 +78,7 @@ function MainPage() {
     });
   }, []);
 
-  console.log(mathData)
+  console.log(arrayData);
 
   return (
     <Container>
@@ -169,7 +169,7 @@ const IntroLetter = styled.div`
 
 const Icon = styled.img`
   width: 3rem;
-  margin-top: 1rem;
+  margin: 1rem 2rem 0 2rem;
 `;
 
 const UnderLine = styled.div`
@@ -186,11 +186,12 @@ const Stage = styled.div`
   row-gap: 3.5rem;
   column-gap: 3.2rem;
   padding: 2rem 2rem 2rem 2rem;
-  // margin-left: 2rem;
   margin-top: 1rem;
 
   @media (max-width: 375px) {
-    width: 375px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-rows: auto;
   }
 `;
 
@@ -234,18 +235,32 @@ const MethodBox = styled.div`
   &:hover {
     transform: translateY(-5px);
   }
+
+  @media (max-width: 375px) {
+    height: 10rem;
+  }
 `;
 
 const MethodContents = styled.div`
   height: 10rem;
+  @media (max-width: 375px) {
+    width: auto;
+    height: auto;
+  }
 `;
 
 const MethodTitle = styled.h3`
   color: #757575;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const MethodBody = styled.div`
   color: #757575;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const MethodCount = styled.div`
@@ -254,4 +269,7 @@ const MethodCount = styled.div`
   font-size: 0.8rem;
   color: #757575;
   margin-top: 1.7rem;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;

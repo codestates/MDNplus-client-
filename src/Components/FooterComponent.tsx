@@ -4,10 +4,12 @@ function FooterComponent() {
   return (
     <Container>
       <ContentContainer>
-        <TopContent>서비스이용약관 | 개인정보처리방침 </TopContent>
+        <TopContent>MDN+ </TopContent>
         <BottomContent>
-          주식회사 마음수업 <br /> 서울시 중구 삼일대로 343 대신파이낸스센터 16층 위워크 <br /> 대표이사: Tudor Daniel Robert <br />
-          사업자등록번호: 406-81-05065 <br /> 통신판매업신고번호: 제2019-서울종로-0883호
+          Front-End : 문성석 김준래
+          <br />
+          Back-End : 조은길 김승용
+          <br />
         </BottomContent>
       </ContentContainer>
     </Container>
@@ -19,10 +21,13 @@ export default FooterComponent;
 const Container = styled.div`
   background: #1a237e;
   width: 100%;
-  height: 18rem;
+  height: 13rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 375px) {
+    display: none;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -35,6 +40,7 @@ const ContentContainer = styled.div`
 
 const TopContent = styled.div`
   padding-bottom: 1rem;
+  font-size: 3rem;
 `;
 
 const BottomContent = styled.div`

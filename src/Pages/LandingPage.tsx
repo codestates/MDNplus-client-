@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useBooleanData from "../Hooks/useBooleanData";
 import FooterComponent from "../Components/FooterComponent";
-import { fadeIn, slideUp, slideUp_Intro, slideUp_short, fadeIn_img, slideLeft, slideLeft_line, slideRight_line } from "../styled-components/Animation";
+import { fadeIn, slideUp, slideUp_Intro, slideUp_short, fadeIn_img, slideLeft, slideLeft_line, slideRight_line, slideLeft_box, slideRight_box } from "../styled-components/Animation";
 import library from "../img/library.jpg";
 import monitor4 from "../img/monitor4.png";
 import monitor3 from "../img/monitor3.png";
@@ -130,20 +130,13 @@ const LandingPage = () => {
           </TimeBox>
         </TimeContainer_ON>
       ) : (
-        <TimeContainer_OFF>
-          <TimeBox>
-            <TimeImg src={clockIcon}></TimeImg>
-            <TimeBoxTitle>MDN+로 아낀 개발 검색 시간</TimeBoxTitle>
-            <Time>153,352분</Time>
-            <TimeSub>* 2021년 6월 설문조사 기준</TimeSub>
-          </TimeBox>
-        </TimeContainer_OFF>
+        <TimeContainer_OFF></TimeContainer_OFF>
       )}
 
-      {currentY >= 800 ? (
+      {currentY >= 600 ? (
         <AppealBox1Container_ON>
           <PreviewBox>
-            {/* <SubBox1></SubBox1> */}
+            <SubBox1></SubBox1>
             <PreviewImg src={appeal1}></PreviewImg>
           </PreviewBox>
           <AppealBox>
@@ -153,22 +146,12 @@ const LandingPage = () => {
           </AppealBox>
         </AppealBox1Container_ON>
       ) : (
-        <AppealBox1Container_OFF>
-          <PreviewBox>
-            {/* <SubBox1></SubBox1> */}
-            <PreviewImg src={appeal1}></PreviewImg>
-          </PreviewBox>
-          <AppealBox>
-            <UnderLine1></UnderLine1>
-            <AppealTitle>MDN+ 위키</AppealTitle>
-            <AppealBody>개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!</AppealBody>
-          </AppealBox>
-        </AppealBox1Container_OFF>
+        <AppealBox1Container_OFF></AppealBox1Container_OFF>
       )}
 
       <EmptySpace></EmptySpace>
 
-      {currentY >= 1550 ? (
+      {currentY >= 1300 ? (
         <AppealBox2Container_ON>
           <AppealBox>
             <UnderLine2></UnderLine2>
@@ -177,23 +160,12 @@ const LandingPage = () => {
             <AppealBody>헬프데스크에 질문하세요!</AppealBody>
           </AppealBox>
           <PreviewBox>
-            {/* <SubBox2></SubBox2> */}
+            <SubBox2></SubBox2>
             <PreviewImg src={appeal2}></PreviewImg>
           </PreviewBox>
         </AppealBox2Container_ON>
       ) : (
-        <AppealBox2Container_OFF>
-          <AppealBox>
-            <UnderLine2></UnderLine2>
-            <AppealTitle>헬프데스크</AppealTitle>
-            <AppealBody>개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?</AppealBody>
-            <AppealBody>헬프데스크에 질문하세요!</AppealBody>
-          </AppealBox>
-          <PreviewBox>
-            {/* <SubBox2></SubBox2> */}
-            <PreviewImg src={appeal2}></PreviewImg>
-          </PreviewBox>
-        </AppealBox2Container_OFF>
+        <AppealBox2Container_OFF></AppealBox2Container_OFF>
       )}
 
       {/* <EmptySpace></EmptySpace> */}
@@ -236,42 +208,7 @@ const LandingPage = () => {
           </ReviewFlexBox>
         </ReviewBoxContainer_ON>
       ) : (
-        <ReviewBoxContainer_OFF>
-          <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
-          <ReviewBoxSubTitle>언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이 없어졌어요.</ReviewBoxSubTitle>
-          <ReviewFlexBox>
-            <ReviewBox>
-              <ReviewerBox>
-                <ReviewerImg src={avatar1}></ReviewerImg>
-                <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
-              </ReviewerBox>
-              <ReviewBody>
-                MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데 MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요. 잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서
-                동시에 공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
-              </ReviewBody>
-            </ReviewBox>
-            <ReviewBox>
-              <ReviewerBox>
-                <ReviewerImg src={avatar2}></ReviewerImg>
-                <Reviewer>주니어 개발자 문코딩</Reviewer>
-              </ReviewerBox>
-              <ReviewBody>
-                처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해 며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을 달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할
-                것 같습니다. 좋은 서비스 감사합니다 :)
-              </ReviewBody>
-            </ReviewBox>
-            <ReviewBox>
-              <ReviewerBox>
-                <ReviewerImg src={avatar3}></ReviewerImg>
-                <Reviewer>개발 3년차 조코딩</Reviewer>
-              </ReviewerBox>
-              <ReviewBody>
-                MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다. 나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니, 면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
-                있었습니다. 정말 감사합니다 !
-              </ReviewBody>
-            </ReviewBox>
-          </ReviewFlexBox>
-        </ReviewBoxContainer_OFF>
+        <ReviewBoxContainer_OFF></ReviewBoxContainer_OFF>
       )}
 
       <NewsContainer>
@@ -538,7 +475,7 @@ const Img = styled.img`
   height: 48rem;
   object-fit: cover;
 
-  animation-duration: 2s;
+  animation-duration: 2.2s;
   animation-timing-function: ease-out;
   animation-name: ${fadeIn_img};
   animation-fill-mode: forwards;
@@ -618,7 +555,7 @@ const AppealBox1Container_ON = styled.div`
   grid-template-columns: 0.6fr 0.4fr;
   background: #fafafa;
 
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
@@ -675,30 +612,39 @@ const PreviewImg = styled.img`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   z-index: 1;
 
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_short};
   animation-fill-mode: forwards;
 `;
 
-// const SubBox1 = styled.div`
-//   position: absolute;
-//   top: 0rem;
-//   left: 0rem;
-//   width: 13rem;
-//   height: 100%;
-//   background: #cfd8dc;
-// `;
+const SubBox1 = styled.div`
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 20rem;
+  height: 100%;
+  background: #cfd8dc;
 
-// const SubBox2 = styled.div`
-// position: absolute;
-// top: 0rem;
-// right: 0rem;
-// width: 13rem;
-// height: 100%;
-// background: #cfd8dc;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
+  animation-name: ${slideLeft_box};
+  animation-fill-mode: forwards;
+`;
 
-// `;
+const SubBox2 = styled.div`
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  width: 20rem;
+  height: 100%;
+  background: #cfd8dc;
+
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
+  animation-name: ${slideRight_box};
+  animation-fill-mode: forwards;
+`;
 
 const AppealBox = styled.div`
   // border: 1px solid black;
@@ -707,8 +653,8 @@ const AppealBox = styled.div`
   flex-direction: column;
   position: relative;
 
-  animation-duration: 1.7s;
-  animation-timing-function: ease-out;
+  animation-duration: 4s;
+  animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_short};
   animation-fill-mode: forwards;
 `;
@@ -720,7 +666,7 @@ const UnderLine1 = styled.div`
   top: 14rem;
   left: -2rem;
 
-  animation-duration: 2.5s;
+  animation-duration: 5s;
   animation-timing-function: ease-out;
   animation-name: ${slideLeft_line};
   animation-fill-mode: forwards;
@@ -733,7 +679,7 @@ const UnderLine2 = styled.div`
   top: 14rem;
   right: -2rem;
 
-  animation-duration: 2.5s;
+  animation-duration: 5s;
   animation-timing-function: ease-out;
   animation-name: ${slideRight_line};
   animation-fill-mode: forwards;
@@ -767,7 +713,7 @@ const ReviewBoxContainer_ON = styled.div`
   flex-direction: column;
   background: #eeeeee;
 
-  animation-duration: 2s;
+  animation-duration: 1.5s;
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
@@ -848,7 +794,7 @@ const NewsContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #f0f1f5;
+  background: white;
 `;
 
 const NewsIntroBox = styled.div`

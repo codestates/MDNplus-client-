@@ -5,10 +5,7 @@ import { RootState } from "../Redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { currentQData } from "../Redux/QcontentData";
 import styled from "styled-components";
-import FakeData2 from "../FakeData2";
-import myPageFakeData from "../mypageFakeData";
 import userIcon from "../img/userIcon_gray.png";
-
 import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
 

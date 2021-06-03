@@ -240,7 +240,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
               ))}
             </AnswerContainer>
           ) : (
-            <AnswerContainer> 답변을 기다리고 있습니다. </AnswerContainer>
+            <div> 답변없음. </div>
           )}
         </Container>
       ) : (

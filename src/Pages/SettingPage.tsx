@@ -78,8 +78,8 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
       handleChangeMenuIcon(res.data.image);
     });
 
-    if(history.location.pathname === "/SettingPage") {
-      onContentPageMode(false)
+    if (history.location.pathname === "/SettingPage") {
+      onContentPageMode(false);
     }
   }, []);
 
@@ -118,9 +118,9 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
           </ImgPickerBox>
           <ImgDelete onClick={handleImgDelete}>프로필 삭제</ImgDelete>
         </SubmitBox>
-      <DelAccountBox>
-        <DelAccountBtn onClick={handleCancelMembership}>회원 탈퇴</DelAccountBtn>
-      </DelAccountBox>
+        <DelAccountBox>
+          <DelAccountBtn onClick={handleCancelMembership}>회원 탈퇴</DelAccountBtn>
+        </DelAccountBox>
       </Stage>
     </Container>
   );
@@ -280,7 +280,7 @@ const DelAccount = styled.span`
 `;
 
 const DelAccountBtn = styled.button`
-  margin-top: -1.3rem;
+  // margin-top: -1.3rem;
   margin-left: 2rem;
   padding: 0.5rem 1.7rem 0.5rem 1.7rem;
   color: white;

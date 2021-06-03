@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import useAllData from "../Hooks/useAllData";
-import FakeData from "../FakeData";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
 import ideaIcon from "../img/idea.png";
 import thinkingIcon from "../img/thinking.png";
+import lodingGif from "../img/loding.gif"
 import axios from "axios";
 import useBooleanData from '../Hooks/useBooleanData';
 
@@ -45,7 +45,7 @@ function MainPage() {
     }
     if (e.target.value === "math") {
       if (mathData) {
-        onChangeFilter(mathData)
+        onChangeFilter(mathData);
         return;
       }
     }
@@ -84,7 +84,7 @@ function MainPage() {
     }
   }, []);
 
-  console.log(arrayData)
+  console.log(arrayData);
 
   return (
     <Container>
@@ -121,7 +121,7 @@ function MainPage() {
       </FilterBox>
       <Stage>
         {currentData === null ? (
-          <div>로딩중입니다</div>
+          <div>로딩 중입니다</div>
         ) : (
           currentData.map((el: any) => (
             <MethodBox key={el._id}>
@@ -132,7 +132,7 @@ function MainPage() {
                   }}
                 >
                   <MethodTitle>{el.title}</MethodTitle>
-                  {el.body ? <MethodBody>{el.body.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
+                  {el.pureBody ? <MethodBody>{el.pureBody.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
                 </MethodContents>
               </div>
               <MethodCount>수정된 횟수 {el.count}</MethodCount>
@@ -145,6 +145,10 @@ function MainPage() {
 }
 export default MainPage;
 
+const Loding = styled.img`
+
+`
+
 const Container = styled.div`
   display: grid;
   width: 100%;
@@ -154,11 +158,11 @@ const Container = styled.div`
 const IntroBox = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 4rem;
+  // margin-left: 4rem;
 `;
 
 const IntroContents = styled.div`
-  margin-left: 1rem;
+  // margin-left: 1rem;
 `;
 
 const IntroTitle = styled.h1`
@@ -168,14 +172,14 @@ const IntroTitle = styled.h1`
 
 const IntroLetter = styled.div`
   margin-top: -1rem;
-  margin-left: 0.1rem;
+  // margin-left: 0.1rem;
   color: #9e9e9e;
   font-weight: bold;
 `;
 
 const Icon = styled.img`
   width: 3rem;
-  margin-top: 1rem;
+  margin: 1rem 2rem 0 2rem;
 `;
 
 const UnderLine = styled.div`
@@ -192,11 +196,12 @@ const Stage = styled.div`
   row-gap: 3.5rem;
   column-gap: 3.2rem;
   padding: 2rem 2rem 2rem 2rem;
-  margin-left: 2rem;
   margin-top: 1rem;
 
   @media (max-width: 375px) {
-    width: 375px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-rows: auto;
   }
 `;
 
@@ -223,13 +228,13 @@ const SecondFilter = styled.select`
   width: 10rem;
   border: none;
   outline: none;
-  margin-left: 2rem;
+  // margin-left: 2rem;
   color: #616161;
   background-color: white;
 `;
 
 const MethodBox = styled.div`
-  border-radius: 1rem;
+  border-radius: 0.4rem;
   padding: 0 1rem 0rem 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: white;
@@ -240,18 +245,32 @@ const MethodBox = styled.div`
   &:hover {
     transform: translateY(-5px);
   }
+
+  @media (max-width: 375px) {
+    height: 10rem;
+  }
 `;
 
 const MethodContents = styled.div`
   height: 10rem;
+  @media (max-width: 375px) {
+    width: auto;
+    height: auto;
+  }
 `;
 
 const MethodTitle = styled.h3`
   color: #757575;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const MethodBody = styled.div`
   color: #757575;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const MethodCount = styled.div`
@@ -260,4 +279,7 @@ const MethodCount = styled.div`
   font-size: 0.8rem;
   color: #757575;
   margin-top: 1.7rem;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;

@@ -8,8 +8,8 @@ type SearchDataType = {
     count: number;
     _id: string;
     title: string;
-    body: string;
     pureBody: string;
+    body: string;
     updatedAt: string;
   }[];
   helpdeskContent: {

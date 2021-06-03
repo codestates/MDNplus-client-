@@ -11,7 +11,7 @@ import useContentData from "../Hooks/useContentData";
 import SearchDataDummy from "../SearchpageDummy";
 import useAllData from "../Hooks/useAllData";
 
-function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon }: any) {
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon, setIsLogin }: any) {
   const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useSearchData();
   const { onUserNickName } = useAllData();
   // const [isLogin, setIsLogin] = useState(false);
@@ -32,7 +32,6 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
   // 검색창에 검색을 칠때마다 state를 업데이트함.
   const handleWritingState = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchingWord(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleIconClick = () => {
@@ -50,7 +49,6 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       onSearchingData(res.data);
     });
     history.push("/SearchPage");
-    word = "";
   };
 
   //엔터를 치면 검색 결과와 select 태그 내용을 가져오게됨.
@@ -93,6 +91,8 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         handleLogin();
         history.push("/NameSettingPage");
       }
+      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
+
       onUserNickName(res.data.nickName);
     });
   };
@@ -115,7 +115,8 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         handleLogin();
         history.push("/NameSettingPage");
       }
-      // onUserNickName(res.data.)
+      console.log(res.data);
+      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
       onUserNickName(res.data.nickName);
     });
   };
@@ -131,10 +132,13 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       }
     } else {
       if (authorizationCode) {
-        console.log(authorizationCode);
         //만약 깃허브에서 로그인이 성공하여 code를 받아왔다면, client(서버)에 accessToken 받아오는 요청을 보냄
         gitAccessToken(authorizationCode);
       }
+    }
+
+    if (window.localStorage.getItem("sessionId")) {
+      setIsLogin(true);
     }
   }, []);
 
@@ -148,7 +152,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       <LeftBox>
         <Logo>MDN +</Logo>
         <SearchBar>
-          <Search onKeyPress={handleKeyPress} onChange={handleWritingState} />
+          <Search type="search" onKeyPress={handleKeyPress} onChange={handleWritingState} />
           <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>
@@ -176,27 +180,37 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
 export default Nav;
 
 const NavBar = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #f4f4f4;
   font-family: "Archivo Black", sans-serif;
   box-shadow: 0px 4px 5px #eeeeee;
-
   @media (max-width: 375px) {
-    width: 375px;
+    height: 5rem;
+    background: #f4f4f4;
   }
 `;
 
 const LeftBox = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 375px) {
+    width: 100%;
+  }
 `;
 
 const Logo = styled.div`
   font-size: 2.5rem;
   color: #005ce7;
   margin: 1rem 1rem 1rem 3rem;
+  @media (max-width: 375px) {
+    margin: 0;
+    padding-left: 0.2rem;
+    font-size: 1.5rem;
+  }
 `;
 
 const SearchBar = styled.div`
@@ -205,6 +219,13 @@ const SearchBar = styled.div`
   background: white;
   padding-left: 1rem;
   margin-left: 2rem;
+
+  @media (max-width: 375px) {
+    width: 50%;
+    margin: 0;
+    padding-left: 1rem;
+    font-size: 1rem;
+  }
 `;
 
 const Search = styled.input`
@@ -228,12 +249,23 @@ const SearchFilter = styled.select`
   background: #f4f4f4;
   padding-right: 0.3rem;
   outline: none;
+  @media (max-width: 375px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const NavButtons = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 375px) {
+    height: auto;
+    width: 2rem;
+    padding: 0.3rem 0 0.3rem 0;
+    margin-right: 1rem;
+    background: #f4f4f4;
+  }
 `;
 
 const LoginBtn = styled.button`
@@ -251,6 +283,15 @@ const LoginBtn = styled.button`
     background: #616161;
     color: white;
   }
+
+  @media (max-width: 375px) {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    border: none;
+    font-size: 0.6rem;
+  }
 `;
 
 const UserIconContainer = styled.img`
@@ -260,4 +301,7 @@ const UserIconContainer = styled.img`
   object-fit: cover;
   margin-right: 1.5rem;
   cursor: pointer;
+  @media (max-width: 375px) {
+    margin: 0;
+  }
 `;

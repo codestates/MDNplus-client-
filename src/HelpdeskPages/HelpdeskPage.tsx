@@ -22,6 +22,7 @@ type Question = {
   like: number;
   title: string;
   body: string;
+  pureBody: string;
   userId: UserData;
   createdAt: string;
   updatedAt: string;
@@ -77,7 +78,8 @@ const HelpdeskPage = () => {
     });
   }, []);
 
-  // console.log(allQuestions);
+  if(selectedQuestions)
+  console.log(selectedQuestions[0].pureBody)
 
   return (
     <>

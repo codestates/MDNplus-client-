@@ -149,22 +149,14 @@ const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
             <TagInput value={tagValue} onChange={handleChangeTag} placeholder="태그를 입력해주세요" />
           </TagBox>
           <UnderLine></UnderLine>
-          {guideLine ? (
-            <GuideMessage
-              onClick={() => {
-                setGuideLine(false);
-              }}
-              value={`궁금한 내용을 적어주세요\n\n답변이 등록되면 질문 수정/삭제가 불가합니다\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+
+          <Body
+            onChange={(e) => {
+              handleChange(e, "body");
+            }}
+            placeholder={`궁금한 내용을 적어주세요\n\n답변이 등록되면 질문 수정/삭제가 불가합니다\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
               `}
-            ></GuideMessage>
-          ) : (
-            <Body
-              onChange={(e) => {
-                handleChange(e, "body");
-              }}
-              autoFocus
-            ></Body>
-          )}
+          ></Body>
         </LeftContainer>
         <RightContainer ref={previewRef}>
           <h1>{title}</h1>
@@ -189,7 +181,7 @@ export const Components = {
 export default HquestionPage;
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vw;
   display: flex;
   align-items: center;

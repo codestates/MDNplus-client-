@@ -7,6 +7,7 @@ import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
 import ideaIcon from "../img/idea.png";
 import thinkingIcon from "../img/thinking.png";
+import lodingGif from "../img/loding.gif"
 import axios from "axios";
 import useBooleanData from '../Hooks/useBooleanData';
 
@@ -121,7 +122,8 @@ function MainPage() {
       </FilterBox>
       <Stage>
         {currentData === null ? (
-          <div>로딩중입니다</div>
+          // <div>로딩 중입니다</div>
+          <Loding src={lodingGif}></Loding>
         ) : (
           currentData.map((el: any) => (
             <MethodBox key={el._id}>
@@ -132,7 +134,7 @@ function MainPage() {
                   }}
                 >
                   <MethodTitle>{el.title}</MethodTitle>
-                  {el.body ? <MethodBody>{el.body.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
+                  {el.pureBody ? <MethodBody>{el.pureBody.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
                 </MethodContents>
               </div>
               <MethodCount>수정된 횟수 {el.count}</MethodCount>
@@ -144,6 +146,10 @@ function MainPage() {
   );
 }
 export default MainPage;
+
+const Loding = styled.img`
+
+`
 
 const Container = styled.div`
   display: grid;
@@ -230,7 +236,7 @@ const SecondFilter = styled.select`
 `;
 
 const MethodBox = styled.div`
-  border-radius: 1rem;
+  border-radius: 0.4rem;
   padding: 0 1rem 0rem 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: white;

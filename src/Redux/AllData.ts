@@ -31,6 +31,13 @@ type InitState = {
   promiseData: null | Method[];
   currentData: null | Method[];
   userNickName: null | string;
+  // allData: any;
+  // arrayData: any;
+  // objectData: any;
+  // mathData: any;
+  // stringData: any;
+  // currentData: any;
+  // userNickName: null | string;
 };
 
 // 초기 state 설정

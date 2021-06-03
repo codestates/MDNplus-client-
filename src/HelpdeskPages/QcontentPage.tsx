@@ -221,8 +221,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                   <Answer>
                     <AnswerTitleBox>
                       {el.userId.image !== "" ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
-                      <Date_A>{`${el.createdAt.substring(0, 4)}.${el.createdAt.substring(5, 7)}.${el.createdAt.substring(8, 10)}. ${" "} 
-                    ${Number(el.createdAt.substring(11, 13)) - 3}: ${el.createdAt.substring(14, 16)}`}</Date_A>
+                      <Date_A>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</Date_A>
                       {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : null}
                     </AnswerTitleBox>
                     <AnswerBody>
@@ -472,68 +471,6 @@ const Date_A = styled.div`
   right: 0rem;
 `;
 
-// const handleQuestionIncreaseLikes = (updateData: DataType) => {
-//   updateData.question.like = updateData.question.like + 1;
-
-//   console.log(updateData);
-
-//   onQuestionLike(updateData);
-
-//   axios.post("http://localhost:80/question/like", { questionId: updateData.question._id, like: updateData.question.like }).then((res) => console.log(res));
-// };
-
-// const handleQuestionDecreaseLikes = (updateData: DataType) => {
-//   updateData.question.like = updateData.question.like - 1;
-
-//   console.log(updateData);
-
-//   onQuestionLike(updateData);
-
-//   setIsLike(() => !isLike);
-//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-// };
-
-// const handleAnswerDecreaseLikes = (updateData: AnswerType) => {
-//   console.log("답변 좋아요 감소");
-
-//   if (updateData.like <= 0) {
-//     console.log("싫어요ㅠㅠ 맘이아픔니다");
-//     return;
-//   }
-//   updateData.like = updateData.like - 1;
-
-//   // onAnswerLike(updateData,true);
-
-//   setIsAnswerLike(() => !isAnswerLike);
-//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-// };
-
-// const handleAnswerIncreaseLikes = (updateData: AnswerType) => {
-//   console.log("답변 좋아요 증가");
-
-//   setTimeout(() => {
-//     console.log("실행");
-//   }, 3000);
-
-//   updateData.like = updateData.like + 1;
-
-//   // onAnswerLike(updateData);
-
-//   setIsAnswerLike(() => !isAnswerLike);
-//   // axios.post('http://localhost:80') // 바껴진 숫자를 업데이트 하는 요청
-// };
-
-//   onCurrentQData(res.data);
-// dispatch(onCurrentQData(QContentFakeData));
-
-// window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
-// console.log(history)
-// if(history.location.pathname === '/ContentPage') {
-//   onSetWriteMode(false)
-// }
-
-// console.log(location.state.questionId);
-
-// console.log("쿼스천 함수 실행됨");
-
-// });
+const WaitingMessage = styled.div`
+  color: #757575
+`

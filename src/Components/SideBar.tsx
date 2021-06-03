@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
 const SideBar = () => {
-  //   const [isSelected, setIsSelected] = useState("#DCEAFF");
   const [sideBar, setSideBar] = useState("wiki");
   const history = useHistory();
 
@@ -17,25 +16,36 @@ const SideBar = () => {
     history.push("/");
   };
 
+  // useEffect(() => {
+  //   console.log(history)
+  //   if(history.location.pathname === "/MyPage") {
+  //     onContentPageMode(false)
+  //   }
+  // },[])
+
+  useEffect(() => {
+    if (window.location.pathname === "/HelpdeskPage" || window.location.pathname === "/MyPage") {
+      setSideBar("helpdesk");
+    } else if (window.location.pathname === "/") {
+      setSideBar("wiki");
+    }
+  });
+
   return (
     <Container>
       {sideBar === "wiki" ? (
         <Wiki color="isSelected" onClick={handleMoveToWiki}>
-          MDN+ WiKi
+          MDN+ 위키
         </Wiki>
       ) : (
-        <Wiki onClick={handleMoveToWiki}>
-          MDN+ WiKi
-        </Wiki>
+        <Wiki onClick={handleMoveToWiki}>MDN+ 위키</Wiki>
       )}
       {sideBar === "helpdesk" ? (
         <HelpDesk color="isSelected" onClick={handleMoveToHelp}>
-          HelpDesk
+          헬프데스크
         </HelpDesk>
       ) : (
-        <HelpDesk onClick={handleMoveToHelp}>
-          HelpDesk
-        </HelpDesk>
+        <HelpDesk onClick={handleMoveToHelp}>헬프데스크</HelpDesk>
       )}
     </Container>
   );
@@ -51,14 +61,10 @@ const handleColorType = (color: any) => {
 };
 
 const Container = styled.span`
-  width: 17%;
-  height: 100vw;
+  width: 13rem;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
-
-  @media (max-width: 375px) {
-    width: 100vw;
-  }
+  height: 100%;
 `;
 
 const Wiki = styled.div`

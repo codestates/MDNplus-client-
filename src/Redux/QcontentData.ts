@@ -7,23 +7,41 @@ type DataType = {
     tags: string[];
     commentCount: number;
     like: number;
+    pureBody: string;
     _id: string;
     title: string;
     body: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: number;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   };
   comments: {
     like: number;
+    pureBody: string;
     _id: string;
     questionId: string;
     content: string;
-    userId: string;
+    userId: {
+      nickName: string;
+      kakaoId: string;
+      githubId: string;
+      image: string;
+      _id: string;
+      __v: number;
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;
+    isLike: boolean;
   }[];
 };
 
@@ -31,10 +49,18 @@ type QuestionType = {
   tags: string[];
   commentCount: number;
   like: number;
+  pureBody: string;
   _id: string;
   title: string;
   body: string;
-  userId: string;
+  userId: {
+    nickName: string;
+    kakaoId: string;
+    githubId: string;
+    image: string;
+    _id: string;
+    __v: number;
+  };
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -45,10 +71,19 @@ type AnswerType = {
   _id: string;
   questionId: string;
   content: string;
-  userId: string;
+  pureBody: string;
+  userId: {
+    nickName: string;
+    kakaoId: string;
+    githubId: string;
+    image: string;
+    _id: string;
+    __v: number;
+  };
   createdAt: string;
   updatedAt: string;
   __v: number;
+  isLike: boolean;
 };
 
 export const currentQData = (currentData: undefined | DataType) => ({
@@ -76,12 +111,14 @@ type InitState = {
   currentData: null | undefined | DataType;
   questionUpdate: null | DataType;
   answerUpdate: null | AnswerType;
+  isLike: null | boolean;
 };
 
 const initialState = {
   currentData: null,
   questionUpdate: null,
   answerUpdate: null,
+  isLike: null,
 };
 
 function QcontentDataReducer(state: InitState = initialState, action: CurrentQDataAction): InitState {

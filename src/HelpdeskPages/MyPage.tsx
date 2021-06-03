@@ -7,8 +7,12 @@ import { currentQData } from "../Redux/QcontentData";
 import styled from "styled-components";
 import FakeData2 from "../FakeData2";
 import myPageFakeData from "../mypageFakeData";
+import userIcon from "../img/userIcon_gray.png";
 
 import axios from "axios";
+import useBooleanData from "../Hooks/useBooleanData";
+
+// axios.defaults.withCredentials = true;
 
 type QuestionType = {
   tags: string[];
@@ -45,9 +49,16 @@ function MyPage() {
   const [isQuestion, setIsQuestion] = useState(true);
   const [questionColor, setQuestionColor] = useState("#005ce7");
   const [answerColor, setAnswerColor] = useState(" #a7a3a3");
+  const { onContentPageMode } = useBooleanData();
 
   useEffect(() => {
-    dispatch(allDataAction(myPageFakeData));
+    // 유저가 마이페이지로 이동했을 때, 유저 정보, 나의 질문, 나의 답변 데이터들을 받아오는 요청
+    axios.get("http://localhost:8080/helpdesk/me", { withCredentials: true }).then((res) => {
+      console.log(res);
+      dispatch(allDataAction(res.data));
+    });
+
+    console.log(history);
   }, []);
 
   //나의 질문에는 질문자가 질문한 제목,내용,날짜
@@ -56,225 +67,242 @@ function MyPage() {
     //myPage 에서 클릭한 question Id 값으로 요청보내면됨 Q컨텐트페이지에서 데이터 받게됨.
     // dispatch(currentQData(el));
 
+    // 마이페이지에서 질문을 클릭했을 때, 해당하는 질문의 데이터들을 받아오는 요청(질문의 ID가 params로 필요)
+    // axios.get('http://localhost:80')
+    console.log("QcontentPage로 이동할거");
+
     history.push({
-      pathname: "/Qcontentpage",
-      state: { pageName: "this is Question State" },
+      pathname: "/QcontentPage",
+      state: { pageName: "/MyPage", questionId: el._id },
     });
   };
 
   const handleMyAnswers = (el: AnswerType) => {
-    //해당 답변을 클릭했을시 질문에 해당하는 ID를 요청보내주면됨
-    // el.questionId;
-    // const findData = questionData?.allData.filter((questionTitle) => questionTitle.title == answerTitle);
-    // const findData = questionData?.allData.filter((el) => (el.answers.filter((questionTitle) => questionTitle.qTitle === answerTitle)));
-    // const findData = mdnAllData?.filter((all) => all.title === el.qTitle);
-    // console.log(findData);
-    // if (findData !== undefined && findData !== null) {
-    //   dispatch(currentQData(findData[0]));
-    //   history.push({
-    //     pathname: "/Qcontentpage",
-    //     state: { pageName: "this is Answer State" },
-    //   });
-    // }
-    // dispatch(currentQData(findData));
-    // history.push({
-    //   pathname: "/Qcontentpage",
-    //   state: { pageName: "this is answer state" },
-    // });
+    history.push({
+      pathname: "/QcontentPage",
+      state: { pageName: "/MyPage", questionId: el.questionId._id },
+    });
   };
 
-  const HandleMDNClicked = () => {
+  const handleMDNClicked = () => {
     setQuestionColor("#005ce7");
     setAnswerColor("#a7a3a3");
     setIsQuestion(true);
   };
 
-  const HandleHelpDeckClicked = () => {
+  const handleHelpDeckClicked = () => {
     setAnswerColor("#005ce7");
     setQuestionColor("#a7a3a3");
     setIsQuestion(false);
   };
 
-  return (
-    <Container>
-      <UserInfoContainer>
-        <UserInfoImage> 유저 사진</UserInfoImage>
-        <UserInfoName> 유저이름</UserInfoName>
-      </UserInfoContainer>
-      <LeftContainer>
-        <QuestionList style={{ color: questionColor }} onClick={HandleMDNClicked}>
-          나의질문
-        </QuestionList>
-        <AnswerList style={{ color: answerColor }} onClick={HandleHelpDeckClicked}>
-          나의답변
-        </AnswerList>
-      </LeftContainer>
-      <RightContainer>
-        {isQuestion ? (
-          <QuestionContainer>
-            {mdnAllData?.questions.map((el) => (
-              <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
-                <Q>Q</Q>
-                <QuestionTitle>{el.title}</QuestionTitle>
-                <QuestionBody>{el.body}</QuestionBody>
-                <div>
-                  {el.tags.map((el, index: number) => (
-                    <QuestionTag key={index}>{el}</QuestionTag>
+  useEffect(() => {
+    console.log(history);
+    if (history.location.pathname === "/MyPage") {
+      onContentPageMode(false);
+    }
+  }, []);
+
+  return mdnAllData === null || mdnAllData === undefined ? (
+    <EmptyComment> 비어있습니다</EmptyComment>
+  ) : (
+    <>
+      <Container>
+        <UserInfoContainer>
+          {!mdnAllData.user.image ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
+          <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
+        </UserInfoContainer>
+        <Stage>
+          <LeftContainer>
+            <QuestionBtn style={{ color: questionColor }} onClick={handleMDNClicked}>
+              나의 질문
+            </QuestionBtn>
+            <AnswerBtn style={{ color: answerColor }} onClick={handleHelpDeckClicked}>
+              나의 답변
+            </AnswerBtn>
+          </LeftContainer>
+          <RightContainer>
+            {isQuestion ? (
+              mdnAllData.questions.length === 0 ? (
+                <EmptyComment>비어있습니다</EmptyComment>
+              ) : (
+                <QuestionContainer>
+                  {mdnAllData.questions.map((el) => (
+                    <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
+                      <QuestionTitle>{el.title}</QuestionTitle>
+                      <QuestionBody>{el.pureBody}</QuestionBody>
+                      {/* <div>
+                      {el.tags.map((el, index: number) => (
+                        <QuestionTag key={index.toString()}>{el}</QuestionTag>
+                      ))}
+                    </div> */}
+                      <QuestionLastLine>
+                        <QuestionDate>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
+                        <QuestionAnswersNum>답변수 {el.commentCount}</QuestionAnswersNum>
+                        <QuestionLikes> 좋아요 {el.like}</QuestionLikes>
+                      </QuestionLastLine>
+                    </QuestionBox>
                   ))}
-                </div>
-                <QuestionLastLine>
-                  <QuestionLikes> 좋아요: &nbsp; {el.like}</QuestionLikes>
-                  <QuestionAnswersNum>답변수:&nbsp; {el.commentCount}</QuestionAnswersNum>
-                  <QuestionDate>{el.createdAt}</QuestionDate>
-                </QuestionLastLine>
-                {/* <div>나의 질문에 대한 답변</div>
-                  <div>
-                    {el.answers.map((el) => (
-                      <div>
-                        <div>{el.userName}</div>
-                        <div>{el.qTitle}</div>
-                        <div>{el.body}</div>
-                        <div>{el.likes}</div>
-                        <div>{el.createdAt}</div>
-                      </div>
-                    ))}
-                  </div> */}
-              </QuestionBox>
-            ))}
-          </QuestionContainer>
-        ) : (
-          <QuestionContainer>
-            {mdnAllData?.comments.map((el) => (
-              <QuestionBox key={el._id} onClick={() => handleMyAnswers(el)}>
-                <Q>Q</Q>
-                <QuestionTitle>{el.questionId.title}</QuestionTitle>
-                <QuestionBody>{el.content}</QuestionBody>
-                <QuestionLastLine>
-                  <QuestionLikes> 좋아요: &nbsp;{el.like}</QuestionLikes>
-                  <QuestionDate>{el.createdAt}</QuestionDate>
-                </QuestionLastLine>
-              </QuestionBox>
-            ))}
-          </QuestionContainer>
-        )}
-      </RightContainer>
-    </Container>
+                </QuestionContainer>
+              )
+            ) : mdnAllData.comments.length === 0 ? (
+              <EmptyComment>비어있음</EmptyComment>
+            ) : (
+              <QuestionContainer>
+                {mdnAllData?.comments.map((el) => (
+                  <QuestionBox key={el._id} onClick={() => handleMyAnswers(el)}>
+                    <QuestionTitle>{el.questionId.title}</QuestionTitle>
+                    <QuestionBody>{el.content}</QuestionBody>
+                    {/* <QuestionLastLine>
+                      <QuestionLikes> 좋아요: &nbsp;{el.like}</QuestionLikes>
+                      <QuestionDate>{el.createdAt.substring(0, 10)}</QuestionDate>
+                    </QuestionLastLine> */}
+                    <QuestionLastLine>
+                      <QuestionDate>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
+                      <QuestionLikes> 좋아요 {el.like}</QuestionLikes>
+                    </QuestionLastLine>
+                  </QuestionBox>
+                ))}
+              </QuestionContainer>
+            )}
+          </RightContainer>
+        </Stage>
+      </Container>
+    </>
   );
 }
 
 export default MyPage;
 
+const UserInfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  // border: 1px solid black;
+  margin-top: 5rem;
+  width: 75%;
+  padding: 4rem 0 4rem 0;
+  border-bottom: 1px solid #bdbdbd;
+`;
+
+const UserInfoImage = styled.img`
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  object-fit: cover;
+  @media (max-width: 375px) {
+    width: 5em;
+    height: 5em;
+  }
+`;
+
+const UserInfoName = styled.div`
+  font-weight: bold;
+  font-size: 2.2rem;
+  margin-left: 3.5rem;
+  @media (max-width: 375px) {
+    font-size: 1.2rem;
+  }
+`;
+
 const Container = styled.div`
-  margin-top: 1rem;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  // margin-bottom: 3rem;
+`;
+
+const Stage = styled.div`
+  width: 80%;
+  justify-content: center;
+  align-items: center;
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: 300px 1000px;
+  grid-template-columns: 0.2fr 1fr;
+  padding: 3rem;
 `;
 
-const QuestionList = styled.div`
-  margin: 1rem;
+const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  height: 100%;
+`;
+
+const QuestionBtn = styled.div`
+  margin: 2rem 0rem 1rem 0rem;
   font-size: 1.5rem;
-  &:hover {
-    color: #005ce7;
+  font-weight: bold;
+  @media (max-width: 375px) {
+    font-size: 1rem;
   }
 `;
 
-const AnswerList = styled.div`
-  margin: 1rem;
+const AnswerBtn = styled.div`
+  margin: 1rem 0rem 1rem 0rem;
   font-size: 1.5rem;
-
-  &:hover {
-    color: "#005ce7";
+  font-weight: bold;
+  @media (max-width: 375px) {
+    font-size: 1rem;
   }
 `;
+
+const RightContainer = styled.div``;
 
 const QuestionContainer = styled.div``;
 
 const QuestionBox = styled.div`
-  border-radius: 1rem;
-  border: none;
+  border-bottom: 1px solid #e0e0e0;
   padding: 0 1rem 1rem 1rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 20px;
-  background: white;
   cursor: pointer;
   margin: 2rem 0 2rem 0;
 `;
 
 const AnswerContainer = styled.div``;
 
-const UserInfoContainer = styled.div`
-  grid-area: 1/2/2/8;
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid #a7a3a3;
-`;
-
-const UserInfoImage = styled.div`
-  margin: 8rem;
-`;
-
-const UserInfoName = styled.div`
-  margin: 3rem;
-`;
-
-const LeftContainer = styled.div`
-  grid-area: 2/2/3/3;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  cursor: pointer;
-  padding: 2rem;
-`;
-
-const RightContainer = styled.div`
-  grid-area: 2/3/3/8;
-`;
-
-const Q = styled.span`
-  font-size: 3rem;
-  color: #005ce7;
-`;
-
 const QuestionTitle = styled.span`
-  font-weight: bold;
-  font-size: 1.5rem;
-  padding 1rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const QuestionBody = styled.div`
-padding 0.7rem;
-margin: 1.5rem 0 2rem 2rem;
-line-height: 1.8rem;
-`;
-
-const QuestionAnswersNum = styled.span`
-padding 0.5rem;`;
-
-const QuestionDate = styled.span`
-padding 0.5rem;
-margin-right:1rem;
-`;
-
-const QuestionLikes = styled.span`
-padding 0.5rem;
-margin-right:1rem;
-
-`;
-
-const QuestionTag = styled.span`
-  font-size: 0.8rem;
-  border-radius: 1.5rem;
-  border: none;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  color: #1658d8;
-  background-color: #f5f5f5;
+  line-height: 1.8rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  @media (max-width: 375px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const QuestionLastLine = styled.div`
-  text-align: right;
-  margin: 1.2rem 0 3rem 0;
   color: #686868;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+`;
+
+const QuestionDate = styled.span`
+  @media (max-width: 375px) {
+    font-size: 0.5rem;
+  }
+`;
+
+const QuestionAnswersNum = styled.span`
+  margin-left: 0.8rem;
+`;
+
+const QuestionLikes = styled.span`
+  margin-left: 0.8rem;
+  @media (max-width: 375px) {
+    font-size: 0.5rem;
+  }
+`;
+
+const EmptyComment = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
 `;

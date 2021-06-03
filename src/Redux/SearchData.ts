@@ -4,13 +4,44 @@ const SEARCSELECT = "SearchSelect/SEARCSELECT" as const;
 const SEARCSHRESULT = "SearchResult/SEARCSHRESULT" as const;
 
 type SearchDataType = {
-  id: number;
-  title: string;
-  body: string;
-  count: number;
+  mainContent?: {
+    count: number;
+    _id: string;
+    title: string;
+    pureBody: string;
+    body: string;
+    updatedAt: string;
+  }[];
+  helpdeskContent: {
+    tags: string[];
+    commentCount: number;
+    like: number;
+    _id: string;
+    pureBody: string;
+    title: string;
+    body: string;
+    userId: {
+      nickName: string;
+      kakaoId: string | null;
+      githubId: string | null;
+      image: string;
+      _id: string;
+      __v: number;
+    };
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  }[];
 };
 
-export const searchData = (data: SearchDataType[]) => ({ type: SEARCHDATA, payload: data });
+// type SearchDataType = {
+//   id: number;
+//   title: string;
+//   body: string;
+//   count: number;
+// };
+
+export const searchData = (data: SearchDataType) => ({ type: SEARCHDATA, payload: data });
 export const searchWord = (word: string) => ({ type: SEARCHWORD, payload: word });
 export const searchSelect = (tag: string) => ({ type: SEARCSELECT, payload: tag });
 export const searchResult = (result: string | null, tagResult: string | null) => ({ type: SEARCSHRESULT, payload: { result, tagResult } });
@@ -18,9 +49,9 @@ export const searchResult = (result: string | null, tagResult: string | null) =>
 type SearchDataAction = ReturnType<typeof searchData> | ReturnType<typeof searchWord> | ReturnType<typeof searchSelect> | ReturnType<typeof searchResult>;
 
 type InitStateType = {
-  contentData: null | SearchDataType[];
+  contentData: null | undefined | SearchDataType;
   word: null | string;
-  tag: null | string;
+  tag: string;
   result: null | string;
   tagResult: null | string;
 };
@@ -28,7 +59,7 @@ type InitStateType = {
 const initialState = {
   contentData: null,
   word: null,
-  tag: null,
+  tag: "전체",
   result: null,
   tagResult: null,
 };

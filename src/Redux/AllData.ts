@@ -1,22 +1,24 @@
 // 액션 타입
 const FILTER = "AllData/FILTER" as const;
 const CHANGEFILTER = "AllData/CHANGEFILTER" as const;
-const SETWRITEMODE = "AllData/SETWRITEMODE" as const;
+const USERNICKNAME = "AllData/USERNICKNAME" as const;
 
 // 액션 생성 함수
 export const filter = (data: Method[]) => ({ type: FILTER, payload: data });
 export const changeFilter = (data: Method[]) => ({ type: CHANGEFILTER, payload: data });
-export const setWriteMode = () => ({type: SETWRITEMODE})
-
+export const userNickName = (userNickName: string) => ({ type: USERNICKNAME, payload: userNickName });
 
 // 액션 객체 타입 설정(타입스크립트)
-type AllDataAction = ReturnType<typeof filter> | ReturnType<typeof changeFilter> | ReturnType<typeof setWriteMode>;
+type AllDataAction = ReturnType<typeof filter> | ReturnType<typeof changeFilter> | ReturnType<typeof userNickName>;
 
 type Method = {
-  id: number;
+  _id: string;
   title: string;
   body: string;
+  pureBody: string;
   count: number;
+  updatedAt: string;
+  createdAt: string;
 };
 
 // 초기 state 타입 설정
@@ -24,8 +26,18 @@ type InitState = {
   allData: null | Method[];
   arrayData: null | Method[];
   objectData: null | Method[];
+  mathData: null | Method[];
+  stringData: null | Method[];
+  promiseData: null | Method[]
   currentData: null | Method[];
-  writeMode: boolean;
+  userNickName: null | string;
+  // allData: any;
+  // arrayData: any;
+  // objectData: any;
+  // mathData: any;
+  // stringData: any;
+  // currentData: any;
+  // userNickName: null | string;
 };
 
 // 초기 state 설정
@@ -34,12 +46,16 @@ const initialState = {
   currentData: null,
   arrayData: null,
   objectData: null,
-  writeMode: false
+  mathData: null,
+  stringData: null,
+  promiseData: null,
+  userNickName: null,
 };
 
 function AllDataReducer(state: InitState = initialState, action: AllDataAction) {
   switch (action.type) {
     case FILTER:
+      console.log(action.payload);
       const arrayData = action.payload.filter((el) => {
         const methodTitle = el.title.split(".")[0];
         return methodTitle === "Array";
@@ -48,17 +64,24 @@ function AllDataReducer(state: InitState = initialState, action: AllDataAction) 
         const methodTitle = el.title.split(".")[0];
         return methodTitle === "Object";
       });
+      const mathData = action.payload.filter((el) => {
+        const methodTitle = el.title.split(".")[0];
+        return methodTitle === "Math";
+      });
+      const stringData = action.payload.filter((el) => {
+        const methodTitle = el.title.split(".")[0];
+        return methodTitle === "String";
+      });
+      const promiseData = action.payload.filter((el) => {
+        const methodTitle = el.title.split(".")[0];
+        return methodTitle === "Promise";
+      });
       const currentData = arrayData;
-      return { ...state, allData: action.payload, currentData, arrayData, objectData };
+      return { ...state, allData: action.payload, currentData, arrayData, objectData, mathData, stringData, promiseData };
     case CHANGEFILTER:
-      return { ...state, currentData: action.payload}
-    case SETWRITEMODE:
-      console.log('writeMode 바껴짐')
-      if(state.writeMode) {
-        return { ...state, writeMode: false}
-      } else {
-        return { ...state, writeMode: true}
-      }
+      return { ...state, currentData: action.payload };
+    case USERNICKNAME:
+      return { ...state, userNickName: action.payload };
     default:
       return state;
   }

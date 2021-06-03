@@ -26,6 +26,7 @@ type AllData = {
     tags: string[];
     commentCount: number;
     like: number;
+    pureBody: string;
     _id: string;
     title: string;
     body: string;
@@ -38,6 +39,7 @@ type AllData = {
   comments: {
     like: number;
     _id: string;
+    pureBody: string;
     questionId: {
       _id: string;
       title: string;
@@ -166,7 +168,7 @@ export const allDataAction = (mdnAllData: AllData | null) => ({
 type MyPageDataAction = ReturnType<typeof allDataAction>;
 
 type InitState = {
-  mdnAllData: null | AllData;
+  mdnAllData: null | undefined | AllData;
   // myPageData: null | DataType;
   // questionData: QuestionType | undefined;
   // answerData: AnswerType | undefined;

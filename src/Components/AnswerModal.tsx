@@ -1,15 +1,20 @@
 import { useRef } from "react";
 import styled from "styled-components";
+import { fadeIn } from "../styled-components/Animation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import useBooleanData from "../Hooks/useBooleanData";
 
 type ModalProps = {
   // handleCloseModal: () => void;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   btnName: string;
+  handleAnswerBtn: () => void;
 };
 
-function AnswerModal({ setIsOpen, btnName }: ModalProps) {
+function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   const overLay = useRef(null);
+  const { onContentPageMode, onSetWriteMode } = useBooleanData();
 
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(false);
@@ -21,8 +26,7 @@ function AnswerModal({ setIsOpen, btnName }: ModalProps) {
   const handleAnswerYes = () => {
     console.log("click");
 
-    //요청보내야함
-    window.history.back();
+    handleAnswerBtn();
   };
 
   const handleAnswerNo = () => {
@@ -30,7 +34,10 @@ function AnswerModal({ setIsOpen, btnName }: ModalProps) {
   };
 
   const handleExitYes = () => {
+    console.log("뒤로 이동");
     window.history.back();
+    onSetWriteMode(false);
+    onContentPageMode(true);
   };
   const handleExitNo = () => {
     setIsOpen(false);
@@ -41,23 +48,24 @@ function AnswerModal({ setIsOpen, btnName }: ModalProps) {
       <Overlay onClick={handleOverLay} ref={overLay} />
 
       <ModalBox>
-        <CloseIcon onClick={handleCloseIcon}>
-          <FontAwesomeIcon icon="times" size="lg" color="#005ce7" />
-        </CloseIcon>
         {btnName === "답변" ? (
           <>
-            <AskInfo>답변하시겠습니까?</AskInfo>
+            <AskInfo>답변을 등록하시겠습니까?</AskInfo>
             <ContentContainer>
-              <Answer onClick={handleAnswerYes}>네</Answer>
-              <Answer onClick={handleAnswerNo}>아니요</Answer>
+              <BtnBox>
+                <CancelBtn onClick={handleAnswerNo}>취소</CancelBtn>
+                <SubmitBtn onClick={handleAnswerYes}>등록</SubmitBtn>
+              </BtnBox>
             </ContentContainer>
           </>
         ) : (
           <>
             <AskInfo>나가시겠습니까?</AskInfo>
             <ContentContainer>
-              <Answer onClick={handleExitYes}>네</Answer>
-              <Answer onClick={handleExitNo}>아니요</Answer>
+              <BtnBox>
+                <CancelBtn onClick={handleExitYes}>네</CancelBtn>
+                <SubmitBtn onClick={handleExitNo}>아니요</SubmitBtn>
+              </BtnBox>
             </ContentContainer>
           </>
         )}
@@ -69,33 +77,46 @@ function AnswerModal({ setIsOpen, btnName }: ModalProps) {
 export default AnswerModal;
 
 const ModalContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
+  left: 0;
+  z-index: 2;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const Overlay = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, 0.6);
   cursor: pointer;
 `;
 const ModalBox = styled.div`
   position: relative;
-  width: 28%;
-  height: 18%;
-  margin: 0 10%;
-  padding: 50px;
+  width: 25rem;
+  height: 10rem;
+  padding: 40px;
   background-color: white;
-  border-radius: 34px;
-  box-sizing: border-box;
+  border: 1px solid #9e9e9e;
+  transition: 0.2s ease-in;
+  border-radius: 10px;
+  @media (max-width: 375px) {
+    height: 9rem;
+    width: 18rem;
+  }
 `;
 
 const CloseIcon = styled.div`
@@ -119,19 +140,32 @@ const ContentContainer = styled.div`
 `;
 
 const AskInfo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 1rem;
-  text-align: center;
+  width: 100%;
+
+  left: 0;
+  color: #616161;
 `;
 
-const Answer = styled.button`
-  font-size: 1.2rem;
-  margin: 1rem;
+export const BtnBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: -2rem;
+  margin-top: 4rem;
+`;
+export const CancelBtn = styled.button`
   border: none;
-  background-color: white;
+  margin-right: 1rem;
+  background: none;
+  cursor: pointer;
+  color: #616161;
+  font-size: 1rem;
+`;
 
-  &:hover {
-    color: #005ce7;
-  }
+export const SubmitBtn = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #0055fa;
+  font-size: 1rem;
 `;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -6,140 +6,116 @@ import ReactMarkdown from "react-markdown";
 import { RootState } from "../Redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import useAllData from "../Hooks/useAllData";
 import AnswerModal from "../Components/AnswerModal";
+import useBooleanData from "../Hooks/useBooleanData";
+import { ExitBtn, SubmitBtn, HelpBtn, BtnBox } from "../styled-components/Post";
+import userImg from "../img/userIcon_gray.png";
+import axios from "axios";
+import HelpModal from "../Components/HelpModal";
+import useAllData from "../Hooks/useAllData";
+import userIcon from "../img/userIcon_gray.png";
 
-function AnswerPage() {
+type PropsOption = {
+  helpModal: Boolean;
+  handleHelpModal: () => void;
+};
+
+function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
-  const { onSetWriteMode } = useAllData();
-  const history = useHistory();
-  const { displayQuestion } = allState;
+  const { onSetWriteMode } = useBooleanData();
   const [writing, setWriting] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [btnName, setbtnName] = useState("");
-
-  useEffect(() => {
-    onSetWriteMode();
-  }, []);
+  const previewRef = useRef<any>(null);
+  const history = useHistory();
+  const [userInfo, setUserInfo] = useState({
+    img: "",
+    nickName: "",
+  });
+  const { displayQuestion } = allState;
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWriting(e.target.value);
   };
 
+  const handleBtns = (e: string) => {
+    console.log(e);
+    setbtnName(e);
+    setIsOpen(() => !isOpen);
+  };
+
   const handleAnswerBtn = () => {
-    setbtnName("답변");
-    setIsOpen(() => !isOpen);
-    // onSetWriteMode();
-    // window.history.back();
-  };
-
-  const handleExitBtn = () => {
-    setbtnName("나가기");
-    setIsOpen(() => !isOpen);
-  };
-
-  const handleHeader = (mark: string) => {
-    if (mark === "H1") {
-      setWriting(writing + "\n" + "# ");
-    } else if (mark === "H2") {
-      setWriting(writing + "\n" + "## ");
-    } else if (mark === "H3") {
-      setWriting(writing + "\n" + "### ");
-    } else if (mark === "H4") {
-      setWriting(writing + "\n" + "#### ");
-    } else if (mark === "Code") {
-      setWriting(writing + " \n ```" + "\n 코드를 입력해주세요 \n" + "\n ```");
-    } else if (mark === "Bold") {
-      setWriting(writing + "**" + "**");
-    } else if (mark === "Italic") {
-      setWriting(writing + "*" + "*");
-    } else if (mark === "Link") {
-      setWriting(writing + "[Name](http://)");
-    } else if (mark === "List") {
-      setWriting(writing + "\n" + "* ");
-    } else if (mark === "Horizontal") {
-      setWriting(writing + "\n" + "---" + " \n");
+    const previewValues = previewRef.current.innerText;
+    console.log(previewValues);
+    const pureContentArr = previewValues.split("님의 답변").slice(1);
+    console.log(pureContentArr);
+    let pureContent = "";
+    for (let i = 0; i < pureContentArr.length; i++) {
+      pureContent = pureContent + pureContentArr[i];
     }
-
-    const input = document.getElementById("text")?.focus();
+    console.log(pureContent);
+    console.log("답변 달림");
+    axios.post("http://localhost:8080/comment", { questionId: displayQuestion?._id, content: writing, pureContent }, { withCredentials: true }).then((res) => {
+      console.log(res);
+      setIsOpen(() => !isOpen);
+      window.history.back();
+    });
   };
 
-  const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // if (e.key === "Enter") {
-    //   setWriting(writing + "\n");
-    // }
-  };
+  useEffect(() => {
+    axios.get("http://localhost:8080/userinfo", { withCredentials: true }).then((res) => {
+      setUserInfo({ img: res.data.image, nickName: res.data.nickName });
+    });
+    onSetWriteMode(true);
+  }, []);
 
-  return (
+  return displayQuestion === undefined || displayQuestion === null ? (
+    <div>비어있는 질문</div>
+  ) : (
     <Container>
+      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
       <LeftContainer>
-        <QuestionPart>
-          <Q>Q</Q>
-          <Title> {displayQuestion?.title}</Title>
-
-          <QuestionBody>{displayQuestion?.body}</QuestionBody>
-          <NameDate>
-            <Likes> 좋아요: {displayQuestion?.like}</Likes>
-            <UserName>유저네임</UserName>
-            <Date>{displayQuestion?.createdAt}</Date>
-          </NameDate>
-        </QuestionPart>
+        <QuestionBox>
+          <QuestionTitleBox>
+            <TitleIcon>질문</TitleIcon>
+            <QuestionTitle> {displayQuestion.title}</QuestionTitle>
+          </QuestionTitleBox>
+          <QuestionBody>
+            <ReactMarkdown children={displayQuestion.body} />
+          </QuestionBody>
+          <InfoBox_Q>
+            {displayQuestion.userId.image}
+            {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
+            <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
+            <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
+          </InfoBox_Q>
+        </QuestionBox>
         <WritingArea>
-          <WritingTitle> 나의 답변</WritingTitle>
-          <MarDownBtns>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H1")}>
-              H1
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H2")}>
-              H2
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H3")}>
-              H3
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("H4")}>
-              H4
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Code")}>
-              Code
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Bold")}>
-              Bold
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Italic")}>
-              Italic
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Link")}>
-              Link
-            </MarkDownBtn>
-
-            <MarkDownBtn id="btn" onClick={() => handleHeader("List")}>
-              List
-            </MarkDownBtn>
-            <MarkDownBtn id="btn" onClick={() => handleHeader("Horizontal")}>
-              Horizontal
-            </MarkDownBtn>
-          </MarDownBtns>
-          <Body autoFocus id="text" value={writing} placeholder="당신의 지식을 공유해주세요..." onChange={handleChange} onKeyPress={handleEnter}></Body>
+          <WritingTitle>나의 답변</WritingTitle>
+          <Body
+            id="text"
+            value={writing}
+            placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+              `}
+            onChange={handleChange}
+          ></Body>
         </WritingArea>
-        <SubmitButtons>
-          <SubmitBtn onClick={handleAnswerBtn}> 답변하기</SubmitBtn>
-          <BackBtn onClick={handleExitBtn}> 나가기 </BackBtn>
-        </SubmitButtons>
-        {isOpen ? <AnswerModal btnName={btnName} setIsOpen={setIsOpen} /> : null}
+        {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} /> : null}
       </LeftContainer>
 
-      <RightContainer>
-        <PrieviewTitle>Preview</PrieviewTitle>
-        <AnswerPart>
-          <Title> {displayQuestion?.title}</Title>
-          <ReactMarkdown children={writing} components={Components} />
-        </AnswerPart>
+      <RightContainer ref={previewRef}>
+        <PreviewTitle>
+          {userInfo.img === "" ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={userInfo.img} />}
+
+          <UserInfoName>{userInfo.nickName} 님의 답변</UserInfoName>
+        </PreviewTitle>
+        <ReactMarkdown children={writing} components={Components} />
       </RightContainer>
+        <BtnBox>
+        <ExitBtn onClick={() => handleBtns("나가기")}> 나가기 </ExitBtn>
+        <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
+        <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
+        </BtnBox>
     </Container>
   );
 }
@@ -153,211 +129,146 @@ export const Components = {
 export default AnswerPage;
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(2, 1fr);
+
+
+  @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    height: 100vh;
+    width: 100vw;
+  }
 `;
 
 const LeftContainer = styled.div`
-  width:50%;
-  height:70%;
-  padding 13px;
+  // padding: 3rem;
+  height: 100%;
+  width: 100%;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
-const WritingTitle = styled.div`
-  font-size: 25px;
-  font-weight: 700;
-  margin: 1em 0;
-  border-bottom: 1.5px solid black;
+const QuestionBox = styled.div`
+  padding: 3rem 3rem 1.5rem 3rem;
+  border-bottom: 1px solid #e0e0e0;
 `;
 
-const MarDownBtns = styled.div`
+const QuestionTitleBox = styled.div``;
+
+const TitleIcon = styled.span`
+  border: none;
+  padding: 0.7rem;
+  background: #90a4ae;
+  color: white;
+  font-weight: bold;
+  margin-right: 0.5rem;
+`;
+
+const QuestionTitle = styled.span`
+  font-size: 1.2rem;
+`;
+
+const QuestionBody = styled.div`
+  margin: 2em 0 2em 0;
+  line-height: 1.5rem;
+`;
+
+const InfoBox_Q = styled.div`
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  background-color: #f5f5f5;
+`;
+
+const UserImg_Q = styled.img`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.4rem;
+  border: none;
+`;
+
+const UserName_Q = styled.span`
+  margin-right: 0.4rem;
+  color: black;
+  font-size: 0.9rem;
+`;
+
+const Date_Q = styled.span`
+  color: #757575;
+  font-size: 0.8rem;
+  padding-bottom: 0.1rem;
 `;
 
 const WritingArea = styled.div`
   width: 100%;
-  height: 100%;
+  height: 60%;
   resize: none;
-  border: none;
   outline: none;
-  font-size: 17px;
+  font-size: 1.3rem;
+  margin: 1.5rem 0rem 3rem 3rem;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
+
+const WritingTitle = styled.div`
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #686868;
+  margin-bottom: 1rem;
+`;
+
 const Body = styled.textarea`
   width: 100%;
-  height: 100%;
+  height: 60%;
   border: none;
   outline: none;
   resize: none;
-  font-size: 16px;
-  margin-top: 3rem;
-`;
-
-const BackBtn = styled.span`
-  margin: 1rem;
-  cursor: pointer;
-  &:hover {
-    color: #005ce7;
-  }
-`;
-const SubmitBtn = styled.span`
-  margin: 1rem;
-  cursor: pointer;
-  &:hover {
-    color: #005ce7;
-  }
-`;
-
-const MarkDownBtn = styled.button`
-  font-size: 1.3rem;
-  color: #9e9e9e;
-  border: none;
-  background-color: #f5f5f5;
-  cursor: pointer;
-  margin: 1rem 0 1rem 0;
-  &:hover {
-    color: #616161;
+  font-size: 1rem;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
   }
 `;
 
 const RightContainer = styled.div`
-background-color: #F5F5F5;
-width:50%;
-height:100%;
-padding 13px;
-
+  background-color: #f5f5f5;
+  padding: 1.3rem 3rem 3rem 3rem;
+  height: 100%;
+  width: 100%;
+  @media (max-width: 375px) {
+    display: none;
+  }
 `;
 
-const PrieviewTitle = styled.div`
-  font-size: 25px;
+const PreviewTitle = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  border-bottom: 1.5px solid black;
-`;
-
-const QuestionPart = styled.div`
-  margin: 3rem 0;
-  width: 100%;
-  height: auto;
-`;
-
-const AnswerPart = styled.div`
-  font-size: 1rem;
-  width: 100%;
-  height: 100%;
-  border: none;
-  line-height: 2rem;
-  word-spacing: 0.5rem;
-`;
-
-const AnswerBox = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-const Q = styled.span`
-  font-size: 3rem;
-  margin: 0.5rem;
-  color: #005ce7;
-`;
-
-const Title = styled.span`
-  font-size: 25px;
-  font-weight: bold;
-  margin-bottom: 1rem;
-`;
-const Date = styled.span`
-  margin: 1rem;
-`;
-
-const UserName = styled.span`
-  margin: 1rem;
-`;
-const QuestionBody = styled.div`
-  margin: 1rem 0 1rem 0;
-  line-height: 1.8rem;
-`;
-const Likes = styled.span`
-  margin: 1rem;
-`;
-const Tags = styled.div``;
-const AnswerBtn = styled.div``;
-
-const NameDate = styled.div`
   color: #686868;
-  text-align: right;
+  margin: 3rem 0rem 3rem 0rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.05rem solid #e0e0e0;
+  width: 100%;
 `;
 
-const SubmitButtons = styled.div`
-  text-align: right;
+const UserInfoImage = styled.img`
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  object-fit: cover;
 `;
 
-// const Container = styled.div`
-//   display: grid;
-//   grid-template-columns: repeat(2, 1fr);
-//   width: 100vw;
-//   height: 100vh;
-// `;
-
-// const LeftContainer = styled.div`
-//   padding: 0px 30px 30px 30px;
-// `;
-
-// const MarDownBtns = styled.div``;
-
-// const WritingArea = styled.div`
-//   border: 2px solid #a7a3a3;
-//   height: 50%;
-// `;
-// const Body = styled.textarea`
-//   width: 100%;
-//   height: 100%;
-//   border: none;
-//   outline: none;
-//   resize: none;
-//   font-size: 16px;
-// `;
-
-// const SubmitBtn = styled.button`
-//   position: fixed;
-//   top: 45rem;
-//   left: 38rem;
-//   // top: 900px;
-//   // left: 800px;
-// `;
-
-// const RightContainer = styled.div`
-//   background: #f4f4f4;
-//   padding: 0px 30px 30px 30px;
-// `;
-
-// const QuestionPart = styled.div`
-//   width: 100%;
-//   height: auto;
-//   border: 2px solid #a7a3a3;
-// `;
-
-// const AnswerPart = styled.div`
-//   width: 100%;
-//   height: 50%;
-//   border: 2px solid #a7a3a3;
-// `;
-
-// const AnswerBox = styled.div`
-//   width: 100%;
-//   height: 100%;
-// `;
-// const Title = styled.div`
-//   font-size: 25px;
-//   font-weight: bold;
-//   margin: 10px;
-// `;
-// const Date = styled.div``;
-// const UserName = styled.div``;
-// const QuestionBody = styled.div``;
-// const Likes = styled.div``;
-// const Tags = styled.div``;
-// const AnswerBtn = styled.div``;
+const UserInfoName = styled.span`
+  margin-left: 2rem;
+`;

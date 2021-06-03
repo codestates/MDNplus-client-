@@ -9,6 +9,7 @@ type SearchDataType = {
     _id: string;
     title: string;
     body: string;
+    pureBody: string;
     updatedAt: string;
   }[];
   helpdeskContent: {
@@ -18,6 +19,7 @@ type SearchDataType = {
     _id: string;
     title: string;
     body: string;
+    pureBody: string;
     userId: {
       nickName: string;
       kakaoId: string | null;

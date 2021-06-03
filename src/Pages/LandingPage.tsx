@@ -168,8 +168,6 @@ const LandingPage = () => {
         <AppealBox2Container_OFF></AppealBox2Container_OFF>
       )}
 
-      {/* <EmptySpace></EmptySpace> */}
-
       {currentY >= 2350 ? (
         <ReviewBoxContainer_ON>
           <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
@@ -211,45 +209,50 @@ const LandingPage = () => {
         <ReviewBoxContainer_OFF></ReviewBoxContainer_OFF>
       )}
 
-      <NewsContainer>
-        <NewsIntroBox>
-          <NewsIntro1>MDN+</NewsIntro1>
-          <NewsIntro2> 뉴스</NewsIntro2>
-        </NewsIntroBox>
-        <NewsBox>
-          <MainNews>
-            <MainNewsContents>
-              <MainNewsTitle>개발 공부가 힘들 때</MainNewsTitle>
-              <MainNewsTitle>'MDN+'를 이용해요</MainNewsTitle>
-              <MainNewsBody>
-                "개발 공부를 시작하면서 MDN을 많이 참고했는데 번역이 매끄럽지 않고 조금 어렵게 설명이 되어있는 부분들이 있더라구요. 그래서 이런 부분들을 현업에서 일하는 개발자들 또는 개발을 공부하는
-                사람들이 자유롭게 수정을 하며 새롭게 MDN을 재구성한다면 어떨까 생각을 ...
-              </MainNewsBody>
-            </MainNewsContents>
-            <MainNewsImg src={MainNewsImage}></MainNewsImg>
-            <MainNewsOverlay></MainNewsOverlay>
-          </MainNews>
-          <SubNews>
-            <SubNewsTitle1>사용자라면 누구든지 수정이 가능한</SubNewsTitle1>
-            <SubNewsTitle2>MDN판 위키백과</SubNewsTitle2>
-            <SubNewsOverlay></SubNewsOverlay>
-            <SubNewsImg src={PenImg}></SubNewsImg>
-          </SubNews>
-          <SubNews>
-            <SubNewsTitle1>MDN+,</SubNewsTitle1>
-            <SubNewsTitle2>누적 사용자 5만명 돌파</SubNewsTitle2>
-            <SubNewsOverlay></SubNewsOverlay>
-            <SubNewsImg src={networkImg}></SubNewsImg>
-          </SubNews>
-          <SubNews>
-            <SubNewsTitle1>예비 개발자라면</SubNewsTitle1>
-            <SubNewsTitle2>꼭 알아야 할 5가지</SubNewsTitle2>
-            <SubNewsOverlay></SubNewsOverlay>
-            <SubNewsImg src={noteImg}></SubNewsImg>
-          </SubNews>
-        </NewsBox>
-      </NewsContainer>
-      <FooterComponent />
+      {currentY >= 3200 ? (
+        <NewsContainer_ON>
+          <NewsIntroBox>
+            <NewsIntro1>MDN+</NewsIntro1>
+            <NewsIntro2> 뉴스</NewsIntro2>
+          </NewsIntroBox>
+          <NewsBox>
+            <MainNews>
+              <MainNewsContents>
+                <MainNewsTitle>개발 공부가 힘들 때</MainNewsTitle>
+                <MainNewsTitle>'MDN+'를 이용해요</MainNewsTitle>
+                <MainNewsBody>
+                  "개발 공부를 시작하면서 MDN을 많이 참고했는데 번역이 매끄럽지 않고 조금 어렵게 설명이 되어있는 부분들이 있더라구요. 그래서 이런 부분들을 현업에서 일하는 개발자들 또는 개발을 공부하는
+                  사람들이 자유롭게 수정을 하며 새롭게 MDN을 재구성한다면 어떨까 생각을 ...
+                </MainNewsBody>
+              </MainNewsContents>
+              <MainNewsImg src={MainNewsImage}></MainNewsImg>
+              <MainNewsOverlay></MainNewsOverlay>
+            </MainNews>
+            <SubNews>
+              <SubNewsTitle1>사용자라면 누구든지 수정이 가능한</SubNewsTitle1>
+              <SubNewsTitle2>MDN판 위키백과</SubNewsTitle2>
+              <SubNewsOverlay></SubNewsOverlay>
+              <SubNewsImg src={PenImg}></SubNewsImg>
+            </SubNews>
+            <SubNews>
+              <SubNewsTitle1>MDN+,</SubNewsTitle1>
+              <SubNewsTitle2>누적 사용자 5만명 돌파</SubNewsTitle2>
+              <SubNewsOverlay></SubNewsOverlay>
+              <SubNewsImg src={networkImg}></SubNewsImg>
+            </SubNews>
+            <SubNews>
+              <SubNewsTitle1>예비 개발자라면</SubNewsTitle1>
+              <SubNewsTitle2>꼭 알아야 할 5가지</SubNewsTitle2>
+              <SubNewsOverlay></SubNewsOverlay>
+              <SubNewsImg src={noteImg}></SubNewsImg>
+            </SubNews>
+          </NewsBox>
+        </NewsContainer_ON>
+      ) : (
+        <NewsContainer_OFF></NewsContainer_OFF>
+      )}
+
+      <FooterComponent/>
     </Container>
   );
 };
@@ -263,10 +266,11 @@ const EmptySpace = styled.div`
 `;
 
 const Container = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   width: 100%;
-  // height: 100vw;
-  flex-direction: column;
+  // height: 100vh;
+  // flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -326,12 +330,12 @@ const HomeBtn = styled.span`
 `;
 
 const IntroBoxContainer = styled.div`
-  position: relative;
   width: 100%;
-  height: 48rem;
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   background: #cfd8dc;
+  position: relative;
 `;
 
 const LeftContainer = styled.div`
@@ -340,9 +344,7 @@ const LeftContainer = styled.div`
   align-items: center;
 `;
 
-const RightContainer = styled.div`
-  // border: 1px solid
-`;
+const RightContainer = styled.div``;
 
 const IntroBox = styled.div`
   // border: 1px solid red;
@@ -381,8 +383,8 @@ const AppBtnBox = styled.div`
   display: flex;
   align-items: center;
 
-  animation-duration: 1.2s;
-  animation-timing-function: cubic-bezier(0.91, 0.2, 0.83, 0.67);
+  animation-duration: 1.5s;
+  animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_short};
   animation-fill-mode: forwards;
 `;
@@ -422,15 +424,15 @@ const CountBox = styled.div`
   position: absolute;
   bottom: 0rem;
   left: 1rem;
-  width: 50rem;
-  height: 7rem;
+  width: 55vw;
+  height: 17vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   background: white;
   z-index: 1;
 
-  animation-duration: 1.9s;
+  animation-duration: 2s;
   animation-timing-function: cubic-bezier(0.56, 0.14, 0.84, 0.76);
   animation-name: ${slideLeft};
   animation-fill-mode: forwards;
@@ -439,7 +441,7 @@ const CountBox = styled.div`
 const HelpCountBox = styled.div`
   text-align: center;
 
-  animation-duration: 3s;
+  animation-duration: 3.2s;
   animation-timing-function: cubic-bezier(0.67, 0.07, 0.31, 0.95);
   animation-name: ${slideUp_short};
   animation-fill-mode: forwards;
@@ -448,7 +450,7 @@ const HelpCountBox = styled.div`
 const EditCountBox = styled.div`
   text-align: center;
 
-  animation-duration: 3s;
+  animation-duration: 3.2s;
   animation-timing-function: cubic-bezier(0.67, 0.07, 0.31, 0.95);
   animation-name: ${slideUp_short};
   animation-fill-mode: forwards;
@@ -472,30 +474,20 @@ const ImgBox = styled.div`
 
 const Img = styled.img`
   width: 40rem;
-  height: 48rem;
+  height: 100vh;
   object-fit: cover;
 
-  animation-duration: 2.2s;
-  animation-timing-function: ease-out;
+  animation-duration: 3.5s;
+  animation-timing-function: cubic-bezier(.68,.04,.81,.68);
   animation-name: ${fadeIn_img};
   animation-fill-mode: forwards;
-`;
-
-const StartBtn = styled.span`
-  font-size: 1.2rem;
-  padding: 0.5rem 1.3rem 0.5rem 1.3rem;
-  border: 1px solid black;
-  background: #424242;
-  color: white;
-  cursor: pointer;
-  margin-top: 3rem;
 `;
 
 //------------------------시간 섹션-------------------------------//
 const TimeContainer_ON = styled.div`
   opacity: 1;
   width: 100%;
-  height: 30rem;
+  height: 31rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -787,7 +779,8 @@ const Reviewer = styled.span`
 
 //----------------------------뉴스 컨테이너------------------------//
 
-const NewsContainer = styled.div`
+const NewsContainer_ON = styled.div`
+  opacity: 1;
   width: 100%;
   height: 40rem;
   display: flex;
@@ -795,6 +788,17 @@ const NewsContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: white;
+
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
+`;
+
+const NewsContainer_OFF = styled.div`
+  opacity: 0;
+  width: 100%;
+  height: 40rem;
 `;
 
 const NewsIntroBox = styled.div`

@@ -661,7 +661,7 @@ const AppealBox = styled.div`
 
 const UnderLine1 = styled.div`
   width: 4rem;
-  border: 1px solid #bdbdbd;
+  border: 1px solid black;
   position: absolute;
   top: 14rem;
   left: -2rem;
@@ -674,7 +674,7 @@ const UnderLine1 = styled.div`
 
 const UnderLine2 = styled.div`
   width: 4rem;
-  border: 1px solid #bdbdbd;
+  border: 1px solid black;
   position: absolute;
   top: 14rem;
   right: -2rem;

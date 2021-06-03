@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { fadeIn } from "../styled-components/Animation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import useBooleanData from '../Hooks/useBooleanData';
+import useBooleanData from "../Hooks/useBooleanData";
 
 type ModalProps = {
   // handleCloseModal: () => void;
@@ -14,7 +14,7 @@ type ModalProps = {
 
 function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   const overLay = useRef(null);
-  const {onContentPageMode, onSetWriteMode} = useBooleanData()
+  const { onContentPageMode, onSetWriteMode } = useBooleanData();
 
   const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(false);
@@ -34,10 +34,10 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
   };
 
   const handleExitYes = () => {
-    console.log('뒤로 이동')
+    console.log("뒤로 이동");
     window.history.back();
-    onSetWriteMode(false)
-    onContentPageMode(true)
+    onSetWriteMode(false);
+    onContentPageMode(true);
   };
   const handleExitNo = () => {
     setIsOpen(false);
@@ -90,6 +90,10 @@ const ModalContainer = styled.div`
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
+  @media (max-width: 375px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const Overlay = styled.div`
@@ -109,6 +113,10 @@ const ModalBox = styled.div`
   border: 1px solid #9e9e9e;
   transition: 0.2s ease-in;
   border-radius: 10px;
+  @media (max-width: 375px) {
+    height: 9rem;
+    width: 18rem;
+  }
 `;
 
 const CloseIcon = styled.div`
@@ -144,7 +152,6 @@ export const BtnBox = styled.div`
   justify-content: flex-end;
   margin-right: -2rem;
   margin-top: 4rem;
-
 `;
 export const CancelBtn = styled.button`
   border: none;

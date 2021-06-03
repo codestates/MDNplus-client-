@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useSearchData from "../Hooks/useSearchData";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import useContentData from "../Hooks/useContentData";
+import useBooleanData from "../Hooks/useBooleanData";
 
 type helpDeskContentType = {
   tags: string[];
   commentCount: number;
   like: number;
   _id: string;
+  pureBody: string;
   title: string;
   body: string;
   userId: {
@@ -27,6 +29,7 @@ type helpDeskContentType = {
 type mainContentType = {
   count: number;
   _id: string;
+  pureBody: string;
   title: string;
   body: string;
   updatedAt: string;
@@ -34,6 +37,7 @@ type mainContentType = {
 
 function SearchPage() {
   const { SearchDataState } = useSearchData();
+  const { onContentPageMode } = useBooleanData();
   const { onClickMethod } = useContentData();
   const [CurrentPage, setCurrentPage] = useState("MDN");
   const [MDNColor, setMDNColor] = useState(" #005ce7");
@@ -67,6 +71,10 @@ function SearchPage() {
     setHelpDeskColor("#005ce7");
     setMDNColor("#a7a3a3");
   };
+
+  useEffect(() => {
+    onContentPageMode(false);
+  }, []);
 
   return !SearchDataState.contentData ? (
     <div>비어있음!</div>
@@ -106,7 +114,7 @@ function SearchPage() {
         {SearchDataState.contentData?.mainContent?.length === 0 && SearchDataState.contentData?.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
         ) : CurrentPage === "MDN" && SearchDataState.contentData?.mainContent ? (
-          SearchDataState.contentData.mainContent?.map((el: any) => (
+          SearchDataState.contentData.mainContent?.map((el) => (
             <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
               <Title>{el.title}</Title>
               <Body>{el.pureBody.slice(0, 200)} ...</Body>
@@ -115,7 +123,7 @@ function SearchPage() {
         ) : SearchDataState.contentData.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
         ) : (
-          SearchDataState.contentData?.helpdeskContent.map((el: any) => (
+          SearchDataState.contentData?.helpdeskContent.map((el) => (
             <Content key={el._id} onClick={() => HandleHelpDeckClicked(el)}>
               <HelpTitle>{el.title}</HelpTitle>
               <Body>{el.pureBody}</Body>
@@ -179,13 +187,14 @@ const FilterSearchResult = styled.div`
 const MDNPlus = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  margin: 20px;
+  margin: 1rem;
   cursor: pointer;
 `;
 const HelpDesk = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  margin: 1rem;
+  margin: 1.4rem;
+
   cursor: pointer;
 `;
 

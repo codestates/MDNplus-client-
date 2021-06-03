@@ -68,7 +68,15 @@ function App() {
     <Container>
       <Header>
         {writeMode ? null : (
-          <Nav userImg={userImg} isLogin={isLogin} isLogInOpen={isLogInOpen} handleLogin={handleLogin} handleLoginModal={handleLoginModal} handleChangeMenuIcon={handleChangeMenuIcon}></Nav>
+          <Nav
+            setIsLogin={setIsLogin}
+            userImg={userImg}
+            isLogin={isLogin}
+            isLogInOpen={isLogInOpen}
+            handleLogin={handleLogin}
+            handleLoginModal={handleLoginModal}
+            handleChangeMenuIcon={handleChangeMenuIcon}
+          ></Nav>
         )}
       </Header>
 
@@ -82,21 +90,20 @@ function App() {
         <Switch>
           <Route exact path="/" render={() => <MainPage />} />
           <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
-          <Route path="/EditPage" render={() => <EditPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
+          <Route path="/EditPage" render={() => <EditPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
           <Route path="/SettingPage" render={() => <SettingPage handleLogin={handleLogin} handleChangeMenuIcon={handleChangeMenuIcon} />} />
           <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-          <Route path="/AnswerPage" render={() => <AnswerPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
-          <Route path="/HquestionPage" render={() => <HquestionPage helpModal={helpModal} handleHelpModal={handleHelpModal}/>} />
+          <Route path="/AnswerPage" render={() => <AnswerPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
+          <Route path="/HquestionPage" render={() => <HquestionPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
           <Route path="/QcontentPage" render={() => <QcontentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/TestEditPage" render={() => <TestEditPage />} />
           <Route path="/LandingPage" render={() => <LandingPage />} />
         </Switch>
       </Body>
-      {/* <Footer>푸터</Footer> */}
       {writeMode ? null : (
         <Footer>
           <FooterComponent />
@@ -105,23 +112,14 @@ function App() {
     </Container>
   );
 }
-
-export default withRouter(App);
-
-// const Container = styled.div`
-//   display: flex;
-//   height: 100vh;
-
-//   @media (max-width: 375px) {
-//     flex-direction: column;
-//   }
-// `;
+export default App;
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
+  width: 100vw;
 
   grid-template-areas:
     "header header"
@@ -129,10 +127,16 @@ const Container = styled.div`
     "footer footer";
 
   @media (max-width: 375px) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    height: 100vh;
+    width: 100vw;
+
     grid-template-areas:
-      "header header"
-      "side main"
-      "main footer";
+      "header"
+      "side"
+      "main";
   }
 `;
 const Header = styled.div`
@@ -142,6 +146,10 @@ const SideArea = styled.div`
   grid-area: side;
   width: 13rem;
   background: #f4f4f4;
+  @media (max-width: 375px) {
+    width: 100%;
+    height: 7rem;
+  }
 `;
 
 const Body = styled.div`

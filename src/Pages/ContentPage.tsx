@@ -67,25 +67,43 @@ export default ContentPage;
 
 const Container = styled.div`
   width: 100%;
-  height: 100vw;
+  height: 100%;
   display: flex;
   justify-content: center;
+  @media (max-width: 375px) {
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+  }
 `;
 
 const ContentBox = styled.div`
   width: 53%;
   margin-top: 2rem;
   margin-left: -10rem;
+  @media (max-width: 375px) {
+    font-size: 1rem;
+    margin: 0.5rem;
+    width: 100%;
+  }
 `;
 
 const TitleBox = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 375px) {
+    align-items: center;
+    justify-content: space-around;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 45px;
   display: inline-block;
+  @media (max-width: 375px) {
+    font-size: 2rem;
+  }
 `;
 
 const EditBtn = styled.span`
@@ -93,4 +111,9 @@ const EditBtn = styled.span`
   font-size: 17px;
   margin-top: 60px;
   margin-right: 15px;
+  @media (max-width: 375px) {
+    margin: 0;
+
+    font-size: 0.8rem;
+  }
 `;

@@ -9,9 +9,9 @@
 |이름|포지션|
 |------|---|
 |👦[조은길](https://github.com/USCgil0127)|Back_End, 팀장|
-|👨문성석|Front_End|
-|👨김준래|Front_End|
-|👦김승용|Back_End|
+|👨[문성석](https://github.com/mooon3356)|Front_End|
+|👨[김준래](https://github.com/jrk9204)|Front_End|
+|👦[김승용](https://github.com/yongyongi)|Back_End|
 -------------------
 
 **=> 저희 프로젝트에 관해 자세하게 알고 싶으시다면, 클라이언트 Wiki를 방문해주세요** 😘

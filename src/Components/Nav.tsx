@@ -143,7 +143,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
   return (
     <NavBar>
       <LeftBox>
-        <Logo>MDN +</Logo>
+        <Logo onClick={(() => history.push('/'))}>MDN +</Logo>
         <SearchBar>
           <Search type="search" onKeyPress={handleKeyPress} onChange={handleWritingState} />
           <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
@@ -199,6 +199,7 @@ const Logo = styled.div`
   font-size: 2.5rem;
   color: #005ce7;
   margin: 1rem 1rem 1rem 3rem;
+  cursor: pointer;
   @media (max-width: 375px) {
     margin: 0;
     padding-left: 0.2rem;

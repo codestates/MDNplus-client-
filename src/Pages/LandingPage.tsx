@@ -50,10 +50,29 @@ const LandingPage = () => {
     <Container>
       {currentY >= 640 ? (
         <Nav2>
-          <Logo style={{ color: "#005CE7" }}>MDN+</Logo>
+          <Logo
+            onClick={() => {
+              history.push("/LandingPage");
+            }}
+            style={{ color: "#005CE7" }}
+          >
+            MDN+
+          </Logo>
           <Nav_RightBox>
-            <QuestionsBtn>자주 하는 질문</QuestionsBtn>
-            <HomeBtn>시작하기</HomeBtn>
+            <QuestionsBtn
+              onClick={() => {
+                history.push("/FAQ");
+              }}
+            >
+              자주 하는 질문
+            </QuestionsBtn>
+            <HomeBtn
+              onClick={() => {
+                history.push("/Wiki");
+              }}
+            >
+              웹 서비스 이동
+            </HomeBtn>
           </Nav_RightBox>
         </Nav2>
       ) : (
@@ -75,10 +94,10 @@ const LandingPage = () => {
             </QuestionsBtn>
             <HomeBtn
               onClick={() => {
-                history.push("/");
+                history.push("/Wiki");
               }}
             >
-              시작하기
+              웹 서비스 이동
             </HomeBtn>
           </Nav_RightBox>
         </Nav>
@@ -252,7 +271,7 @@ const LandingPage = () => {
         <NewsContainer_OFF></NewsContainer_OFF>
       )}
 
-      <FooterComponent/>
+      <FooterComponent />
     </Container>
   );
 };
@@ -270,6 +289,11 @@ const Container = styled.div`
   grid-template-columns: 1fr;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Nav = styled.div`
@@ -283,6 +307,9 @@ const Nav = styled.div`
   position: fixed;
   top: 0;
   z-index: 99;
+
+  @media (max-width: 500px) {
+  }
 `;
 
 const Nav2 = styled.div`
@@ -302,14 +329,12 @@ const Logo = styled.span`
   font-size: 1.7rem;
   font-weight: bold;
   margin-left: 1rem;
+  cursor: pointer;
 
   color: ${(props) => props.color || "black"};
 `;
 
-const Nav_RightBox = styled.div`
-  // margin-right: 5rem;
-  // border: 1px solid black;
-`;
+const Nav_RightBox = styled.div``;
 
 const QuestionsBtn = styled.span`
   font-size: 1.3rem;
@@ -333,13 +358,13 @@ const IntroBoxContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   background: #cfd8dc;
   position: relative;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const LeftContainer = styled.div`
-  // border: 1px solid blue;
-  display: flex;
-  align-items: center;
-`;
+const LeftContainer = styled.div``;
 
 const RightContainer = styled.div``;
 
@@ -347,7 +372,12 @@ const IntroBox = styled.div`
   // border: 1px solid red;
   margin-left: 2rem;
   width: 30rem;
-  margin-top: -8rem;
+  margin-top: 8rem;
+
+  @media (max-width: 500px) {
+    margin-left: 0rem;
+    margin-top: 8rem;
+  }
 `;
 
 const IntroBox_Body1 = styled.div`
@@ -359,6 +389,11 @@ const IntroBox_Body1 = styled.div`
   animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_Intro};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    font-size: 2rem;
+    margin-left: 1rem;
+  }
 `;
 
 const IntroBox_Body2 = styled.div`
@@ -371,6 +406,11 @@ const IntroBox_Body2 = styled.div`
   animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_Intro};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    font-size: 2rem;
+    margin-left: 1rem;
+  }
 `;
 
 const AppBtnBox = styled.div`
@@ -384,6 +424,10 @@ const AppBtnBox = styled.div`
   animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_short};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    margin-top: 0rem;
+  }
 `;
 
 const AppLogo = styled.img`
@@ -391,6 +435,11 @@ const AppLogo = styled.img`
   height: 1.5rem;
   object-fit: cover;
   margin-right: 1rem;
+
+  @media (max-width: 500px) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 `;
 
 const GoogleBtn = styled.button`
@@ -404,7 +453,14 @@ const GoogleBtn = styled.button`
   justify-content: center;
   align-items: center;
   background: white;
+
+  @media (max-width: 500px) {
+    font-size: 1rem;
+    padding: 0.5rem 1.3rem 0.5rem 1.3rem;
+    margin-left: 1rem;
+  }
 `;
+
 const AppStoreBtn = styled.button`
   font-size: 1.2rem;
   border-radius: 2rem;
@@ -415,6 +471,10 @@ const AppStoreBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 500px) {
+    opacity: 0;
+  }
 `;
 
 const CountBox = styled.div`
@@ -433,6 +493,11 @@ const CountBox = styled.div`
   animation-timing-function: cubic-bezier(0.56, 0.14, 0.84, 0.76);
   animation-name: ${slideLeft};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    width: 96%;
+    height: 12vh;
+  }
 `;
 
 const HelpCountBox = styled.div`
@@ -456,17 +521,29 @@ const EditCountBox = styled.div`
 const CountTitle = styled.div`
   color: #424242;
   font-size: 1.3rem;
+
+  @media (max-width: 500px) {
+    font-size: 1rem;
+  }
 `;
 
 const Count = styled.div`
   color: black;
   font-size: 2rem;
   font-weight: 500;
+
+  @media (max-width: 500px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const ImgBox = styled.div`
   display: flex;
   justify-content: flex-end;
+  // border: 1px solid blue;
+
+  @media (max-width: 500px) {
+  }
 `;
 
 const Img = styled.img`
@@ -475,9 +552,14 @@ const Img = styled.img`
   object-fit: cover;
 
   animation-duration: 3.5s;
-  animation-timing-function: cubic-bezier(.68,.04,.81,.68);
+  animation-timing-function: cubic-bezier(0.68, 0.04, 0.81, 0.68);
   animation-name: ${fadeIn_img};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    width: 100%;
+    height: 28rem;
+  }
 `;
 
 //------------------------시간 섹션-------------------------------//
@@ -500,10 +582,6 @@ const TimeContainer_OFF = styled.div`
   opacity: 0;
   width: 100%;
   height: 30rem;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // background: white;
 `;
 
 const TimeBox = styled.div`
@@ -550,6 +628,10 @@ const AppealBox1Container_ON = styled.div`
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const AppealBox1Container_OFF = styled.div`
@@ -571,6 +653,10 @@ const AppealBox2Container_ON = styled.div`
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const AppealBox2Container_OFF = styled.div`
@@ -599,6 +685,11 @@ const PreviewImg = styled.img`
   animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 0.98);
   animation-name: ${slideUp_short};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    width: 20rem;
+    height: 19rem;
+  }
 `;
 
 const SubBox1 = styled.div`
@@ -653,6 +744,10 @@ const UnderLine1 = styled.div`
   animation-timing-function: ease-out;
   animation-name: ${slideLeft_line};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    border: none;
+  }
 `;
 
 const UnderLine2 = styled.div`
@@ -666,6 +761,10 @@ const UnderLine2 = styled.div`
   animation-timing-function: ease-out;
   animation-name: ${slideRight_line};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    border: none;
+  }
 `;
 
 const AppealTitle = styled.div`
@@ -675,6 +774,9 @@ const AppealTitle = styled.div`
   margin-bottom: 1rem;
   color: #616161;
   font-size: 1.2rem;
+
+  @media (max-width: 500px) {
+  }
 `;
 
 const AppealBody = styled.div`
@@ -682,6 +784,10 @@ const AppealBody = styled.div`
   font-weight: bold;
   width: 75%;
   line-height: 3.5rem;
+
+  @media (max-width: 500px) {
+    font-size: 2rem;
+  }
 `;
 
 //---------------------------리뷰 섹션----------------------------//
@@ -700,6 +806,10 @@ const ReviewBoxContainer_ON = styled.div`
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 
 const ReviewBoxContainer_OFF = styled.div`
@@ -710,6 +820,10 @@ const ReviewBoxContainer_OFF = styled.div`
 
 const ReviewFlexBox = styled.div`
   display: flex;
+
+  @media (max-width: 500px) {
+    display: grid;
+  }
 `;
 
 const ReviewBoxTitle = styled.div`
@@ -717,7 +831,13 @@ const ReviewBoxTitle = styled.div`
   font-size: 3rem;
   margin-top: 4rem;
   color: #424242;
+
+  @media (max-width: 500px) {
+    font-size: 1rem;
+    margin-top: -10srem;
+  }
 `;
+
 const ReviewBoxSubTitle = styled.div`
   font-size: 1.2rem;
   margin: 0.5rem 0 3rem 0;

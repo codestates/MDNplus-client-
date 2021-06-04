@@ -74,7 +74,7 @@ function MainPage() {
       onFilter(res.data);
     });
 
-    if (history.location.pathname === "/") {
+    if (history.location.pathname === "/Wiki") {
       onSetWriteMode(false);
     }
   }, []);
@@ -198,7 +198,6 @@ const Stage = styled.div`
 
 const FilterBox = styled.div`
   margin-top: 2rem;
-  // margin-left: 4rem;
   width: 100%;
   display: flex;
   // border: 1px solid black;
@@ -219,7 +218,7 @@ const SecondFilter = styled.select`
   width: 10rem;
   border: none;
   outline: none;
-  // margin-left: 2rem;
+  margin-left: 2rem;
   color: #616161;
   background-color: white;
 `;

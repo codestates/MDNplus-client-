@@ -259,8 +259,9 @@ const ImgDelete = styled.div`
 const DelAccountBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 37%;
+  width: 50%;
   margin-top: 3rem;
+  align-items: center;
   @media (max-width: 375px) {
     width: 100%;
     height: 100%;
@@ -280,13 +281,14 @@ const DelAccount = styled.span`
 `;
 
 const DelAccountBtn = styled.button`
-  // margin-top: -1.3rem;
-  margin-left: 2rem;
+  display: inline-block;
   padding: 0.5rem 1.7rem 0.5rem 1.7rem;
   color: white;
   background-color: #ff5b5b;
   cursor: pointer;
   border-radius: 0.5rem;
-  border: none;
   font-size: 1rem;
+  margin-left: 2rem;
+  margin-top: -3.2rem;
+  border: none;
 `;

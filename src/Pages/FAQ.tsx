@@ -5,6 +5,7 @@ import { RootState } from "../Redux";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+
 type TagType = {
   label: {
     tagName: string;
@@ -17,6 +18,7 @@ function FAQ() {
   const { data } = FAQstate;
   const [currentTitle, setCurrentTitle] = useState<TagType>(data.AllFAQdata[0]);
   const [pickName, setPickName] = useState("자주하는질문");
+  const history = useHistory()
 
   const handleLabel = (el: TagType) => {
     setPickName(el.label.tagName);
@@ -25,6 +27,32 @@ function FAQ() {
 
   return (
     <Container>
+      <Nav>
+          <Logo
+            onClick={() => {
+              history.push("/");
+            }}
+            style={{ color: "#005CE7" }}
+          >
+            MDN+
+          </Logo>
+          <Nav_RightBox>
+            <QuestionsBtn
+              onClick={() => {
+                history.push("/FAQ");
+              }}
+            >
+              자주 하는 질문
+            </QuestionsBtn>
+            <HomeBtn
+              onClick={() => {
+                history.push("/wiki");
+              }}
+            >
+              웹 서비스 이동
+            </HomeBtn>
+          </Nav_RightBox>
+        </Nav>
       <TitleContainer>
         <FAQmain>자주 하는 질문</FAQmain>
         <FAQsub>MDN + 에게 궁금한 점이 있으신가요?</FAQsub>
@@ -70,10 +98,49 @@ const Container = styled.div`
   grid-template-rows: repeat(8, auto);
 `;
 
+const Nav = styled.div`
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 2rem;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+`;
+
+const Logo = styled.span`
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-left: 1rem;
+  cursor: pointer;
+
+  color: ${(props) => props.color || "black"};
+`;
+
+const Nav_RightBox = styled.div``;
+
+const QuestionsBtn = styled.span`
+  font-size: 1.3rem;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 3rem;
+`;
+
+const HomeBtn = styled.span`
+  font-size: 1.3rem;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+`;
+
 const TitleContainer = styled.div`
   grid-area: 1/2/2/8;
   align-self: end;
-  margin: 2rem 0 1rem 0;
+  margin: 5rem 0 1rem 0;
   padding-bottom: 1.5rem;
   border-bottom: 0.15rem solid #616161;
 `;

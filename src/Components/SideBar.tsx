@@ -13,7 +13,7 @@ const SideBar = () => {
 
   const handleMoveToWiki = () => {
     setSideBar("wiki");
-    history.push("/");
+    history.push("/Wiki");
   };
 
   // useEffect(() => {
@@ -26,7 +26,7 @@ const SideBar = () => {
   useEffect(() => {
     if (window.location.pathname === "/HelpdeskPage" || window.location.pathname === "/MyPage") {
       setSideBar("helpdesk");
-    } else if (window.location.pathname === "/") {
+    } else if (window.location.pathname === "/Wiki") {
       setSideBar("wiki");
     }
   });

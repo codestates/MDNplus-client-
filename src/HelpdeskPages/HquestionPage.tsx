@@ -1,13 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import EditConfirmModal from "../Components/EditConfirmModal";
-import useContentData from "../Hooks/useContentData";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import autosize from "autosize";
 import QconfirmModal from "../Components/QconfirmModal";
-import useAllData from "../Hooks/useAllData";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
@@ -15,8 +11,6 @@ import HelpModal from "../Components/HelpModal";
 import { SubmitBtn, ExitBtn, BtnBox, GuideLine, HelpBtn } from "../styled-components/Post";
 
 // axios.defaults.withCredentials = true;
-
-const date = new Date();
 type NewQuestion = {
   title: string;
   body: string;
@@ -32,7 +26,7 @@ type PropsOption = {
 const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
   const [checkModal, setCheckModal] = useState(false);
   const [tagValue, setTagValue] = useState("");
-  const [guideLine, setGuideLine] = useState(true);
+  const [askInfo, setAskInfo] = useState("");
   const [newQuestion, setNewQuestion] = useState<NewQuestion>({
     title: "",
     body: "",
@@ -65,7 +59,6 @@ const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
         setTagValue("");
       } else {
         // -1이 아니라면 이미 있는 태그이므로, 배열에 추가하지 않고, input만 초기화한다.
-        console.log("이미 있는 태그");
         setTagValue("");
       }
     }
@@ -84,6 +77,16 @@ const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
 
   // 유저가 수정버튼 누를 시, 정말로 수정할 것인지 물어보는 모달의 상태(true, false)를 관리하는 함수
   const handleConfirmModal = () => {
+    setAskInfo("질문");
+    if (checkModal) {
+      setCheckModal(false);
+    } else {
+      setCheckModal(true);
+    }
+  };
+
+  const handleExitModal = () => {
+    setAskInfo("나가기");
     if (checkModal) {
       setCheckModal(false);
     } else {
@@ -93,21 +96,10 @@ const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
 
   // 모달에서 등록하기 버튼 누를 시, 서버에 새 질문 저장하는 요청 보내는 코드(모달에 props로 전달함)
   const handleSubmitQ = () => {
-    console.log("새 질문 등록 요청 보내짐");
-    // console.log(title, body, pureBody, tags);
-    console.log("여기는 바디" + body);
-    console.log("여기는 퓨어바디" + pureBody);
     axios.post("http://localhost:8080/question", { title, body, pureBody, tags }, { withCredentials: true }).then((res) => {
-      console.log(res);
       history.push("/HelpdeskPage");
       onSetWriteMode(false);
     });
-  };
-
-  //나가기 버튼을 눌렀을 때, HelpdeskPage로 이동하는 코드
-  const handleExit = () => {
-    history.push("/HelpdeskPage");
-    onSetWriteMode(false);
   };
 
   //처음 질문 작성 페이지로 이동했을 때, Nav,SideBar 없애는 코드
@@ -120,7 +112,7 @@ const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
     <Container>
       {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
 
-      {checkModal ? <QconfirmModal handleSubmitQ={handleSubmitQ} handleConfirmModal={handleConfirmModal} /> : null}
+      {checkModal ? <QconfirmModal handleSubmitQ={handleSubmitQ} handleConfirmModal={handleConfirmModal} askInfo={askInfo} /> : null}
       <PostContainer>
         <LeftContainer>
           <TitleBox>
@@ -164,7 +156,7 @@ const HquestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
         </RightContainer>
       </PostContainer>
       <BtnBox>
-        <ExitBtn onClick={handleExit}>나가기</ExitBtn>
+        <ExitBtn onClick={handleExitModal}>나가기</ExitBtn>
         <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
         <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
       </BtnBox>
@@ -182,7 +174,7 @@ export default HquestionPage;
 
 const Container = styled.div`
   width: 100%;
-  height: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -258,17 +250,6 @@ const Body = styled.textarea`
   color: black;
 `;
 
-const GuideMessage = styled.textarea`
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-  resize: none;
-  font-size: 1rem;
-  margin-top: 0.7rem;
-  color: gray;
-`;
-
 const RightContainer = styled.div`
   background: #f4f4f4;
   padding: 0.7rem 3rem 3rem 3rem;
@@ -277,12 +258,3 @@ const RightContainer = styled.div`
     display: none;
   }
 `;
-
-// 마크다운 버튼 클릭 시, 추가하는 기능을 위해 만들었던 코드(시간 남으면 진행할 예정)
-// const handleGetIndex = () => {
-//   const text = textareaRef.current;
-//   const currentIndex = text?.selectionStart;
-//   console.log(text)
-//   console.log(currentIndex);
-//   setCurrentIndex(currentIndex);
-// };

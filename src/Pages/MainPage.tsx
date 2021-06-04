@@ -1,15 +1,13 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import useAllData from "../Hooks/useAllData";
-import FakeData from "../FakeData";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
-import ideaIcon from "../img/idea.png";
 import thinkingIcon from "../img/thinking.png";
-import lodingGif from "../img/loding.gif"
+import lodingGif from "../img/loding.gif";
 import axios from "axios";
-import useBooleanData from '../Hooks/useBooleanData';
+import useBooleanData from "../Hooks/useBooleanData";
+import Loading from "../styled-components/Loading";
 
 type Method = {
   _id: string;
@@ -26,12 +24,11 @@ function MainPage() {
   const { allState, onFilter, onChangeFilter } = useAllData();
   const { arrayData, objectData, mathData, stringData, promiseData, currentData } = allState;
   const { onClickMethod } = useContentData();
-  const {onSetWriteMode, onContentPageMode} = useBooleanData()
+  const { onSetWriteMode, onContentPageMode } = useBooleanData();
   const history = useHistory();
 
   // 메인페이지 array, object 선택바가 변경이 되었을 때, 실행되는 코드
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
     if (e.target.value === "object") {
       if (objectData) {
         onChangeFilter(objectData);
@@ -66,7 +63,6 @@ function MainPage() {
 
   // 오른쪽에 렌더링된 하나의 메소드 박스를 클릭했을 시, ContentPage로 이동하기 위한 함수
   const handleClickMethod = (method: Method) => {
-    // console.log("컨텐츠 페이지에 뿌려줘야됨");
     onClickMethod(method); // ContentData 값을 변경하기 위한 dispatch 메소드
     history.push("/ContentPage");
   };
@@ -74,20 +70,16 @@ function MainPage() {
   // 처음 스토어에 저장되어 있는 값들은 null이므로 '로딩 중입니다'가 렌더링 된다.
   // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
-    // console.log('데이터 가져오는 요청 보내짐')
     axios.get("http://localhost:8080/maincontent").then((res) => {
-      console.log(res);
       onFilter(res.data);
     });
 
-    if(history.location.pathname === "/") {
-      onSetWriteMode(false)
+    if (history.location.pathname === "/Wiki") {
+      onSetWriteMode(false);
     }
   }, []);
 
-  console.log(arrayData);
-
-  return (
+  return currentData ? (
     <Container>
       <IntroBox>
         <Icon src={thinkingIcon}></Icon>
@@ -122,8 +114,7 @@ function MainPage() {
       </FilterBox>
       <Stage>
         {currentData === null ? (
-          // <div>로딩 중입니다</div>
-          <Loding src={lodingGif}></Loding>
+          <Loading />
         ) : (
           currentData.map((el: any) => (
             <MethodBox key={el._id}>
@@ -143,13 +134,11 @@ function MainPage() {
         )}
       </Stage>
     </Container>
+  ) : (
+    <Loading />
   );
 }
 export default MainPage;
-
-const Loding = styled.img`
-
-`
 
 const Container = styled.div`
   display: grid;
@@ -209,7 +198,6 @@ const Stage = styled.div`
 
 const FilterBox = styled.div`
   margin-top: 2rem;
-  // margin-left: 4rem;
   width: 100%;
   display: flex;
   // border: 1px solid black;
@@ -230,7 +218,7 @@ const SecondFilter = styled.select`
   width: 10rem;
   border: none;
   outline: none;
-  // margin-left: 2rem;
+  margin-left: 2rem;
   color: #616161;
   background-color: white;
 `;

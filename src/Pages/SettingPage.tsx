@@ -78,8 +78,8 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
       handleChangeMenuIcon(res.data.image);
     });
 
-    if(history.location.pathname === "/SettingPage") {
-      onContentPageMode(false)
+    if (history.location.pathname === "/SettingPage") {
+      onContentPageMode(false);
     }
   }, []);
 
@@ -118,9 +118,9 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
           </ImgPickerBox>
           <ImgDelete onClick={handleImgDelete}>프로필 삭제</ImgDelete>
         </SubmitBox>
-      <DelAccountBox>
-        <DelAccountBtn onClick={handleCancelMembership}>회원 탈퇴</DelAccountBtn>
-      </DelAccountBox>
+        <DelAccountBox>
+          <DelAccountBtn onClick={handleCancelMembership}>회원 탈퇴</DelAccountBtn>
+        </DelAccountBox>
       </Stage>
     </Container>
   );
@@ -259,8 +259,9 @@ const ImgDelete = styled.div`
 const DelAccountBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 37%;
+  width: 50%;
   margin-top: 3rem;
+  align-items: center;
   @media (max-width: 375px) {
     width: 100%;
     height: 100%;
@@ -271,22 +272,15 @@ const DelAccountBox = styled.div`
   }
 `;
 
-const DelAccount = styled.span`
-  margin-left: 2rem;
-  font-weight: 600;
-  @media (max-width: 375px) {
-    display: none;
-  }
-`;
-
 const DelAccountBtn = styled.button`
-  margin-top: -1.3rem;
-  margin-left: 2rem;
+  display: inline-block;
   padding: 0.5rem 1.7rem 0.5rem 1.7rem;
   color: white;
   background-color: #ff5b5b;
   cursor: pointer;
   border-radius: 0.5rem;
-  border: none;
   font-size: 1rem;
+  margin-left: 2rem;
+  margin-top: -3.2rem;
+  border: none;
 `;

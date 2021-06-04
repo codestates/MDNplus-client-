@@ -111,12 +111,3 @@ const ModalButton = styled.div`
     font-size: 0.7rem;
   }
 `;
-
-// const MenuButtonContainer = styled.div`
-//   height: 100%;
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-// `;

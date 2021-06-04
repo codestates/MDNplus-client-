@@ -88,7 +88,7 @@ function App() {
 
       <Body>
         <Switch>
-          <Route exact path="/" render={() => <MainPage />} />
+          <Route exact path="/" render={() => <LandingPage />} />
           <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
           <Route path="/EditPage" render={() => <EditPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
@@ -101,7 +101,7 @@ function App() {
           <Route path="/QcontentPage" render={() => <QcontentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/TestEditPage" render={() => <TestEditPage />} />
-          <Route path="/LandingPage" render={() => <LandingPage />} />
+          <Route path="/Wiki" render={() => <MainPage />} />
         </Switch>
       </Body>
       {writeMode ? null : (
@@ -115,37 +115,39 @@ function App() {
 export default App;
 
 const Container = styled.div`
+display: grid;
+grid-template-columns: auto 1fr;
+grid-template-rows: auto 1fr auto;
+height: 100vh;
+width: 100%;
+
+grid-template-areas:
+  "header header"
+  "side main"
+  "footer footer";
+
+@media (max-width: 375px) {
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto;
   height: 100vh;
   width: 100vw;
 
   grid-template-areas:
-    "header header"
-    "side main"
-    "footer footer";
-
-  @media (max-width: 375px) {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto auto;
-    height: 100vh;
-    width: 100vw;
-
-    grid-template-areas:
-      "header"
-      "side"
-      "main";
-  }
+    "header"
+    "side"
+    "main";
 `;
 const Header = styled.div`
   grid-area: header;
 `;
+
+
 const SideArea = styled.div`
   grid-area: side;
   width: 13rem;
   background: #f4f4f4;
+
   @media (max-width: 375px) {
     width: 100%;
     height: 7rem;
@@ -154,9 +156,9 @@ const SideArea = styled.div`
 
 const Body = styled.div`
   grid-area: main;
-  margin: 0;
+  // margin: 0;
+  margin: 0 0 10rem 0;
   width: 100%;
-  height: 100%;
 `;
 const Footer = styled.div`
   grid-area: footer;

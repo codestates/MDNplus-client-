@@ -2,10 +2,8 @@ import styled from "styled-components";
 import { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fadeIn, slideUp } from "../styled-components/Animation";
-import userIcon from "../img/userIcon_blue3.png";
 import kakao from "../img/kakao2.png";
 import github from "../img/github.png";
-import useBooleanData from "../Hooks/useBooleanData";
 
 type Props = {
   isOpen: boolean;
@@ -38,20 +36,16 @@ function LoginModal({ isOpen, onClose, handleLogin }: Props) {
 
   const socialLoginHandler = () => {
     // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
-    console.log("깃허브 로그인 실행됨");
     window.location.assign(GITHUB_LOGIN_URL);
   };
 
   const kakaoLoginHandler = () => {
     // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
-    console.log("카카오 로그인 실행됨");
     window.location.assign(KAKAO_LOGIN_URL);
     Kakao.Auth.authorize({
       redirectUri: REDIRECT_URI,
     });
   };
-
-  console.log("로그인 모달 뜸");
 
   return isOpen ? (
     <ModalContainer onClick={handleOverLay} ref={overLay}>

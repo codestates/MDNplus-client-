@@ -17,7 +17,7 @@ function FAQ() {
   const FAQstate = useSelector((state: RootState) => state.FAQdataReducer);
   const { data } = FAQstate;
   const [currentTitle, setCurrentTitle] = useState<TagType>(data.AllFAQdata[0]);
-  const [pickName, setPickName] = useState("자주하는질문");
+  const [pickName, setPickName] = useState("자주 하는 질문");
   const history = useHistory();
 
   const handleLabel = (el: TagType) => {

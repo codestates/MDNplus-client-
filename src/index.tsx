@@ -7,18 +7,6 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-<<<<<<< HEAD
-import store from "./store";
-
-library.add(faSearch, faTimes, faSortDown, faSortUp);
-
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-=======
 import { createStore } from "redux";
 import rootReducer from "./Redux/index";
 
@@ -32,6 +20,5 @@ ReactDOM.render(
       <App />
     </Provider>
   </BrowserRouter>,
->>>>>>> 5ca157fbe7660cd99b637f68e71f7500b922e3db
   document.getElementById("root")
 );

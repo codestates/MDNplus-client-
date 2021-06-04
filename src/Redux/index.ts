@@ -1,10 +1,4 @@
 import { combineReducers } from "redux";
-<<<<<<< HEAD
-import MyPageRedux from "./MyPageRedux";
-
-const rootReducer = combineReducers({
-  MyPageRedux,
-=======
 import AllDataReducer from "./AllData";
 import ContentDataReducer from "./ContentData";
 import MyPageReducer from "./MyPageData";
@@ -13,7 +7,7 @@ import QcontentDataReducer from "./QcontentData";
 import AnswerPageReducer from "./AnswerPageData";
 import HelpDataReducer from "./HelpData";
 import FAQdataReducer from "./FAQdata";
-import BooleanDataReducer from "./BooleanData"
+import BooleanDataReducer from "./BooleanData";
 
 const rootReducer = combineReducers({
   AllDataReducer,
@@ -24,8 +18,7 @@ const rootReducer = combineReducers({
   AnswerPageReducer,
   HelpDataReducer,
   FAQdataReducer,
-  BooleanDataReducer
->>>>>>> 5ca157fbe7660cd99b637f68e71f7500b922e3db
+  BooleanDataReducer,
 });
 
 export default rootReducer;

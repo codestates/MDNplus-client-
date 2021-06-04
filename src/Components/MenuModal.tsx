@@ -63,21 +63,6 @@ function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
 
 export default MenuModal;
 
-<<<<<<< HEAD
-const LogOut = styled.button`
-  border: none;
-  background-color: white;
-  margin: 10px;
-`;
-
-const MyPage = styled.div`
-  border: none;
-  background-color: white;
-  margin: 10px;
-`;
-
-=======
->>>>>>> 5ca157fbe7660cd99b637f68e71f7500b922e3db
 const ModalContainer = styled.div`
   width: 100%;
   height: 100%;

@@ -9,10 +9,11 @@ type ModalProps = {
   // handleCloseModal: () => void;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   btnName: string;
+  writing: string;
   handleAnswerBtn: () => void;
 };
 
-function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
+function AnswerModal({ setIsOpen, btnName, handleAnswerBtn, writing }: ModalProps) {
   const overLay = useRef(null);
   const { onContentPageMode, onSetWriteMode } = useBooleanData();
 
@@ -43,15 +44,24 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
 
       <ModalBox>
         {btnName === "답변" ? (
-          <>
-            <AskInfo>답변을 등록하시겠습니까?</AskInfo>
-            <ContentContainer>
-              <BtnBox>
-                <CancelBtn onClick={handleAnswerNo}>취소</CancelBtn>
-                <SubmitBtn onClick={handleAnswerYes}>등록</SubmitBtn>
-              </BtnBox>
-            </ContentContainer>
-          </>
+          writing ? (
+            <>
+              <AskInfo>답변을 등록하시겠습니까?</AskInfo>
+              <ContentContainer>
+                <BtnBox>
+                  <CancelBtn onClick={handleAnswerNo}>취소</CancelBtn>
+                  <SubmitBtn onClick={handleAnswerYes}>등록</SubmitBtn>
+                </BtnBox>
+              </ContentContainer>
+            </>
+          ) : (
+            <>
+              <EmptyBox>
+                <AskEmptyInfo>게시물을 작성해주세요.</AskEmptyInfo>
+                <Submit onClick={handleAnswerNo}>확인</Submit>
+              </EmptyBox>
+            </>
+          )
         ) : (
           <>
             <AskInfo>나가시겠습니까?</AskInfo>
@@ -69,6 +79,28 @@ function AnswerModal({ setIsOpen, btnName, handleAnswerBtn }: ModalProps) {
 }
 
 export default AnswerModal;
+
+const EmptyBox = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const AskEmptyInfo = styled.div`
+  font-size: 1.1rem;
+
+  color: #616161;
+`;
+
+const Submit = styled.div`
+  color: #616161;
+  font-size: 0.8rem;
+
+  cursor: pointer;
+`;
 
 const ModalContainer = styled.div`
   height: 100%;
@@ -123,7 +155,6 @@ const ContentContainer = styled.div`
 
 const AskInfo = styled.div`
   width: 100%;
-
   left: 0;
   color: #616161;
 `;

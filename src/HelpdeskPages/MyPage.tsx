@@ -8,6 +8,7 @@ import userIcon from "../img/userIcon_gray.png";
 import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
 import Loading from "../styled-components/Loading";
+import person from "../img/person.png";
 
 type QuestionType = {
   tags: string[];
@@ -111,7 +112,10 @@ function MyPage() {
           <RightContainer>
             {isQuestion ? (
               mdnAllData.questions.length === 0 ? (
-                <EmptyComment>질문이 없습니다</EmptyComment>
+                <EmptyComment>
+                  <Img src={person}></Img>
+                  <EmptyMessage>포스트가 없습니다</EmptyMessage>
+                </EmptyComment>
               ) : (
                 <QuestionContainer>
                   {mdnAllData.questions.map((el) => (
@@ -128,7 +132,10 @@ function MyPage() {
                 </QuestionContainer>
               )
             ) : mdnAllData.comments.length === 0 ? (
-              <EmptyComment>답변이 없습니다</EmptyComment>
+              <EmptyComment>
+                  <Img src={person}></Img>
+                  <EmptyMessage>포스트가 없습니다</EmptyMessage>
+                </EmptyComment>
             ) : (
               <QuestionContainer>
                 {mdnAllData?.comments.map((el) => (
@@ -156,7 +163,7 @@ const UserInfoContainer = styled.div`
   display: flex;
   align-items: center;
   // border: 1px solid black;
-  margin-top: 5rem;
+  margin-top: 2rem;
   width: 75%;
   padding: 4rem 0 4rem 0;
   border-bottom: 1px solid #bdbdbd;
@@ -283,4 +290,17 @@ const EmptyComment = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+  flex-direction: column;
 `;
+
+const Img = styled.img`
+  width: 30rem;
+  height: 30rem;
+  margin-top: -3rem;
+`;
+
+const EmptyMessage = styled.div`
+  color: #9E9E9E;
+  font-size: 2rem;
+  margin-top: -3rem;
+`

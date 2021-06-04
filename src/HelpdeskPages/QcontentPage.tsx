@@ -240,7 +240,15 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
               ))}
             </AnswerContainer>
           ) : (
-            <div> 답변없음. </div>
+            <AnswerContainer>
+            <AnswerBox>
+              <Answer>
+                <AnswerTitleBox>
+                  <AnswerTitle_empty>답변을 기다리는 중입니다.</AnswerTitle_empty>
+                </AnswerTitleBox>
+              </Answer>
+            </AnswerBox>
+            </AnswerContainer>
           )}
         </Container>
       ) : (
@@ -443,7 +451,6 @@ const Answer = styled.div`
 const AnswerTitleBox = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e0e0e0;
   padding-bottom: 1rem;
 `;
 
@@ -458,6 +465,13 @@ const AnswerUserImg = styled.img`
 const AnswerTitle = styled.span`
   font-weight: bold;
 `;
+
+const AnswerTitle_empty = styled.div`
+  text-align: center;
+  width: 100%;
+  font-size: 1.2rem;
+  color: #424242
+`
 
 const AnswerBody = styled.div`
   line-height: 2rem;

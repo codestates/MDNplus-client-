@@ -272,14 +272,6 @@ const DelAccountBox = styled.div`
   }
 `;
 
-const DelAccount = styled.span`
-  margin-left: 2rem;
-  font-weight: 600;
-  @media (max-width: 375px) {
-    display: none;
-  }
-`;
-
 const DelAccountBtn = styled.button`
   display: inline-block;
   padding: 0.5rem 1.7rem 0.5rem 1.7rem;

@@ -4,7 +4,7 @@ import spinGIF from "../img/spinGIF.gif";
 function Loading() {
   return (
     <LoadingContainer>
-      <img src={spinGIF}></img>
+      <Img src={spinGIF}></Img>
     </LoadingContainer>
   );
 }
@@ -18,3 +18,10 @@ const LoadingContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const Img = styled.img`
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  margin-top: 5rem;
+`

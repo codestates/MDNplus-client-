@@ -74,7 +74,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
         console.log(res.data.image);
         handleChangeMenuIcon(res.data.image);
-        history.push("/");
+        history.push("/Wiki");
         handleLogin();
       } else {
         console.log("처음 로그인한 유저이므로 닉네임 설정 페이지로 이동");
@@ -97,7 +97,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         console.log("이미 가입했던 회원이므로 메인페이지로 이동");
         console.log(res);
         handleChangeMenuIcon(res.data.image);
-        history.push("/");
+        history.push("/Wiki");
         handleLogin();
       } else {
         console.log("처음 로그인한 유저이므로 닉네임 설정 페이지로 이동");
@@ -145,7 +145,7 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       <LeftBox>
         <Logo onClick={(() => history.push('/'))}>MDN +</Logo>
         <SearchBar>
-          <Search type="search" onKeyPress={handleKeyPress} onChange={handleWritingState} />
+          <Search onKeyPress={handleKeyPress} onChange={handleWritingState} />
           <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>

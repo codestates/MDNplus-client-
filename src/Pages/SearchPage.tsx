@@ -211,7 +211,7 @@ const MDNPlus = styled.div`
 const HelpDesk = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  margin: 1.4rem;
+  margin: 1rem;
 
   cursor: pointer;
 `;

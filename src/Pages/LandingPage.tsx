@@ -21,6 +21,7 @@ import appeal1 from "../img/appeal1.png";
 import appeal2 from "../img/appeal2.png";
 import appeal3 from "../img/appeal2-1.png";
 import clockIcon from "../img/clockIcon.png";
+import arrow from "../img/arrow2.png"
 import { useHistory } from "react-router";
 
 const LandingPage = () => {
@@ -73,6 +74,7 @@ const LandingPage = () => {
             >
               웹 서비스 이동
             </HomeBtn>
+            <ArrowImg src={arrow}></ArrowImg>
           </Nav_RightBox>
         </Nav2>
       ) : (
@@ -99,6 +101,7 @@ const LandingPage = () => {
             >
               웹 서비스 이동
             </HomeBtn>
+            <ArrowImg src={arrow}></ArrowImg>
           </Nav_RightBox>
         </Nav>
       )}
@@ -337,19 +340,37 @@ const Logo = styled.span`
 const Nav_RightBox = styled.div``;
 
 const QuestionsBtn = styled.span`
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: black;
   cursor: pointer;
   font-weight: bold;
-  margin-right: 3rem;
+  margin-right: 2rem;
+  border: 1px solid black;
+  padding: 0.5rem 1.2rem 0.5rem 1.2rem;
+  border-radius: 2rem;
+  background: white;
 `;
 
 const HomeBtn = styled.span`
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: black;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 500;
+  border: 1px solid black;
+  padding: 0.5rem 2.5rem 0.5rem 1.2rem;
+  border-radius: 2rem;
+  position: relative;
+  background: #263238;
+  color: white;
 `;
+
+const ArrowImg = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  top: 1.2rem;
+  right: 2.5rem;
+`
 
 const IntroBoxContainer = styled.div`
   width: 100%;

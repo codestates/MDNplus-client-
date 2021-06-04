@@ -118,7 +118,7 @@ const Container = styled.div`
 display: grid;
 grid-template-columns: auto 1fr;
 grid-template-rows: auto 1fr auto;
-height: 100%;
+height: 100vh;
 width: 100%;
 
 grid-template-areas:
@@ -156,9 +156,9 @@ const SideArea = styled.div`
 
 const Body = styled.div`
   grid-area: main;
-  margin: 0;
+  // margin: 0;
+  margin: 0 0 10rem 0;
   width: 100%;
-  height: 100%;
 `;
 const Footer = styled.div`
   grid-area: footer;

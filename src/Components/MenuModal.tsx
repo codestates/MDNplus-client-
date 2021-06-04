@@ -3,41 +3,59 @@
 
 import React from "react";
 import styled from "styled-components";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 type MenuProps = {
   isOpen: boolean;
   checkMenu: React.Dispatch<React.SetStateAction<boolean>>;
   onClose: () => void;
-  getGitHubImage: React.Dispatch<React.SetStateAction<never[]>>;
+  handleLogin: () => void;
 };
 
-function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
+function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
+  const [isHelpDesk, setIsHelpDesk] = useState(false);
   const overLay = useRef(null);
   const history = useHistory();
 
-  const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleOverLay = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === overLay.current) {
       onClose();
     }
   };
-  //<Link to="/courses" replace />
 
-  const handleLogOutButton = () => {};
+  const handleLogOutButton = () => {
+    axios.post("http://localhost:8080/oauth/logout", null, { withCredentials: true }).then((res) => console.log(res));
+    window.localStorage.removeItem("sessionId");
+    handleLogin();
+    onClose();
+    history.push("/");
+  };
+
+  console.log("hi");
 
   const handleMyPageButton = () => {
-    history.push("MyPage");
+    history.push("/MyPage");
+  };
+
+  const handleMypage = () => {
+    history.push("/MyPage");
+    onClose();
+  };
+
+  const handleEditInfoButton = () => {
+    history.push("/SettingPage");
+    onClose();
   };
 
   return (
     <ModalContainer>
-      <Overlay onClick={handleOverLay} ref={overLay}></Overlay>
+      <Overlay onClick={handleOverLay} ref={overLay} />
       <ModalBox>
-        <MenuButtonContainer>
-          <LogOut onClick={handleLogOutButton}>로그아웃</LogOut>
-          <MyPage onClick={handleMyPageButton}>마이페이지</MyPage>
-        </MenuButtonContainer>
+        <ModalButton onClick={handleMypage}>마이페이지</ModalButton>
+        <ModalButton onClick={handleEditInfoButton}>정보수정</ModalButton>
+        <ModalButton onClick={handleLogOutButton}>로그아웃</ModalButton>
       </ModalBox>
     </ModalContainer>
   );
@@ -45,6 +63,7 @@ function MenuModal({ isOpen, checkMenu, onClose }: MenuProps) {
 
 export default MenuModal;
 
+<<<<<<< HEAD
 const LogOut = styled.button`
   border: none;
   background-color: white;
@@ -57,14 +76,14 @@ const MyPage = styled.div`
   margin: 10px;
 `;
 
+=======
+>>>>>>> 5ca157fbe7660cd99b637f68e71f7500b922e3db
 const ModalContainer = styled.div`
-  height: 100%;
   width: 100%;
+  height: 100%;
   display: flex;
   position: fixed;
-  top: 10%;
-  margin: 10px;
-  left: 80%;
+  z-index: 1;
 `;
 
 const Overlay = styled.div`
@@ -73,26 +92,37 @@ const Overlay = styled.div`
   height: 100%;
   top: 0;
   left: 0;
-  cursor: pointer;
 `;
 
 const ModalBox = styled.div`
-  position: relative;
+  position: fixed;
+  top: 5rem;
+  right: 0rem;
   width: 10%;
   height: 20%;
-  padding: 10px;
   background-color: white;
-  border: 1.8px solid #a7a3a3;
-
-  border-radius: 34px;
-  box-sizing: border-box;
+  border-radius: 0.4rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  @media (max-width: 375px) {
+    width: 100%;
+    height: auto;
+    font-size: 1rem;
+  }
 `;
 
-const MenuButtonContainer = styled.div`
-  height: 100%;
+const ModalButton = styled.div`
+  background-color: white;
+  cursor: pointer;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 1.1rem;
+  text-align: center;
+  color: #424242;
+
+  &:hover {
+    background: #f5f5f5;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 0.7rem;
+  }
 `;

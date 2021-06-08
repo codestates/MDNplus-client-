@@ -1,19 +1,21 @@
 import { useRef } from "react";
 import styled from "styled-components";
 import { fadeIn } from "../styled-components/Animation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import useBooleanData from "../Hooks/useBooleanData";
 
 type ModalProps = {
-  // handleCloseModal: () => void;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   btnName: string;
   writing: string;
   handleAnswerBtn: () => void;
 };
 
-function AnswerModal({ setIsOpen, btnName, handleAnswerBtn, writing }: ModalProps) {
+function AnswerModal({
+  setIsOpen,
+  btnName,
+  handleAnswerBtn,
+  writing,
+}: ModalProps) {
   const overLay = useRef(null);
   const { onContentPageMode, onSetWriteMode } = useBooleanData();
 
@@ -159,7 +161,6 @@ const AskInfo = styled.div`
   left: 0;
   color: #616161;
   margin-bottom: 0.5rem;
-
 `;
 
 const BtnBox = styled.div`
@@ -187,11 +188,3 @@ const SubmitBtn = styled.button`
   color: #0055fa;
   font-size: 1rem;
 `;
-
-const ErrorMessage = styled.div`
-  color: red;
-  font-size: 0.8rem;
-  position: absolute;
-  top: 5rem;
-  left: 2.5rem;
-`

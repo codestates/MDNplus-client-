@@ -47,18 +47,7 @@ function MyPage() {
   const [answerColor, setAnswerColor] = useState(" #a7a3a3");
   const { onContentPageMode } = useBooleanData();
 
-  useEffect(() => {
-    axios.get("http://localhost:8080/helpdesk/me", { withCredentials: true }).then((res) => {
-      console.log(res);
-      dispatch(allDataAction(res.data));
-    });
-
-    console.log(history);
-  }, []);
-
   const handleMyQuestions = (el: QuestionType) => {
-    console.log("QcontentPage로 이동할거");
-
     history.push({
       pathname: "/QcontentPage",
       state: { pageName: "/MyPage", questionId: el._id },
@@ -85,7 +74,12 @@ function MyPage() {
   };
 
   useEffect(() => {
-    console.log(history);
+    axios
+      .get("http://localhost:8080/helpdesk/me", { withCredentials: true })
+      .then((res) => {
+        dispatch(allDataAction(res.data));
+      });
+
     if (history.location.pathname === "/MyPage") {
       onContentPageMode(false);
     }
@@ -97,15 +91,25 @@ function MyPage() {
     <>
       <Container>
         <UserInfoContainer>
-          {!mdnAllData.user.image ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={mdnAllData.user.image} />}
+          {!mdnAllData.user.image ? (
+            <UserInfoImage src={userIcon} />
+          ) : (
+            <UserInfoImage src={mdnAllData.user.image} />
+          )}
           <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
         </UserInfoContainer>
         <Stage>
           <LeftContainer>
-            <QuestionBtn style={{ color: questionColor }} onClick={handleMDNClicked}>
+            <QuestionBtn
+              style={{ color: questionColor }}
+              onClick={handleMDNClicked}
+            >
               나의 질문
             </QuestionBtn>
-            <AnswerBtn style={{ color: answerColor }} onClick={handleHelpDeckClicked}>
+            <AnswerBtn
+              style={{ color: answerColor }}
+              onClick={handleHelpDeckClicked}
+            >
               나의 답변
             </AnswerBtn>
           </LeftContainer>
@@ -119,12 +123,23 @@ function MyPage() {
               ) : (
                 <QuestionContainer>
                   {mdnAllData.questions.map((el) => (
-                    <QuestionBox key={el._id} onClick={() => handleMyQuestions(el)}>
+                    <QuestionBox
+                      key={el._id}
+                      onClick={() => handleMyQuestions(el)}
+                    >
                       <QuestionTitle>{el.title}</QuestionTitle>
                       <QuestionBody>{el.pureBody}</QuestionBody>
                       <QuestionLastLine>
-                        <QuestionDate>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
-                        <QuestionAnswersNum>답변수 {el.commentCount}</QuestionAnswersNum>
+                        <QuestionDate>{`${el.createdAt.substring(
+                          0,
+                          4
+                        )}년 ${el.createdAt.substring(
+                          5,
+                          7
+                        )}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
+                        <QuestionAnswersNum>
+                          답변수 {el.commentCount}
+                        </QuestionAnswersNum>
                         <QuestionLikes> 좋아요 {el.like}</QuestionLikes>
                       </QuestionLastLine>
                     </QuestionBox>
@@ -133,9 +148,9 @@ function MyPage() {
               )
             ) : mdnAllData.comments.length === 0 ? (
               <EmptyComment>
-                  <Img src={person}></Img>
-                  <EmptyMessage>포스트가 없습니다</EmptyMessage>
-                </EmptyComment>
+                <Img src={person}></Img>
+                <EmptyMessage>포스트가 없습니다</EmptyMessage>
+              </EmptyComment>
             ) : (
               <QuestionContainer>
                 {mdnAllData?.comments.map((el) => (
@@ -143,7 +158,13 @@ function MyPage() {
                     <QuestionTitle>{el.questionId.title}</QuestionTitle>
                     <QuestionBody>{el.content}</QuestionBody>
                     <QuestionLastLine>
-                      <QuestionDate>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
+                      <QuestionDate>{`${el.createdAt.substring(
+                        0,
+                        4
+                      )}년 ${el.createdAt.substring(
+                        5,
+                        7
+                      )}월 ${el.createdAt.substring(8, 10)}일`}</QuestionDate>
                       <QuestionLikes> 좋아요 {el.like}</QuestionLikes>
                     </QuestionLastLine>
                   </QuestionBox>
@@ -243,8 +264,6 @@ const QuestionBox = styled.div`
   margin: 2rem 0 2rem 0;
 `;
 
-const AnswerContainer = styled.div``;
-
 const QuestionTitle = styled.span`
   font-weight: 600;
   font-size: 1.3rem;
@@ -300,7 +319,7 @@ const Img = styled.img`
 `;
 
 const EmptyMessage = styled.div`
-  color: #9E9E9E;
+  color: #9e9e9e;
   font-size: 2rem;
   margin-top: -3rem;
-`
+`;

@@ -61,7 +61,11 @@ function FAQ() {
       <QuestionTags>
         {data.AllFAQdata.map((el) => (
           <Tag
-            style={{ color: el.label.tagName === pickName ? "#005CE7" : " #a7a3a3", borderColor: el.label.tagName === pickName ? "#005CE7" : " #a7a3a3" }}
+            style={{
+              color: el.label.tagName === pickName ? "#005CE7" : " #a7a3a3",
+              borderColor:
+                el.label.tagName === pickName ? "#005CE7" : " #a7a3a3",
+            }}
             key={el.label.tagName}
             onClick={() => handleLabel(el)}
           >
@@ -227,9 +231,6 @@ const DataTitle = styled.label`
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  // &:hover {
-  //   color: #2196f3;
-  // }
 `;
 
 const DataBody = styled.div`

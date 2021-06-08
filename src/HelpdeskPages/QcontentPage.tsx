@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { answerPageData } from "../Redux/AnswerPageData";
 import ReactMarkdown from "react-markdown";
 import useBooleanData from "../Hooks/useBooleanData";
@@ -85,7 +85,8 @@ type LoginType = {
 };
 
 function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
-  const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } = useQcontentData();
+  const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } =
+    useQcontentData();
   const { onContentPageMode } = useBooleanData();
   const { currentData } = QcontentState;
   const history = useHistory();
@@ -93,7 +94,6 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   const [isMainPage, setisMainPage] = useState<boolean>(false);
   const location = useLocation<PageNameType>();
 
-  // 질문에 대한 좋아요 처리하는 코드
   const handleQuestionLike = (updateData: DataType) => {
     if (updateData.question.isLike === true) {
       updateData.question.like = updateData.question.like + 1;
@@ -106,14 +106,19 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
       onQuestionLike(updateData);
     }
 
-    axios
-      .post("http://localhost:8080/question/like", { questionId: updateData.question._id, like: updateData.question.like, isLike: updateData.question.isLike }, { withCredentials: true })
-      .then((res) => console.log("응답받은 질문에대한 좋아요 =", res));
+    axios.post(
+      "http://localhost:8080/question/like",
+      {
+        questionId: updateData.question._id,
+        like: updateData.question.like,
+        isLike: updateData.question.isLike,
+      },
+      { withCredentials: true }
+    );
   };
 
   const handleAnswerLike = (updateData: AnswerType, index: number) => {
     if (updateData.isLike === true) {
-      console.log("clicked");
       updateData.like = updateData.like + 1;
       updateData.isLike = false;
 
@@ -122,20 +127,20 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
       updateData.like = updateData.like - 1;
       updateData.isLike = true;
       onAnswerLike(updateData);
-
-      // onAnswerLike(updateData);
     }
 
-    axios
-      .post("http://localhost:8080/question/like", { questionId: updateData.questionId, like: updateData.like, isLike: updateData.isLike }, { withCredentials: true })
-      .then((res) => console.log("응답받은 대답에대한 좋아요 =", res));
-
-    // axios.post("http://localhost:80/question/like", { questionId: updateData.questionId, like: updateData.question.like }, {withCredentials:true}).then((res) => console.log(res));
+    axios.post(
+      "http://localhost:8080/question/like",
+      {
+        questionId: updateData.questionId,
+        like: updateData.like,
+        isLike: updateData.isLike,
+      },
+      { withCredentials: true }
+    );
   };
 
-  //답변하기 버튼 눌렀을 때, 실행되는 코드
   const handleAnswerBtn = () => {
-    //비로그인 유저라면 로그인하게 유도하는 코드
     if (!isLogin) {
       handleLoginModal();
       return;
@@ -155,7 +160,6 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
   };
 
   useEffect(() => {
-    //questionID 설정해주는 코드들
     onContentPageMode(true);
     let questionID: string = "";
     if (location.state === undefined) {
@@ -177,13 +181,25 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     <>
       {currentData !== null && currentData !== undefined ? (
         <Container>
-          <BackBtn onClick={() => window.history.back()}>{"< 돌아가기"}</BackBtn>
+          <BackBtn onClick={() => window.history.back()}>
+            {"< 돌아가기"}
+          </BackBtn>
           <QuestionContainer>
             <LikeBox_Q>
               {currentData.question.isLike === true ? (
-                <FontAwesomeIcon onClick={() => handleQuestionLike(currentData)} icon={["far", "heart"]} color="#686868" size="lg" />
+                <FontAwesomeIcon
+                  onClick={() => handleQuestionLike(currentData)}
+                  icon={["far", "heart"]}
+                  color="#686868"
+                  size="lg"
+                />
               ) : (
-                <FontAwesomeIcon onClick={() => handleQuestionLike(currentData)} icon={["fas", "heart"]} color="#ef5350" size="lg" />
+                <FontAwesomeIcon
+                  onClick={() => handleQuestionLike(currentData)}
+                  icon={["fas", "heart"]}
+                  color="#ef5350"
+                  size="lg"
+                />
               )}
               <LikeNum_Q> {currentData.question.like}</LikeNum_Q>
             </LikeBox_Q>
@@ -203,10 +219,25 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                 ))}
               </TagBox>
               <InfoBox_Q>
-                {currentData.question.userId.image ? <UserImg_Q src={currentData.question.userId.image} /> : <UserImg_Q src={userImg} />}
+                {currentData.question.userId.image ? (
+                  <UserImg_Q src={currentData.question.userId.image} />
+                ) : (
+                  <UserImg_Q src={userImg} />
+                )}
                 <UserName_Q>{currentData.question.userId.nickName}</UserName_Q>
-                <Date_Q>{`${currentData.question.createdAt.substring(0, 4)}년 ${currentData.question.createdAt.substring(5, 7)}월 ${currentData.question.createdAt.substring(8, 10)}일`}</Date_Q>
-                {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
+                <Date_Q>{`${currentData.question.createdAt.substring(
+                  0,
+                  4
+                )}년 ${currentData.question.createdAt.substring(
+                  5,
+                  7
+                )}월 ${currentData.question.createdAt.substring(
+                  8,
+                  10
+                )}일`}</Date_Q>
+                {isMainPage ? (
+                  <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn>
+                ) : null}
               </InfoBox_Q>
             </QuestionBox>
           </QuestionContainer>
@@ -217,20 +248,42 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                   <LikeBox_A>
                     {el.isLike === true ? (
                       <HeartIcon>
-                        <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["far", "heart"]} color="#686868" size="lg" />
+                        <FontAwesomeIcon
+                          onClick={() => handleAnswerLike(el, index)}
+                          icon={["far", "heart"]}
+                          color="#686868"
+                          size="lg"
+                        />
                       </HeartIcon>
                     ) : (
                       <HeartIcon>
-                        <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
+                        <FontAwesomeIcon
+                          onClick={() => handleAnswerLike(el, index)}
+                          icon={["fas", "heart"]}
+                          color="#ef5350"
+                          size="lg"
+                        />{" "}
                       </HeartIcon>
                     )}
                     <LikeNum_A> {el.like}</LikeNum_A>
                   </LikeBox_A>
                   <Answer>
                     <AnswerTitleBox>
-                      {el.userId.image !== "" ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
-                      <Date_A>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</Date_A>
-                      {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : null}
+                      {el.userId.image !== "" ? (
+                        <AnswerUserImg src={el.userId.image}></AnswerUserImg>
+                      ) : (
+                        <AnswerUserImg src={userImg}></AnswerUserImg>
+                      )}
+                      <Date_A>{`${el.createdAt.substring(
+                        0,
+                        4
+                      )}년 ${el.createdAt.substring(
+                        5,
+                        7
+                      )}월 ${el.createdAt.substring(8, 10)}일`}</Date_A>
+                      {el.userId.nickName !== null ? (
+                        <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle>
+                      ) : null}
                     </AnswerTitleBox>
                     <AnswerBody>
                       <ReactMarkdown children={el.content}></ReactMarkdown>
@@ -241,13 +294,15 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
             </AnswerContainer>
           ) : (
             <AnswerContainer>
-            <AnswerBox>
-              <Answer>
-                <AnswerTitleBox>
-                  <AnswerTitle_empty>답변을 기다리는 중입니다.</AnswerTitle_empty>
-                </AnswerTitleBox>
-              </Answer>
-            </AnswerBox>
+              <AnswerBox>
+                <Answer>
+                  <AnswerTitleBox>
+                    <AnswerTitle_empty>
+                      답변을 기다리는 중입니다.
+                    </AnswerTitle_empty>
+                  </AnswerTitleBox>
+                </Answer>
+              </AnswerBox>
             </AnswerContainer>
           )}
         </Container>
@@ -470,8 +525,8 @@ const AnswerTitle_empty = styled.div`
   text-align: center;
   width: 100%;
   font-size: 1.2rem;
-  color: #424242
-`
+  color: #424242;
+`;
 
 const AnswerBody = styled.div`
   line-height: 2rem;

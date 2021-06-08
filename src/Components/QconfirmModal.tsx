@@ -1,7 +1,12 @@
-import React from "react";
-import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { BtnBox, CancelBtn, Message, ModalBox, ModalContainer, SubmitBtn } from "../styled-components/ConfirmModal";
+import {
+  BtnBox,
+  CancelBtn,
+  Message,
+  ModalBox,
+  ModalContainer,
+  SubmitBtn,
+} from "../styled-components/ConfirmModal";
 
 type Qprops = {
   handleConfirmModal: () => void;

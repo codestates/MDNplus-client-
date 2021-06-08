@@ -38,7 +38,9 @@ function FooterComponent() {
 
           <Contents>
             <div>
-              <Atag href="https://github.com/codestates/MDNplus-client-">Visit US!</Atag>
+              <Atag href="https://github.com/codestates/MDNplus-client-">
+                Visit US!
+              </Atag>
             </div>
             <div>Seongseok Moon</div>
             <div>Junrae Kim</div>
@@ -50,8 +52,6 @@ function FooterComponent() {
     </Container>
   );
 }
-
-//&nbsp;Front-End : 문성석 김준래 &nbsp; &nbsp;Back-End : 조은길 김승용
 
 export default FooterComponent;
 

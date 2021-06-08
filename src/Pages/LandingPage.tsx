@@ -2,12 +2,19 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useBooleanData from "../Hooks/useBooleanData";
 import FooterComponent from "../Components/FooterComponent";
-import { fadeIn, slideUp, slideUp_Intro, slideUp_short, fadeIn_img, slideLeft, slideLeft_line, slideRight_line, slideLeft_box, slideRight_box } from "../styled-components/Animation";
-import library from "../img/library.jpg";
-import monitor4 from "../img/monitor4.png";
+import {
+  fadeIn,
+  slideUp,
+  slideUp_Intro,
+  slideUp_short,
+  fadeIn_img,
+  slideLeft,
+  slideLeft_line,
+  slideRight_line,
+  slideLeft_box,
+  slideRight_box,
+} from "../styled-components/Animation";
 import monitor3 from "../img/monitor3.png";
-import developer from "../img/developer.png";
-import preview from "../img/preview.png";
 import MainNewsImage from "../img/MainNews.jpg";
 import PenImg from "../img/pen.jpg";
 import networkImg from "../img/network.jpg";
@@ -19,16 +26,14 @@ import googleLogo from "../img/googleLogo.png";
 import appleLogo from "../img/appleLogo.png";
 import appeal1 from "../img/appeal1.png";
 import appeal2 from "../img/appeal2.png";
-import appeal3 from "../img/appeal2-1.png";
 import clockIcon from "../img/clockIcon.png";
-import arrow from "../img/arrow2.png"
+import arrow from "../img/arrow2.png";
 import { useHistory } from "react-router";
 
 const LandingPage = () => {
   const { onSetWriteMode } = useBooleanData();
   const [height, setHeight] = useState(0);
   const [currentY, setCurrentY] = useState(0);
-
   const history = useHistory();
 
   useEffect(() => {
@@ -45,8 +50,6 @@ const LandingPage = () => {
     });
   }, [currentY]);
 
-  console.log(currentY);
-  console.log("전체 높이", height);
   return (
     <Container>
       {currentY >= 640 ? (
@@ -164,7 +167,9 @@ const LandingPage = () => {
           <AppealBox>
             <UnderLine1></UnderLine1>
             <AppealTitle>MDN+ 위키</AppealTitle>
-            <AppealBody>개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!</AppealBody>
+            <AppealBody>
+              개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!
+            </AppealBody>
           </AppealBox>
         </AppealBox1Container_ON>
       ) : (
@@ -178,7 +183,9 @@ const LandingPage = () => {
           <AppealBox>
             <UnderLine2></UnderLine2>
             <AppealTitle>헬프데스크</AppealTitle>
-            <AppealBody>개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?</AppealBody>
+            <AppealBody>
+              개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?
+            </AppealBody>
             <AppealBody>헬프데스크에 질문하세요!</AppealBody>
           </AppealBox>
           <PreviewBox>
@@ -192,8 +199,13 @@ const LandingPage = () => {
 
       {currentY >= 2350 ? (
         <ReviewBoxContainer_ON>
-          <ReviewBoxTitle>개발공부에 얼마나 많은 도움이 되었을까? </ReviewBoxTitle>
-          <ReviewBoxSubTitle>언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이 없어졌어요.</ReviewBoxSubTitle>
+          <ReviewBoxTitle>
+            개발공부에 얼마나 많은 도움이 되었을까?{" "}
+          </ReviewBoxTitle>
+          <ReviewBoxSubTitle>
+            언제 어디서든 MDN+에 있는 여러 개발자분들 덕분에 개발공부에 두려움이
+            없어졌어요.
+          </ReviewBoxSubTitle>
           <ReviewFlexBox>
             <ReviewBox>
               <ReviewerBox>
@@ -201,8 +213,10 @@ const LandingPage = () => {
                 <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
               </ReviewerBox>
               <ReviewBody>
-                MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데 MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요. 잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서
-                동시에 공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
+                MDN에 번역이 조금 이해가 안되는 부분들이 있었어서 힘들었는데
+                MDN+ 위키에 어떤 분이 좀 더 자연스럽게 번역해서 올리셨더라구요.
+                잘못된 정보들도 몇군데 있었는데, 제가 직접 수정하면서 동시에
+                공부도 할 수 있었어서 개발 공부에 도움이 많이 됐습니다.
               </ReviewBody>
             </ReviewBox>
             <ReviewBox>
@@ -211,7 +225,9 @@ const LandingPage = () => {
                 <Reviewer>주니어 개발자 문코딩</Reviewer>
               </ReviewerBox>
               <ReviewBody>
-                처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해 며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을 달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할
+                처음으로 혼자 진행하던 사이드 프로젝트에서 오류가 발생해
+                며칠동안 밤을 새도 답이 안나왔었는데 시니어 개발자님이 답변을
+                달아주셔서 해결할 수 있었습니다! 앞으로도 개발하면서 계속 이용할
                 것 같습니다. 좋은 서비스 감사합니다 :)
               </ReviewBody>
             </ReviewBox>
@@ -221,7 +237,9 @@ const LandingPage = () => {
                 <Reviewer>개발 3년차 조코딩</Reviewer>
               </ReviewerBox>
               <ReviewBody>
-                MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다. 나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니, 면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
+                MDN+ 헬프데스크에 올라오는 질문들에 틈틈히 답변을 달았었습니다.
+                나중에 이직하는 과정에서 이러한 경험들을 자기소개서에 담았더니,
+                면접관님이 좋게봐주셔서 무사히 원하던 기업에 이직할 수
                 있었습니다. 정말 감사합니다 !
               </ReviewBody>
             </ReviewBox>
@@ -243,8 +261,11 @@ const LandingPage = () => {
                 <MainNewsTitle>개발 공부가 힘들 때</MainNewsTitle>
                 <MainNewsTitle>'MDN+'를 이용해요</MainNewsTitle>
                 <MainNewsBody>
-                  "개발 공부를 시작하면서 MDN을 많이 참고했는데 번역이 매끄럽지 않고 조금 어렵게 설명이 되어있는 부분들이 있더라구요. 그래서 이런 부분들을 현업에서 일하는 개발자들 또는 개발을 공부하는
-                  사람들이 자유롭게 수정을 하며 새롭게 MDN을 재구성한다면 어떨까 생각을 ...
+                  "개발 공부를 시작하면서 MDN을 많이 참고했는데 번역이 매끄럽지
+                  않고 조금 어렵게 설명이 되어있는 부분들이 있더라구요. 그래서
+                  이런 부분들을 현업에서 일하는 개발자들 또는 개발을 공부하는
+                  사람들이 자유롭게 수정을 하며 새롭게 MDN을 재구성한다면 어떨까
+                  생각을 ...
                 </MainNewsBody>
               </MainNewsContents>
               <MainNewsImg src={MainNewsImage}></MainNewsImg>
@@ -370,7 +391,7 @@ const ArrowImg = styled.img`
   position: absolute;
   top: 1.2rem;
   right: 2.5rem;
-`
+`;
 
 const IntroBoxContainer = styled.div`
   width: 100%;

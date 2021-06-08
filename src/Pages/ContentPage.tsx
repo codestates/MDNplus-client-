@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import useAllData from "../Hooks/useAllData";
 import useBooleanData from "../Hooks/useBooleanData";
 import useContentData from "../Hooks/useContentData";
 import { Components } from "./EditPage";
@@ -21,7 +20,6 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
   const { BooleanState, onSetWriteMode } = useBooleanData();
   const history = useHistory();
 
-  // 수정 버튼 눌렀을 시, 로그인 상태에 따라 EditPage로 이동 또는 로그인 모달창 띄움
   const handleClickEdit = () => {
     if (isLogin) {
       history.push("/EditPage");
@@ -32,7 +30,7 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
+    window.scrollTo(0, 0);
     if (history.location.pathname === "/ContentPage") {
       onSetWriteMode(false);
     }
@@ -49,7 +47,13 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
               <Title>{contentData.title}</Title>
               <EditBtn onClick={handleClickEdit}>수정</EditBtn>
             </TitleBox>
-            <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[gfm, { singleTilde: false }]]} components={Components} children={contentData.body} className="markdown" />
+            <ReactMarkdown
+              rehypePlugins={[rehypeRaw]}
+              remarkPlugins={[[gfm, { singleTilde: false }]]}
+              components={Components}
+              children={contentData.body}
+              className="markdown"
+            />
           </ContentBox>
         )}
       </Container>

@@ -70,8 +70,7 @@ const HelpdeskPage = () => {
   };
 
   useEffect(() => {
-    // 헬프데스크 메인페이지 렌더링에 필요한 데이터 받아오는 요청
-    window.scrollTo(0, 0); // 스크롤 맨위로 이동시키는 코드
+    window.scrollTo(0, 0);
 
     if (history.location.pathname === "/HelpdeskPage") {
       onSetWriteMode(false);
@@ -170,7 +169,13 @@ const HelpdeskPage = () => {
                     <NumberBox>
                       <LikesNum>좋아요 {el.like}</LikesNum>
                       <AnswersNum>답변 {el.commentCount}</AnswersNum>
-                      <CreatedAt>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</CreatedAt>
+                      <CreatedAt>{`${el.createdAt.substring(
+                        0,
+                        4
+                      )}년 ${el.createdAt.substring(
+                        5,
+                        7
+                      )}월 ${el.createdAt.substring(8, 10)}일`}</CreatedAt>
                     </NumberBox>
                   </QuestionBox>
                 ))

@@ -7,22 +7,8 @@ import LoginModal from "./LoginModal";
 import MenuModal from "./MenuModal";
 import search from "../img/search.jpeg";
 
-function Nav({
-  userImg,
-  isLogInOpen,
-  isLogin,
-  handleLogin,
-  handleLoginModal,
-  handleChangeMenuIcon,
-  setIsLogin,
-}: any) {
-  const {
-    SearchDataState,
-    onSearchingData,
-    onSearchingResult,
-    onSearchingWord,
-    onSearchingTag,
-  } = useSearchData();
+function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon, setIsLogin }: any) {
+  const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useSearchData();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userUrl, setUserUrl] = useState("");
   const history = useHistory();
@@ -37,85 +23,66 @@ function Nav({
 
   const handleIconClick = () => {
     let word: string | null = SearchDataState.word;
-    let tag: string = SearchDataState.tag;
+    let tag: string | null = SearchDataState.tag;
     if (SearchDataState.word === "") {
       alert("입력해주세요");
       return;
     }
     onSearchingResult(word, tag);
-    axios
-      .post("http://localhost:8080/search", { type: tag, content: word })
-      .then((res) => {
-        onSearchingData(res.data);
-      });
+    axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
+      onSearchingData(res.data);
+    });
     word = null;
 
     history.push("/SearchPage");
   };
 
-  const handleKeyPress = (
-    e: React.KeyboardEvent<HTMLInputElement> &
-      React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>): void => {
     let word: string | null = e.target.value;
-    let tag: string = SearchDataState.tag;
+    let tag: string | null = SearchDataState.tag;
     if (e.key === "Enter") {
       if (SearchDataState.word === "") {
         alert("입력해주세요");
         return;
       }
       onSearchingResult(e.target.value, SearchDataState.tag);
-      axios
-        .post("http://localhost:8080/search", { type: tag, content: word })
-        .then((res) => {
-          onSearchingData(res.data);
-        });
+      axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
+        onSearchingData(res.data);
+      });
       word = null;
       history.push("/SearchPage");
     }
   };
 
   const gitAccessToken = (authorizationCode: string) => {
-    axios
-      .post(
-        "http://localhost:8080/oauth",
-        { authorizationCode: authorizationCode },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const { nickName, image } = res.data;
-        if (nickName) {
-          handleChangeMenuIcon(res.data.image);
-          history.push("/Wiki");
-          handleLogin();
-        } else {
-          handleLogin();
-          history.push("/NameSettingPage");
-        }
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+      const { nickName, image } = res.data;
+      if (nickName) {
+        handleChangeMenuIcon(res.data.image);
+        history.push("/Wiki");
+        handleLogin();
+      } else {
+        handleLogin();
+        history.push("/NameSettingPage");
+      }
 
-        window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
-      });
+      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
+    });
   };
 
   const kakaoAccessToken = (authorizationCode: string) => {
-    axios
-      .post(
-        "http://localhost:8080/oauth",
-        { authorizationCode: authorizationCode },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const { nickName, image } = res.data;
-        if (nickName) {
-          handleChangeMenuIcon(res.data.image);
-          history.push("/Wiki");
-          handleLogin();
-        } else {
-          handleLogin();
-          history.push("/NameSettingPage");
-        }
-        window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
-      });
+    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
+      const { nickName, image } = res.data;
+      if (nickName) {
+        handleChangeMenuIcon(res.data.image);
+        history.push("/Wiki");
+        handleLogin();
+      } else {
+        handleLogin();
+        history.push("/NameSettingPage");
+      }
+      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
+    });
   };
 
   useEffect(() => {
@@ -132,19 +99,14 @@ function Nav({
     }
 
     if (window.localStorage.getItem("sessionId")) {
-      axios
-        .get("http://localhost:8080/userinfo", { withCredentials: true })
-        .then((res) => {
-          setUserUrl(res.data.image);
-        });
+      axios.get("http://localhost:8080/userinfo", { withCredentials: true }).then((res) => {
+        setUserUrl(res.data.image);
+      });
       setIsLogin(true);
     }
   }, []);
 
-  const option = (
-    e: React.ChangeEvent<HTMLSelectElement> &
-      React.MouseEvent<HTMLSelectElement>
-  ) => {
+  const option = (e: React.ChangeEvent<HTMLSelectElement> & React.MouseEvent<HTMLSelectElement>) => {
     onSearchingTag(e.target.value);
   };
 
@@ -165,34 +127,13 @@ function Nav({
       </LeftBox>
       {isLogin ? (
         <NavButtons>
-          {userUrl ? (
-            <UserIconContainer
-              src={userUrl}
-              onClick={handleMenuModal}
-            ></UserIconContainer>
-          ) : (
-            <UserIconContainer
-              src={userImg}
-              onClick={handleMenuModal}
-            ></UserIconContainer>
-          )}
-          {isMenuOpen ? (
-            <MenuModal
-              handleLogin={handleLogin}
-              isOpen={isMenuOpen}
-              onClose={handleMenuModal}
-              checkMenu={setIsMenuOpen}
-            ></MenuModal>
-          ) : null}
+          {userUrl ? <UserIconContainer src={userUrl} onClick={handleMenuModal}></UserIconContainer> : <UserIconContainer src={userImg} onClick={handleMenuModal}></UserIconContainer>}
+          {isMenuOpen ? <MenuModal handleLogin={handleLogin} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
         </NavButtons>
       ) : (
         <NavButtons>
           <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
-          <LoginModal
-            isOpen={isLogInOpen}
-            onClose={handleLoginModal}
-            handleLogin={handleLogin}
-          ></LoginModal>
+          <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal} handleLogin={handleLogin}></LoginModal>
         </NavButtons>
       )}
     </NavBar>

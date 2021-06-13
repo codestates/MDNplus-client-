@@ -216,7 +216,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  // margin-bottom: 3rem;
+  padding-bottom: 10rem;
 `;
 
 const Stage = styled.div`

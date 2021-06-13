@@ -1,4 +1,5 @@
 import FAQFakeData from "../FAQFakeData";
+
 const FAQDATA = "faqData/FAQDATA" as const;
 
 type FAQdata = {

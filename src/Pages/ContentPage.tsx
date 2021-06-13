@@ -68,6 +68,8 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  padding-bottom: 10rem;
+
   @media (max-width: 375px) {
     height: 100vh;
     width: 100vw;
@@ -79,6 +81,8 @@ const ContentBox = styled.div`
   width: 53%;
   margin-top: 2rem;
   margin-left: -10rem;
+  line-height: 1.5rem;
+
   @media (max-width: 375px) {
     font-size: 1rem;
     margin: 0.5rem;

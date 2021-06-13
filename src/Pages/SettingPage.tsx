@@ -21,13 +21,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
   };
 
   const handleNameSave = () => {
-    axios
-      .patch(
-        "http://localhost:8080/userinfo/nick",
-        { nickName: userInfo.nickName },
-        { withCredentials: true }
-      )
-      .then((res) => console.log(res));
+    axios.patch("http://localhost:8080/userinfo/nick", { nickName: userInfo.nickName }, { withCredentials: true }).then((res) => console.log(res));
     setEditing(false);
   };
 
@@ -36,16 +30,10 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
   };
 
   const handleImgDelete = () => {
-    axios
-      .patch(
-        "http://localhost:8080/userinfo/img",
-        { img: "" },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        setUserInfo({ ...userInfo, img: "" });
-        handleChangeMenuIcon("");
-      });
+    axios.patch("http://localhost:8080/userinfo/img", { img: "" }, { withCredentials: true }).then((res) => {
+      setUserInfo({ ...userInfo, img: "" });
+      handleChangeMenuIcon("");
+    });
   };
 
   const handleCancelMembership = () => {
@@ -71,25 +59,17 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
         .then((res) => {
           setUserInfo({ ...userInfo, img: res.data.url });
           handleChangeMenuIcon(res.data.url);
-          axios
-            .patch(
-              "http://localhost:8080/userinfo/img",
-              { img: res.data.url },
-              { withCredentials: true }
-            )
-            .then((res) => console.log(res));
+          axios.patch("http://localhost:8080/userinfo/img", { img: res.data.url }, { withCredentials: true }).then((res) => console.log(res));
         })
         .catch((err) => console.log(err));
     }
   }, [selectedImg]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/userinfo", { withCredentials: true })
-      .then((res) => {
-        setUserInfo({ nickName: res.data.nickName, img: res.data.image });
-        handleChangeMenuIcon(res.data.image);
-      });
+    axios.get("http://localhost:8080/userinfo", { withCredentials: true }).then((res) => {
+      setUserInfo({ nickName: res.data.nickName, img: res.data.image });
+      handleChangeMenuIcon(res.data.image);
+    });
 
     if (history.location.pathname === "/SettingPage") {
       onContentPageMode(false);
@@ -99,13 +79,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
   return (
     <Container>
       <Stage>
-        <ImgBox>
-          {!userInfo.img ? (
-            <Img src={userIcon}></Img>
-          ) : (
-            <Img src={userInfo.img} />
-          )}
-        </ImgBox>
+        <ImgBox>{!userInfo.img ? <Img src={userIcon}></Img> : <Img src={userInfo.img} />}</ImgBox>
         {!editing ? (
           <UserNameBox>
             <UserName>{userInfo.nickName}</UserName>
@@ -119,11 +93,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
           </UserNameBox>
         ) : (
           <UserNameBox>
-            <EditInput
-              onChange={handleInputChange}
-              value={userInfo.nickName}
-              autoFocus
-            ></EditInput>
+            <EditInput onChange={handleInputChange} value={userInfo.nickName} autoFocus></EditInput>
             <EditName_save
               onClick={() => {
                 handleNameSave();
@@ -142,9 +112,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
           <ImgDelete onClick={handleImgDelete}>프로필 삭제</ImgDelete>
         </SubmitBox>
         <DelAccountBox>
-          <DelAccountBtn onClick={handleCancelMembership}>
-            회원 탈퇴
-          </DelAccountBtn>
+          <DelAccountBtn onClick={handleCancelMembership}>회원 탈퇴</DelAccountBtn>
         </DelAccountBox>
       </Stage>
     </Container>

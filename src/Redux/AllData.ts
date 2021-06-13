@@ -1,14 +1,11 @@
-// 액션 타입
 const FILTER = "AllData/FILTER" as const;
 const CHANGEFILTER = "AllData/CHANGEFILTER" as const;
 const USERNICKNAME = "AllData/USERNICKNAME" as const;
 
-// 액션 생성 함수
 export const filter = (data: Method[]) => ({ type: FILTER, payload: data });
 export const changeFilter = (data: Method[]) => ({ type: CHANGEFILTER, payload: data });
 export const userNickName = (userNickName: string) => ({ type: USERNICKNAME, payload: userNickName });
 
-// 액션 객체 타입 설정(타입스크립트)
 type AllDataAction = ReturnType<typeof filter> | ReturnType<typeof changeFilter> | ReturnType<typeof userNickName>;
 
 type Method = {
@@ -21,7 +18,6 @@ type Method = {
   createdAt: string;
 };
 
-// 초기 state 타입 설정
 type InitState = {
   allData: null | Method[];
   arrayData: null | Method[];
@@ -33,7 +29,6 @@ type InitState = {
   userNickName: null | string;
 };
 
-// 초기 state 설정
 const initialState = {
   allData: null,
   currentData: null,

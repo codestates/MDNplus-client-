@@ -6,13 +6,6 @@ export const changeContent = (data: any) => ({ type: CHANGECONTENT, payload: dat
 
 type ContentDataAction = ReturnType<typeof clickMethod> | ReturnType<typeof changeContent>;
 
-type Method = {
-  id: number;
-  title: string;
-  body: string;
-  count: number;
-};
-
 type InitState = {
   contentData: any;
 };

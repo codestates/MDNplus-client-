@@ -21,14 +21,7 @@ type Method = {
 function MainPage() {
   const [firstOption, setFirstOption] = useState("javascript");
   const { allState, onFilter, onChangeFilter } = useAllData();
-  const {
-    arrayData,
-    objectData,
-    mathData,
-    stringData,
-    promiseData,
-    currentData,
-  } = allState;
+  const { arrayData, objectData, mathData, stringData, promiseData, currentData } = allState;
   const { onClickMethod } = useContentData();
   const { onSetWriteMode } = useBooleanData();
   const history = useHistory();
@@ -91,21 +84,13 @@ function MainPage() {
         </IntroContents>
       </IntroBox>
       <FilterBox>
-        <FirstFilter
-          onChange={(e) => setFirstOption(e.target.value)}
-          name="firstFilter"
-          id="firstFilter"
-        >
+        <FirstFilter onChange={(e) => setFirstOption(e.target.value)} name="firstFilter" id="firstFilter">
           <option value="javascript">Javascript</option>
           <option value="html">HTML</option>
           <option value="css">CSS</option>
         </FirstFilter>
         {firstOption === "javascript" ? (
-          <SecondFilter
-            onChange={(e) => handleFilter(e)}
-            name="secondFilter"
-            id="secondFilter"
-          >
+          <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
             <option value="array">Array</option>
             <option value="object">Object</option>
             <option value="math">Math</option>
@@ -113,11 +98,7 @@ function MainPage() {
             <option value="promise">Promise</option>
           </SecondFilter>
         ) : (
-          <SecondFilter
-            onChange={(e) => handleFilter(e)}
-            name="secondFilter"
-            id="secondFilter"
-          >
+          <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
             <option value="구현중">구현중</option>
           </SecondFilter>
         )}
@@ -135,11 +116,7 @@ function MainPage() {
                   }}
                 >
                   <MethodTitle>{el.title}</MethodTitle>
-                  {el.pureBody ? (
-                    <MethodBody>{el.pureBody.slice(0, 70)} ...</MethodBody>
-                  ) : (
-                    <MethodBody>빈칸</MethodBody>
-                  )}
+                  {el.pureBody ? <MethodBody>{el.pureBody.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
                 </MethodContents>
               </div>
               <MethodCount>수정된 횟수 {el.count}</MethodCount>
@@ -158,6 +135,7 @@ const Container = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
+  padding-bottom: 10rem;
 `;
 
 const IntroBox = styled.div`
@@ -185,12 +163,6 @@ const IntroLetter = styled.div`
 const Icon = styled.img`
   width: 3rem;
   margin: 1rem 2rem 0 2rem;
-`;
-
-const UnderLine = styled.div`
-  margin-top: 1.5rem;
-  width: 100%;
-  border-bottom: 0.5px solid #e0e0e0;
 `;
 
 const Stage = styled.div`

@@ -10,17 +10,12 @@ const NameSettingPage = () => {
   const history = useHistory();
 
   const handleSubmit = () => {
-    console.log(nickname);
     axios
-      .post(
-        "http://localhost:8080/oauth/nick",
-        { nickName: nickname },
-        { withCredentials: true }
-      )
+      .post("http://localhost:8080/oauth/nick", { nickName: nickname }, { withCredentials: true })
       .then((res) => {
-        history.push("/");
+        history.push("/Wiki");
       })
-      .catch((err) => console.log("안됨"));
+      .catch((err) => console.log(err));
   };
 
   const handleChangeName = (e: any) => {
@@ -37,11 +32,7 @@ const NameSettingPage = () => {
         <FirstTitle>MDN+에 오신 것을 환영합니다 !</FirstTitle>
         <SecondTitle>사용하실 이름을 입력해주세요</SecondTitle>
         <Name>이름</Name>
-        <NameInput
-          onChange={handleChangeName}
-          placeholder=""
-          autoFocus
-        ></NameInput>
+        <NameInput onChange={handleChangeName} placeholder="" autoFocus></NameInput>
         <NextBtn onClick={handleSubmit}>다음</NextBtn>
       </Stage>
     </Container>

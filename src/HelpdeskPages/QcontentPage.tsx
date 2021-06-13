@@ -85,8 +85,7 @@ type LoginType = {
 };
 
 function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
-  const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } =
-    useQcontentData();
+  const { QcontentState, onCurrentQData, onQuestionLike, onAnswerLike } = useQcontentData();
   const { onContentPageMode } = useBooleanData();
   const { currentData } = QcontentState;
   const history = useHistory();
@@ -181,25 +180,13 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
     <>
       {currentData !== null && currentData !== undefined ? (
         <Container>
-          <BackBtn onClick={() => window.history.back()}>
-            {"< 돌아가기"}
-          </BackBtn>
+          <BackBtn onClick={() => window.history.back()}>{"< 돌아가기"}</BackBtn>
           <QuestionContainer>
             <LikeBox_Q>
               {currentData.question.isLike === true ? (
-                <FontAwesomeIcon
-                  onClick={() => handleQuestionLike(currentData)}
-                  icon={["far", "heart"]}
-                  color="#686868"
-                  size="lg"
-                />
+                <FontAwesomeIcon onClick={() => handleQuestionLike(currentData)} icon={["far", "heart"]} color="#686868" size="lg" />
               ) : (
-                <FontAwesomeIcon
-                  onClick={() => handleQuestionLike(currentData)}
-                  icon={["fas", "heart"]}
-                  color="#ef5350"
-                  size="lg"
-                />
+                <FontAwesomeIcon onClick={() => handleQuestionLike(currentData)} icon={["fas", "heart"]} color="#ef5350" size="lg" />
               )}
               <LikeNum_Q> {currentData.question.like}</LikeNum_Q>
             </LikeBox_Q>
@@ -219,25 +206,10 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                 ))}
               </TagBox>
               <InfoBox_Q>
-                {currentData.question.userId.image ? (
-                  <UserImg_Q src={currentData.question.userId.image} />
-                ) : (
-                  <UserImg_Q src={userImg} />
-                )}
+                {currentData.question.userId.image ? <UserImg_Q src={currentData.question.userId.image} /> : <UserImg_Q src={userImg} />}
                 <UserName_Q>{currentData.question.userId.nickName}</UserName_Q>
-                <Date_Q>{`${currentData.question.createdAt.substring(
-                  0,
-                  4
-                )}년 ${currentData.question.createdAt.substring(
-                  5,
-                  7
-                )}월 ${currentData.question.createdAt.substring(
-                  8,
-                  10
-                )}일`}</Date_Q>
-                {isMainPage ? (
-                  <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn>
-                ) : null}
+                <Date_Q>{`${currentData.question.createdAt.substring(0, 4)}년 ${currentData.question.createdAt.substring(5, 7)}월 ${currentData.question.createdAt.substring(8, 10)}일`}</Date_Q>
+                {isMainPage ? <AnswerBtn onClick={handleAnswerBtn}>답변하기</AnswerBtn> : null}
               </InfoBox_Q>
             </QuestionBox>
           </QuestionContainer>
@@ -248,42 +220,20 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
                   <LikeBox_A>
                     {el.isLike === true ? (
                       <HeartIcon>
-                        <FontAwesomeIcon
-                          onClick={() => handleAnswerLike(el, index)}
-                          icon={["far", "heart"]}
-                          color="#686868"
-                          size="lg"
-                        />
+                        <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["far", "heart"]} color="#686868" size="lg" />
                       </HeartIcon>
                     ) : (
                       <HeartIcon>
-                        <FontAwesomeIcon
-                          onClick={() => handleAnswerLike(el, index)}
-                          icon={["fas", "heart"]}
-                          color="#ef5350"
-                          size="lg"
-                        />{" "}
+                        <FontAwesomeIcon onClick={() => handleAnswerLike(el, index)} icon={["fas", "heart"]} color="#ef5350" size="lg" />{" "}
                       </HeartIcon>
                     )}
                     <LikeNum_A> {el.like}</LikeNum_A>
                   </LikeBox_A>
                   <Answer>
                     <AnswerTitleBox>
-                      {el.userId.image !== "" ? (
-                        <AnswerUserImg src={el.userId.image}></AnswerUserImg>
-                      ) : (
-                        <AnswerUserImg src={userImg}></AnswerUserImg>
-                      )}
-                      <Date_A>{`${el.createdAt.substring(
-                        0,
-                        4
-                      )}년 ${el.createdAt.substring(
-                        5,
-                        7
-                      )}월 ${el.createdAt.substring(8, 10)}일`}</Date_A>
-                      {el.userId.nickName !== null ? (
-                        <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle>
-                      ) : null}
+                      {el.userId.image !== "" ? <AnswerUserImg src={el.userId.image}></AnswerUserImg> : <AnswerUserImg src={userImg}></AnswerUserImg>}
+                      <Date_A>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</Date_A>
+                      {el.userId.nickName !== null ? <AnswerTitle> {el.userId.nickName} 님 답변</AnswerTitle> : null}
                     </AnswerTitleBox>
                     <AnswerBody>
                       <ReactMarkdown children={el.content}></ReactMarkdown>
@@ -297,9 +247,7 @@ function QcontentPage({ isLogin, handleLoginModal }: LoginType) {
               <AnswerBox>
                 <Answer>
                   <AnswerTitleBox>
-                    <AnswerTitle_empty>
-                      답변을 기다리는 중입니다.
-                    </AnswerTitle_empty>
+                    <AnswerTitle_empty>답변을 기다리는 중입니다.</AnswerTitle_empty>
                   </AnswerTitleBox>
                 </Answer>
               </AnswerBox>
@@ -321,6 +269,7 @@ const Container = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
+  
   @media (max-width: 375px) {
     height: 100vh;
     width: 100vw;
@@ -374,6 +323,9 @@ const QuestionBox = styled.div`
 
 const QuestionTitleBox = styled.div`
   padding-bottom: 1rem;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 `;
 
 const TitleIcon = styled.span`
@@ -383,6 +335,9 @@ const TitleIcon = styled.span`
   color: white;
   font-weight: bold;
   margin-right: 0.5rem;
+  width: 4rem;
+  text-align: center;
+
 
   @media (max-width: 375px) {
     font-size: 0.8rem;

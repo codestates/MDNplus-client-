@@ -68,6 +68,8 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  padding-bottom: 10rem;
+
   @media (max-width: 375px) {
     height: 100vh;
     width: 100vw;

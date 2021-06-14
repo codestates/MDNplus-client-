@@ -20,7 +20,6 @@ import QcontentPage from "./HelpdeskPages/QcontentPage";
 import AnswerPage from "./HelpdeskPages/AnswerPage";
 import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
 import HquestionPage from "./HelpdeskPages/HquestionPage";
-import TestEditPage from "./Pages/TestEditPage";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -83,66 +82,17 @@ function App() {
       <Body>
         <Switch>
           <Route exact path="/" render={() => <LandingPage />} />
-          <Route
-            path="/ContentPage"
-            render={() => (
-              <ContentPage
-                isLogin={isLogin}
-                handleLoginModal={handleLoginModal}
-              />
-            )}
-          />
-          <Route
-            path="/EditPage"
-            render={() => (
-              <EditPage
-                helpModal={helpModal}
-                handleHelpModal={handleHelpModal}
-              />
-            )}
-          />
+          <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
+          <Route path="/EditPage" render={() => <EditPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
           <Route path="/SearchPage" render={() => <SearchPage />} />
-          <Route
-            path="/SettingPage"
-            render={() => (
-              <SettingPage
-                handleLogin={handleLogin}
-                handleChangeMenuIcon={handleChangeMenuIcon}
-              />
-            )}
-          />
+          <Route path="/SettingPage" render={() => <SettingPage handleLogin={handleLogin} handleChangeMenuIcon={handleChangeMenuIcon} />} />
           <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-          <Route
-            path="/AnswerPage"
-            render={() => (
-              <AnswerPage
-                helpModal={helpModal}
-                handleHelpModal={handleHelpModal}
-              />
-            )}
-          />
-          <Route
-            path="/HquestionPage"
-            render={() => (
-              <HquestionPage
-                helpModal={helpModal}
-                handleHelpModal={handleHelpModal}
-              />
-            )}
-          />
-          <Route
-            path="/QcontentPage"
-            render={() => (
-              <QcontentPage
-                isLogin={isLogin}
-                handleLoginModal={handleLoginModal}
-              />
-            )}
-          />
+          <Route path="/AnswerPage" render={() => <AnswerPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
+          <Route path="/HquestionPage" render={() => <HquestionPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
+          <Route path="/QcontentPage" render={() => <QcontentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
           <Route path="/FAQ" render={() => <FAQ />} />
-          <Route path="/TestEditPage" render={() => <TestEditPage />} />
           <Route path="/Wiki" render={() => <MainPage />} />
         </Switch>
       </Body>
@@ -197,8 +147,6 @@ const SideArea = styled.div`
 
 const Body = styled.div`
   grid-area: main;
-  // margin: 0;
-  margin: 0 0 10rem 0;
   width: 100%;
 `;
 const Footer = styled.div`

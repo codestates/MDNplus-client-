@@ -46,7 +46,7 @@ function FAQ() {
           </QuestionsBtn>
           <HomeBtn
             onClick={() => {
-              history.push("/wiki");
+              history.push("/Wiki");
             }}
           >
             웹 서비스 이동

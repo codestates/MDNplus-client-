@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../Redux";
+import { RootState } from "../modules";
 import { useCallback } from "react";
-import {filter, storeData} from "../Redux/HelpData"
+import {filter, storeData} from "../modules/HelpData"
 
 type UserData = {
   githubId: null;

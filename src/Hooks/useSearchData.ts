@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../Redux/";
+import { RootState } from "../modules";
 import { useCallback } from "react";
-import { searchData, searchResult, searchSelect, searchWord } from "../Redux/SearchData";
+import { searchData, searchResult, searchSelect, searchWord } from "../modules/SearchData";
 
 type SearchDataType = {
   mainContent?: {
@@ -16,10 +16,10 @@ type SearchDataType = {
     tags: string[];
     commentCount: number;
     like: number;
+    pureBody: string;
     _id: string;
     title: string;
     body: string;
-    pureBody: string;
     userId: {
       nickName: string;
       kakaoId: string | null;

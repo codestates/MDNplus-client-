@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux'
-import { RootState } from "../Redux";
+import { RootState } from "../modules";
 import { useCallback } from "react";
-import { clickMethod, changeContent  } from "../Redux/ContentData"
+import { clickMethod, changeContent  } from "../modules/ContentData"
 
 type Method = {
     id: number;

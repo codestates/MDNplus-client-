@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../Redux/";
-import { filter, changeFilter, userNickName } from "../Redux/AllData";
+import { RootState } from "../modules/";
+import { filter, changeFilter, userNickName } from "../modules/AllData";
 import { useCallback } from "react";
 
 type Method = {

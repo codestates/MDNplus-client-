@@ -8,7 +8,7 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import rootReducer from "./Redux/index";
+import rootReducer from "./modules/index";
 
 const store = createStore(rootReducer);
 

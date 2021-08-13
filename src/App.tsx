@@ -2,24 +2,25 @@ import "./App.css";
 import { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
-import userIcon from "./img/userIcon_gray.png";
-import useBooleanData from "./Hooks/useBooleanData";
-import Nav from "./Components/Nav";
-import SideBar from "./Components/SideBar";
-import SearchPage from "./Pages/SearchPage";
-import NameSettingPage from "./Pages/NameSettingPage";
-import MyPage from "./HelpdeskPages/MyPage";
-import FAQ from "./Pages/FAQ";
-import FooterComponent from "./Components/FooterComponent";
-import LandingPage from "./Pages/LandingPage";
-import ContentPage from "./Pages/ContentPage";
-import SettingPage from "./Pages/SettingPage";
-import EditPage from "./Pages/EditPage";
-import MainPage from "./Pages/MainPage";
-import QcontentPage from "./HelpdeskPages/QcontentPage";
-import AnswerPage from "./HelpdeskPages/AnswerPage";
-import HelpdeskPage from "./HelpdeskPages/HelpdeskPage";
-import HquestionPage from "./HelpdeskPages/HquestionPage";
+import useBooleanData from "./hooks/useBooleanData";
+import Nav from "./components/Nav";
+import SideBar from "./components/SideBar";
+import SearchPage from "./pages/common/SearchPage";
+import NameSettingPage from "./pages/wiki/NameSettingPage";
+import MyPage from "./pages/common/MyPage";
+import FAQ from "./pages/common/FAQ";
+import FooterComponent from "./components/Footer";
+import LandingPage from "./pages/common/LandingPage";
+import ContentPage from "./pages/wiki/ContentPage";
+import SettingPage from "./pages/common/SettingPage";
+import EditPage from "./pages/wiki/EditPage";
+import MainPage from "./pages/wiki/MainPage";
+import QcontentPage from "./pages/helpdesk/ContentPage";
+import AnswerPage from "./pages/helpdesk/AnswerPage";
+import HelpdeskPage from "./pages/helpdesk/HelpdeskPage";
+import HquestionPage from "./pages/helpdesk/QuestionPage";
+
+const userIcon = require('./img/userIcon_gray.png')
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -149,6 +150,7 @@ const Body = styled.div`
   grid-area: main;
   width: 100%;
 `;
+
 const Footer = styled.div`
   grid-area: footer;
 `;

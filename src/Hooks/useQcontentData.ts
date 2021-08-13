@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../Redux";
+import { RootState } from "../modules";
 import { useCallback } from "react";
-import { currentQData, questionLike, answerLike } from "../Redux/QcontentData";
-import { BooleanLiteral } from "typescript";
+import { currentQData, questionLike, answerLike } from "../modules/QcontentData";
 
 type DataType = {
   question: {

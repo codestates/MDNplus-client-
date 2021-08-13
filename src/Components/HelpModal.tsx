@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
-import { Message, ModalContainer } from "../styled-components/ConfirmModal";
-import { fadeIn, slideUp } from "../styled-components/Animation";
+import { ModalContainer } from "../styled-components/ConfirmModal";
+import { slideUp } from "../styled-components/Animation";
 
 type PropsOptions = {
   handleHelpModal: () => void;
@@ -55,10 +54,9 @@ const HelpModal = ({ handleHelpModal }: PropsOptions) => {
               <div>이렇게 하면 됩니다</div>
             </TestBr>
             <TestBox>
-            <TestTitle>이미지 : </TestTitle>
-            <Test>{`<img width="100" src="이미지 링크"/>`}</Test>
+              <TestTitle>이미지 : </TestTitle>
+              <Test>{`<img width="100" src="이미지 링크"/>`}</Test>
             </TestBox>
-            {/* <Test>{"링크 [네이버](https://www.naver.com)"}</Test> */}
           </LeftContainer>
           <RightContainer>
             <Test1>h1</Test1>
@@ -71,8 +69,12 @@ const HelpModal = ({ handleHelpModal }: PropsOptions) => {
             <Test8>테스트</Test8>
             <Test10>줄바꿈은</Test10>
             <Test11>이렇게 하면 됩니다</Test11>
-            <Test12 width={100} src={"https://res.cloudinary.com/dr4ka7tze/image/upload/v1622032268/oke1b4jtmpxebeofuqbu.jpg"}></Test12>
-            {/* <Test9 href="https://www.naver.com">네이버</Test9> */}
+            <Test12
+              width={100}
+              src={
+                "https://res.cloudinary.com/dr4ka7tze/image/upload/v1622032268/oke1b4jtmpxebeofuqbu.jpg"
+              }
+            ></Test12>
           </RightContainer>
         </Container>
       </ModalBox>

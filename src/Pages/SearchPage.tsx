@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import useSearchData from "../Hooks/useSearchData";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import useContentData from "../Hooks/useContentData";
 import useBooleanData from "../Hooks/useBooleanData";
+import Loading from "../styled-components/Loading";
+import axios from "axios";
 
 type helpDeskContentType = {
   tags: string[];
@@ -35,13 +37,25 @@ type mainContentType = {
   updatedAt: string;
 };
 
+type TagNameType = {
+  tagName: string | undefined;
+};
+
 function SearchPage() {
-  const { SearchDataState } = useSearchData();
+  const {
+    SearchDataState,
+    onSearchingData,
+    onSearchingResult,
+    onSearchingWord,
+    onSearchingTag,
+  } = useSearchData();
   const { onContentPageMode } = useBooleanData();
   const { onClickMethod } = useContentData();
   const [CurrentPage, setCurrentPage] = useState("MDN");
   const [MDNColor, setMDNColor] = useState(" #005ce7");
   const [HelpDeskColor, setHelpDeskColor] = useState("#a7a3a3");
+  const location = useLocation<TagNameType>();
+
   const history = useHistory();
 
   const HandleMDNClicked = (el: mainContentType) => {
@@ -74,36 +88,68 @@ function SearchPage() {
 
   useEffect(() => {
     onContentPageMode(false);
+
+    if (location.state?.tagName) {
+      onSearchingResult(location.state.tagName, "태그");
+      axios
+        .post("http://localhost:8080/search", {
+          type: "태그",
+          content: location.state.tagName,
+        })
+        .then((res) => {
+          onSearchingData(res.data);
+        });
+    }
   }, []);
 
   return !SearchDataState.contentData ? (
-    <div>비어있음!</div>
+    <Loading />
   ) : (
     <Container>
       <SearchResult>
         <ResultTextColor>
           " &nbsp;
           <ResultText>
-            {SearchDataState.result} &nbsp; , &nbsp; {SearchDataState.tagResult === null && SearchDataState.tagResult === undefined ? "전체" : SearchDataState.tagResult}&nbsp;
+            {SearchDataState.result} &nbsp; , &nbsp;{" "}
+            {SearchDataState.tagResult === null &&
+            SearchDataState.tagResult === undefined
+              ? "전체"
+              : SearchDataState.tagResult}
+            &nbsp;
           </ResultText>
           " &nbsp; (을)를 검색하셨습니다.
         </ResultTextColor>
 
         <ResultNum>
-          총 &nbsp; {SearchDataState.contentData?.mainContent !== undefined ? SearchDataState.contentData?.mainContent.length + SearchDataState.contentData?.helpdeskContent.length : 0} 개의 검색결과
-          &nbsp; / &nbsp; MDN+ &nbsp; {SearchDataState.contentData?.mainContent !== undefined ? SearchDataState.contentData?.mainContent.length : 0} 개 &nbsp; / &nbsp; Help Desk &nbsp;
+          총 &nbsp;{" "}
+          {SearchDataState.contentData?.mainContent !== undefined
+            ? SearchDataState.contentData?.mainContent.length +
+              SearchDataState.contentData?.helpdeskContent.length
+            : 0}{" "}
+          개의 검색결과 &nbsp; / &nbsp; MDN+ &nbsp;{" "}
+          {SearchDataState.contentData?.mainContent !== undefined
+            ? SearchDataState.contentData?.mainContent.length
+            : 0}{" "}
+          개 &nbsp; / &nbsp; Help Desk &nbsp;
           {SearchDataState.contentData?.helpdeskContent.length} 개
         </ResultNum>
       </SearchResult>
       <FilterSearchResult>
-        {SearchDataState.contentData?.mainContent === undefined || SearchDataState.contentData.mainContent === null ? (
+        {SearchDataState.contentData?.mainContent === undefined ||
+        SearchDataState.contentData.mainContent === null ? (
           <> </>
         ) : (
           <>
-            <MDNPlus onClick={() => HandleMDNColor()} style={{ color: MDNColor }}>
+            <MDNPlus
+              onClick={() => HandleMDNColor()}
+              style={{ color: MDNColor }}
+            >
               MDN+ 위키
             </MDNPlus>
-            <HelpDesk onClick={() => HandleHelpDeckColor()} style={{ color: HelpDeskColor }}>
+            <HelpDesk
+              onClick={() => HandleHelpDeckColor()}
+              style={{ color: HelpDeskColor }}
+            >
               HelpDesk
             </HelpDesk>
           </>
@@ -111,9 +157,11 @@ function SearchPage() {
       </FilterSearchResult>
 
       <ContentContainer>
-        {SearchDataState.contentData?.mainContent?.length === 0 && SearchDataState.contentData?.helpdeskContent.length === 0 ? (
+        {SearchDataState.contentData?.mainContent?.length === 0 &&
+        SearchDataState.contentData?.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
-        ) : CurrentPage === "MDN" && SearchDataState.contentData?.mainContent ? (
+        ) : CurrentPage === "MDN" &&
+          SearchDataState.contentData?.mainContent ? (
           SearchDataState.contentData.mainContent?.map((el) => (
             <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
               <Title>{el.title}</Title>
@@ -126,7 +174,7 @@ function SearchPage() {
           SearchDataState.contentData?.helpdeskContent.map((el) => (
             <Content key={el._id} onClick={() => HandleHelpDeckClicked(el)}>
               <HelpTitle>{el.title}</HelpTitle>
-              <Body>{el.pureBody}</Body>
+              <Body>{el.pureBody.slice(0, 200)} ...</Body>
             </Content>
           ))
         )}
@@ -138,6 +186,8 @@ function SearchPage() {
 export default SearchPage;
 
 const Container = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -193,7 +243,7 @@ const MDNPlus = styled.div`
 const HelpDesk = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  margin: 1.4rem;
+  margin: 1rem;
 
   cursor: pointer;
 `;
@@ -201,6 +251,10 @@ const HelpDesk = styled.div`
 const Content = styled.div`
   padding: 30px;
   cursor: pointer;
+
+  &: hover {
+    border-bottom: 1px solid #bdbdbd;
+  }
 `;
 
 const Title = styled.div`

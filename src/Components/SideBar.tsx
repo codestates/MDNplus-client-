@@ -13,20 +13,16 @@ const SideBar = () => {
 
   const handleMoveToWiki = () => {
     setSideBar("wiki");
-    history.push("/");
+    history.push("/Wiki");
   };
 
-  // useEffect(() => {
-  //   console.log(history)
-  //   if(history.location.pathname === "/MyPage") {
-  //     onContentPageMode(false)
-  //   }
-  // },[])
-
   useEffect(() => {
-    if (window.location.pathname === "/HelpdeskPage" || window.location.pathname === "/MyPage") {
+    if (
+      window.location.pathname === "/HelpdeskPage" ||
+      window.location.pathname === "/MyPage"
+    ) {
       setSideBar("helpdesk");
-    } else if (window.location.pathname === "/") {
+    } else if (window.location.pathname === "/Wiki") {
       setSideBar("wiki");
     }
   });
@@ -85,5 +81,3 @@ const HelpDesk = styled.div`
 
   ${({ color }) => handleColorType(color)};
 `;
-
-//   background: ${(props) => props.color || "#f4f4f4"};

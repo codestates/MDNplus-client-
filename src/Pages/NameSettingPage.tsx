@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import useAllData from "../Hooks/useAllData";
 import styled from "styled-components";
 import useBooleanData from "../Hooks/useBooleanData";
-
-// axios.defaults.withCredentials=true;
 
 const NameSettingPage = () => {
   const { onSetWriteMode } = useBooleanData();
@@ -15,7 +12,11 @@ const NameSettingPage = () => {
   const handleSubmit = () => {
     console.log(nickname);
     axios
-      .post("http://localhost:8080/oauth/nick", { nickName: nickname }, { withCredentials: true })
+      .post(
+        "http://localhost:8080/oauth/nick",
+        { nickName: nickname },
+        { withCredentials: true }
+      )
       .then((res) => {
         history.push("/");
       })
@@ -23,7 +24,6 @@ const NameSettingPage = () => {
   };
 
   const handleChangeName = (e: any) => {
-    console.log(e.target.value);
     setNickname(e.target.value);
   };
 
@@ -37,7 +37,11 @@ const NameSettingPage = () => {
         <FirstTitle>MDN+에 오신 것을 환영합니다 !</FirstTitle>
         <SecondTitle>사용하실 이름을 입력해주세요</SecondTitle>
         <Name>이름</Name>
-        <NameInput onChange={handleChangeName} placeholder="" autoFocus></NameInput>
+        <NameInput
+          onChange={handleChangeName}
+          placeholder=""
+          autoFocus
+        ></NameInput>
         <NextBtn onClick={handleSubmit}>다음</NextBtn>
       </Stage>
     </Container>

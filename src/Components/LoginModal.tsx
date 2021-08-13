@@ -2,22 +2,17 @@ import styled from "styled-components";
 import { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fadeIn, slideUp } from "../styled-components/Animation";
-import userIcon from "../img/userIcon_blue3.png";
 import kakao from "../img/kakao2.png";
 import github from "../img/github.png";
-import useBooleanData from "../Hooks/useBooleanData";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
   handleLogin: () => void;
-  // handleLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function LoginModal({ isOpen, onClose, handleLogin }: Props) {
   const overLay = useRef(null);
-
-  const REST_API_KEY = "144bf580b6a5f37255716facf6728b0d";
   const REDIRECT_URI = "http://localhost:3000/kakaoLogin";
   const { Kakao }: any = window;
 
@@ -33,25 +28,18 @@ function LoginModal({ isOpen, onClose, handleLogin }: Props) {
 
   const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize/?client_id=6247a72ec8e51735ea34`;
 
-  //카카오톡 URL 마크 해줘야함
   const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=&redirect_uri=144bf580b6a5f37255716facf6728b0d`;
 
   const socialLoginHandler = () => {
-    // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
-    console.log("깃허브 로그인 실행됨");
     window.location.assign(GITHUB_LOGIN_URL);
   };
 
   const kakaoLoginHandler = () => {
-    // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
-    console.log("카카오 로그인 실행됨");
     window.location.assign(KAKAO_LOGIN_URL);
     Kakao.Auth.authorize({
       redirectUri: REDIRECT_URI,
     });
   };
-
-  console.log("로그인 모달 뜸");
 
   return isOpen ? (
     <ModalContainer onClick={handleOverLay} ref={overLay}>
@@ -200,37 +188,3 @@ const GithubLogo = styled.img`
   width: 2rem;
   z-index: 1;
 `;
-// import axios from 'axios'
-// import React, { useState } from 'react'
-// // require('dotenv').config();
-
-// // const clientID = process.env.GITHUB_CLIENT_ID;
-// // const clientSecret = process.env.GITHUB_CLIENT_SECRET;
-
-// const REST_API_KEY = '144bf580b6a5f37255716facf6728b0d'
-// const REDIRECT_URI = 'http://localhost:3000/kakaoLogin'
-
-// function LoginModal() {
-//     const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize/?client_id=6247a72ec8e51735ea34`
-//     const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}
-//     `
-
-//     const socialLoginHandler = () => { // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
-//         console.log('깃허브 로그인 실행됨')
-//         window.location.assign(GITHUB_LOGIN_URL)
-//     }
-
-//     const kakaoLoginHandler = () => { // 깃허브로 로그인 버튼이 클릭이 되면, 깃허브 로그인 주소로 이동하게 됨
-//         console.log('카카오 로그인 실행됨')
-//         window.location.assign(KAKAO_LOGIN_URL)
-//     }
-
-//     return (
-//         <div>
-//             <button onClick={socialLoginHandler}>깃허브로 로그인</button>
-//             <button onClick={kakaoLoginHandler}>카카오로 로그인</button>
-//         </div>
-//     )
-// }
-
-// export default LoginModal

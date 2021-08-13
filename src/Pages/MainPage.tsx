@@ -1,14 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import useAllData from "../Hooks/useAllData";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../Hooks/useContentData";
-import ideaIcon from "../img/idea.png";
 import thinkingIcon from "../img/thinking.png";
-import lodingGif from "../img/loding.gif"
 import axios from "axios";
-import useBooleanData from '../Hooks/useBooleanData';
+import useBooleanData from "../Hooks/useBooleanData";
+import Loading from "../styled-components/Loading";
 
 type Method = {
   _id: string;
@@ -23,14 +21,19 @@ type Method = {
 function MainPage() {
   const [firstOption, setFirstOption] = useState("javascript");
   const { allState, onFilter, onChangeFilter } = useAllData();
-  const { arrayData, objectData, mathData, stringData, promiseData, currentData } = allState;
+  const {
+    arrayData,
+    objectData,
+    mathData,
+    stringData,
+    promiseData,
+    currentData,
+  } = allState;
   const { onClickMethod } = useContentData();
-  const {onSetWriteMode, onContentPageMode} = useBooleanData()
+  const { onSetWriteMode } = useBooleanData();
   const history = useHistory();
 
-  // 메인페이지 array, object 선택바가 변경이 되었을 때, 실행되는 코드
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
     if (e.target.value === "object") {
       if (objectData) {
         onChangeFilter(objectData);
@@ -63,30 +66,22 @@ function MainPage() {
     }
   };
 
-  // 오른쪽에 렌더링된 하나의 메소드 박스를 클릭했을 시, ContentPage로 이동하기 위한 함수
   const handleClickMethod = (method: Method) => {
-    // console.log("컨텐츠 페이지에 뿌려줘야됨");
-    onClickMethod(method); // ContentData 값을 변경하기 위한 dispatch 메소드
+    onClickMethod(method);
     history.push("/ContentPage");
   };
 
-  // 처음 스토어에 저장되어 있는 값들은 null이므로 '로딩 중입니다'가 렌더링 된다.
-  // 컴포넌트가 마운트된 후, useEffect가 실행되어 서버와 통신하여 실제 데이터들을 가져온다.(여기서는 더미데이터 사용)
   useEffect(() => {
-    // console.log('데이터 가져오는 요청 보내짐')
     axios.get("http://localhost:8080/maincontent").then((res) => {
-      console.log(res);
       onFilter(res.data);
     });
 
-    if(history.location.pathname === "/") {
-      onSetWriteMode(false)
+    if (history.location.pathname === "/Wiki") {
+      onSetWriteMode(false);
     }
   }, []);
 
-  console.log(arrayData);
-
-  return (
+  return currentData ? (
     <Container>
       <IntroBox>
         <Icon src={thinkingIcon}></Icon>
@@ -95,17 +90,22 @@ function MainPage() {
           <IntroLetter>당신의 지식을 공유해주세요</IntroLetter>
         </IntroContents>
       </IntroBox>
-      {/* <UnderLine></UnderLine> */}
       <FilterBox>
-        <FirstFilter onChange={(e) => setFirstOption(e.target.value)} name="firstFilter" id="firstFilter">
-          {/* <label htmlFor="firstFilter"></label> */}
+        <FirstFilter
+          onChange={(e) => setFirstOption(e.target.value)}
+          name="firstFilter"
+          id="firstFilter"
+        >
           <option value="javascript">Javascript</option>
           <option value="html">HTML</option>
           <option value="css">CSS</option>
         </FirstFilter>
         {firstOption === "javascript" ? (
-          <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
-            {/* <label htmlFor="secondFilter"></label> */}
+          <SecondFilter
+            onChange={(e) => handleFilter(e)}
+            name="secondFilter"
+            id="secondFilter"
+          >
             <option value="array">Array</option>
             <option value="object">Object</option>
             <option value="math">Math</option>
@@ -113,15 +113,18 @@ function MainPage() {
             <option value="promise">Promise</option>
           </SecondFilter>
         ) : (
-          <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
-            {/* <label htmlFor="secondFilter"></label> */}
+          <SecondFilter
+            onChange={(e) => handleFilter(e)}
+            name="secondFilter"
+            id="secondFilter"
+          >
             <option value="구현중">구현중</option>
           </SecondFilter>
         )}
       </FilterBox>
       <Stage>
         {currentData === null ? (
-          <div>로딩 중입니다</div>
+          <Loading />
         ) : (
           currentData.map((el: any) => (
             <MethodBox key={el._id}>
@@ -132,7 +135,11 @@ function MainPage() {
                   }}
                 >
                   <MethodTitle>{el.title}</MethodTitle>
-                  {el.pureBody ? <MethodBody>{el.pureBody.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
+                  {el.pureBody ? (
+                    <MethodBody>{el.pureBody.slice(0, 70)} ...</MethodBody>
+                  ) : (
+                    <MethodBody>빈칸</MethodBody>
+                  )}
                 </MethodContents>
               </div>
               <MethodCount>수정된 횟수 {el.count}</MethodCount>
@@ -141,13 +148,11 @@ function MainPage() {
         )}
       </Stage>
     </Container>
+  ) : (
+    <Loading />
   );
 }
 export default MainPage;
-
-const Loding = styled.img`
-
-`
 
 const Container = styled.div`
   display: grid;
@@ -207,7 +212,6 @@ const Stage = styled.div`
 
 const FilterBox = styled.div`
   margin-top: 2rem;
-  // margin-left: 4rem;
   width: 100%;
   display: flex;
   // border: 1px solid black;
@@ -228,7 +232,7 @@ const SecondFilter = styled.select`
   width: 10rem;
   border: none;
   outline: none;
-  // margin-left: 2rem;
+  margin-left: 2rem;
   color: #616161;
   background-color: white;
 `;

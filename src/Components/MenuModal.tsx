@@ -1,9 +1,6 @@
-// 로그인이 되면 유저정보 버튼이 생김
-// 유저정보 버튼이 생겨서 클릭할경우 유저 정보창이 열림
-
 import React from "react";
 import styled from "styled-components";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
@@ -26,14 +23,16 @@ function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
   };
 
   const handleLogOutButton = () => {
-    axios.post("http://localhost:8080/oauth/logout", null, { withCredentials: true }).then((res) => console.log(res));
+    axios
+      .post("http://localhost:8080/oauth/logout", null, {
+        withCredentials: true,
+      })
+      .then((res) => console.log(res));
     window.localStorage.removeItem("sessionId");
     handleLogin();
     onClose();
     history.push("/");
   };
-
-  console.log("hi");
 
   const handleMyPageButton = () => {
     history.push("/MyPage");
@@ -111,12 +110,3 @@ const ModalButton = styled.div`
     font-size: 0.7rem;
   }
 `;
-
-// const MenuButtonContainer = styled.div`
-//   height: 100%;
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-// `;

@@ -45,27 +45,6 @@ type DataType = {
   }[];
 };
 
-type QuestionType = {
-  tags: string[];
-  commentCount: number;
-  like: number;
-  pureBody: string;
-  _id: string;
-  title: string;
-  body: string;
-  userId: {
-    nickName: string;
-    kakaoId: string;
-    githubId: string;
-    image: string;
-    _id: string;
-    __v: number;
-  };
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-};
-
 type AnswerType = {
   like: number;
   _id: string;
@@ -105,7 +84,10 @@ export const answerLike = (answerUpdate: AnswerType) => ({
   },
 });
 
-type CurrentQDataAction = ReturnType<typeof currentQData> | ReturnType<typeof questionLike> | ReturnType<typeof answerLike>;
+type CurrentQDataAction =
+  | ReturnType<typeof currentQData>
+  | ReturnType<typeof questionLike>
+  | ReturnType<typeof answerLike>;
 
 type InitState = {
   currentData: null | undefined | DataType;
@@ -121,7 +103,10 @@ const initialState = {
   isLike: null,
 };
 
-function QcontentDataReducer(state: InitState = initialState, action: CurrentQDataAction): InitState {
+function QcontentDataReducer(
+  state: InitState = initialState,
+  action: CurrentQDataAction
+): InitState {
   switch (action.type) {
     case CURRENTQDATA:
       return { ...state, currentData: action.payload };

@@ -28,6 +28,25 @@ export const slideUp_AppealBox = keyframes`
 `;
 
 // 랜딩페이지
+
+export const fadeIn_img = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0;
+  }
+  
+  75% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
+
 export const slideUp_Intro = keyframes`
   from {
     opacity: 0;
@@ -57,23 +76,6 @@ export const slideUp_short = keyframes`
   100% {
     opacity: 1;
     transform: translateY(0rem)
-  }
-`;
-
-export const fadeIn_img = keyframes`
-  0% {
-    opacity: 0;
-  }
-
-  25% {
-    opacity: 0;
-  }
-  
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 `;
 
@@ -112,15 +114,15 @@ export const slideLeft_box = keyframes`
 export const slideLeft_line = keyframes`
   0% {
     opacity: 0;
-    transform: translateX(-3rem)
+    transform: translateX(-1rem)
   }
   25% {
     opacity: 0;
-    transform: translateX(-3rem)
+    transform: translateX(-1rem)
   }
   50% {
     opacity: 0;
-    transform: translateX(-3rem)
+    transform: translateX(-1rem)
   }
   100% {
     opacity: 1;
@@ -151,15 +153,15 @@ export const slideRight_box = keyframes`
 export const slideRight_line = keyframes`
   0% {
     opacity: 0;
-    transform: translateX(3rem)
+    transform: translateX(1rem)
   }
   25% {
     opacity: 0;
-    transform: translateX(3rem)
+    transform: translateX(1rem)
   }
   50% {
     opacity: 0;
-    transform: translateX(3rem)
+    transform: translateX(1rem)
   }
   100% {
     opacity: 1;

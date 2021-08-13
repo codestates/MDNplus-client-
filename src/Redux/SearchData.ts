@@ -34,19 +34,28 @@ type SearchDataType = {
   }[];
 };
 
-// type SearchDataType = {
-//   id: number;
-//   title: string;
-//   body: string;
-//   count: number;
-// };
+export const searchData = (data: SearchDataType) => ({
+  type: SEARCHDATA,
+  payload: data,
+});
+export const searchWord = (word: string) => ({
+  type: SEARCHWORD,
+  payload: word,
+});
+export const searchSelect = (tag: string) => ({
+  type: SEARCSELECT,
+  payload: tag,
+});
+export const searchResult = (
+  result: string | null,
+  tagResult: string | null
+) => ({ type: SEARCSHRESULT, payload: { result, tagResult } });
 
-export const searchData = (data: SearchDataType) => ({ type: SEARCHDATA, payload: data });
-export const searchWord = (word: string) => ({ type: SEARCHWORD, payload: word });
-export const searchSelect = (tag: string) => ({ type: SEARCSELECT, payload: tag });
-export const searchResult = (result: string | null, tagResult: string | null) => ({ type: SEARCSHRESULT, payload: { result, tagResult } });
-
-type SearchDataAction = ReturnType<typeof searchData> | ReturnType<typeof searchWord> | ReturnType<typeof searchSelect> | ReturnType<typeof searchResult>;
+type SearchDataAction =
+  | ReturnType<typeof searchData>
+  | ReturnType<typeof searchWord>
+  | ReturnType<typeof searchSelect>
+  | ReturnType<typeof searchResult>;
 
 type InitStateType = {
   contentData: null | undefined | SearchDataType;
@@ -64,7 +73,10 @@ const initialState = {
   tagResult: null,
 };
 
-function SearchDataReducer(state: InitStateType = initialState, action: SearchDataAction): InitStateType {
+function SearchDataReducer(
+  state: InitStateType = initialState,
+  action: SearchDataAction
+): InitStateType {
   switch (action.type) {
     case SEARCHDATA:
       return { ...state, contentData: action.payload };
@@ -73,7 +85,11 @@ function SearchDataReducer(state: InitStateType = initialState, action: SearchDa
     case SEARCSELECT:
       return { ...state, tag: action.payload };
     case SEARCSHRESULT:
-      return { ...state, result: action.payload.result, tagResult: action.payload.tagResult };
+      return {
+        ...state,
+        result: action.payload.result,
+        tagResult: action.payload.tagResult,
+      };
 
     default:
       return state;

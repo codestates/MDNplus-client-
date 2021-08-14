@@ -27,7 +27,7 @@ function EditPage({ helpModal, handleHelpModal }: PropsOption) {
   const previewRef = useRef<any>(null);
   const history = useHistory();
 
-  const handleChange = (e: any) => {
+  const handleChange = (e:any) => {
     const previewValues = previewRef.current.innerText;
     onChangeContent({ body: e.target.value, pureBody: previewValues });
   };

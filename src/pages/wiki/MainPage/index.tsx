@@ -9,18 +9,8 @@ import Loading from "../../../components/Loading";
 import {
   Container,
   FilterBox,
-  FirstFilter,
-  Icon,
   IntroBox,
-  IntroContents,
-  IntroLetter,
-  IntroTitle,
-  MethodBody,
   MethodBox,
-  MethodContents,
-  MethodCount,
-  MethodTitle,
-  SecondFilter,
   Stage,
 } from "./MainPage.style";
 
@@ -37,7 +27,14 @@ type Method = {
 function MainPage() {
   const [firstOption, setFirstOption] = useState("javascript");
   const { allState, onFilter, onChangeFilter } = useAllData();
-  const { arrayData, objectData, mathData, stringData, promiseData, currentData } = allState;
+  const {
+    arrayData,
+    objectData,
+    mathData,
+    stringData,
+    promiseData,
+    currentData,
+  } = allState;
   const { onClickMethod } = useContentData();
   const { onSetWriteMode } = useBooleanData();
   const history = useHistory();
@@ -93,30 +90,45 @@ function MainPage() {
   return currentData ? (
     <Container>
       <IntroBox>
-        <Icon src={thinkingIcon}></Icon>
-        <IntroContents>
-          <IntroTitle>MDN+ 위키</IntroTitle>
-          <IntroLetter>당신의 지식을 공유해주세요</IntroLetter>
-        </IntroContents>
+        <img src={thinkingIcon} className="icon"></img>
+        <div>
+          <h1 className="title">MDN+ 위키</h1>
+          <div className="description">당신의 지식을 공유해주세요</div>
+        </div>
       </IntroBox>
       <FilterBox>
-        <FirstFilter onChange={(e) => setFirstOption(e.target.value)} name="firstFilter" id="firstFilter">
+        <select
+          className="filter first"
+          onChange={(e) => setFirstOption(e.target.value)}
+          name="firstFilter"
+          id="firstFilter"
+        >
           <option value="javascript">Javascript</option>
           <option value="html">HTML</option>
           <option value="css">CSS</option>
-        </FirstFilter>
+        </select>
         {firstOption === "javascript" ? (
-          <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
+          <select
+            className="filter second"
+            onChange={(e) => handleFilter(e)}
+            name="secondFilter"
+            id="secondFilter"
+          >
             <option value="array">Array</option>
             <option value="object">Object</option>
             <option value="math">Math</option>
             <option value="string">String</option>
             <option value="promise">Promise</option>
-          </SecondFilter>
+          </select>
         ) : (
-          <SecondFilter onChange={(e) => handleFilter(e)} name="secondFilter" id="secondFilter">
+          <select
+            className="filter second"
+            onChange={(e) => handleFilter(e)}
+            name="secondFilter"
+            id="secondFilter"
+          >
             <option value="구현중">구현중</option>
-          </SecondFilter>
+          </select>
         )}
       </FilterBox>
       <Stage>
@@ -125,17 +137,21 @@ function MainPage() {
         ) : (
           currentData.map((el: any) => (
             <MethodBox key={el._id}>
-              <div>
-                <MethodContents
+              <div className="contents">
+                <div
                   onClick={() => {
                     handleClickMethod(el);
                   }}
                 >
-                  <MethodTitle>{el.title}</MethodTitle>
-                  {el.pureBody ? <MethodBody>{el.pureBody.slice(0, 70)} ...</MethodBody> : <MethodBody>빈칸</MethodBody>}
-                </MethodContents>
+                  <h3 className="title">{el.title}</h3>
+                  {el.pureBody ? (
+                    <div className="body">{el.pureBody.slice(0, 70)} ...</div>
+                  ) : (
+                    <div>빈칸</div>
+                  )}
+                </div>
               </div>
-              <MethodCount>수정된 횟수 {el.count}</MethodCount>
+              <div className="count">수정된 횟수 {el.count}</div>
             </MethodBox>
           ))
         )}

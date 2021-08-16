@@ -20,13 +20,13 @@ import AnswerPage from "./pages/helpdesk/AnswerPage";
 import HelpdeskPage from "./pages/helpdesk/HelpdeskPage";
 import HquestionPage from "./pages/helpdesk/QuestionPage";
 
-const userIcon = require('./img/userIcon_gray.png')
-
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
   const [helpModal, setHelpModal] = useState(false);
-  const [userImg, setUserImg] = useState(userIcon);
+  const [userImg, setUserImg] = useState(
+    "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
+  );
   const { BooleanState } = useBooleanData();
   const { writeMode, contentPageMode } = BooleanState;
 
@@ -38,7 +38,9 @@ function App() {
     if (url) {
       setUserImg(url);
     } else {
-      setUserImg(userIcon);
+      setUserImg(
+        "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
+      );
     }
   };
 
@@ -83,16 +85,64 @@ function App() {
       <Body>
         <Switch>
           <Route exact path="/" render={() => <LandingPage />} />
-          <Route path="/ContentPage" render={() => <ContentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
-          <Route path="/EditPage" render={() => <EditPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
+          <Route
+            path="/ContentPage"
+            render={() => (
+              <ContentPage
+                isLogin={isLogin}
+                handleLoginModal={handleLoginModal}
+              />
+            )}
+          />
+          <Route
+            path="/EditPage"
+            render={() => (
+              <EditPage
+                helpModal={helpModal}
+                handleHelpModal={handleHelpModal}
+              />
+            )}
+          />
           <Route path="/SearchPage" render={() => <SearchPage />} />
-          <Route path="/SettingPage" render={() => <SettingPage handleLogin={handleLogin} handleChangeMenuIcon={handleChangeMenuIcon} />} />
+          <Route
+            path="/SettingPage"
+            render={() => (
+              <SettingPage
+                handleLogin={handleLogin}
+                handleChangeMenuIcon={handleChangeMenuIcon}
+              />
+            )}
+          />
           <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-          <Route path="/AnswerPage" render={() => <AnswerPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
-          <Route path="/HquestionPage" render={() => <HquestionPage helpModal={helpModal} handleHelpModal={handleHelpModal} />} />
-          <Route path="/QcontentPage" render={() => <QcontentPage isLogin={isLogin} handleLoginModal={handleLoginModal} />} />
+          <Route
+            path="/AnswerPage"
+            render={() => (
+              <AnswerPage
+                helpModal={helpModal}
+                handleHelpModal={handleHelpModal}
+              />
+            )}
+          />
+          <Route
+            path="/HquestionPage"
+            render={() => (
+              <HquestionPage
+                helpModal={helpModal}
+                handleHelpModal={handleHelpModal}
+              />
+            )}
+          />
+          <Route
+            path="/QcontentPage"
+            render={() => (
+              <QcontentPage
+                isLogin={isLogin}
+                handleLoginModal={handleLoginModal}
+              />
+            )}
+          />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/Wiki" render={() => <MainPage />} />
         </Switch>

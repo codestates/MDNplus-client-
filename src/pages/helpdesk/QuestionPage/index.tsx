@@ -7,8 +7,25 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import HelpModal from "../../../components/HelpModal";
-import { SubmitBtn, ExitBtn, BtnBox, GuideLine, HelpBtn } from "../../../styled-components/Post";
-import { Body, Container, LeftContainer, PostContainer, RightContainer, Tag, TagBox, TagInput, Title, TitleBox, UnderLine } from "./QuestionPage.style";
+import {
+  SubmitBtn,
+  ExitBtn,
+  BtnBox,
+  HelpBtn,
+} from "../../../styled-components/Post";
+import {
+  Body,
+  Container,
+  LeftContainer,
+  PostContainer,
+  RightContainer,
+  Tag,
+  TagBox,
+  TagInput,
+  Title,
+  TitleBox,
+  UnderLine,
+} from "./QuestionPage.style";
 
 type NewQuestion = {
   title: string;
@@ -37,7 +54,10 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
   const previewRef = useRef<any>(null);
   const history = useHistory();
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, type: string) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    type: string
+  ) => {
     const previewValues = previewRef.current.innerText;
     if (type === "title") {
       setNewQuestion({ ...newQuestion, title: e.target.value });
@@ -91,10 +111,16 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
   };
 
   const handleSubmitQ = () => {
-    axios.post("http://localhost:8080/question", { title, body, pureBody, tags }, { withCredentials: true }).then((res) => {
-      history.push("/HelpdeskPage");
-      onSetWriteMode(false);
-    });
+    axios
+      .post(
+        "http://localhost:8080/question",
+        { title, body, pureBody, tags },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        history.push("/HelpdeskPage");
+        onSetWriteMode(false);
+      });
   };
 
   useEffect(() => {
@@ -105,7 +131,13 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
     <Container>
       {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
 
-      {checkModal ? <QconfirmModal handleSubmitQ={handleSubmitQ} handleConfirmModal={handleConfirmModal} askInfo={askInfo} /> : null}
+      {checkModal ? (
+        <QconfirmModal
+          handleSubmitQ={handleSubmitQ}
+          handleConfirmModal={handleConfirmModal}
+          askInfo={askInfo}
+        />
+      ) : null}
       <PostContainer>
         <LeftContainer>
           <TitleBox>
@@ -131,7 +163,11 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
                     {el}
                   </Tag>
                 ))}
-            <TagInput value={tagValue} onChange={handleChangeTag} placeholder="태그를 입력해주세요" />
+            <TagInput
+              value={tagValue}
+              onChange={handleChangeTag}
+              placeholder="태그를 입력해주세요"
+            />
           </TagBox>
           <UnderLine></UnderLine>
 
@@ -145,7 +181,11 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
         </LeftContainer>
         <RightContainer ref={previewRef}>
           <h1>{title}</h1>
-          <ReactMarkdown components={Components} children={body} className="markdown" />
+          <ReactMarkdown
+            components={Components}
+            children={body}
+            className="markdown"
+          />
         </RightContainer>
       </PostContainer>
       <BtnBox>
@@ -159,7 +199,15 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
 
 export const Components = {
   code({ node, inline, className, children, ...props }: any) {
-    return <SyntaxHighlighter style={docco} language="javascript" PreTag="div" children={String(children).replace(/\n$/, "")} {...props} />;
+    return (
+      <SyntaxHighlighter
+        style={docco}
+        language="javascript"
+        PreTag="div"
+        children={String(children).replace(/\n$/, "")}
+        {...props}
+      />
+    );
   },
 };
 

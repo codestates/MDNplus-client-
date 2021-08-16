@@ -3,7 +3,6 @@ import useHelpData from "../../../hooks/useHelpData";
 import { useHistory } from "react-router";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
-import helpIcon from "../../../img/question.png";
 import Loading from "../../../components/Loading";
 import {
   TitleBox,
@@ -114,7 +113,7 @@ const HelpdeskPage = () => {
       <Container>
         <Stage>
           <IntroBox>
-            <Icon src={helpIcon}></Icon>
+            <Icon src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/question_sirbpg.png"></Icon>
             <IntroContents>
               <IntroTitle>헬프데스크</IntroTitle>
               <IntroLetter>궁금한 점들을 질문하세요</IntroLetter>
@@ -196,7 +195,13 @@ const HelpdeskPage = () => {
                     <NumberBox>
                       <LikesNum>좋아요 {el.like}</LikesNum>
                       <AnswersNum>답변 {el.commentCount}</AnswersNum>
-                      <CreatedAt>{`${el.createdAt.substring(0, 4)}년 ${el.createdAt.substring(5, 7)}월 ${el.createdAt.substring(8, 10)}일`}</CreatedAt>
+                      <CreatedAt>{`${el.createdAt.substring(
+                        0,
+                        4
+                      )}년 ${el.createdAt.substring(
+                        5,
+                        7
+                      )}월 ${el.createdAt.substring(8, 10)}일`}</CreatedAt>
                     </NumberBox>
                   </QuestionBox>
                 ))

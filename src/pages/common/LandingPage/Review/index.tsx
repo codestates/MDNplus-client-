@@ -1,6 +1,3 @@
-import avatar1 from "../../../../img/avatar1.png";
-import avatar2 from "../../../../img/avatar2.png";
-import avatar3 from "../../../../img/avatar3.png";
 import {
   ReviewBody,
   ReviewBox,
@@ -33,7 +30,7 @@ function ReviewSection({ currentY }: ReviewSectionProps) {
           <ReviewFlexBox>
             <ReviewBox>
               <ReviewerBox>
-                <ReviewerImg src={avatar1}></ReviewerImg>
+                <ReviewerImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/avatar1_hedjen.png"></ReviewerImg>
                 <Reviewer>코드스테이츠 27기 김코딩</Reviewer>
               </ReviewerBox>
               <ReviewBody>
@@ -45,7 +42,7 @@ function ReviewSection({ currentY }: ReviewSectionProps) {
             </ReviewBox>
             <ReviewBox>
               <ReviewerBox>
-                <ReviewerImg src={avatar2}></ReviewerImg>
+                <ReviewerImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/avatar2_zi6fmz.png"></ReviewerImg>
                 <Reviewer>주니어 개발자 문코딩</Reviewer>
               </ReviewerBox>
               <ReviewBody>
@@ -57,7 +54,7 @@ function ReviewSection({ currentY }: ReviewSectionProps) {
             </ReviewBox>
             <ReviewBox>
               <ReviewerBox>
-                <ReviewerImg src={avatar3}></ReviewerImg>
+                <ReviewerImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/avatar3_j6uvwn.png"></ReviewerImg>
                 <Reviewer>개발 3년차 조코딩</Reviewer>
               </ReviewerBox>
               <ReviewBody>

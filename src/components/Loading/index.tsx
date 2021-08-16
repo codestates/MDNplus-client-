@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import spinGIF from "../../img/spinGIF.gif";
 
 function Loading() {
   return (
     <Container>
-      <Img src={spinGIF}></Img>
+      <Img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/spinGIF_shsswk.gif"></Img>
     </Container>
   );
 }
@@ -24,4 +23,4 @@ const Img = styled.img`
   height: 5rem;
   object-fit: cover;
   margin-top: 5rem;
-`
+`;

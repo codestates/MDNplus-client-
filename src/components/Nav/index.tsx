@@ -4,11 +4,35 @@ import { useHistory } from "react-router";
 import useSearchData from "../../hooks/useSearchData";
 import LoginModal from "../LoginModal";
 import MenuModal from "../MenuModal";
-import search from "../../img/search.jpeg";
-import { LeftBox, LoginBtn, Logo, NavBar, NavButtons, Search, SearchBar, SearchFilter, SearchIcon, UserIconContainer} from "./Nav.style"
+import {
+  LeftBox,
+  LoginBtn,
+  Logo,
+  NavBar,
+  NavButtons,
+  Search,
+  SearchBar,
+  SearchFilter,
+  SearchIcon,
+  UserIconContainer,
+} from "./Nav.style";
 
-function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, handleChangeMenuIcon, setIsLogin }: any) {
-  const { SearchDataState, onSearchingData, onSearchingResult, onSearchingWord, onSearchingTag } = useSearchData();
+function Nav({
+  userImg,
+  isLogInOpen,
+  isLogin,
+  handleLogin,
+  handleLoginModal,
+  handleChangeMenuIcon,
+  setIsLogin,
+}: any) {
+  const {
+    SearchDataState,
+    onSearchingData,
+    onSearchingResult,
+    onSearchingWord,
+    onSearchingTag,
+  } = useSearchData();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userUrl, setUserUrl] = useState("");
   const history = useHistory();
@@ -29,15 +53,20 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       return;
     }
     onSearchingResult(word, tag);
-    axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
-      onSearchingData(res.data);
-    });
+    axios
+      .post("http://localhost:8080/search", { type: tag, content: word })
+      .then((res) => {
+        onSearchingData(res.data);
+      });
     word = null;
 
     history.push("/SearchPage");
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>): void => {
+  const handleKeyPress = (
+    e: React.KeyboardEvent<HTMLInputElement> &
+      React.ChangeEvent<HTMLInputElement>
+  ): void => {
     let word: string | null = e.target.value;
     let tag: string | null = SearchDataState.tag;
     if (e.key === "Enter") {
@@ -46,43 +75,57 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         return;
       }
       onSearchingResult(e.target.value, SearchDataState.tag);
-      axios.post("http://localhost:8080/search", { type: tag, content: word }).then((res) => {
-        onSearchingData(res.data);
-      });
+      axios
+        .post("http://localhost:8080/search", { type: tag, content: word })
+        .then((res) => {
+          onSearchingData(res.data);
+        });
       word = null;
       history.push("/SearchPage");
     }
   };
 
   const gitAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
-      const { nickName } = res.data;
-      if (nickName) {
-        handleChangeMenuIcon(res.data.image);
-        history.push("/Wiki");
-        handleLogin();
-      } else {
-        handleLogin();
-        history.push("/NameSettingPage");
-      }
+    axios
+      .post(
+        "http://localhost:8080/oauth",
+        { authorizationCode: authorizationCode },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        const { nickName } = res.data;
+        if (nickName) {
+          handleChangeMenuIcon(res.data.image);
+          history.push("/Wiki");
+          handleLogin();
+        } else {
+          handleLogin();
+          history.push("/NameSettingPage");
+        }
 
-      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
-    });
+        window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
+      });
   };
 
   const kakaoAccessToken = (authorizationCode: string) => {
-    axios.post("http://localhost:8080/oauth", { authorizationCode: authorizationCode }, { withCredentials: true }).then((res) => {
-      const { nickName } = res.data;
-      if (nickName) {
-        handleChangeMenuIcon(res.data.image);
-        history.push("/Wiki");
-        handleLogin();
-      } else {
-        handleLogin();
-        history.push("/NameSettingPage");
-      }
-      window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
-    });
+    axios
+      .post(
+        "http://localhost:8080/oauth",
+        { authorizationCode: authorizationCode },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        const { nickName } = res.data;
+        if (nickName) {
+          handleChangeMenuIcon(res.data.image);
+          history.push("/Wiki");
+          handleLogin();
+        } else {
+          handleLogin();
+          history.push("/NameSettingPage");
+        }
+        window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
+      });
   };
 
   useEffect(() => {
@@ -99,16 +142,23 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
     }
 
     if (window.localStorage.getItem("sessionId")) {
-      axios.get("http://localhost:8080/userinfo", { withCredentials: true }).then((res) => {
-        setUserUrl(res.data.image);
-      });
+      axios
+        .get("http://localhost:8080/userinfo", { withCredentials: true })
+        .then((res) => {
+          setUserUrl(res.data.image);
+        });
       setIsLogin(true);
     }
   }, []);
 
-  const option = (e: React.ChangeEvent<HTMLSelectElement> & React.MouseEvent<HTMLSelectElement>) => {
+  const option = (
+    e: React.ChangeEvent<HTMLSelectElement> &
+      React.MouseEvent<HTMLSelectElement>
+  ) => {
     onSearchingTag(e.target.value);
   };
+
+  console.log(userImg);
 
   return (
     <NavBar>
@@ -116,7 +166,10 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
         <Logo onClick={() => history.push("/")}>MDN +</Logo>
         <SearchBar>
           <Search onKeyPress={handleKeyPress} onChange={handleWritingState} />
-          <SearchIcon onClick={handleIconClick} src={search}></SearchIcon>
+          <SearchIcon
+            onClick={handleIconClick}
+            src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/search_u2ytnm.jpg"
+          ></SearchIcon>
         </SearchBar>
         <SearchFilter name="filter" id="filter" onChange={option}>
           <option value="전체">전체</option>
@@ -127,13 +180,34 @@ function Nav({ userImg, isLogInOpen, isLogin, handleLogin, handleLoginModal, han
       </LeftBox>
       {isLogin ? (
         <NavButtons>
-          {userUrl ? <UserIconContainer src={userUrl} onClick={handleMenuModal}></UserIconContainer> : <UserIconContainer src={userImg} onClick={handleMenuModal}></UserIconContainer>}
-          {isMenuOpen ? <MenuModal handleLogin={handleLogin} isOpen={isMenuOpen} onClose={handleMenuModal} checkMenu={setIsMenuOpen}></MenuModal> : null}
+          {userUrl ? (
+            <UserIconContainer
+              src={userUrl}
+              onClick={handleMenuModal}
+            ></UserIconContainer>
+          ) : (
+            <UserIconContainer
+              src={userImg}
+              onClick={handleMenuModal}
+            ></UserIconContainer>
+          )}
+          {isMenuOpen ? (
+            <MenuModal
+              handleLogin={handleLogin}
+              isOpen={isMenuOpen}
+              onClose={handleMenuModal}
+              checkMenu={setIsMenuOpen}
+            ></MenuModal>
+          ) : null}
         </NavButtons>
       ) : (
         <NavButtons>
           <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
-          <LoginModal isOpen={isLogInOpen} onClose={handleLoginModal} handleLogin={handleLogin}></LoginModal>
+          <LoginModal
+            isOpen={isLogInOpen}
+            onClose={handleLoginModal}
+            handleLogin={handleLogin}
+          ></LoginModal>
         </NavButtons>
       )}
     </NavBar>

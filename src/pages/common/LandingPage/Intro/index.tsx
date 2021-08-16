@@ -17,9 +17,6 @@ import {
   Img,
   ImgBox,
 } from "./Intro.style";
-import googleLogo from "../../../../img/googleLogo.png";
-import appleLogo from "../../../../img/appleLogo.png";
-import monitor3 from "../../../../img/monitor3.png";
 
 function IntroSection() {
   return (
@@ -32,11 +29,11 @@ function IntroSection() {
 
             <AppBtnBox>
               <GoogleBtn>
-                <AppLogo src={googleLogo}></AppLogo>
+                <AppLogo src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/googleLogo_vxfjro.png"></AppLogo>
                 Google Play
               </GoogleBtn>
               <AppStoreBtn>
-                <AppLogo src={appleLogo}></AppLogo>
+                <AppLogo src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/appleLogo_pcdiqo.png"></AppLogo>
                 App Store
               </AppStoreBtn>
             </AppBtnBox>
@@ -56,7 +53,7 @@ function IntroSection() {
         </LeftContainer>
         <RightContainer>
           <ImgBox>
-            <Img src={monitor3}></Img>
+            <Img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112350/monitor3_ltq26s.png"></Img>
           </ImgBox>
         </RightContainer>
       </IntroBoxContainer>

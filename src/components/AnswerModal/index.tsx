@@ -1,6 +1,18 @@
 import { useRef } from "react";
 import useBooleanData from "../../hooks/useBooleanData";
-import { AskEmptyInfo, AskInfo, BtnBox, CancelBtn, ContentContainer, EmptyBox, ModalBox, ModalContainer, Overlay, Submit, SubmitBtn } from "./AnswerModal.style";
+import {
+  AskEmptyInfo,
+  AskInfo,
+  BtnBox,
+  CancelBtn,
+  ContentContainer,
+  EmptyBox,
+  ModalBox,
+  ModalContainer,
+  Overlay,
+  Submit,
+  SubmitBtn,
+} from "./AnswerModal.style";
 
 type ModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,7 +21,12 @@ type ModalProps = {
   handleAnswerBtn: () => void;
 };
 
-function AnswerModal({ setIsOpen, btnName, handleAnswerBtn, writing }: ModalProps) {
+function AnswerModal({
+  setIsOpen,
+  btnName,
+  handleAnswerBtn,
+  writing,
+}: ModalProps) {
   const overLay = useRef(null);
   const { onContentPageMode, onSetWriteMode } = useBooleanData();
 

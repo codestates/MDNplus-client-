@@ -10,28 +10,22 @@ export const Container = styled.div`
 export const IntroBox = styled.div`
   display: flex;
   align-items: center;
-  // margin-left: 4rem;
-`;
 
-export const IntroContents = styled.div`
-  // margin-left: 1rem;
-`;
+  .title {
+    color: #757575;
+    font-weight: 600;
+  }
 
-export const IntroTitle = styled.h1`
-  color: #757575;
-  font-weight: 600;
-`;
+  .description {
+    margin-top: -1rem;
+    color: #9e9e9e;
+    font-weight: bold;
+  }
 
-export const IntroLetter = styled.div`
-  margin-top: -1rem;
-  // margin-left: 0.1rem;
-  color: #9e9e9e;
-  font-weight: bold;
-`;
-
-export const Icon = styled.img`
-  width: 3rem;
-  margin: 1rem 2rem 0 2rem;
+  img {
+    width: 3rem;
+    margin: 1rem 2rem 0 2rem;
+  }
 `;
 
 export const Stage = styled.div`
@@ -57,25 +51,19 @@ export const FilterBox = styled.div`
   display: flex;
   // border: 1px solid black;
   justify-content: center;
-`;
 
-export const FirstFilter = styled.select`
-  font-size: 1.2rem;
-  width: 10rem;
-  border: none;
-  outline: none;
-  color: #616161;
-  background-color: white;
-`;
+  .filter {
+    font-size: 1.2rem;
+    width: 10rem;
+    border: none;
+    outline: none;
+    color: #616161;
+    background-color: white;
+  }
 
-export const SecondFilter = styled.select`
-  font-size: 1.2rem;
-  width: 10rem;
-  border: none;
-  outline: none;
-  margin-left: 2rem;
-  color: #616161;
-  background-color: white;
+  .filter.second {
+    margin-left: 2rem;
+  }
 `;
 
 export const MethodBox = styled.div`
@@ -94,37 +82,37 @@ export const MethodBox = styled.div`
   @media (max-width: 375px) {
     height: 10rem;
   }
-`;
 
-export const MethodContents = styled.div`
-  height: 10rem;
-  @media (max-width: 375px) {
-    width: auto;
-    height: auto;
+  .contents {
+    height: 10rem;
+    @media (max-width: 375px) {
+      width: auto;
+      height: auto;
+    }
   }
-`;
 
-export const MethodTitle = styled.h3`
-  color: #757575;
-  @media (max-width: 375px) {
-    font-size: 0.8rem;
+  .title {
+    color: #757575;
+    @media (max-width: 375px) {
+      font-size: 0.8rem;
+    }
   }
-`;
 
-export const MethodBody = styled.div`
-  color: #757575;
-  @media (max-width: 375px) {
-    font-size: 0.8rem;
+  .body {
+    color: #757575;
+    @media (max-width: 375px) {
+      font-size: 0.8rem;
+    }
   }
-`;
 
-export const MethodCount = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  font-size: 0.8rem;
-  color: #757575;
-  margin-top: 1.7rem;
-  @media (max-width: 375px) {
+  .count {
+    display: flex;
+    justify-content: flex-end;
     font-size: 0.8rem;
+    color: #757575;
+    margin-top: 1.7rem;
+    @media (max-width: 375px) {
+      font-size: 0.8rem;
+    }
   }
 `;

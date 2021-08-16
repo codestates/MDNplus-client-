@@ -17,10 +17,6 @@ import {
   SubNewsTitle1,
   SubNewsTitle2,
 } from "./News.style";
-import MainNewsImage from "../../../../img/MainNews.jpg";
-import PenImg from "../../../../img/pen.jpg";
-import networkImg from "../../../../img/network.jpg";
-import noteImg from "../../../../img/note.jpg";
 
 type NewsSectionProps = {
   currentY: number;
@@ -48,26 +44,26 @@ function NewsSection({ currentY }: NewsSectionProps) {
                   생각을 ...
                 </MainNewsBody>
               </MainNewsContents>
-              <MainNewsImg src={MainNewsImage}></MainNewsImg>
+              <MainNewsImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112351/MainNews_nej1zj.jpg"></MainNewsImg>
               <MainNewsOverlay></MainNewsOverlay>
             </MainNews>
             <SubNews>
               <SubNewsTitle1>사용자라면 누구든지 수정이 가능한</SubNewsTitle1>
               <SubNewsTitle2>MDN판 위키백과</SubNewsTitle2>
               <SubNewsOverlay></SubNewsOverlay>
-              <SubNewsImg src={PenImg}></SubNewsImg>
+              <SubNewsImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/pen_b7vxvc.jpg"></SubNewsImg>
             </SubNews>
             <SubNews>
               <SubNewsTitle1>MDN+,</SubNewsTitle1>
               <SubNewsTitle2>누적 사용자 5만명 돌파</SubNewsTitle2>
               <SubNewsOverlay></SubNewsOverlay>
-              <SubNewsImg src={networkImg}></SubNewsImg>
+              <SubNewsImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112351/network_nunmed.jpg"></SubNewsImg>
             </SubNews>
             <SubNews>
               <SubNewsTitle1>예비 개발자라면</SubNewsTitle1>
               <SubNewsTitle2>꼭 알아야 할 5가지</SubNewsTitle2>
               <SubNewsOverlay></SubNewsOverlay>
-              <SubNewsImg src={noteImg}></SubNewsImg>
+              <SubNewsImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112351/note_hx9pna.jpg"></SubNewsImg>
             </SubNews>
           </NewsBox>
         </NewsContainer_ON>

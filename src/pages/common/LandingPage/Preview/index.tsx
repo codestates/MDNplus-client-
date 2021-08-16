@@ -13,8 +13,6 @@ import {
   UnderLine1,
   UnderLine2,
 } from "./Preview.style";
-import appeal1 from "../../../../img/appeal1.png";
-import appeal2 from "../../../../img/appeal2.png";
 import styled from "styled-components";
 
 type PreviewSectionProps = {
@@ -28,7 +26,7 @@ function PreviewSection({ currentY }: PreviewSectionProps) {
         <Preview1Container_ON>
           <PreviewBox>
             <SubBox1></SubBox1>
-            <PreviewImg src={appeal1}></PreviewImg>
+            <PreviewImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/appeal1_ekduys.png"></PreviewImg>
           </PreviewBox>
           <AppealBox>
             <UnderLine1></UnderLine1>
@@ -56,7 +54,7 @@ function PreviewSection({ currentY }: PreviewSectionProps) {
           </AppealBox>
           <PreviewBox>
             <SubBox2></SubBox2>
-            <PreviewImg src={appeal2}></PreviewImg>
+            <PreviewImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/appeal2_nehb8u.png"></PreviewImg>
           </PreviewBox>
         </Preview2Container_ON>
       ) : (

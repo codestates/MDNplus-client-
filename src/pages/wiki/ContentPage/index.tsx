@@ -3,11 +3,17 @@ import ReactMarkdown from "react-markdown";
 import { useHistory } from "react-router";
 import useBooleanData from "../../../hooks/useBooleanData";
 import useContentData from "../../../hooks/useContentData";
-// import { Components } from "./EditPage";
+import { Components } from "../EditPage";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import Loading from "../../../components/Loading";
-import { Container, ContentBox, EditBtn, Title, TitleBox } from "./ContentPage.style";
+import {
+  Container,
+  ContentBox,
+  EditBtn,
+  Title,
+  TitleBox,
+} from "./ContentPage.style";
 
 type PropsOption = {
   isLogin: Boolean;
@@ -50,7 +56,7 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}
               remarkPlugins={[[gfm, { singleTilde: false }]]}
-              // components={Components}
+              components={Components}
               children={contentData.body}
               className="markdown"
             />

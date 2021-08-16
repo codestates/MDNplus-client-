@@ -6,11 +6,14 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import AnswerModal from "../../../components/AnswerModal";
 import useBooleanData from "../../../hooks/useBooleanData";
-import { ExitBtn, SubmitBtn, HelpBtn, BtnBox } from "../../../styled-components/Post";
-import userImg from "../../../img/userIcon_gray.png";
 import axios from "axios";
 import HelpModal from "../../../components/HelpModal";
-import userIcon from "../../../img/userIcon_gray.png";
+import {
+  ExitBtn,
+  SubmitBtn,
+  HelpBtn,
+  BtnBox,
+} from "../../../styled-components/Post";
 import {
   UserName_Q,
   Body,
@@ -66,16 +69,24 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
     for (let i = 0; i < pureContentArr.length; i++) {
       pureContent = pureContent + pureContentArr[i];
     }
-    axios.post("http://localhost:8080/comment", { questionId: displayQuestion?._id, content: writing, pureContent }, { withCredentials: true }).then((res) => {
-      setIsOpen(() => !isOpen);
-      window.history.back();
-    });
+    axios
+      .post(
+        "http://localhost:8080/comment",
+        { questionId: displayQuestion?._id, content: writing, pureContent },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setIsOpen(() => !isOpen);
+        window.history.back();
+      });
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8080/userinfo", { withCredentials: true }).then((res) => {
-      setUserInfo({ img: res.data.image, nickName: res.data.nickName });
-    });
+    axios
+      .get("http://localhost:8080/userinfo", { withCredentials: true })
+      .then((res) => {
+        setUserInfo({ img: res.data.image, nickName: res.data.nickName });
+      });
     onSetWriteMode(true);
   }, []);
 
@@ -94,21 +105,47 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
             <ReactMarkdown children={displayQuestion.body} />
           </QuestionBody>
           <InfoBox_Q>
-            {displayQuestion.userId.image ? <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q> : <UserImg_Q src={userImg}></UserImg_Q>}
+            {displayQuestion.userId.image ? (
+              <UserImg_Q src={displayQuestion.userId.image}></UserImg_Q>
+            ) : (
+              <UserImg_Q src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"></UserImg_Q>
+            )}
             <UserName_Q>{displayQuestion.userId.nickName}</UserName_Q>
-            <Date_Q>{`${displayQuestion.createdAt.substring(0, 4)}.${displayQuestion.createdAt.substring(5, 7)}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
+            <Date_Q>{`${displayQuestion.createdAt.substring(
+              0,
+              4
+            )}.${displayQuestion.createdAt.substring(
+              5,
+              7
+            )}.${displayQuestion.createdAt.substring(8, 10)}`}</Date_Q>
           </InfoBox_Q>
         </QuestionBox>
         <WritingArea>
           <WritingTitle>나의 답변</WritingTitle>
-          <Body id="text" value={writing} placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.`} onChange={handleChange} />
+          <Body
+            id="text"
+            value={writing}
+            placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.`}
+            onChange={handleChange}
+          />
         </WritingArea>
-        {isOpen ? <AnswerModal handleAnswerBtn={handleAnswerBtn} btnName={btnName} setIsOpen={setIsOpen} writing={writing} /> : null}
+        {isOpen ? (
+          <AnswerModal
+            handleAnswerBtn={handleAnswerBtn}
+            btnName={btnName}
+            setIsOpen={setIsOpen}
+            writing={writing}
+          />
+        ) : null}
       </LeftContainer>
 
       <RightContainer ref={previewRef}>
         <PreviewTitle>
-          {userInfo.img === "" ? <UserInfoImage src={userIcon} /> : <UserInfoImage src={userInfo.img} />}
+          {userInfo.img === "" ? (
+            <UserInfoImage src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg" />
+          ) : (
+            <UserInfoImage src={userInfo.img} />
+          )}
           <UserInfoName>{userInfo.nickName} 님의 답변</UserInfoName>
         </PreviewTitle>
         <ReactMarkdown children={writing} components={Components} />
@@ -124,7 +161,15 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
 
 export const Components = {
   code({ node, inline, className, children, ...props }: any) {
-    return <SyntaxHighlighter style={docco} language="javascript" PreTag="div" children={String(children).replace(/\n$/, "")} {...props} />;
+    return (
+      <SyntaxHighlighter
+        style={docco}
+        language="javascript"
+        PreTag="div"
+        children={String(children).replace(/\n$/, "")}
+        {...props}
+      />
+    );
   },
 };
 

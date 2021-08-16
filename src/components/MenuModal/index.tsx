@@ -11,8 +11,7 @@ type MenuProps = {
   handleLogin: () => void;
 };
 
-function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
-  const [isHelpDesk, setIsHelpDesk] = useState(false);
+function MenuModal({ onClose, handleLogin }: MenuProps) {
   const overLay = useRef(null);
   const history = useHistory();
 
@@ -32,10 +31,6 @@ function MenuModal({ isOpen, checkMenu, onClose, handleLogin }: MenuProps) {
     handleLogin();
     onClose();
     history.push("/");
-  };
-
-  const handleMyPageButton = () => {
-    history.push("/MyPage");
   };
 
   const handleMypage = () => {

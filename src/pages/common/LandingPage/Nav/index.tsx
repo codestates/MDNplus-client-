@@ -8,7 +8,6 @@ import {
   QuestionsBtn,
   HomeBtn,
 } from "./Nav.style";
-import arrow from "../../../../img/arrow2.png";
 
 type NavContainerProps = {
   currentY: number;
@@ -44,7 +43,7 @@ function NavContainer({ currentY }: NavContainerProps) {
             >
               웹 서비스 이동
             </HomeBtn>
-            <ArrowImg src={arrow}></ArrowImg>
+            <ArrowImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/arrow2_oht57k.png"></ArrowImg>
           </Nav_RightBox>
         </Nav2>
       ) : (
@@ -71,7 +70,7 @@ function NavContainer({ currentY }: NavContainerProps) {
             >
               웹 서비스 이동
             </HomeBtn>
-            <ArrowImg src={arrow}></ArrowImg>
+            <ArrowImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/arrow2_oht57k.png"></ArrowImg>
           </Nav_RightBox>
         </Nav>
       )}

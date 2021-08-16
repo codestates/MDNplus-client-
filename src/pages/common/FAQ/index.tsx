@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { RootState } from "../../../modules";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import arrow from "../img/arrow2.png";
 
 type TagType = {
   label: {

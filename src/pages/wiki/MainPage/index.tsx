@@ -2,7 +2,6 @@ import useAllData from "../../../hooks/useAllData";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useContentData from "../../../hooks/useContentData";
-import thinkingIcon from "../../../img/thinking.png";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import Loading from "../../../components/Loading";
@@ -90,7 +89,7 @@ function MainPage() {
   return currentData ? (
     <Container>
       <IntroBox>
-        <img src={thinkingIcon} className="icon"></img>
+        <img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/thinking_amc5e2.png" className="icon"></img>
         <div>
           <h1 className="title">MDN+ 위키</h1>
           <div className="description">당신의 지식을 공유해주세요</div>

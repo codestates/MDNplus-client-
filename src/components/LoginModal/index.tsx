@@ -1,8 +1,18 @@
 import { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import kakao from "../../img/kakao2.png";
 import github from "../../img/github.png";
-import {Title, CloseIcon, GithubBtn, GithubLogo, KaKaoLogo, KakaoBtn, ModalBox, ModalContainer, OauthContainer, SocialBtnBox} from "./LoginModal.style"
+import {
+  Title,
+  CloseIcon,
+  GithubBtn,
+  GithubLogo,
+  KaKaoLogo,
+  KakaoBtn,
+  ModalBox,
+  ModalContainer,
+  OauthContainer,
+  SocialBtnBox,
+} from "./LoginModal.style";
 
 type Props = {
   isOpen: boolean;
@@ -49,9 +59,9 @@ function LoginModal({ isOpen, onClose }: Props) {
         <OauthContainer>
           <Title>MDN +</Title>
           <SocialBtnBox>
-            <KaKaoLogo src={kakao}></KaKaoLogo>
+            <KaKaoLogo src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112350/kakao2_evw3bk.png"></KaKaoLogo>
             <KakaoBtn onClick={kakaoLoginHandler}>카카오 로그인</KakaoBtn>
-            <GithubLogo src={github}></GithubLogo>
+            <GithubLogo src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/github_il3cw8.png"></GithubLogo>
             <GithubBtn onClick={socialLoginHandler}>깃허브 로그인</GithubBtn>
           </SocialBtnBox>
         </OauthContainer>

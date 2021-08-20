@@ -1,18 +1,6 @@
 import { useRef } from "react";
 import useBooleanData from "../../hooks/useBooleanData";
-import {
-  AskEmptyInfo,
-  AskInfo,
-  BtnBox,
-  CancelBtn,
-  ContentContainer,
-  EmptyBox,
-  ModalBox,
-  ModalContainer,
-  Overlay,
-  Submit,
-  SubmitBtn,
-} from "./AnswerModal.style";
+import { ModalBox, ModalContainer } from "./AnswerModal.style";
 
 type ModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,60 +18,62 @@ function AnswerModal({
   const overLay = useRef(null);
   const { onContentPageMode, onSetWriteMode } = useBooleanData();
 
-  const handleOverLay = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsOpen(false);
-  };
-
-  const handleAnswerYes = () => {
-    handleAnswerBtn();
-  };
-
-  const handleAnswerNo = () => {
-    setIsOpen(false);
-  };
-
-  const handleExitYes = () => {
+  const handleExit = () => {
     window.history.back();
     onSetWriteMode(false);
     onContentPageMode(true);
   };
-  const handleExitNo = () => {
-    setIsOpen(false);
-  };
 
   return (
     <ModalContainer>
-      <Overlay onClick={handleOverLay} ref={overLay} />
+      <div className="overlay" onClick={() => setIsOpen(false)} ref={overLay} />
 
       <ModalBox>
         {btnName === "답변" ? (
           writing ? (
             <>
-              <AskInfo>답변을 등록하시겠습니까?</AskInfo>
-              <ContentContainer>
-                <BtnBox>
-                  <CancelBtn onClick={handleAnswerNo}>취소</CancelBtn>
-                  <SubmitBtn onClick={handleAnswerYes}>등록</SubmitBtn>
-                </BtnBox>
-              </ContentContainer>
+              <div className="askInfo">답변을 등록하시겠습니까?</div>
+              <div className="selectBox">
+                <button
+                  className="select cancel"
+                  onClick={() => setIsOpen(false)}
+                >
+                  취소
+                </button>
+                <button
+                  className="select submit"
+                  onClick={() => handleAnswerBtn()}
+                >
+                  등록
+                </button>
+              </div>
             </>
           ) : (
             <>
-              <EmptyBox>
-                <AskEmptyInfo>게시물을 작성해주세요.</AskEmptyInfo>
-                <Submit onClick={handleAnswerNo}>확인</Submit>
-              </EmptyBox>
+              <div className="emptyBox">
+                <div className="askInfo">게시물을 작성해주세요.</div>
+                <div className="selectBox">
+                  <div className="confirmBtn" onClick={() => setIsOpen(false)}>
+                    확인
+                  </div>
+                </div>
+              </div>
             </>
           )
         ) : (
           <>
-            <AskInfo>나가시겠습니까?</AskInfo>
-            <ContentContainer>
-              <BtnBox>
-                <CancelBtn onClick={handleExitYes}>네</CancelBtn>
-                <SubmitBtn onClick={handleExitNo}>아니요</SubmitBtn>
-              </BtnBox>
-            </ContentContainer>
+            <div className="askInfo">나가시겠습니까?</div>
+            <div className="selectBox">
+              <button className="select cancel" onClick={handleExit}>
+                네
+              </button>
+              <button
+                className="select submit"
+                onClick={() => setIsOpen(false)}
+              >
+                아니요
+              </button>
+            </div>
           </>
         )}
       </ModalBox>

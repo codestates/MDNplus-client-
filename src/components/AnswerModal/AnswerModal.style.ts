@@ -1,28 +1,6 @@
 import styled from "styled-components";
 import { fadeIn } from "../../styled-components/Animation";
 
-export const EmptyBox = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-`;
-
-export const AskEmptyInfo = styled.div`
-  font-size: 1.1rem;
-
-  color: #616161;
-`;
-
-export const Submit = styled.div`
-  color: #616161;
-  font-size: 0.8rem;
-
-  cursor: pointer;
-`;
-
 export const ModalContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -41,15 +19,15 @@ export const ModalContainer = styled.div`
     height: 100%;
     width: 100%;
   }
-`;
 
-export const Overlay = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(3px);
-  background: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(3px);
+    background: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+  }
 `;
 
 export const ModalBox = styled.div`
@@ -65,45 +43,53 @@ export const ModalBox = styled.div`
     height: 9rem;
     width: 18rem;
   }
-`;
 
-export const ContentContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50%;
-  width: 100%;
-`;
+  .askInfo {
+    width: 100%;
+    left: 0;
+    color: #616161;
+    margin-bottom: 0.5rem;
+  }
 
-export const AskInfo = styled.div`
-  width: 100%;
-  left: 0;
-  color: #616161;
-  margin-bottom: 0.5rem;
-`;
+  .emptyBox {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
 
-export const BtnBox = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-right: -2rem;
-  margin-top: 2rem;
-  position: relative;
-`;
+  .selectBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+    margin-right: -2rem;
+    margin-top: 2rem;
+    position: relative;
+  }
 
-export const CancelBtn = styled.button`
-  border: none;
-  margin-right: 1rem;
-  background: none;
-  cursor: pointer;
-  color: #616161;
-  font-size: 1rem;
-`;
+  .confitmBtn {
+    color: #616161;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
 
-export const SubmitBtn = styled.button`
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: #0055fa;
-  font-size: 1rem;
+  .select {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #616161;
+    font-size: 1rem;
+  }
+
+  .select.cancel {
+    margin-right: 1rem;
+  }
+
+  .select.submit {
+    color: #3d5afe;
+  }
 `;

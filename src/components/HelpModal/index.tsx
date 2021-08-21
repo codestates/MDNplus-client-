@@ -1,19 +1,19 @@
 import styled from "styled-components";
-import { ModalContainer } from "../EditConfirmModal/ConfirmModal";
 import { slideUp } from "../../styled-components/Animation";
+import Modal from "../Modal";
 
 type PropsOptions = {
   handleHelpModal: () => void;
+  isOpen: boolean;
 };
 
-const HelpModal = ({ handleHelpModal }: PropsOptions) => {
+const HelpModal = ({ isOpen, handleHelpModal }: PropsOptions) => {
   return (
-    <ModalContainer onClick={handleHelpModal}>
-      <ModalBox
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
+    <Modal
+      isOpen={isOpen}
+      handleModal={handleHelpModal}
+      modalSize={"large"}
+      component={
         <Container>
           <LeftContainer>
             <Title>마크다운 사용법</Title>
@@ -77,8 +77,8 @@ const HelpModal = ({ handleHelpModal }: PropsOptions) => {
             ></Test12>
           </RightContainer>
         </Container>
-      </ModalBox>
-    </ModalContainer>
+      }
+    ></Modal>
   );
 };
 
@@ -114,6 +114,7 @@ const Container = styled.div`
   grid-template-columns: 1fr 0.7fr;
   width: 100%;
   height: 100%;
+  border: 1px solid black;
 `;
 
 const LeftContainer = styled.div`

@@ -45,19 +45,11 @@ function App() {
   };
 
   const handleLogin = () => {
-    if (isLogin) {
-      setIsLogin(false);
-    } else {
-      setIsLogin(true);
-    }
+    setIsLogin(!isLogin);
   };
 
   const handleHelpModal = () => {
-    if (helpModal) {
-      setHelpModal(false);
-    } else {
-      setHelpModal(true);
-    }
+    setHelpModal(!helpModal);
   };
 
   return (

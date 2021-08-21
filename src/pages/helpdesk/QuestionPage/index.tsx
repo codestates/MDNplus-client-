@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import QconfirmModal from "../../../components/QcomfirmModal";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
@@ -26,6 +25,8 @@ import {
   TitleBox,
   UnderLine,
 } from "./QuestionPage.style";
+import Modal from "../../../components/Modal";
+import SelectBtn from "../../../components/SelectBtn";
 
 type NewQuestion = {
   title: string;
@@ -40,9 +41,9 @@ type PropsOption = {
 };
 
 const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
-  const [checkModal, setCheckModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [tagValue, setTagValue] = useState("");
-  const [askInfo, setAskInfo] = useState("");
+  const [btnName, setBtnName] = useState("");
   const [newQuestion, setNewQuestion] = useState<NewQuestion>({
     title: "",
     body: "",
@@ -93,24 +94,16 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
   };
 
   const handleConfirmModal = () => {
-    setAskInfo("질문");
-    if (checkModal) {
-      setCheckModal(false);
-    } else {
-      setCheckModal(true);
-    }
+    setBtnName("submit");
+    setIsOpen(!isOpen);
   };
 
   const handleExitModal = () => {
-    setAskInfo("나가기");
-    if (checkModal) {
-      setCheckModal(false);
-    } else {
-      setCheckModal(true);
-    }
+    setBtnName("exit");
+    setIsOpen(!isOpen);
   };
 
-  const handleSubmitQ = () => {
+  const handleSubmit = () => {
     axios
       .post(
         "http://localhost:8080/question",
@@ -123,21 +116,43 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
       });
   };
 
+  const handleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleExit = () => {
+    window.history.back();
+    onSetWriteMode(false);
+  };
+
   useEffect(() => {
     onSetWriteMode(true);
   }, []);
 
   return (
     <Container>
-      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
-
-      {checkModal ? (
-        <QconfirmModal
-          handleSubmitQ={handleSubmitQ}
-          handleConfirmModal={handleConfirmModal}
-          askInfo={askInfo}
+      {helpModal ? (
+        <HelpModal isOpen={isOpen} handleHelpModal={handleHelpModal} />
+      ) : null}
+      {isOpen ? (
+        <Modal
+          isOpen={isOpen}
+          handleModal={handleModal}
+          modalSize={"small"}
+          component={
+            <SelectBtn
+              type={btnName}
+              writing={newQuestion.body}
+              handleModal={handleModal}
+              handleSubmit={handleSubmit}
+              askInfo={"질문을 등록하시겠습니까?"}
+              submitType={"등록"}
+              handleExit={handleExit}
+            />
+          }
         />
       ) : null}
+
       <PostContainer>
         <LeftContainer>
           <TitleBox>

@@ -1,5 +1,24 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components";
 import { fadeIn } from "../../styled-components/Animation";
+import { ModalProps } from "./index";
+
+type SizeType = Pick<ModalProps, "modalSize">;
+
+const sizeStyles = css<SizeType>`
+  ${({ modalSize }) =>
+    modalSize === "large" &&
+    css`
+      width: 50rem;
+      height: 39rem;
+    `}
+
+  ${({ modalSize }) =>
+    modalSize === "small" &&
+    css`
+      width: 25rem;
+      height: 10rem;
+    `}
+`;
 
 export const ModalStyle = styled.div`
   height: 100%;
@@ -20,7 +39,7 @@ export const ModalStyle = styled.div`
     width: 100%;
   }
 
-  .overlay {
+  .modal-overlay {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -30,19 +49,16 @@ export const ModalStyle = styled.div`
   }
 `;
 
-export const ModalBox = styled.div`
+export const ModalBox = styled.div<ModalProps>`
   position: relative;
-  width: 25rem;
-  height: 10rem;
-  padding: 40px;
+  padding: 2.5rem;
   background-color: white;
   border: 1px solid #9e9e9e;
   transition: 0.2s ease-in;
   border-radius: 10px;
-  @media (max-width: 375px) {
-    height: 9rem;
-    width: 18rem;
-  }
+  padding: ${(props) => (props.modalSize === "large" ? "0rem" : "2.5rem")};
+
+  ${sizeStyles}
 
   .askInfo {
     width: 100%;
@@ -71,7 +87,7 @@ export const ModalBox = styled.div`
     position: relative;
   }
 
-  .confitmBtn {
+  .confirmBtn {
     color: #616161;
     font-size: 0.9rem;
     cursor: pointer;
@@ -91,5 +107,18 @@ export const ModalBox = styled.div`
 
   .select.submit {
     color: #3d5afe;
+  }
+
+  .select.yes {
+    margin-right: 1rem;
+  }
+
+  .select.no {
+    color: #3d5afe;
+  }
+
+  @media (max-width: 375px) {
+    height: 9rem;
+    width: 18rem;
   }
 `;

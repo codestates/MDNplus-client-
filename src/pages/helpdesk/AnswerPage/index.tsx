@@ -4,7 +4,6 @@ import ReactMarkdown from "react-markdown";
 import { RootState } from "../../../modules";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import AnswerModal from "../../../components/AnswerModal";
 import useBooleanData from "../../../hooks/useBooleanData";
 import axios from "axios";
 import HelpModal from "../../../components/HelpModal";
@@ -34,9 +33,11 @@ import {
   WritingArea,
   WritingTitle,
 } from "./AnswerPage.style";
+import Modal from "../../../components/Modal";
+import SelectBtn from "../../../components/SelectBtn";
 
 type PropsOption = {
-  helpModal: Boolean;
+  helpModal: boolean;
   handleHelpModal: () => void;
 };
 
@@ -51,10 +52,16 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
     img: "",
     nickName: "",
   });
+
   const { displayQuestion } = allState;
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWriting(e.target.value);
+  };
+
+  const handleExit = () => {
+    window.history.back();
+    onSetWriteMode(false);
   };
 
   const handleBtns = (e: string) => {
@@ -62,7 +69,7 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
     setIsOpen(() => !isOpen);
   };
 
-  const handleAnswerBtn = () => {
+  const handleSubmit = () => {
     const previewValues = previewRef.current.innerText;
     const pureContentArr = previewValues.split("님의 답변").slice(1);
     let pureContent = "";
@@ -81,6 +88,10 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
       });
   };
 
+  const handleModal = () => {
+    setIsOpen(!isOpen)
+  }
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/userinfo", { withCredentials: true })
@@ -94,7 +105,7 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
     <div>비어있는 질문</div>
   ) : (
     <Container>
-      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
+      {helpModal ? <HelpModal isOpen={helpModal} handleHelpModal={handleHelpModal} /> : null}
       <LeftContainer>
         <QuestionBox>
           <QuestionTitleBox>
@@ -130,12 +141,22 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
           />
         </WritingArea>
         {isOpen ? (
-          <AnswerModal
-            handleAnswerBtn={handleAnswerBtn}
-            btnName={btnName}
-            setIsOpen={setIsOpen}
-            writing={writing}
-          />
+          <Modal
+            isOpen={true}
+            handleModal={handleModal}
+            modalSize={"small"}
+            component={
+              <SelectBtn
+                type={btnName}
+                writing={writing}
+                askInfo={"답변을 등록하시겠습니까?"}
+                submitType={"등록"}
+                handleSubmit={handleSubmit}
+                handleModal={handleModal}
+                handleExit={handleExit}
+              />
+            }
+          ></Modal>
         ) : null}
       </LeftContainer>
 
@@ -146,13 +167,13 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
           ) : (
             <UserInfoImage src={userInfo.img} />
           )}
-          <UserInfoName>{userInfo.nickName} 님의 답변</UserInfoName>
+          <UserInfoName>{userInfo.nickName}님의 답변</UserInfoName>
         </PreviewTitle>
         <ReactMarkdown children={writing} components={Components} />
       </RightContainer>
       <BtnBox>
-        <ExitBtn onClick={() => handleBtns("나가기")}> 나가기 </ExitBtn>
-        <SubmitBtn onClick={() => handleBtns("답변")}> 답변달기</SubmitBtn>
+        <ExitBtn onClick={() => handleBtns("exit")}> 나가기 </ExitBtn>
+        <SubmitBtn onClick={() => handleBtns("submit")}> 답변 등록</SubmitBtn>
         <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
       </BtnBox>
     </Container>

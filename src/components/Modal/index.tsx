@@ -1,19 +1,19 @@
-import { Component, MouseEventHandler, ReactElement } from "react";
+import { Component, ReactElement, MouseEventHandler } from "react";
 import { ModalBox, ModalStyle } from "./Modal.style";
 
-type ModalProps = {
-  readonly isOpen: boolean;
-  component: Component | ReactElement;
-  handler: MouseEventHandler<HTMLDivElement>;
+export type ModalProps = {
+  isOpen?: boolean;
+  handleModal?: () => void;
+  component?: Component | ReactElement;
+  modalSize?: "small" | "medium" | "large"
 };
 
-function Modal({ isOpen = false, component, handler }: ModalProps) {
+function Modal({ isOpen = false, component, handleModal, modalSize }: ModalProps) {
   if (!isOpen) return null;
   return (
-    <ModalStyle onClick={handler} className="modal-overlay">
-      <ModalBox>
-        <div className="modal-component-box">{component}</div>
-      </ModalBox>
+    <ModalStyle onClick={handleModal}>
+      <div className="modal-overlay"></div>
+      <ModalBox onClick={(e) => e.stopPropagation()} modalSize={modalSize}>{component}</ModalBox>
     </ModalStyle>
   );
 }

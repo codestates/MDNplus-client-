@@ -1,20 +1,36 @@
 import { useRef, useState, useEffect } from "react";
-import EditConfirmModal from "../../../components/EditConfirmModal";
 import useContentData from "../../../hooks/useContentData";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useHistory } from "react-router-dom";
 import useBooleanData from "../../../hooks/useBooleanData";
-import { SubmitBtn, ExitBtn, BtnBox, HelpBtn, GuideLine } from "../../../styled-components/Post";
+import {
+  SubmitBtn,
+  ExitBtn,
+  BtnBox,
+  HelpBtn,
+  GuideLine,
+} from "../../../styled-components/Post";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import HelpModal from "../../../components/HelpModal";
 import Loading from "../../../components/Loading";
-import { TitleBox, Body, Container, LeftContainer, PostContainer, RightContainer, Title } from "./EditPage.style";
+import {
+  TitleBox,
+  Body,
+  Container,
+  LeftContainer,
+  PostContainer,
+  RightContainer,
+  Title,
+} from "./EditPage.style";
+import Modal from "../../../components/Modal";
+import SelectBtn from "../../../components/SelectBtn";
+import axios from "axios";
 
 type PropsOption = {
-  helpModal: Boolean;
+  helpModal: boolean;
   handleHelpModal: () => void;
 };
 
@@ -23,34 +39,48 @@ function EditPage({ helpModal, handleHelpModal }: PropsOption) {
   const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState;
   const [checkModal, setCheckModal] = useState(false);
-  const [askInfo, setAskInfo] = useState("");
+  const [btnName, setBtnName] = useState("");
   const previewRef = useRef<any>(null);
   const history = useHistory();
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     const previewValues = previewRef.current.innerText;
     onChangeContent({ body: e.target.value, pureBody: previewValues });
   };
 
-  const handleConfirmModal = () => {
-    setAskInfo("수정");
-    if (checkModal) {
-      setCheckModal(false);
-    } else {
-      setCheckModal(true);
-    }
+  const handleModal = () => {
+    setBtnName("submit");
+    setCheckModal(!checkModal);
   };
 
   const handleExitModal = () => {
-    setAskInfo("나가기");
-    if (checkModal) {
-      setCheckModal(false);
-    } else {
-      setCheckModal(true);
-    }
+    setBtnName("exit");
+    setCheckModal(!checkModal);
   };
 
   const handleExit = () => {
+    window.history.back();
+    onSetWriteMode(false);
+  };
+
+  const handleSubmit = () => {
+    const pureBodyArr = contentData.pureBody.split("()").slice(1);
+    let pureBody = "";
+    for (let i = 0; i < pureBodyArr.length; i++) {
+      pureBody = pureBody + pureBodyArr[i];
+    }
+    axios
+      .patch(
+        "http://localhost:8080/maincontent",
+        {
+          mainContentId: contentData._id,
+          body: contentData.body,
+          pureBody: pureBody,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {});
+    handleModal();
     history.push("/ContentPage");
     onSetWriteMode(false);
   };
@@ -61,8 +91,25 @@ function EditPage({ helpModal, handleHelpModal }: PropsOption) {
 
   return (
     <Container>
-      {helpModal ? <HelpModal handleHelpModal={handleHelpModal} /> : null}
-      {checkModal ? <EditConfirmModal handleConfirmModal={handleConfirmModal} handleExitModal={handleExitModal} askInfo={askInfo} /> : null}
+      {helpModal ? <HelpModal isOpen={helpModal} handleHelpModal={handleHelpModal} /> : null}
+      {checkModal ? (
+        <Modal
+          isOpen={true}
+          handleModal={handleModal}
+          modalSize={"small"}
+          component={
+            <SelectBtn
+              type={btnName}
+              writing={"1"}
+              askInfo={"게시물을 수정하시겠습니까?"}
+              submitType={"수정"}
+              handleSubmit={handleSubmit}
+              handleModal={handleModal}
+              handleExit={handleExit}
+            />
+          }
+        ></Modal>
+      ) : null}
       {!contentData ? (
         <Loading />
       ) : (
@@ -71,18 +118,37 @@ function EditPage({ helpModal, handleHelpModal }: PropsOption) {
             <LeftContainer>
               <TitleBox>
                 <Title>{contentData.title}</Title>
-                <GuideLine>* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.</GuideLine>
+                <GuideLine>
+                  * 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
+                </GuideLine>
               </TitleBox>
-              {contentData.body ? <Body defaultValue={contentData.body} onChange={handleChange} autoFocus></Body> : <Body placeholder="당신의 지식을 공유해주세요..." onChange={handleChange}></Body>}
+              {contentData.body ? (
+                <Body
+                  defaultValue={contentData.body}
+                  onChange={handleChange}
+                  autoFocus
+                ></Body>
+              ) : (
+                <Body
+                  placeholder="당신의 지식을 공유해주세요..."
+                  onChange={handleChange}
+                ></Body>
+              )}
             </LeftContainer>
             <RightContainer ref={previewRef}>
               <Title>{contentData.title}</Title>
-              <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[[gfm, { singleTilde: false }]]} components={Components} children={contentData.body} className="markdown" />
+              <ReactMarkdown
+                rehypePlugins={[rehypeRaw]}
+                remarkPlugins={[[gfm, { singleTilde: false }]]}
+                components={Components}
+                children={contentData.body}
+                className="markdown"
+              />
             </RightContainer>
           </PostContainer>
           <BtnBox>
             <ExitBtn onClick={handleExitModal}>나가기</ExitBtn>
-            <SubmitBtn onClick={handleConfirmModal}>수정 완료</SubmitBtn>
+            <SubmitBtn onClick={handleModal}>수정 완료</SubmitBtn>
             <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
           </BtnBox>
         </>
@@ -93,7 +159,15 @@ function EditPage({ helpModal, handleHelpModal }: PropsOption) {
 
 export const Components = {
   code({ node, inline, className, children, ...props }: any) {
-    return <SyntaxHighlighter style={docco} language="javascript" PreTag="div" children={String(children).replace(/\n$/, "")} {...props} />;
+    return (
+      <SyntaxHighlighter
+        style={docco}
+        language="javascript"
+        PreTag="div"
+        children={String(children).replace(/\n$/, "")}
+        {...props}
+      />
+    );
   },
 };
 

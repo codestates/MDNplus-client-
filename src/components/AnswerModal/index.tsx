@@ -27,7 +27,6 @@ function AnswerModal({
   return (
     <ModalContainer>
       <div className="overlay" onClick={() => setIsOpen(false)} ref={overLay} />
-
       <ModalBox>
         {btnName === "답변" ? (
           writing ? (

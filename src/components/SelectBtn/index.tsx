@@ -23,7 +23,7 @@ function SelectBtn({
         writing ? (
           <>
             <div className="askInfo">{askInfo}</div>
-            <div className="selectBox">
+            <div className="select-box">
               <button className="select cancel" onClick={handleModal}>
                 취소
               </button>
@@ -35,8 +35,8 @@ function SelectBtn({
         ) : (
           <>
             <div className="askInfo">게시물을 작성해주세요.</div>
-            <div className="selectBox">
-              <div className="confirmBtn" onClick={handleModal}>
+            <div className="select-box">
+              <div className="confirm-btn" onClick={handleModal}>
                 확인
               </div>
             </div>
@@ -45,7 +45,7 @@ function SelectBtn({
       ) : type === "exit" ? (
         <>
           <div className="askInfo">나가시겠습니까?</div>
-          <div className="selectBox">
+          <div className="select-box">
             <button className="select yes" onClick={handleExit}>네</button>
             <button className="select no" onClick={handleModal}>아니요</button>
           </div>

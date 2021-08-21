@@ -9,7 +9,7 @@ const sizeStyles = css<SizeType>`
     modalSize === "large" &&
     css`
       width: 50rem;
-      height: 39rem;
+      height: 41rem;
     `}
 
   ${({ modalSize }) =>
@@ -67,16 +67,7 @@ export const ModalBox = styled.div<ModalProps>`
     margin-bottom: 0.5rem;
   }
 
-  .emptyBox {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .selectBox {
+  .select-box {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -87,7 +78,7 @@ export const ModalBox = styled.div<ModalProps>`
     position: relative;
   }
 
-  .confirmBtn {
+  .confirm-btn {
     color: #616161;
     font-size: 0.9rem;
     cursor: pointer;

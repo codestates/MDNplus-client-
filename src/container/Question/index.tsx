@@ -4,22 +4,22 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import useBooleanData from "../../../hooks/useBooleanData";
-import HelpModal from "../../../components/HelpModal";
+import useBooleanData from "../../hooks/useBooleanData";
+import HelpModal from "../../components/HelpModal";
 import {
   SubmitBtn,
   ExitBtn,
   BtnBox,
   HelpBtn,
-} from "../../../styled-components/Post";
-import Modal from "../../../components/Modal";
-import SelectBtn from "../../../components/SelectBtn";
+} from "../../styled-components/Post";
+import Modal from "../../components/Modal";
+import SelectBtn from "../../components/SelectBtn";
 import {
   Container,
   LeftContainer,
   RightContainer,
-} from "../../../styles/PostLayout.style";
-import TagBox from "../../../components/TagBox";
+} from "../../styles/PostLayout.style";
+import TagBox from "../../components/TagBox";
 
 type NewQuestion = {
   title: string;
@@ -33,7 +33,7 @@ type PropsOption = {
   handleHelpModal: () => void;
 };
 
-const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
+function QuestionContainer({ helpModal, handleHelpModal }: PropsOption) {
   const [isOpen, setIsOpen] = useState(false);
   const [tagValue, setTagValue] = useState("");
   const [btnName, setBtnName] = useState("");
@@ -193,7 +193,7 @@ const QuestionPage = ({ helpModal, handleHelpModal }: PropsOption) => {
       ) : null}
     </>
   );
-};
+}
 
 export const Components = {
   code({ node, inline, className, children, ...props }: any) {
@@ -209,4 +209,4 @@ export const Components = {
   },
 };
 
-export default QuestionPage;
+export default QuestionContainer;

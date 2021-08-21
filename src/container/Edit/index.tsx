@@ -1,35 +1,35 @@
 import { useRef, useState, useEffect } from "react";
-import useContentData from "../../../hooks/useContentData";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useHistory } from "react-router-dom";
-import useBooleanData from "../../../hooks/useBooleanData";
+import axios from "axios";
+import useBooleanData from "../../hooks/useBooleanData";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import HelpModal from "../../../components/HelpModal";
-import Loading from "../../../components/Loading";
-import Modal from "../../../components/Modal";
-import SelectBtn from "../../../components/SelectBtn";
-import axios from "axios";
+import useContentData from "../../hooks/useContentData";
+import HelpModal from "../../components/HelpModal";
+import Loading from "../../components/Loading";
+import Modal from "../../components/Modal";
+import SelectBtn from "../../components/SelectBtn";
 import {
   SubmitBtn,
   ExitBtn,
   BtnBox,
   HelpBtn,
-} from "../../../styled-components/Post";
+} from "../../styled-components/Post";
 import {
   RightContainer,
   Container,
   LeftContainer,
-} from "../../../styles/PostLayout.style";
+} from "../../styles/PostLayout.style";
 
 type PropsOption = {
   helpModal: boolean;
   handleHelpModal: () => void;
 };
 
-function EditPage({ helpModal, handleHelpModal }: PropsOption) {
+function EditContainer({ helpModal, handleHelpModal }: PropsOption) {
   const { contentState, onChangeContent } = useContentData();
   const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState;
@@ -171,4 +171,4 @@ export const Components = {
   },
 };
 
-export default EditPage;
+export default EditContainer;

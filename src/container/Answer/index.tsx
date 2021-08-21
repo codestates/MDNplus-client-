@@ -1,34 +1,34 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
-import { RootState } from "../../../modules";
+import { RootState } from "../../modules";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import useBooleanData from "../../../hooks/useBooleanData";
+import useBooleanData from "../../hooks/useBooleanData";
 import axios from "axios";
-import HelpModal from "../../../components/HelpModal";
+import styled from "styled-components";
+import HelpModal from "../../components/HelpModal";
 import {
   ExitBtn,
   SubmitBtn,
   HelpBtn,
   BtnBox,
-} from "../../../styled-components/Post";
-import { WritingArea } from "./AnswerPage.style";
-import Modal from "../../../components/Modal";
-import SelectBtn from "../../../components/SelectBtn";
-import QuestionSection from "../../../components/QuestionSection";
+} from "../../styled-components/Post";
+import Modal from "../../components/Modal";
+import SelectBtn from "../../components/SelectBtn";
+import QuestionSection from "../../components/QuestionSection";
 import {
   Container,
   LeftContainer,
   RightContainer,
-} from "../../../styles/PostLayout.style";
+} from "../../styles/PostLayout.style";
 
 type PropsOption = {
   helpModal: boolean;
   handleHelpModal: () => void;
 };
 
-function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
+function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
   const { onSetWriteMode } = useBooleanData();
   const [writing, setWriting] = useState<string>("");
@@ -94,7 +94,7 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
     <Container>
       <LeftContainer>
         <QuestionSection data={displayQuestion} />
-        <WritingArea>
+        <WritingSection>
           <div className="answer-title">나의 답변</div>
           <textarea
             className="my-answer"
@@ -102,7 +102,7 @@ function AnswerPage({ helpModal, handleHelpModal }: PropsOption) {
             placeholder={`당신의 지식을 공유해주세요...\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.`}
             onChange={handleChange}
           />
-        </WritingArea>
+        </WritingSection>
       </LeftContainer>
       <RightContainer ref={previewRef}>
         <div className="preview-top">
@@ -164,4 +164,29 @@ export const Components = {
   },
 };
 
-export default AnswerPage;
+export default AnswerContainer;
+
+export const WritingSection = styled.div`
+  width: 100%;
+  height: 60%;
+  resize: none;
+  outline: none;
+  font-size: 1.3rem;
+  margin: 1.5rem 0rem 3rem 3rem;
+
+  .answer-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #686868;
+    margin-bottom: 1rem;
+  }
+
+  .my-answer {
+    width: 90%;
+    height: 60%;
+    border: none;
+    outline: none;
+    resize: none;
+    font-size: 1rem;
+  }
+`;

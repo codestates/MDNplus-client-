@@ -13,12 +13,10 @@ import FooterComponent from "./components/Footer";
 import LandingPage from "./pages/common/LandingPage";
 import ContentPage from "./pages/wiki/ContentPage";
 import SettingPage from "./pages/common/SettingPage";
-import EditPage from "./pages/wiki/EditPage";
 import MainPage from "./pages/wiki/MainPage";
 import QcontentPage from "./pages/helpdesk/ContentPage";
-import AnswerPage from "./pages/helpdesk/AnswerPage";
 import HelpdeskPage from "./pages/helpdesk/HelpdeskPage";
-import HquestionPage from "./pages/helpdesk/QuestionPage";
+import PostPage from "./pages/common/PostPage";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -86,15 +84,6 @@ function App() {
               />
             )}
           />
-          <Route
-            path="/EditPage"
-            render={() => (
-              <EditPage
-                helpModal={helpModal}
-                handleHelpModal={handleHelpModal}
-              />
-            )}
-          />
           <Route path="/SearchPage" render={() => <SearchPage />} />
           <Route
             path="/SettingPage"
@@ -108,24 +97,7 @@ function App() {
           <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
           <Route path="/MyPage" render={() => <MyPage />} />
           <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-          <Route
-            path="/AnswerPage"
-            render={() => (
-              <AnswerPage
-                helpModal={helpModal}
-                handleHelpModal={handleHelpModal}
-              />
-            )}
-          />
-          <Route
-            path="/HquestionPage"
-            render={() => (
-              <HquestionPage
-                helpModal={helpModal}
-                handleHelpModal={handleHelpModal}
-              />
-            )}
-          />
+
           <Route
             path="/QcontentPage"
             render={() => (
@@ -137,6 +109,15 @@ function App() {
           />
           <Route path="/FAQ" render={() => <FAQ />} />
           <Route path="/Wiki" render={() => <MainPage />} />
+          <Route
+            path="/PostPage"
+            render={() => (
+              <PostPage
+                helpModal={helpModal}
+                handleHelpModal={handleHelpModal}
+              />
+            )}
+          ></Route>
         </Switch>
       </Body>
       {writeMode ? null : (

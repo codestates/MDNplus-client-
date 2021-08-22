@@ -176,7 +176,8 @@ function ContentPage({ isLogin, handleLoginModal }: LoginType) {
     }
     dispatch(answerPageData(currentData?.question));
     history.push({
-      pathname: "/AnswerPage",
+      pathname: "/PostPage",
+      hash: "Answer",
       state: { pageName: "this page is from QcontentPage" },
     });
   };

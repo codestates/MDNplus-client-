@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import { useHistory } from "react-router";
 import useBooleanData from "../../../hooks/useBooleanData";
 import useContentData from "../../../hooks/useContentData";
-import { Components } from "../EditPage";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import Loading from "../../../components/Loading";
@@ -28,7 +27,10 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
 
   const handleClickEdit = () => {
     if (isLogin) {
-      history.push("/EditPage");
+      history.push({
+        pathname: "/PostPage",
+        hash: "Edit",
+      });
     } else {
       localStorage.setItem("contentPage", "true");
       handleLoginModal();
@@ -56,7 +58,6 @@ function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}
               remarkPlugins={[[gfm, { singleTilde: false }]]}
-              components={Components}
               children={contentData.body}
               className="markdown"
             />

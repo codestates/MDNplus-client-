@@ -31,7 +31,7 @@ import {
   QuestionBtn,
   Questions,
   Stage,
-} from "./MainPage.style";
+} from "./HelpdeskPage.style";
 
 type UserData = {
   githubId: null;
@@ -81,6 +81,13 @@ const HelpdeskPage = () => {
     }
   };
 
+  const handleMakeQuestion = () => {
+    history.push({
+      pathname: "/PostPage",
+      hash: "Question",
+    });
+  };
+
   const handleClickQuestion = (question: Question) => {
     history.push({
       pathname: "/QcontentPage",
@@ -118,13 +125,7 @@ const HelpdeskPage = () => {
               <IntroTitle>헬프데스크</IntroTitle>
               <IntroLetter>궁금한 점들을 질문하세요</IntroLetter>
             </IntroContents>
-            <QuestionBtn
-              onClick={() => {
-                history.push("/HquestionPage");
-              }}
-            >
-              질문하기
-            </QuestionBtn>
+            <QuestionBtn onClick={handleMakeQuestion}>질문하기</QuestionBtn>
           </IntroBox>
           <Questions>
             <FilterBox>

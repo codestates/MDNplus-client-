@@ -1,17 +1,7 @@
 import {
-  AppealBody,
-  AppealBox,
-  Preview1Container_OFF,
-  Preview1Container_ON,
-  Preview2Container_OFF,
-  Preview2Container_ON,
-  AppealTitle,
-  PreviewBox,
-  PreviewImg,
-  SubBox1,
-  SubBox2,
-  UnderLine1,
-  UnderLine2,
+  PreviewContainer_OFF,
+  PreviewContainer_ON,
+  Container,
 } from "./Preview.style";
 import styled from "styled-components";
 
@@ -21,46 +11,52 @@ type PreviewSectionProps = {
 
 function PreviewSection({ currentY }: PreviewSectionProps) {
   return (
-    <>
+    <Container>
       {currentY >= 600 ? (
-        <Preview1Container_ON>
-          <PreviewBox>
-            <SubBox1></SubBox1>
-            <PreviewImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/appeal1_ekduys.png"></PreviewImg>
-          </PreviewBox>
-          <AppealBox>
-            <UnderLine1></UnderLine1>
-            <AppealTitle>MDN+ 위키</AppealTitle>
-            <AppealBody>
+        <PreviewContainer_ON className="preview1">
+          <div className="preview-box">
+            <div className="sub-box"></div>
+            <img
+              className="preview-img"
+              src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/appeal1_ekduys.png"
+            ></img>
+          </div>
+          <div className="appeal-box">
+            <div className="underline"></div>
+            <div className="appeal-title">MDN+ 위키</div>
+            <div className="appeal-body">
               개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!
-            </AppealBody>
-          </AppealBox>
-        </Preview1Container_ON>
+            </div>
+          </div>
+        </PreviewContainer_ON>
       ) : (
-        <Preview1Container_OFF></Preview1Container_OFF>
+        <PreviewContainer_OFF></PreviewContainer_OFF>
       )}
 
       <EmptySpace></EmptySpace>
 
       {currentY >= 1300 ? (
-        <Preview2Container_ON>
-          <AppealBox>
-            <UnderLine2></UnderLine2>
-            <AppealTitle>헬프데스크</AppealTitle>
-            <AppealBody>
+        <PreviewContainer_ON className="preview2">
+          <div className="appeal-box second">
+            <div className="underline second"></div>
+            <div className="appeal-title">헬프데스크</div>
+            <div className="appeal-body">
               개발 관련 정보들을 찾는데 시간이 오래 걸리셨나요?
-            </AppealBody>
-            <AppealBody>헬프데스크에 질문하세요!</AppealBody>
-          </AppealBox>
-          <PreviewBox>
-            <SubBox2></SubBox2>
-            <PreviewImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/appeal2_nehb8u.png"></PreviewImg>
-          </PreviewBox>
-        </Preview2Container_ON>
+            </div>
+            <div className="appeal-body">헬프데스크에 질문하세요!</div>
+          </div>
+          <div className="preview-box">
+            <div className="sub-box second"></div>
+            <img
+              className="preview-img"
+              src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/appeal2_nehb8u.png"
+            ></img>
+          </div>
+        </PreviewContainer_ON>
       ) : (
-        <Preview2Container_OFF></Preview2Container_OFF>
+        <PreviewContainer_OFF></PreviewContainer_OFF>
       )}
-    </>
+    </Container>
   );
 }
 

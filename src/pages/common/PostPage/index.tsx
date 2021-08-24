@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import AnswerContainer from "../../../container/Answer";
-import EditContainer from "../../../container/Edit";
-import QuestionContainer from "../../../container/Question";
+import AnswerContainer from "../../../container/post/Answer";
+import EditContainer from "../../../container/post/Edit";
+import QuestionContainer from "../../../container/post/Question";
 import useBooleanData from "../../../hooks/useBooleanData";
 
 type PostPageProps = {

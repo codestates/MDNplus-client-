@@ -1,27 +1,28 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
-import { RootState } from "../../modules";
+import { RootState } from "../../../modules";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import useBooleanData from "../../hooks/useBooleanData";
+import useBooleanData from "../../../hooks/useBooleanData";
 import axios from "axios";
 import styled from "styled-components";
-import HelpModal from "../../components/HelpModal";
+import HelpModal from "../../../components/HelpModal";
 import {
   ExitBtn,
   SubmitBtn,
   HelpBtn,
   BtnBox,
-} from "../../styled-components/Post";
-import Modal from "../../components/Modal";
-import SelectBtn from "../../components/SelectBtn";
-import QuestionSection from "../../components/QuestionSection";
+} from "../../../styled-components/Post";
+import Modal from "../../../components/Modal";
+import SelectBtn from "../../../components/SelectBtn";
+import QuestionSection from "../../../components/QuestionSection";
 import {
   Container,
   LeftContainer,
   RightContainer,
-} from "../../styles/PostLayout.style";
+} from "../../../styles/PostLayout.style";
+import { useHistory } from "react-router";
 
 type PropsOption = {
   helpModal: boolean;
@@ -39,6 +40,7 @@ function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
     img: "",
     nickName: "",
   });
+  const history = useHistory();
 
   const { displayQuestion } = allState;
 
@@ -79,6 +81,13 @@ function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
     setIsOpen(!isOpen);
   };
 
+  const handleSearchTag = (tagName: string) => {
+    history.push({
+      pathname: "/SearchPage",
+      state: { tagName },
+    });
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/userinfo", { withCredentials: true })
@@ -93,7 +102,11 @@ function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
   ) : (
     <Container>
       <LeftContainer>
-        <QuestionSection data={displayQuestion} />
+        <QuestionSection
+          data={displayQuestion}
+          type="writing"
+          handleSearchTag={handleSearchTag}
+        />
         <WritingSection>
           <div className="answer-title">나의 답변</div>
           <textarea

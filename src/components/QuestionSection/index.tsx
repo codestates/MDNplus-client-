@@ -1,20 +1,45 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { QuestionType } from "../../types/reducer";
 
 type QuestionSectionProps = {
   data: QuestionType;
+  isMainPage?: boolean;
+  type: string;
+  handleAnswerBtn?: () => void;
+  handleSearchTag: (tagName: string) => void;
 };
 
-function QuestionSection({ data }: QuestionSectionProps) {
+type sizeType = Pick<QuestionSectionProps, "type">;
+
+function QuestionSection({
+  data,
+  isMainPage,
+  type,
+  handleAnswerBtn,
+  handleSearchTag,
+}: QuestionSectionProps) {
   return (
-    <Container>
-      <div>
-        <span className="question-icon">질문</span>
-        <span className="question-title"> {data.title}</span>
-      </div>
-      <div className="question-body">
-        <ReactMarkdown children={data.body} />
+    <Container type={type}>
+      <div className="question-box">
+        <div className="question-title-box">
+          <span className="question-icon">질문</span>
+          <span className="question-title"> {data.title}</span>
+        </div>
+        <div className="question-body">
+          <ReactMarkdown children={data.body} />
+        </div>
+        {data.tags.length !== 0
+          ? data.tags.map((el, idx) => (
+              <span
+                className="tag"
+                key={idx}
+                onClick={() => handleSearchTag(el)}
+              >
+                {el}
+              </span>
+            ))
+          : null}
       </div>
       <div className="userInfo-box">
         {data.userId.image ? (
@@ -33,6 +58,11 @@ function QuestionSection({ data }: QuestionSectionProps) {
           8,
           10
         )}`}</span>
+        {isMainPage ? (
+          <button className="answer-btn" onClick={handleAnswerBtn}>
+            답변하기
+          </button>
+        ) : null}
       </div>
     </Container>
   );
@@ -40,32 +70,54 @@ function QuestionSection({ data }: QuestionSectionProps) {
 
 export default QuestionSection;
 
-const Container = styled.div`
+const Container = styled.div<sizeType>`
   height: 40%;
   overflow-y: auto;
   padding: 3rem 3rem 1.5rem 3rem;
   border-bottom: 1px solid #e0e0e0;
 
+  ${({ type }) =>
+    type === "content" &&
+    css`
+      width: 50%;
+    `}
+
+  ${({ type }) =>
+    type === "writing" &&
+    css`
+      width: 100%;
+    `}
+
+    .question-title-box {
+    display: flex;
+  }
+
   .question-icon {
-    border: none;
-    padding: 0.7rem;
     background: #90a4ae;
     color: white;
     font-weight: bold;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .question-title {
     font-size: 1.2rem;
+    display: flex;
+    align-items: center;
   }
 
   .question-body {
-    margin: 2em 0 2em 0;
+    padding-top: 1rem;
   }
 
   .userInfo-box {
     display: flex;
     align-items: center;
+    margin-top: 1rem;
   }
 
   .userInfo-img {
@@ -87,5 +139,26 @@ const Container = styled.div`
     color: #757575;
     font-size: 0.8rem;
     padding-bottom: 0.1rem;
+  }
+
+  .tag {
+    color: #78909c;
+    cursor: pointer;
+    margin-right: 0.5rem;
+
+    &:hover {
+      color: #2196f3;
+    }
+  }
+
+  .answer-btn {
+    margin-left: auto;
+    padding: 0.7rem 1rem 0.7rem 1rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    @media (max-width: 375px) {
+      font-size: 0.6rem;
+    }
   }
 `;

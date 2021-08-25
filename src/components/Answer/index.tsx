@@ -1,10 +1,9 @@
 import ReactMarkdown from "react-markdown";
-import styled from "styled-components";
-import { AnswerType } from "../../types/reducer";
+import { CommentType } from "../../types/reducer";
 import {Container} from "./Answer.style"
 
 type AnswerProps = {
-  data?: AnswerType;
+  data?: CommentType;
 };
 
 function Answer({ data }: AnswerProps) {

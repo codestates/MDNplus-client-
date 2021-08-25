@@ -1,4 +1,4 @@
-import { Component, ReactElement, MouseEventHandler } from "react";
+import { Component, ReactElement } from "react";
 import { ModalBox, ModalStyle } from "./Modal.style";
 
 export type ModalProps = {

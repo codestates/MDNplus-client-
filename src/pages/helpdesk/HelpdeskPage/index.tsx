@@ -5,63 +5,33 @@ import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import Loading from "../../../components/Loading";
 import {
-  TitleBox,
-  AnswersNum,
-  Body,
   BoxContainer,
   Container,
-  CreatedAt,
   FilterBox,
   FilterFast,
   FilterFast_Selected,
   FilterPopular,
   FilterPopular_Selected,
-  FixedLetter,
   Icon,
-  Title,
-  TagBox,
-  Tag,
   IntroBox,
   IntroContents,
   IntroLetter,
   IntroTitle,
-  LikesNum,
-  NumberBox,
-  QuestionBox,
   QuestionBtn,
   Questions,
   Stage,
 } from "./HelpdeskPage.style";
-
-type UserData = {
-  githubId: null;
-  image: null;
-  kakaoId: string;
-  nickName: string;
-  _id: string;
-};
-
-type Question = {
-  _id: string;
-  tags: string[];
-  like: number;
-  title: string;
-  body: string;
-  pureBody: string;
-  userId: UserData;
-  createdAt: string;
-  updatedAt: string;
-  commentCount: number;
-};
+import Question from "../../../components/Question";
+import { QuestionType } from "../../../types/reducer";
 
 type AllQuestionstype = {
-  latestQuestion: Question[];
-  popularityQuestion: Question[];
+  latestQuestion: QuestionType[];
+  popularityQuestion: QuestionType[];
 };
 
 type HelpData = {
   allQuestions: AllQuestionstype;
-  selectedQuestions: Question[];
+  selectedQuestions: QuestionType[];
 };
 
 const HelpdeskPage = () => {
@@ -88,7 +58,7 @@ const HelpdeskPage = () => {
     });
   };
 
-  const handleClickQuestion = (question: Question) => {
+  const handleClickQuestion = (question: QuestionType) => {
     history.push({
       pathname: "/QcontentPage",
       state: { pageName: "/HelpdeskPage", questionId: question._id },
@@ -170,41 +140,11 @@ const HelpdeskPage = () => {
                 <div>로딩 중입니다</div>
               ) : (
                 selectedQuestions.map((el, idx: number) => (
-                  <QuestionBox key={el._id}>
-                    <TitleBox
-                      onClick={() => {
-                        handleClickQuestion(el);
-                      }}
-                    >
-                      <FixedLetter>Q</FixedLetter>
-                      <Title>{el.title}</Title>
-                    </TitleBox>
-                    <Body
-                      onClick={() => {
-                        handleClickQuestion(el);
-                      }}
-                    >
-                      {el.pureBody.slice(0, 150)} .......
-                    </Body>
-                    <TagBox>
-                      {el.tags.map((el: string, idx: number) => (
-                        <Tag key={idx + 1} onClick={() => handleSearchTag(el)}>
-                          {el}
-                        </Tag>
-                      ))}
-                    </TagBox>
-                    <NumberBox>
-                      <LikesNum>좋아요 {el.like}</LikesNum>
-                      <AnswersNum>답변 {el.commentCount}</AnswersNum>
-                      <CreatedAt>{`${el.createdAt.substring(
-                        0,
-                        4
-                      )}년 ${el.createdAt.substring(
-                        5,
-                        7
-                      )}월 ${el.createdAt.substring(8, 10)}일`}</CreatedAt>
-                    </NumberBox>
-                  </QuestionBox>
+                  <Question
+                    data={el}
+                    handleClickQuestion={handleClickQuestion}
+                    handleSearchTag={handleSearchTag}
+                  />
                 ))
               )}
             </BoxContainer>

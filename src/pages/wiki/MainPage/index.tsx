@@ -12,6 +12,7 @@ import {
   MethodBox,
   Stage,
 } from "./MainPage.style";
+import ServiceIntro from "../../../components/ServiceIntro";
 
 type Method = {
   _id: string;
@@ -88,13 +89,14 @@ function MainPage() {
 
   return currentData ? (
     <Container>
-      <IntroBox>
-        <img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/thinking_amc5e2.png" className="icon"></img>
-        <div>
-          <h1 className="title">MDN+ 위키</h1>
-          <div className="description">당신의 지식을 공유해주세요</div>
-        </div>
-      </IntroBox>
+      <ServiceIntro
+        img={
+          "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/thinking_amc5e2.png"
+        }
+        title={"MDN+ 위키"}
+        description={"당신의 지식을 공유해주세요"}
+        type="wiki"
+      />
       <FilterBox>
         <select
           className="filter first"

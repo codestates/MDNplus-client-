@@ -12,17 +12,11 @@ import {
   FilterFast_Selected,
   FilterPopular,
   FilterPopular_Selected,
-  Icon,
-  IntroBox,
-  IntroContents,
-  IntroLetter,
-  IntroTitle,
-  QuestionBtn,
-  Questions,
-  Stage,
+  QuestionContainer,
 } from "./HelpdeskPage.style";
 import Question from "../../../components/Question";
 import { QuestionType } from "../../../types/reducer";
+import ServiceIntro from "../../../components/ServiceIntro";
 
 type AllQuestionstype = {
   latestQuestion: QuestionType[];
@@ -88,16 +82,16 @@ const HelpdeskPage = () => {
   return selectedQuestions ? (
     <>
       <Container>
-        <Stage>
-          <IntroBox>
-            <Icon src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/question_sirbpg.png"></Icon>
-            <IntroContents>
-              <IntroTitle>헬프데스크</IntroTitle>
-              <IntroLetter>궁금한 점들을 질문하세요</IntroLetter>
-            </IntroContents>
-            <QuestionBtn onClick={handleMakeQuestion}>질문하기</QuestionBtn>
-          </IntroBox>
-          <Questions>
+        <div className="stage">
+          <ServiceIntro
+            img={
+              "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/question_sirbpg.png"
+            }
+            title={"헬프데스크"}
+            description={"궁금한 점들을 질문하세요"}
+            handleMakeQuestion={handleMakeQuestion}
+          ></ServiceIntro>
+          <QuestionContainer>
             <FilterBox>
               {isSelected === "최신순" ? (
                 <FilterFast_Selected
@@ -137,9 +131,9 @@ const HelpdeskPage = () => {
 
             <BoxContainer>
               {selectedQuestions === null ? (
-                <div>로딩 중입니다</div>
+                <Loading />
               ) : (
-                selectedQuestions.map((el, idx: number) => (
+                selectedQuestions.map((el) => (
                   <Question
                     data={el}
                     handleClickQuestion={handleClickQuestion}
@@ -148,8 +142,8 @@ const HelpdeskPage = () => {
                 ))
               )}
             </BoxContainer>
-          </Questions>
-        </Stage>
+          </QuestionContainer>
+        </div>
       </Container>
     </>
   ) : (

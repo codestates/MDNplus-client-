@@ -21,11 +21,6 @@ export const IntroBox = styled.div`
     color: #9e9e9e;
     font-weight: bold;
   }
-
-  img {
-    width: 3rem;
-    margin: 1rem 2rem 0 2rem;
-  }
 `;
 
 export const Stage = styled.div`

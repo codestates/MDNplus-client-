@@ -4,22 +4,22 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import useBooleanData from "../../hooks/useBooleanData";
-import HelpModal from "../../components/HelpModal";
+import useBooleanData from "../../../hooks/useBooleanData";
+import HelpModal from "../../../components/HelpModal";
 import {
   SubmitBtn,
   ExitBtn,
   BtnBox,
   HelpBtn,
-} from "../../styled-components/Post";
-import Modal from "../../components/Modal";
-import SelectBtn from "../../components/SelectBtn";
+} from "../../../styled-components/Post";
+import Modal from "../../../components/Modal";
+import SelectBtn from "../../../components/SelectBtn";
 import {
   Container,
   LeftContainer,
   RightContainer,
-} from "../../styles/PostLayout.style";
-import TagBox from "../../components/TagBox";
+} from "../../../styles/PostLayout.style";
+import TagBox from "../../../components/TagInput";
 
 type NewQuestion = {
   title: string;

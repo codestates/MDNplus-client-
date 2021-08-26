@@ -5,63 +5,27 @@ import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import Loading from "../../../components/Loading";
 import {
-  TitleBox,
-  AnswersNum,
-  Body,
   BoxContainer,
   Container,
-  CreatedAt,
   FilterBox,
   FilterFast,
   FilterFast_Selected,
   FilterPopular,
   FilterPopular_Selected,
-  FixedLetter,
-  Icon,
-  Title,
-  TagBox,
-  Tag,
-  IntroBox,
-  IntroContents,
-  IntroLetter,
-  IntroTitle,
-  LikesNum,
-  NumberBox,
-  QuestionBox,
-  QuestionBtn,
-  Questions,
-  Stage,
+  QuestionContainer,
 } from "./HelpdeskPage.style";
-
-type UserData = {
-  githubId: null;
-  image: null;
-  kakaoId: string;
-  nickName: string;
-  _id: string;
-};
-
-type Question = {
-  _id: string;
-  tags: string[];
-  like: number;
-  title: string;
-  body: string;
-  pureBody: string;
-  userId: UserData;
-  createdAt: string;
-  updatedAt: string;
-  commentCount: number;
-};
+import Question from "../../../components/Question";
+import { QuestionType } from "../../../types/reducer";
+import ServiceIntro from "../../../components/ServiceIntro";
 
 type AllQuestionstype = {
-  latestQuestion: Question[];
-  popularityQuestion: Question[];
+  latestQuestion: QuestionType[];
+  popularityQuestion: QuestionType[];
 };
 
 type HelpData = {
   allQuestions: AllQuestionstype;
-  selectedQuestions: Question[];
+  selectedQuestions: QuestionType[];
 };
 
 const HelpdeskPage = () => {
@@ -88,7 +52,7 @@ const HelpdeskPage = () => {
     });
   };
 
-  const handleClickQuestion = (question: Question) => {
+  const handleClickQuestion = (question: QuestionType) => {
     history.push({
       pathname: "/QcontentPage",
       state: { pageName: "/HelpdeskPage", questionId: question._id },
@@ -118,16 +82,16 @@ const HelpdeskPage = () => {
   return selectedQuestions ? (
     <>
       <Container>
-        <Stage>
-          <IntroBox>
-            <Icon src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/question_sirbpg.png"></Icon>
-            <IntroContents>
-              <IntroTitle>헬프데스크</IntroTitle>
-              <IntroLetter>궁금한 점들을 질문하세요</IntroLetter>
-            </IntroContents>
-            <QuestionBtn onClick={handleMakeQuestion}>질문하기</QuestionBtn>
-          </IntroBox>
-          <Questions>
+        <div className="stage">
+          <ServiceIntro
+            img={
+              "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/question_sirbpg.png"
+            }
+            title={"헬프데스크"}
+            description={"궁금한 점들을 질문하세요"}
+            handleMakeQuestion={handleMakeQuestion}
+          ></ServiceIntro>
+          <QuestionContainer>
             <FilterBox>
               {isSelected === "최신순" ? (
                 <FilterFast_Selected
@@ -167,49 +131,19 @@ const HelpdeskPage = () => {
 
             <BoxContainer>
               {selectedQuestions === null ? (
-                <div>로딩 중입니다</div>
+                <Loading />
               ) : (
-                selectedQuestions.map((el, idx: number) => (
-                  <QuestionBox key={el._id}>
-                    <TitleBox
-                      onClick={() => {
-                        handleClickQuestion(el);
-                      }}
-                    >
-                      <FixedLetter>Q</FixedLetter>
-                      <Title>{el.title}</Title>
-                    </TitleBox>
-                    <Body
-                      onClick={() => {
-                        handleClickQuestion(el);
-                      }}
-                    >
-                      {el.pureBody.slice(0, 150)} .......
-                    </Body>
-                    <TagBox>
-                      {el.tags.map((el: string, idx: number) => (
-                        <Tag key={idx + 1} onClick={() => handleSearchTag(el)}>
-                          {el}
-                        </Tag>
-                      ))}
-                    </TagBox>
-                    <NumberBox>
-                      <LikesNum>좋아요 {el.like}</LikesNum>
-                      <AnswersNum>답변 {el.commentCount}</AnswersNum>
-                      <CreatedAt>{`${el.createdAt.substring(
-                        0,
-                        4
-                      )}년 ${el.createdAt.substring(
-                        5,
-                        7
-                      )}월 ${el.createdAt.substring(8, 10)}일`}</CreatedAt>
-                    </NumberBox>
-                  </QuestionBox>
+                selectedQuestions.map((el) => (
+                  <Question
+                    data={el}
+                    handleClickQuestion={handleClickQuestion}
+                    handleSearchTag={handleSearchTag}
+                  />
                 ))
               )}
             </BoxContainer>
-          </Questions>
-        </Stage>
+          </QuestionContainer>
+        </div>
       </Container>
     </>
   ) : (

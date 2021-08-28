@@ -5,14 +5,11 @@ import useContentData from "../../../hooks/useContentData";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import Loading from "../../../components/Loading";
-import {
-  Container,
-  MethodBox,
-  Stage,
-} from "./MainPage.style";
+import { Container, Stage } from "./MainPage.style";
 import ServiceIntro from "../../../components/ServiceIntro";
 import { MethodType } from "../../../types/reducer";
 import WikiFilter from "../../../components/WikiFilter";
+import Method from "../../../components/Method";
 
 function MainPage() {
   const [firstOption, setFirstOption] = useState("javascript");
@@ -98,23 +95,11 @@ function MainPage() {
           <Loading />
         ) : (
           currentData.map((el: MethodType) => (
-            <MethodBox key={el._id}>
-              <div className="contents">
-                <div
-                  onClick={() => {
-                    handleClickMethod(el);
-                  }}
-                >
-                  <h3 className="title">{el.title}</h3>
-                  {el.pureBody ? (
-                    <div className="body">{el.pureBody.slice(0, 70)} ...</div>
-                  ) : (
-                    <div>빈칸</div>
-                  )}
-                </div>
-              </div>
-              <div className="count">수정된 횟수 {el.count}</div>
-            </MethodBox>
+            <Method
+              key={el._id}
+              data={el}
+              handleClickMethod={handleClickMethod}
+            ></Method>
           ))
         )}
       </Stage>

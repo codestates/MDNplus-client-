@@ -19,43 +19,27 @@ import {
   LeftContainer,
 } from "../../../styles/PostLayout.style";
 import Button from "../../../components/Button";
+import { PostPagesType } from "../../../types/components";
 
-type PropsOption = {
-  helpModal: boolean;
-  handleHelpModal: () => void;
-};
-
-function EditContainer({ helpModal, handleHelpModal }: PropsOption) {
+function EditContainer({
+  helpModal,
+  checkModal,
+  btnName,
+  handleHelpModal,
+  handleExit,
+  handleExitModal,
+  handleModal,
+  handleSubmitModal,
+}: PostPagesType) {
   const { contentState, onChangeContent } = useContentData();
   const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState;
-  const [checkModal, setCheckModal] = useState(false);
-  const [btnName, setBtnName] = useState("");
   const previewRef = useRef<any>(null);
   const history = useHistory();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const previewValues = previewRef.current.innerText;
     onChangeContent({ body: e.target.value, pureBody: previewValues });
-  };
-
-  const handleModal = () => {
-    setCheckModal(!checkModal);
-  };
-
-  const handleExit = () => {
-    window.history.back();
-    onSetWriteMode(false);
-  };
-
-  const handleExitModal = () => {
-    setBtnName("exit");
-    setCheckModal(() => !checkModal);
-  };
-
-  const handleSubmitModal = () => {
-    setBtnName("submit");
-    setCheckModal(() => !checkModal);
   };
 
   const handleSubmit = () => {

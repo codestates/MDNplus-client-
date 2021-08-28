@@ -19,18 +19,21 @@ import {
 } from "../../../styles/PostLayout.style";
 import { useHistory } from "react-router";
 import Button from "../../../components/Button";
+import { PostPagesType } from "../../../types/components";
 
-type PropsOption = {
-  helpModal: boolean;
-  handleHelpModal: () => void;
-};
-
-function CommentContainer({ helpModal, handleHelpModal }: PropsOption) {
+function CommentContainer({
+  helpModal,
+  handleHelpModal,
+  handleSubmitModal,
+  handleModal,
+  handleExitModal,
+  handleExit,
+  checkModal,
+  btnName,
+}: PostPagesType) {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
   const { onSetWriteMode } = useBooleanData();
   const [writing, setWriting] = useState<string>("");
-  const [checkModal, setCheckModal] = useState(false);
-  const [btnName, setbtnName] = useState("");
   const previewRef = useRef<any>(null);
   const [userInfo, setUserInfo] = useState({
     img: "",
@@ -42,25 +45,6 @@ function CommentContainer({ helpModal, handleHelpModal }: PropsOption) {
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWriting(e.target.value);
-  };
-
-  const handleModal = () => {
-    setCheckModal(!checkModal);
-  };
-
-  const handleExitModal = () => {
-    setbtnName("exit");
-    setCheckModal(() => !checkModal);
-  };
-
-  const handleSubmitModal = () => {
-    setbtnName("submit");
-    setCheckModal(() => !checkModal);
-  };
-
-  const handleExit = () => {
-    window.history.back();
-    onSetWriteMode(false);
   };
 
   const handleSubmit = () => {
@@ -77,7 +61,7 @@ function CommentContainer({ helpModal, handleHelpModal }: PropsOption) {
         { withCredentials: true }
       )
       .then((res) => {
-        setCheckModal(() => !checkModal);
+        handleModal();
         window.history.back();
       });
   };

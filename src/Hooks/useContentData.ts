@@ -2,12 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { useCallback } from "react";
 import { clickMethod, changeContent } from "../modules/ContentData";
-import { MethodType } from "../types/reducer";
-
-type EditingDataType = {
-  body: string;
-  pureBody: string;
-}
+import { MethodType, EditingDataType } from "../types/reducer";
 
 function useContentData() {
   const contentState = useSelector(

@@ -43,25 +43,27 @@ function EditContainer({
   };
 
   const handleSubmit = () => {
-    const pureBodyArr = contentData.pureBody.split("()").slice(1);
-    let pureBody = "";
-    for (let i = 0; i < pureBodyArr.length; i++) {
-      pureBody = pureBody + pureBodyArr[i];
+    if (contentData) {
+      const pureBodyArr = contentData.pureBody.split("()").slice(1);
+      let pureBody = "";
+      for (let i = 0; i < pureBodyArr.length; i++) {
+        pureBody = pureBody + pureBodyArr[i];
+      }
+      axios
+        .patch(
+          "http://localhost:8080/maincontent",
+          {
+            mainContentId: contentData._id,
+            body: contentData.body,
+            pureBody: pureBody,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {});
+      handleModal();
+      history.push("/ContentPage");
+      onSetWriteMode(false);
     }
-    axios
-      .patch(
-        "http://localhost:8080/maincontent",
-        {
-          mainContentId: contentData._id,
-          body: contentData.body,
-          pureBody: pureBody,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {});
-    handleModal();
-    history.push("/ContentPage");
-    onSetWriteMode(false);
   };
 
   useEffect(() => {

@@ -16,6 +16,7 @@ import {
 } from "../../../styles/PostLayout.style";
 import TagBox from "../../../components/TagInput";
 import Button from "../../../components/Button";
+import { PostPagesType } from "../../../types/components";
 
 type NewQuestion = {
   title: string;
@@ -24,15 +25,17 @@ type NewQuestion = {
   tags: string[];
 };
 
-type PropsOption = {
-  helpModal: boolean;
-  handleHelpModal: () => void;
-};
-
-function QuestionContainer({ helpModal, handleHelpModal }: PropsOption) {
-  const [isOpen, setIsOpen] = useState(false);
+function QuestionContainer({
+  helpModal,
+  btnName,
+  checkModal,
+  handleHelpModal,
+  handleExit,
+  handleExitModal,
+  handleModal,
+  handleSubmitModal,
+}: PostPagesType) {
   const [tagValue, setTagValue] = useState("");
-  const [btnName, setBtnName] = useState("");
   const [newQuestion, setNewQuestion] = useState<NewQuestion>({
     title: "",
     body: "",
@@ -82,16 +85,6 @@ function QuestionContainer({ helpModal, handleHelpModal }: PropsOption) {
     setNewQuestion({ ...newQuestion, tags: newTagArr });
   };
 
-  const handleSubmitModal = () => {
-    setBtnName("submit");
-    setIsOpen(!isOpen);
-  };
-
-  const handleExitModal = () => {
-    setBtnName("exit");
-    setIsOpen(!isOpen);
-  };
-
   const handleSubmit = () => {
     axios
       .post(
@@ -103,15 +96,6 @@ function QuestionContainer({ helpModal, handleHelpModal }: PropsOption) {
         history.push("/HelpdeskPage");
         onSetWriteMode(false);
       });
-  };
-
-  const handleModal = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleExit = () => {
-    window.history.back();
-    onSetWriteMode(false);
   };
 
   useEffect(() => {
@@ -177,9 +161,9 @@ function QuestionContainer({ helpModal, handleHelpModal }: PropsOption) {
       {helpModal ? (
         <HelpModal isOpen={helpModal} handleHelpModal={handleHelpModal} />
       ) : null}
-      {isOpen ? (
+      {checkModal ? (
         <Modal
-          isOpen={isOpen}
+          isOpen={checkModal}
           handleModal={handleModal}
           modalSize={"small"}
           component={

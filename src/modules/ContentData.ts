@@ -1,4 +1,5 @@
-import { MethodType } from "../types/reducer";
+import { Method } from 'axios';
+import { MethodType, EditingDataType } from "../types/reducer";
 
 const CLICKMETHOD = "ContentData/CLICKMETHOD" as const;
 const CHANGECONTENT = "ContentData/CHANGCONTENT" as const;
@@ -7,17 +8,18 @@ export const clickMethod = (data: MethodType) => ({
   type: CLICKMETHOD,
   payload: data,
 });
-export const changeContent = (data: any) => ({
+export const changeContent = (data: EditingDataType) => ({
   type: CHANGECONTENT,
   payload: data,
 });
+
 
 type ContentDataAction =
   | ReturnType<typeof clickMethod>
   | ReturnType<typeof changeContent>;
 
 type InitState = {
-  contentData: any;
+  contentData: null | MethodType;
 };
 
 const initialState = {

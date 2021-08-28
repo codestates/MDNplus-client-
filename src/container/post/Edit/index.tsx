@@ -19,18 +19,21 @@ import {
   LeftContainer,
 } from "../../../styles/PostLayout.style";
 import Button from "../../../components/Button";
+import { PostPagesType } from "../../../types/components";
 
-type PropsOption = {
-  helpModal: boolean;
-  handleHelpModal: () => void;
-};
-
-function EditContainer({ helpModal, handleHelpModal }: PropsOption) {
+function EditContainer({
+  helpModal,
+  checkModal,
+  btnName,
+  handleHelpModal,
+  handleExit,
+  handleExitModal,
+  handleModal,
+  handleSubmitModal,
+}: PostPagesType) {
   const { contentState, onChangeContent } = useContentData();
   const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState;
-  const [checkModal, setCheckModal] = useState(false);
-  const [btnName, setBtnName] = useState("");
   const previewRef = useRef<any>(null);
   const history = useHistory();
 
@@ -39,45 +42,28 @@ function EditContainer({ helpModal, handleHelpModal }: PropsOption) {
     onChangeContent({ body: e.target.value, pureBody: previewValues });
   };
 
-  const handleModal = () => {
-    setCheckModal(!checkModal);
-  };
-
-  const handleExit = () => {
-    window.history.back();
-    onSetWriteMode(false);
-  };
-
-  const handleExitModal = () => {
-    setBtnName("exit");
-    setCheckModal(() => !checkModal);
-  };
-
-  const handleSubmitModal = () => {
-    setBtnName("submit");
-    setCheckModal(() => !checkModal);
-  };
-
   const handleSubmit = () => {
-    const pureBodyArr = contentData.pureBody.split("()").slice(1);
-    let pureBody = "";
-    for (let i = 0; i < pureBodyArr.length; i++) {
-      pureBody = pureBody + pureBodyArr[i];
+    if (contentData) {
+      const pureBodyArr = contentData.pureBody.split("()").slice(1);
+      let pureBody = "";
+      for (let i = 0; i < pureBodyArr.length; i++) {
+        pureBody = pureBody + pureBodyArr[i];
+      }
+      axios
+        .patch(
+          "http://localhost:8080/maincontent",
+          {
+            mainContentId: contentData._id,
+            body: contentData.body,
+            pureBody: pureBody,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {});
+      handleModal();
+      history.push("/ContentPage");
+      onSetWriteMode(false);
     }
-    axios
-      .patch(
-        "http://localhost:8080/maincontent",
-        {
-          mainContentId: contentData._id,
-          body: contentData.body,
-          pureBody: pureBody,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {});
-    handleModal();
-    history.push("/ContentPage");
-    onSetWriteMode(false);
   };
 
   useEffect(() => {

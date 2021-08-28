@@ -14,6 +14,27 @@ function PostPage({ helpModal, handleHelpModal }: PostPageProps) {
   const { onSetWriteMode } = useBooleanData();
   const history = useHistory();
   const [pageType, setPageType] = useState("");
+  const [checkModal, setCheckModal] = useState(false);
+  const [btnName, setBtnName] = useState("");
+
+  const handleModal = () => {
+    setCheckModal(!checkModal);
+  };
+
+  const handleExit = () => {
+    window.history.back();
+    onSetWriteMode(false);
+  };
+
+  const handleExitModal = () => {
+    setBtnName("exit");
+    setCheckModal(() => !checkModal);
+  };
+
+  const handleSubmitModal = () => {
+    setBtnName("submit");
+    setCheckModal(() => !checkModal);
+  };
 
   useEffect(() => {
     onSetWriteMode(true);
@@ -26,18 +47,36 @@ function PostPage({ helpModal, handleHelpModal }: PostPageProps) {
         <CommentContainer
           helpModal={helpModal}
           handleHelpModal={handleHelpModal}
+          handleExit={handleExit}
+          handleExitModal={handleExitModal}
+          handleModal={handleModal}
+          handleSubmitModal={handleSubmitModal}
+          btnName={btnName}
+          checkModal={checkModal}
         ></CommentContainer>
       ) : null}
       {pageType === "#Question" ? (
         <QuestionContainer
           helpModal={helpModal}
           handleHelpModal={handleHelpModal}
+          handleExit={handleExit}
+          handleExitModal={handleExitModal}
+          handleModal={handleModal}
+          handleSubmitModal={handleSubmitModal}
+          btnName={btnName}
+          checkModal={checkModal}
         ></QuestionContainer>
       ) : null}
       {pageType === "#Edit" ? (
         <EditContainer
           helpModal={helpModal}
           handleHelpModal={handleHelpModal}
+          handleExit={handleExit}
+          handleExitModal={handleExitModal}
+          handleModal={handleModal}
+          handleSubmitModal={handleSubmitModal}
+          btnName={btnName}
+          checkModal={checkModal}
         ></EditContainer>
       ) : null}
     </>

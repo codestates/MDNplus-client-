@@ -8,6 +8,11 @@ export type MethodType = {
   updatedAt: string;
 };
 
+export type EditingDataType = {
+  body: string;
+  pureBody: string;
+}
+
 // helpdesk
 export type AllQuestionsType = {
   latestQuestion: QuestionType[];

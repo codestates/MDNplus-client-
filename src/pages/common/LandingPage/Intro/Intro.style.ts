@@ -4,7 +4,7 @@ import {
   slideUp_short,
   fadeIn_img,
   slideLeft,
-} from "../../../../styled-components/Animation";
+} from "../../../../styles/Animation";
 
 export const Container = styled.div`
   width: 100%;

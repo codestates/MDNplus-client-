@@ -1,69 +1,8 @@
+import { CommentType, DataType, QuestionType } from "../types/reducer";
+
 const CURRENTQDATA = "QcontentData/CURRENTQDATA" as const;
 const QUESTIONLIKE = "QuestionLike/QUESTIONLIKE" as const;
-const ANSWERLIKE = "AnswerLike/ANSWERLIKE" as const;
-
-type DataType = {
-  question: {
-    tags: string[];
-    commentCount: number;
-    like: number;
-    pureBody: string;
-    _id: string;
-    title: string;
-    body: string;
-    userId: {
-      nickName: string;
-      kakaoId: string;
-      githubId: string;
-      image: string;
-      _id: string;
-      __v: number;
-    };
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-    isLike: boolean;
-  };
-  comments: {
-    like: number;
-    pureBody: string;
-    _id: string;
-    questionId: string;
-    content: string;
-    userId: {
-      nickName: string;
-      kakaoId: string;
-      githubId: string;
-      image: string;
-      _id: string;
-      __v: number;
-    };
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-    isLike: boolean;
-  }[];
-};
-
-type AnswerType = {
-  like: number;
-  _id: string;
-  questionId: string;
-  content: string;
-  pureBody: string;
-  userId: {
-    nickName: string;
-    kakaoId: string;
-    githubId: string;
-    image: string;
-    _id: string;
-    __v: number;
-  };
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  isLike: boolean;
-};
+const COMMENTLIKE = "CommentLike/COMMENTLIKE" as const;
 
 export const currentQData = (currentData: undefined | DataType) => ({
   type: CURRENTQDATA,
@@ -77,29 +16,29 @@ export const questionLike = (questionUpdate: DataType) => ({
   },
 });
 
-export const answerLike = (answerUpdate: AnswerType) => ({
-  type: ANSWERLIKE,
+export const commentLike = (commentUpdate: CommentType) => ({
+  type: COMMENTLIKE,
   payload: {
-    answerUpdate,
+    commentUpdate,
   },
 });
 
 type CurrentQDataAction =
   | ReturnType<typeof currentQData>
   | ReturnType<typeof questionLike>
-  | ReturnType<typeof answerLike>;
+  | ReturnType<typeof commentLike>;
 
 type InitState = {
   currentData: null | undefined | DataType;
-  questionUpdate: null | DataType;
-  answerUpdate: null | AnswerType;
+  questionUpdate: null | QuestionType;
+  commentUpdate: null | CommentType;
   isLike: null | boolean;
 };
 
 const initialState = {
   currentData: null,
   questionUpdate: null,
-  answerUpdate: null,
+  commentUpdate: null,
   isLike: null,
 };
 
@@ -116,10 +55,10 @@ function QcontentDataReducer(
         currentData: action.payload.questionUpdate,
       };
 
-    case ANSWERLIKE:
+    case COMMENTLIKE:
       return {
         ...state,
-        answerUpdate: action.payload.answerUpdate,
+        commentUpdate: action.payload.commentUpdate,
       };
     default:
       return state;

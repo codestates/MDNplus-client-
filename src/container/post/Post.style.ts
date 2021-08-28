@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../../components/Button/index"
 
 export const BtnBox = styled.div`
   position: fixed;
@@ -11,24 +12,15 @@ export const BtnBox = styled.div`
   z-index: 1;
 `;
 
-export const ExitBtn = styled.button`
-  border: none;
-  background: none;
-  font-size: 1.3rem;
-  cursor: pointer;
-  width: 7rem;
-  height: 2.5rem;
+export const ExitBtn = styled(Button)`
+  margin-top: 1rem;
 `;
-export const SubmitBtn = styled.button`
-  width: 7rem;
-  height: 2.5rem;
-  border: none;
-  border-radius: 1.5rem;
+
+export const SubmitBtn = styled(Button)`
   background: #5766b4;
   color: white;
-  font-size: 1rem;
-  cursor: pointer;
   margin-right: 13rem;
+  font-size: 1.2rem;
 `;
 
 export const HelpBtn = styled.button`
@@ -41,9 +33,4 @@ export const HelpBtn = styled.button`
   color: white;
   cursor: pointer;
   margin-right: 1rem;
-`;
-
-export const GuideLine = styled.span`
-  font-size: 0.85rem;
-  color: #757575;
 `;

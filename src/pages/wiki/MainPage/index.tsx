@@ -13,16 +13,7 @@ import {
   Stage,
 } from "./MainPage.style";
 import ServiceIntro from "../../../components/ServiceIntro";
-
-type Method = {
-  _id: string;
-  title: string;
-  body: string;
-  pureBody: string;
-  count: number;
-  updatedAt: string;
-  createdAt: string;
-};
+import { MethodType } from "../../../types/reducer";
 
 function MainPage() {
   const [firstOption, setFirstOption] = useState("javascript");
@@ -72,7 +63,7 @@ function MainPage() {
     }
   };
 
-  const handleClickMethod = (method: Method) => {
+  const handleClickMethod = (method: MethodType) => {
     onClickMethod(method);
     history.push("/ContentPage");
   };

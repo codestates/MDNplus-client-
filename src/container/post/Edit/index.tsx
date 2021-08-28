@@ -12,17 +12,13 @@ import HelpModal from "../../../components/HelpModal";
 import Loading from "../../../components/Loading";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
-import {
-  SubmitBtn,
-  ExitBtn,
-  BtnBox,
-  HelpBtn,
-} from "../../../styled-components/Post";
+import { HelpBtn, BtnBox, SubmitBtn } from "../Post.style";
 import {
   RightContainer,
   Container,
   LeftContainer,
 } from "../../../styles/PostLayout.style";
+import Button from "../../../components/Button";
 
 type PropsOption = {
   helpModal: boolean;
@@ -38,24 +34,28 @@ function EditContainer({ helpModal, handleHelpModal }: PropsOption) {
   const previewRef = useRef<any>(null);
   const history = useHistory();
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const previewValues = previewRef.current.innerText;
     onChangeContent({ body: e.target.value, pureBody: previewValues });
   };
 
   const handleModal = () => {
-    setBtnName("submit");
-    setCheckModal(!checkModal);
-  };
-
-  const handleExitModal = () => {
-    setBtnName("exit");
     setCheckModal(!checkModal);
   };
 
   const handleExit = () => {
     window.history.back();
     onSetWriteMode(false);
+  };
+
+  const handleExitModal = () => {
+    setBtnName("exit");
+    setCheckModal(() => !checkModal);
+  };
+
+  const handleSubmitModal = () => {
+    setBtnName("submit");
+    setCheckModal(() => !checkModal);
   };
 
   const handleSubmit = () => {
@@ -124,8 +124,16 @@ function EditContainer({ helpModal, handleHelpModal }: PropsOption) {
               />
             </RightContainer>
             <BtnBox>
-              <ExitBtn onClick={handleExitModal}>나가기</ExitBtn>
-              <SubmitBtn onClick={handleModal}>수정 완료</SubmitBtn>
+              <Button size="large" handler={handleExitModal}>
+                나가기
+              </Button>
+              <SubmitBtn
+                size="large"
+                handler={handleSubmitModal}
+                className="submit-btn"
+              >
+                답변 등록
+              </SubmitBtn>
               <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
             </BtnBox>
           </>

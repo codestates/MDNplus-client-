@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import AnswerContainer from "../../../container/post/Answer";
+import CommentContainer from "../../../container/post/Comment";
 import EditContainer from "../../../container/post/Edit";
 import QuestionContainer from "../../../container/post/Question";
 import useBooleanData from "../../../hooks/useBooleanData";
@@ -23,10 +23,10 @@ function PostPage({ helpModal, handleHelpModal }: PostPageProps) {
   return (
     <>
       {pageType === "#Answer" ? (
-        <AnswerContainer
+        <CommentContainer
           helpModal={helpModal}
           handleHelpModal={handleHelpModal}
-        ></AnswerContainer>
+        ></CommentContainer>
       ) : null}
       {pageType === "#Question" ? (
         <QuestionContainer

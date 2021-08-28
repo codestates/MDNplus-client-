@@ -1,12 +1,12 @@
 import ReactMarkdown from "react-markdown";
 import { CommentType } from "../../types/reducer";
-import {Container} from "./Answer.style"
+import { Container } from "./Comment.style";
 
-type AnswerProps = {
+type CommentProps = {
   data?: CommentType;
 };
 
-function Answer({ data }: AnswerProps) {
+function Comment({ data }: CommentProps) {
   return (
     <Container>
       {data !== undefined ? (
@@ -28,13 +28,13 @@ function Answer({ data }: AnswerProps) {
               10
             )}일`}</div>
             {data.userId.nickName !== null ? (
-              <span className="answer-title">
+              <span className="comment-title">
                 {" "}
                 {data.userId.nickName} 님 답변
               </span>
             ) : null}
           </div>
-          <div className="answer-body">
+          <div className="comment-body">
             <ReactMarkdown children={data.content}></ReactMarkdown>
           </div>
         </>
@@ -45,4 +45,4 @@ function Answer({ data }: AnswerProps) {
   );
 }
 
-export default Answer;
+export default Comment;

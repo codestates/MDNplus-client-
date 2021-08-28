@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../../../components/Button";
 
 export const Container = styled.div`
   display: flex;
@@ -58,4 +59,12 @@ export const BoxContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(1, auto);
   }
+`;
+
+export const QuestionBtn = styled(Button)`
+  position: absolute;
+  top: 7rem;
+  right: 8rem;
+  background: #1976d2;
+  color: white;
 `;

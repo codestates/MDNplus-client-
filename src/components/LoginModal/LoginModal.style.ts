@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { fadeIn, slideUp } from "../../styled-components/Animation";
+import { fadeIn, slideUp } from "../../styles/Animation";
 
 export const ModalContainer = styled.div`
   display: flex;

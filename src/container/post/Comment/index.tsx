@@ -8,12 +8,7 @@ import useBooleanData from "../../../hooks/useBooleanData";
 import axios from "axios";
 import styled from "styled-components";
 import HelpModal from "../../../components/HelpModal";
-import {
-  ExitBtn,
-  SubmitBtn,
-  HelpBtn,
-  BtnBox,
-} from "../../../styled-components/Post";
+import { HelpBtn, BtnBox, SubmitBtn } from "../Post.style";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
 import UserQuestion from "../../../components/UserQuestion";
@@ -23,17 +18,18 @@ import {
   RightContainer,
 } from "../../../styles/PostLayout.style";
 import { useHistory } from "react-router";
+import Button from "../../../components/Button";
 
 type PropsOption = {
   helpModal: boolean;
   handleHelpModal: () => void;
 };
 
-function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
+function CommentContainer({ helpModal, handleHelpModal }: PropsOption) {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
   const { onSetWriteMode } = useBooleanData();
   const [writing, setWriting] = useState<string>("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [checkModal, setCheckModal] = useState(false);
   const [btnName, setbtnName] = useState("");
   const previewRef = useRef<any>(null);
   const [userInfo, setUserInfo] = useState({
@@ -48,14 +44,23 @@ function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
     setWriting(e.target.value);
   };
 
+  const handleModal = () => {
+    setCheckModal(!checkModal);
+  };
+
+  const handleExitModal = () => {
+    setbtnName("exit");
+    setCheckModal(() => !checkModal);
+  };
+
+  const handleSubmitModal = () => {
+    setbtnName("submit");
+    setCheckModal(() => !checkModal);
+  };
+
   const handleExit = () => {
     window.history.back();
     onSetWriteMode(false);
-  };
-
-  const handleBtns = (e: string) => {
-    setbtnName(e);
-    setIsOpen(() => !isOpen);
   };
 
   const handleSubmit = () => {
@@ -72,13 +77,9 @@ function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
         { withCredentials: true }
       )
       .then((res) => {
-        setIsOpen(() => !isOpen);
+        setCheckModal(() => !checkModal);
         window.history.back();
       });
-  };
-
-  const handleModal = () => {
-    setIsOpen(!isOpen);
   };
 
   const handleSearchTag = (tagName: string) => {
@@ -132,8 +133,16 @@ function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
         <ReactMarkdown children={writing} components={Components} />
       </RightContainer>
       <BtnBox>
-        <ExitBtn onClick={() => handleBtns("exit")}> 나가기 </ExitBtn>
-        <SubmitBtn onClick={() => handleBtns("submit")}> 답변 등록</SubmitBtn>
+        <Button size="large" handler={handleExitModal}>
+          나가기
+        </Button>
+        <SubmitBtn
+          size="large"
+          handler={handleSubmitModal}
+          className="submit-btn"
+        >
+          답변 등록
+        </SubmitBtn>
         <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
       </BtnBox>
 
@@ -141,7 +150,7 @@ function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
         <HelpModal isOpen={helpModal} handleHelpModal={handleHelpModal} />
       ) : null}
 
-      {isOpen ? (
+      {checkModal ? (
         <Modal
           isOpen={true}
           handleModal={handleModal}
@@ -177,7 +186,7 @@ export const Components = {
   },
 };
 
-export default AnswerContainer;
+export default CommentContainer;
 
 export const WritingSection = styled.div`
   width: 100%;

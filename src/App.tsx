@@ -47,6 +47,8 @@ function App() {
   };
 
   const handleHelpModal = () => {
+    console.log('헬프 모달 핸들러 실행')
+    console.log(helpModal)
     setHelpModal(!helpModal);
   };
 

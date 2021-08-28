@@ -1,5 +1,6 @@
 import { UserQuestionProps } from "./index";
 import styled, { css } from "styled-components";
+import Button from '../Button';
 
 type sizeType = Pick<UserQuestionProps, "type">;
 
@@ -86,12 +87,18 @@ export const Container = styled.div<sizeType>`
 
   .answer-btn {
     margin-left: auto;
-    padding: 0.7rem 1rem 0.7rem 1rem;
     border-radius: 1rem;
     border: none;
     cursor: pointer;
+    width: 6rem;
+    height: 2rem;
     @media (max-width: 375px) {
       font-size: 0.6rem;
     }
   }
 `;
+
+export const AnswerBtn = styled(Button)`
+  font-size: 0.9rem
+
+`

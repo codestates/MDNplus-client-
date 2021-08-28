@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from '../Button';
 
 export const NavBar = styled.div`
   width: 100%;
@@ -90,15 +91,11 @@ export const NavButtons = styled.div`
   }
 `;
 
-export const LoginBtn = styled.button`
+export const LoginBtn = styled(Button)`
   background-color: white;
-  font-size: 14px;
   font-weight: 500;
   margin: 1rem;
   border: 1px solid #a7a3a3;
-  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
-  border-radius: 1.5rem;
-  cursor: pointer;
   transition: 0.3s ease-in-out;
 
   &:hover {

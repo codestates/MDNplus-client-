@@ -6,12 +6,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import HelpModal from "../../../components/HelpModal";
-import {
-  SubmitBtn,
-  ExitBtn,
-  BtnBox,
-  HelpBtn,
-} from "../../../styled-components/Post";
+import { SubmitBtn, BtnBox, HelpBtn } from "../../../styled-components/Post";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
 import {
@@ -20,6 +15,7 @@ import {
   RightContainer,
 } from "../../../styles/PostLayout.style";
 import TagBox from "../../../components/TagInput";
+import Button from "../../../components/Button";
 
 type NewQuestion = {
   title: string;
@@ -29,7 +25,7 @@ type NewQuestion = {
 };
 
 type PropsOption = {
-  helpModal: Boolean;
+  helpModal: boolean;
   handleHelpModal: () => void;
 };
 
@@ -86,7 +82,7 @@ function QuestionContainer({ helpModal, handleHelpModal }: PropsOption) {
     setNewQuestion({ ...newQuestion, tags: newTagArr });
   };
 
-  const handleConfirmModal = () => {
+  const handleSubmitModal = () => {
     setBtnName("submit");
     setIsOpen(!isOpen);
   };
@@ -164,14 +160,22 @@ function QuestionContainer({ helpModal, handleHelpModal }: PropsOption) {
           />
         </RightContainer>
         <BtnBox>
-          <ExitBtn onClick={handleExitModal}>나가기</ExitBtn>
-          <SubmitBtn onClick={handleConfirmModal}>질문 등록</SubmitBtn>
+          <Button size="large" handler={handleExitModal}>
+            나가기
+          </Button>
+          <SubmitBtn
+            size="large"
+            handler={handleSubmitModal}
+            className="submit-btn"
+          >
+            답변 등록
+          </SubmitBtn>
           <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
         </BtnBox>
       </Container>
 
       {helpModal ? (
-        <HelpModal isOpen={isOpen} handleHelpModal={handleHelpModal} />
+        <HelpModal isOpen={helpModal} handleHelpModal={handleHelpModal} />
       ) : null}
       {isOpen ? (
         <Modal

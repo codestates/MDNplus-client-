@@ -12,6 +12,7 @@ import {
   FilterFast_Selected,
   FilterPopular,
   FilterPopular_Selected,
+  QuestionBtn,
   QuestionContainer,
 } from "./HelpdeskPage.style";
 import Question from "../../../components/Question";
@@ -128,6 +129,10 @@ const HelpdeskPage = () => {
                 </FilterPopular>
               )}
             </FilterBox>
+
+            <QuestionBtn size="medium" handler={handleMakeQuestion}>
+              질문하기
+            </QuestionBtn>
 
             <BoxContainer>
               {selectedQuestions === null ? (

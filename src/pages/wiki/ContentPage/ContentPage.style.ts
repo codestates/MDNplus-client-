@@ -47,9 +47,9 @@ export const Title = styled.h1`
 
 export const EditBtn = styled.span`
   cursor: pointer;
-  font-size: 17px;
-  margin-top: 60px;
-  margin-right: 15px;
+  font-size: 1.2rem;
+  margin-top: 4rem;
+  margin-right: 1rem;
   @media (max-width: 375px) {
     margin: 0;
 

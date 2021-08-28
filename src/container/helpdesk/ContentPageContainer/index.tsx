@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import UserQuestion from "../../../components/UserQuestion";
@@ -13,6 +13,8 @@ import {
   Container,
   QuestionContainer,
 } from "./ContentPageContainer.style";
+import Button from "../../../components/Button";
+import styled from "styled-components";
 
 type ContentPageContainerProps = {
   isLogin: boolean;
@@ -56,6 +58,12 @@ function ContentPageContainer({
     });
   };
 
+  const handleMoveToBack = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    window.history.back();
+  };
+
   useEffect(() => {
     onContentPageMode(true);
     let questionID: string = "";
@@ -78,9 +86,12 @@ function ContentPageContainer({
     <>
       {currentData !== null && currentData !== undefined ? (
         <Container>
-          <span className="back-btn" onClick={() => window.history.back()}>
-            {"< 돌아가기"}
-          </span>
+          <BackBtn
+            size="large"
+            color="#78909c"
+            handler={handleMoveToBack}
+            className="back-btn"
+          >{`< 돌아가기`}</BackBtn>
 
           <QuestionContainer>
             <UserQuestion
@@ -116,3 +127,7 @@ function ContentPageContainer({
 }
 
 export default ContentPageContainer;
+
+const BackBtn = styled(Button)`
+  font-size: 1.4rem;
+`;

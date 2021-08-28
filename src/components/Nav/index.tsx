@@ -158,8 +158,6 @@ function Nav({
     onSearchingTag(e.target.value);
   };
 
-  console.log(userImg);
-
   return (
     <NavBar>
       <LeftBox>
@@ -202,7 +200,7 @@ function Nav({
         </NavButtons>
       ) : (
         <NavButtons>
-          <LoginBtn onClick={handleLoginModal}>로그인</LoginBtn>
+          <LoginBtn handler={handleLoginModal}>로그인</LoginBtn>
           <LoginModal
             isOpen={isLogInOpen}
             onClose={handleLoginModal}

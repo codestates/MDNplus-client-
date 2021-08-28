@@ -14,7 +14,7 @@ width: 100%;
   position: absolute;
   top: 2rem;
   left: 2rem;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: #78909c;
   cursor: pointer;
   @media (max-width: 375px) {

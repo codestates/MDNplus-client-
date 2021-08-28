@@ -26,9 +26,6 @@ function ServiceIntro({
         <h1 className="intro-title">{title}</h1>
         <div className="intro-description">{description}</div>
       </div>
-      <button className="question-btn" onClick={handleMakeQuestion}>
-        질문하기
-      </button>
     </Wrapper>
   );
 }

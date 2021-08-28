@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { fadeIn } from "../../../../styled-components/Animation";
+import { fadeIn } from "../../../../styles/Animation";
 
 export const Container_ON = styled.div`
   opacity: 1;

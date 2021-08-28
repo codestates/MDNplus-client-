@@ -1,54 +1,20 @@
+import { MyDataType } from "../types/reducer";
+
 const ALLDATA = "AllData/ALLDATA" as const;
 
-type AllData = {
-  user: {
-    nickName: string;
-    image: string;
-    _id: string;
-  };
-  questions: {
-    tags: string[];
-    commentCount: number;
-    like: number;
-    pureBody: string;
-    _id: string;
-    title: string;
-    body: string;
-    userId: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  }[];
-
-  comments: {
-    like: number;
-    _id: string;
-    pureBody: string;
-    questionId: {
-      _id: string;
-      title: string;
-    };
-    content: string;
-    userId: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  }[];
-};
-
-export const allDataAction = (mdnAllData: AllData | null) => ({
+export const allDataAction = (myPageData: MyDataType | null) => ({
   type: ALLDATA,
-  payload: mdnAllData,
+  payload: myPageData,
 });
 
 type MyPageDataAction = ReturnType<typeof allDataAction>;
 
 type InitState = {
-  mdnAllData: null | undefined | AllData;
+  myPageData: null | undefined | MyDataType;
 };
 
 const initialState = {
-  mdnAllData: null,
+  myPageData: null,
 };
 
 function MyPageReducer(
@@ -57,7 +23,7 @@ function MyPageReducer(
 ): InitState {
   switch (action.type) {
     case ALLDATA:
-      return { ...state, mdnAllData: action.payload };
+      return { ...state, myPageData: action.payload };
     default:
       return state;
   }

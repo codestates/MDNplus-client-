@@ -6,10 +6,10 @@ import UserQuestion from "../../../components/UserQuestion";
 import useBooleanData from "../../../hooks/useBooleanData";
 import useQcontentData from "../../../hooks/useQcontentData";
 import { answerPageData } from "../../../modules/AnswerPageData";
-import Answer from "../../../components/Answer";
+import Comment from "../../../components/Comment";
 import Loading from "../../../components/Loading";
 import {
-  AnswerContainer,
+  CommentContainer,
   Container,
   QuestionContainer,
 } from "./ContentPageContainer.style";
@@ -104,19 +104,19 @@ function ContentPageContainer({
           </QuestionContainer>
 
           {currentData.comments.length !== 0 ? (
-            <AnswerContainer>
+            <CommentContainer>
               {currentData.comments?.map((el, index: number) => (
-                <div className="answer-box" key={index}>
-                  <Answer data={el}></Answer>
+                <div className="comment-box" key={index}>
+                  <Comment data={el}></Comment>
                 </div>
               ))}
-            </AnswerContainer>
+            </CommentContainer>
           ) : (
-            <AnswerContainer>
-              <div className="answer-box">
-                <Answer></Answer>
+            <CommentContainer>
+              <div className="comment-box">
+                <Comment></Comment>
               </div>
-            </AnswerContainer>
+            </CommentContainer>
           )}
         </Container>
       ) : (

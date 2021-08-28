@@ -28,39 +28,13 @@ import {
   UserInfoImage,
   UserInfoName,
 } from "./MyPage.style";
-
-type QuestionType = {
-  tags: string[];
-  commentCount: number;
-  like: number;
-  _id: string;
-  title: string;
-  body: string;
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-};
-
-type AnswerType = {
-  like: number;
-  _id: string;
-  questionId: {
-    _id: string;
-    title: string;
-  };
-  content: string;
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-};
+import { CommentType, QuestionType } from "../../../types/reducer";
 
 function MyPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const allState = useSelector((state: RootState) => state.MyPageReducer);
-  const { mdnAllData } = allState;
+  const { myPageData } = allState;
   const [isQuestion, setIsQuestion] = useState(true);
   const [questionColor, setQuestionColor] = useState("#005ce7");
   const [answerColor, setAnswerColor] = useState(" #a7a3a3");
@@ -73,10 +47,10 @@ function MyPage() {
     });
   };
 
-  const handleMyAnswers = (el: AnswerType) => {
+  const handleMyAnswers = (el: CommentType) => {
     history.push({
       pathname: "/QcontentPage",
-      state: { pageName: "/MyPage", questionId: el.questionId._id },
+      state: { pageName: "/MyPage", questionId: el.questionId },
     });
   };
 
@@ -96,6 +70,7 @@ function MyPage() {
     axios
       .get("http://localhost:8080/helpdesk/me", { withCredentials: true })
       .then((res) => {
+        console.log(res.data);
         dispatch(allDataAction(res.data));
       });
 
@@ -104,18 +79,18 @@ function MyPage() {
     }
   }, []);
 
-  return mdnAllData === null || mdnAllData === undefined ? (
+  return myPageData === null || myPageData === undefined ? (
     <Loading />
   ) : (
     <>
       <Container>
         <UserInfoContainer>
-          {!mdnAllData.user.image ? (
+          {!myPageData.user.image ? (
             <UserInfoImage src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg" />
           ) : (
-            <UserInfoImage src={mdnAllData.user.image} />
+            <UserInfoImage src={myPageData.user.image} />
           )}
-          <UserInfoName>{mdnAllData.user.nickName}</UserInfoName>
+          <UserInfoName>{myPageData.user.nickName}</UserInfoName>
         </UserInfoContainer>
         <Stage>
           <LeftContainer>
@@ -134,14 +109,14 @@ function MyPage() {
           </LeftContainer>
           <RightContainer>
             {isQuestion ? (
-              mdnAllData.questions.length === 0 ? (
+              myPageData.questions.length === 0 ? (
                 <EmptyComment>
                   <Img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/person_omh4xf.png"></Img>
                   <EmptyMessage>포스트가 없습니다</EmptyMessage>
                 </EmptyComment>
               ) : (
                 <QuestionContainer>
-                  {mdnAllData.questions.map((el) => (
+                  {myPageData.questions.map((el) => (
                     <QuestionBox
                       key={el._id}
                       onClick={() => handleMyQuestions(el)}
@@ -165,14 +140,14 @@ function MyPage() {
                   ))}
                 </QuestionContainer>
               )
-            ) : mdnAllData.comments.length === 0 ? (
+            ) : myPageData.comments.length === 0 ? (
               <EmptyComment>
                 <Img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/person_omh4xf.png"></Img>
                 <EmptyMessage>포스트가 없습니다</EmptyMessage>
               </EmptyComment>
             ) : (
               <QuestionContainer>
-                {mdnAllData?.comments.map((el) => (
+                {myPageData?.comments.map((el) => (
                   <QuestionBox key={el._id} onClick={() => handleMyAnswers(el)}>
                     <QuestionTitle>{el.questionId.title}</QuestionTitle>
                     <QuestionBody>{el.content}</QuestionBody>

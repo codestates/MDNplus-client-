@@ -138,8 +138,9 @@ const HelpdeskPage = () => {
               {selectedQuestions === null ? (
                 <Loading />
               ) : (
-                selectedQuestions.map((el) => (
+                selectedQuestions.map((el, idx) => (
                   <Question
+                    key={idx + 1}
                     data={el}
                     handleClickQuestion={handleClickQuestion}
                     handleSearchTag={handleSearchTag}

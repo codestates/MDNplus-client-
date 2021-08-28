@@ -12,7 +12,7 @@ import HelpModal from "../../../components/HelpModal";
 import Loading from "../../../components/Loading";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
-import { SubmitBtn, BtnBox, HelpBtn } from "../../../styled-components/Post";
+import { HelpBtn, BtnBox, SubmitBtn } from "../Post.style";
 import {
   RightContainer,
   Container,
@@ -34,7 +34,7 @@ function EditContainer({ helpModal, handleHelpModal }: PropsOption) {
   const previewRef = useRef<any>(null);
   const history = useHistory();
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const previewValues = previewRef.current.innerText;
     onChangeContent({ body: e.target.value, pureBody: previewValues });
   };
@@ -124,8 +124,6 @@ function EditContainer({ helpModal, handleHelpModal }: PropsOption) {
               />
             </RightContainer>
             <BtnBox>
-              {/* <ExitBtn onClick={handleExitModal}>나가기</ExitBtn> */}
-              {/* <SubmitBtn onClick={handleModal}>수정 완료</SubmitBtn> */}
               <Button size="large" handler={handleExitModal}>
                 나가기
               </Button>

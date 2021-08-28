@@ -1,38 +1,9 @@
+import { SearchDataType } from "../types/reducer";
+
 const SEARCHDATA = "SearchData/SEARCHDATA" as const;
 const SEARCHWORD = "SearchWord/SEARCHWORD" as const;
 const SEARCSELECT = "SearchSelect/SEARCSELECT" as const;
 const SEARCSHRESULT = "SearchResult/SEARCSHRESULT" as const;
-
-type SearchDataType = {
-  mainContent?: {
-    count: number;
-    _id: string;
-    title: string;
-    pureBody: string;
-    body: string;
-    updatedAt: string;
-  }[];
-  helpdeskContent: {
-    tags: string[];
-    commentCount: number;
-    like: number;
-    _id: string;
-    pureBody: string;
-    title: string;
-    body: string;
-    userId: {
-      nickName: string;
-      kakaoId: string | null;
-      githubId: string | null;
-      image: string;
-      _id: string;
-      __v: number;
-    };
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  }[];
-};
 
 export const searchData = (data: SearchDataType) => ({
   type: SEARCHDATA,

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { fadeIn } from "../../styled-components/Animation";
+import { fadeIn } from "../../styles/Animation";
 import { ModalProps } from "./index";
 
 type SizeType = Pick<ModalProps, "modalSize">;

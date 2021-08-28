@@ -1,25 +1,6 @@
-const ANSWERPAGEDATA = "AnswerPageData/ANSWERPAGEDATA" as const;
+import { QuestionType } from '../types/reducer';
 
-type QuestionType = {
-  tags: string[];
-  commentCount: number;
-  pureBody: string;
-  like: number;
-  _id: string;
-  title: string;
-  body: string;
-  userId: {
-    nickName: string;
-    kakaoId: string;
-    githubId: string;
-    image: string;
-    _id: string;
-    __v: number;
-  };
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-};
+const ANSWERPAGEDATA = "AnswerPageData/ANSWERPAGEDATA" as const;
 
 export const answerPageData = (displayQuestion: QuestionType | undefined | null) => ({
   type: ANSWERPAGEDATA,

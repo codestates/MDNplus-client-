@@ -6,7 +6,7 @@ import {
   slideRight_line,
   slideLeft_box,
   slideRight_box,
-} from "../../../../styled-components/Animation";
+} from "../../../../styles/Animation";
 
 export const Container = styled.div`
   width: 100%;

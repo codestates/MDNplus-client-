@@ -32,7 +32,7 @@ justify-content: center;
 align-items: center;
 `;
 
-export const AnswerContainer = styled.div`
+export const CommentContainer = styled.div`
 background: #f6f6f6;
 display: flex;
 justify-content: center;
@@ -40,7 +40,7 @@ align-items: center;
 flex-direction: column;
 padding-bottom: 5rem;
 
-.answer-box {
+.comment-box {
   background: white;
   padding: 5rem 1rem 5rem 1rem;
   width: 60%;

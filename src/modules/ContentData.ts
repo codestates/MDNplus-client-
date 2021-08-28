@@ -1,20 +1,33 @@
+import { MethodType } from "../types/reducer";
+
 const CLICKMETHOD = "ContentData/CLICKMETHOD" as const;
 const CHANGECONTENT = "ContentData/CHANGCONTENT" as const;
 
-export const clickMethod = (data: any) => ({ type: CLICKMETHOD, payload: data });
-export const changeContent = (data: any) => ({ type: CHANGECONTENT, payload: data });
+export const clickMethod = (data: MethodType) => ({
+  type: CLICKMETHOD,
+  payload: data,
+});
+export const changeContent = (data: any) => ({
+  type: CHANGECONTENT,
+  payload: data,
+});
 
-type ContentDataAction = ReturnType<typeof clickMethod> | ReturnType<typeof changeContent>;
+type ContentDataAction =
+  | ReturnType<typeof clickMethod>
+  | ReturnType<typeof changeContent>;
 
 type InitState = {
-  contentData: any
+  contentData: any;
 };
 
 const initialState = {
   contentData: null,
 };
 
-function ContentDataReducer(state: InitState = initialState, action: ContentDataAction) {
+function ContentDataReducer(
+  state: InitState = initialState,
+  action: ContentDataAction
+) {
   switch (action.type) {
     case CLICKMETHOD:
       return { ...state, contentData: action.payload };

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import HelpModal from "../../../components/HelpModal";
-import { SubmitBtn, BtnBox, HelpBtn } from "../../../styled-components/Post";
+import { HelpBtn, BtnBox, SubmitBtn } from "../Post.style";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
 import {

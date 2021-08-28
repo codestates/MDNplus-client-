@@ -27,11 +27,11 @@ width: 75%;
   right: 0rem;
 }
 
-.answer-title {
+.comment-title {
   font-weight: bold;
 }
 
-.answer-body {
+.comment-body {
   line-height: 2rem;
 }
 

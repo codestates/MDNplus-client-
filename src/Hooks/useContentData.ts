@@ -2,21 +2,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../modules";
 import { useCallback } from "react";
 import { clickMethod, changeContent } from "../modules/ContentData";
+import { MethodType } from "../types/reducer";
 
-type mainContentType = {
-  count: number;
-  _id: string;
-  pureBody: string;
-  title: string;
+type EditingDataType = {
   body: string;
-  updatedAt: string;
-};
+  pureBody: string;
+}
 
 function useContentData() {
-  const contentState = useSelector((state: RootState) => state.ContentDataReducer);
+  const contentState = useSelector(
+    (state: RootState) => state.ContentDataReducer
+  );
   const dispatch = useDispatch();
-  const onClickMethod = useCallback((data: any) => dispatch(clickMethod(data)),[dispatch]);
-  const onChangeContent = useCallback((data: any) => dispatch(changeContent(data)),[dispatch]);
+
+  const onClickMethod = useCallback(
+    (data: MethodType) => dispatch(clickMethod(data)),
+    [dispatch]
+  );
+  const onChangeContent = useCallback(
+    (data: EditingDataType) => dispatch(changeContent(data)),
+    [dispatch]
+  );
   return { contentState, onClickMethod, onChangeContent };
 }
 

@@ -1,31 +1,32 @@
-const FILTER = "AllData/FILTER" as const
+import { MethodType } from "../types/reducer";
+
+const FILTER = "AllData/FILTER" as const;
 const CHANGEFILTER = "AllData/CHANGEFILTER" as const;
 const USERNICKNAME = "AllData/USERNICKNAME" as const;
 
-export const filter = (data: Method[]) => ({ type: FILTER, payload: data });
-export const changeFilter = (data: Method[]) => ({ type: CHANGEFILTER, payload: data });
-export const userNickName = (userNickName: string) => ({ type: USERNICKNAME, payload: userNickName });
+export const filter = (data: MethodType[]) => ({ type: FILTER, payload: data });
+export const changeFilter = (data: MethodType[]) => ({
+  type: CHANGEFILTER,
+  payload: data,
+});
+export const userNickName = (userNickName: string) => ({
+  type: USERNICKNAME,
+  payload: userNickName,
+});
 
-type AllDataAction = ReturnType<typeof filter> | ReturnType<typeof changeFilter> | ReturnType<typeof userNickName>;
-
-type Method = {
-  _id: string;
-  title: string;
-  body: string;
-  pureBody: string;
-  count: number;
-  updatedAt: string;
-  createdAt: string;
-};
+type AllDataAction =
+  | ReturnType<typeof filter>
+  | ReturnType<typeof changeFilter>
+  | ReturnType<typeof userNickName>;
 
 type InitState = {
-  allData: null | Method[];
-  arrayData: null | Method[];
-  objectData: null | Method[];
-  mathData: null | Method[];
-  stringData: null | Method[];
-  promiseData: null | Method[];
-  currentData: null | Method[];
+  allData: null | MethodType[];
+  arrayData: null | MethodType[];
+  objectData: null | MethodType[];
+  mathData: null | MethodType[];
+  stringData: null | MethodType[];
+  promiseData: null | MethodType[];
+  currentData: null | MethodType[];
   userNickName: null | string;
 };
 
@@ -40,7 +41,10 @@ const initialState = {
   userNickName: null,
 };
 
-function AllDataReducer(state: InitState = initialState, action: AllDataAction) {
+function AllDataReducer(
+  state: InitState = initialState,
+  action: AllDataAction
+) {
   switch (action.type) {
     case FILTER:
       const arrayData = action.payload.filter((el) => {
@@ -64,7 +68,16 @@ function AllDataReducer(state: InitState = initialState, action: AllDataAction) 
         return methodTitle === "Promise";
       });
       const currentData = arrayData;
-      return { ...state, allData: action.payload, currentData, arrayData, objectData, mathData, stringData, promiseData };
+      return {
+        ...state,
+        allData: action.payload,
+        currentData,
+        arrayData,
+        objectData,
+        mathData,
+        stringData,
+        promiseData,
+      };
     case CHANGEFILTER:
       return { ...state, currentData: action.payload };
     case USERNICKNAME:

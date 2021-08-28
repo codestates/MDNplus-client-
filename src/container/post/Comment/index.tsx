@@ -8,7 +8,7 @@ import useBooleanData from "../../../hooks/useBooleanData";
 import axios from "axios";
 import styled from "styled-components";
 import HelpModal from "../../../components/HelpModal";
-import { HelpBtn, BtnBox, SubmitBtn } from "../../../styled-components/Post";
+import { HelpBtn, BtnBox, SubmitBtn } from "../Post.style";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
 import UserQuestion from "../../../components/UserQuestion";
@@ -25,7 +25,7 @@ type PropsOption = {
   handleHelpModal: () => void;
 };
 
-function AnswerContainer({ helpModal, handleHelpModal }: PropsOption) {
+function CommentContainer({ helpModal, handleHelpModal }: PropsOption) {
   const allState = useSelector((state: RootState) => state.AnswerPageReducer);
   const { onSetWriteMode } = useBooleanData();
   const [writing, setWriting] = useState<string>("");
@@ -186,7 +186,7 @@ export const Components = {
   },
 };
 
-export default AnswerContainer;
+export default CommentContainer;
 
 export const WritingSection = styled.div`
   width: 100%;

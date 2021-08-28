@@ -6,7 +6,7 @@ import useBooleanData from "./hooks/useBooleanData";
 import Nav from "./components/Nav";
 import SideBar from "./components/SideBar";
 import SearchPage from "./pages/common/SearchPage";
-import NameSettingPage from "./pages/wiki/NameSettingPage";
+import NameSettingPage from "./pages/common/NameSettingPage";
 import MyPage from "./pages/common/MyPage";
 import FAQ from "./pages/common/FAQ";
 import FooterComponent from "./components/Footer";

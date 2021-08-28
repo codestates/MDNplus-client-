@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { MethodType } from "../../types/reducer";
 import { Wrapper } from "./Method.style";
 

@@ -7,13 +7,12 @@ import useBooleanData from "../../../hooks/useBooleanData";
 import Loading from "../../../components/Loading";
 import {
   Container,
-  FilterBox,
-  IntroBox,
   MethodBox,
   Stage,
 } from "./MainPage.style";
 import ServiceIntro from "../../../components/ServiceIntro";
 import { MethodType } from "../../../types/reducer";
+import WikiFilter from "../../../components/WikiFilter";
 
 function MainPage() {
   const [firstOption, setFirstOption] = useState("javascript");
@@ -88,46 +87,17 @@ function MainPage() {
         description={"당신의 지식을 공유해주세요"}
         type="wiki"
       />
-      <FilterBox>
-        <select
-          className="filter first"
-          onChange={(e) => setFirstOption(e.target.value)}
-          name="firstFilter"
-          id="firstFilter"
-        >
-          <option value="javascript">Javascript</option>
-          <option value="html">HTML</option>
-          <option value="css">CSS</option>
-        </select>
-        {firstOption === "javascript" ? (
-          <select
-            className="filter second"
-            onChange={(e) => handleFilter(e)}
-            name="secondFilter"
-            id="secondFilter"
-          >
-            <option value="array">Array</option>
-            <option value="object">Object</option>
-            <option value="math">Math</option>
-            <option value="string">String</option>
-            <option value="promise">Promise</option>
-          </select>
-        ) : (
-          <select
-            className="filter second"
-            onChange={(e) => handleFilter(e)}
-            name="secondFilter"
-            id="secondFilter"
-          >
-            <option value="구현중">구현중</option>
-          </select>
-        )}
-      </FilterBox>
+
+      <WikiFilter
+        handleFilter={handleFilter}
+        setFirstOption={setFirstOption}
+        firstOption={firstOption}
+      ></WikiFilter>
       <Stage>
         {currentData === null ? (
           <Loading />
         ) : (
-          currentData.map((el: any) => (
+          currentData.map((el: MethodType) => (
             <MethodBox key={el._id}>
               <div className="contents">
                 <div

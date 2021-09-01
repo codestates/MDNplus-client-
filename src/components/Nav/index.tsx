@@ -4,18 +4,8 @@ import { useHistory } from "react-router";
 import useSearchData from "../../hooks/useSearchData";
 import LoginModal from "../LoginModal";
 import MenuModal from "../MenuModal";
-import {
-  LeftBox,
-  LoginBtn,
-  Logo,
-  NavBar,
-  NavButtons,
-  Search,
-  SearchBar,
-  SearchFilter,
-  SearchIcon,
-  UserIconContainer,
-} from "./Nav.style";
+import { LoginBtn, Wrapper, NavButtons, UserIconContainer } from "./Nav.style";
+import SearchBar from "../SearchBar";
 
 function Nav({
   userImg,
@@ -159,23 +149,18 @@ function Nav({
   };
 
   return (
-    <NavBar>
-      <LeftBox>
-        <Logo onClick={() => history.push("/")}>MDN +</Logo>
-        <SearchBar>
-          <Search onKeyPress={handleKeyPress} onChange={handleWritingState} />
-          <SearchIcon
-            onClick={handleIconClick}
-            src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/search_u2ytnm.jpg"
-          ></SearchIcon>
-        </SearchBar>
-        <SearchFilter name="filter" id="filter" onChange={option}>
-          <option value="전체">전체</option>
-          <option value="제목">제목</option>
-          <option value="내용">내용</option>
-          <option value="태그">태그</option>
-        </SearchFilter>
-      </LeftBox>
+    <Wrapper>
+      <div className="left-box">
+        <div className="logo" onClick={() => history.push("/")}>
+          MDN +
+        </div>
+        <SearchBar
+          handleIconClick={handleIconClick}
+          handleKeyPress={handleKeyPress}
+          handleWritingState={handleWritingState}
+          option={option}
+        ></SearchBar>
+      </div>
       {isLogin ? (
         <NavButtons>
           {userUrl ? (
@@ -208,7 +193,7 @@ function Nav({
           ></LoginModal>
         </NavButtons>
       )}
-    </NavBar>
+    </Wrapper>
   );
 }
 

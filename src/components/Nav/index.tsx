@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
-import useSearchData from "../../hooks/useSearchData";
 import LoginModal from "../LoginModal";
 import MenuModal from "../MenuModal";
 import { LoginBtn, Wrapper, NavButtons, UserIconContainer } from "./Nav.style";
-import SearchBar from "../SearchBar";
+import SearchContainer from "../../container/nav/Search";
 
 function Nav({
   userImg,
@@ -16,63 +15,12 @@ function Nav({
   handleChangeMenuIcon,
   setIsLogin,
 }: any) {
-  const {
-    SearchDataState,
-    onSearchingData,
-    onSearchingResult,
-    onSearchingWord,
-    onSearchingTag,
-  } = useSearchData();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userUrl, setUserUrl] = useState("");
   const history = useHistory();
 
   const handleMenuModal = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleWritingState = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onSearchingWord(e.target.value);
-  };
-
-  const handleIconClick = () => {
-    let word: string | null = SearchDataState.word;
-    let tag: string | null = SearchDataState.tag;
-    if (SearchDataState.word === "") {
-      alert("입력해주세요");
-      return;
-    }
-    onSearchingResult(word, tag);
-    axios
-      .post("http://localhost:8080/search", { type: tag, content: word })
-      .then((res) => {
-        onSearchingData(res.data);
-      });
-    word = null;
-
-    history.push("/SearchPage");
-  };
-
-  const handleKeyPress = (
-    e: React.KeyboardEvent<HTMLInputElement> &
-      React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    let word: string | null = e.target.value;
-    let tag: string | null = SearchDataState.tag;
-    if (e.key === "Enter") {
-      if (SearchDataState.word === "") {
-        alert("입력해주세요");
-        return;
-      }
-      onSearchingResult(e.target.value, SearchDataState.tag);
-      axios
-        .post("http://localhost:8080/search", { type: tag, content: word })
-        .then((res) => {
-          onSearchingData(res.data);
-        });
-      word = null;
-      history.push("/SearchPage");
-    }
   };
 
   const gitAccessToken = (authorizationCode: string) => {
@@ -141,25 +89,13 @@ function Nav({
     }
   }, []);
 
-  const option = (
-    e: React.ChangeEvent<HTMLSelectElement> &
-      React.MouseEvent<HTMLSelectElement>
-  ) => {
-    onSearchingTag(e.target.value);
-  };
-
   return (
     <Wrapper>
       <div className="left-box">
         <div className="logo" onClick={() => history.push("/")}>
           MDN +
         </div>
-        <SearchBar
-          handleIconClick={handleIconClick}
-          handleKeyPress={handleKeyPress}
-          handleWritingState={handleWritingState}
-          option={option}
-        ></SearchBar>
+        <SearchContainer />
       </div>
       {isLogin ? (
         <NavButtons>

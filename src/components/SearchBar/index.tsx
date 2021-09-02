@@ -6,7 +6,7 @@ type SearchBarProps = {
       React.ChangeEvent<HTMLInputElement>
   ) => void;
   handleWritingState: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleIconClick: () => void;
+  handleSearchClick: () => void;
   option: (
     e: React.ChangeEvent<HTMLSelectElement> &
       React.MouseEvent<HTMLSelectElement>
@@ -16,7 +16,7 @@ type SearchBarProps = {
 function SearchBar({
   handleKeyPress,
   handleWritingState,
-  handleIconClick,
+  handleSearchClick,
   option,
 }: SearchBarProps) {
   return (
@@ -29,7 +29,7 @@ function SearchBar({
         />
         <img
           className="search-icon"
-          onClick={handleIconClick}
+          onClick={handleSearchClick}
           src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/search_u2ytnm.jpg"
         ></img>
       </div>

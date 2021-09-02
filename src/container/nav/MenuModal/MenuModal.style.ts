@@ -8,14 +8,6 @@ export const ModalContainer = styled.div`
   z-index: 1;
 `;
 
-export const Overlay = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-`;
-
 export const ModalBox = styled.div`
   position: fixed;
   top: 5rem;

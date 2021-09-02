@@ -1,4 +1,4 @@
-import ContentPageContainer from "../../../container/helpdesk/ContentPageContainer";
+import ContentPageContainer from "../../../container/wiki/ContentPageContainer";
 
 type PropsOption = {
   isLogin: boolean;

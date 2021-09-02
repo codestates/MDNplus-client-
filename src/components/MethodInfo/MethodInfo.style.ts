@@ -33,12 +33,11 @@ export const Wrapper = styled.div`
 `;
 
 export const EditBtn = styled(Button)`
-  margin-top: 4rem;
-  margin-right: 1rem;
+  margin-top: 2.5rem;
   font-size: 1.2rem;
+
   @media (max-width: 375px) {
     margin: 0;
-
     font-size: 0.8rem;
   }
 `;

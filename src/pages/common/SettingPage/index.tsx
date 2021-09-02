@@ -21,7 +21,7 @@ import {
   UserNameBox,
 } from "./Setting.style";
 
-function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
+function SettingPage({ handleChangeUserImg, handleLogin }: any) {
   const [userInfo, setUserInfo] = useState({
     img: "",
     nickName: "",
@@ -59,7 +59,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
       )
       .then((res) => {
         setUserInfo({ ...userInfo, img: "" });
-        handleChangeMenuIcon("");
+        handleChangeUserImg("");
       });
   };
 
@@ -84,7 +84,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
         .post(url, formData)
         .then((res) => {
           setUserInfo({ ...userInfo, img: res.data.url });
-          handleChangeMenuIcon(res.data.url);
+          handleChangeUserImg(res.data.url);
           axios
             .patch(
               "http://localhost:8080/userinfo/img",
@@ -102,7 +102,7 @@ function SettingPage({ handleChangeMenuIcon, handleLogin }: any) {
       .get("http://localhost:8080/userinfo", { withCredentials: true })
       .then((res) => {
         setUserInfo({ nickName: res.data.nickName, img: res.data.image });
-        handleChangeMenuIcon(res.data.image);
+        handleChangeUserImg(res.data.image);
       });
 
     if (history.location.pathname === "/SettingPage") {

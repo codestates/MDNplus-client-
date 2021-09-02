@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import useBooleanData from "./hooks/useBooleanData";
-import Nav from "./components/Nav";
+import Nav from "./container/nav";
 import SideBar from "./components/SideBar";
 import SearchPage from "./pages/common/SearchPage";
 import NameSettingPage from "./pages/common/NameSettingPage";
@@ -32,7 +32,15 @@ function App() {
     setIsLogInOpen(!isLogInOpen);
   };
 
-  const handleChangeMenuIcon = (url: string) => {
+  const handleLogin = () => {
+    setIsLogin(!isLogin);
+  };
+
+  const handleHelpModal = () => {
+    setHelpModal(!helpModal);
+  };
+
+  const handleChangeUserImg = (url: string) => {
     if (url) {
       setUserImg(url);
     } else {
@@ -40,16 +48,6 @@ function App() {
         "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
       );
     }
-  };
-
-  const handleLogin = () => {
-    setIsLogin(!isLogin);
-  };
-
-  const handleHelpModal = () => {
-    console.log('헬프 모달 핸들러 실행')
-    console.log(helpModal)
-    setHelpModal(!helpModal);
   };
 
   return (
@@ -63,7 +61,7 @@ function App() {
             isLogInOpen={isLogInOpen}
             handleLogin={handleLogin}
             handleLoginModal={handleLoginModal}
-            handleChangeMenuIcon={handleChangeMenuIcon}
+            handleChangeUserImg={handleChangeUserImg}
           ></Nav>
         )}
       </Header>
@@ -92,7 +90,7 @@ function App() {
             render={() => (
               <SettingPage
                 handleLogin={handleLogin}
-                handleChangeMenuIcon={handleChangeMenuIcon}
+                handleChangeUserImg={handleChangeUserImg}
               />
             )}
           />

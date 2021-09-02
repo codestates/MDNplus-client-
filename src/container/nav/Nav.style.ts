@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "../Button";
+import Button from "../../components/Button";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -36,19 +36,18 @@ export const Wrapper = styled.div`
       font-size: 1.5rem;
     }
   }
-`;
 
-export const NavButtons = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 375px) {
-    height: auto;
+  .user-icon {
     width: 2rem;
-    padding: 0.3rem 0 0.3rem 0;
-    margin-right: 1rem;
-    background: #f4f4f4;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1.5rem;
+    cursor: pointer;
+
+    @media (max-width: 375px) {
+      margin: 0;
+    }
   }
 `;
 
@@ -74,14 +73,3 @@ export const LoginBtn = styled(Button)`
   }
 `;
 
-export const UserIconContainer = styled.img`
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 1.5rem;
-  cursor: pointer;
-  @media (max-width: 375px) {
-    margin: 0;
-  }
-`;

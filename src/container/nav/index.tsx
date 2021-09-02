@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
-import LoginModal from "../LoginModal";
-import MenuModal from "../MenuModal";
-import { LoginBtn, Wrapper, NavButtons, UserIconContainer } from "./Nav.style";
-import SearchContainer from "../../container/nav/Search";
+import LoginModal from "./LoginModal";
+import MenuModal from "./MenuModal";
+import { LoginBtn, Wrapper } from "./Nav.style";
+import SearchContainer from "./Search";
 
-function Nav({
+type NavContainerProps = {
+  userImg: string;
+  isLogInOpen: boolean;
+  isLogin: boolean;
+  handleLogin: () => void;
+  handleLoginModal: () => void;
+  handleChangeUserImg: (url: string) => void;
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function NavContainer({
   userImg,
   isLogInOpen,
   isLogin,
   handleLogin,
   handleLoginModal,
-  handleChangeMenuIcon,
+  handleChangeUserImg,
   setIsLogin,
-}: any) {
+}: NavContainerProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userUrl, setUserUrl] = useState("");
   const history = useHistory();
@@ -33,7 +43,7 @@ function Nav({
       .then((res) => {
         const { nickName } = res.data;
         if (nickName) {
-          handleChangeMenuIcon(res.data.image);
+          handleChangeUserImg(res.data.image);
           history.push("/Wiki");
           handleLogin();
         } else {
@@ -55,7 +65,7 @@ function Nav({
       .then((res) => {
         const { nickName } = res.data;
         if (nickName) {
-          handleChangeMenuIcon(res.data.image);
+          handleChangeUserImg(res.data.image);
           history.push("/Wiki");
           handleLogin();
         } else {
@@ -98,17 +108,19 @@ function Nav({
         <SearchContainer />
       </div>
       {isLogin ? (
-        <NavButtons>
+        <>
           {userUrl ? (
-            <UserIconContainer
+            <img
+              className="user-icon"
               src={userUrl}
               onClick={handleMenuModal}
-            ></UserIconContainer>
+            ></img>
           ) : (
-            <UserIconContainer
+            <img
+              className="user-icon"
               src={userImg}
               onClick={handleMenuModal}
-            ></UserIconContainer>
+            ></img>
           )}
           {isMenuOpen ? (
             <MenuModal
@@ -118,19 +130,19 @@ function Nav({
               checkMenu={setIsMenuOpen}
             ></MenuModal>
           ) : null}
-        </NavButtons>
+        </>
       ) : (
-        <NavButtons>
+        <>
           <LoginBtn handler={handleLoginModal}>로그인</LoginBtn>
           <LoginModal
             isOpen={isLogInOpen}
             onClose={handleLoginModal}
             handleLogin={handleLogin}
           ></LoginModal>
-        </NavButtons>
+        </>
       )}
     </Wrapper>
   );
 }
 
-export default Nav;
+export default NavContainer;

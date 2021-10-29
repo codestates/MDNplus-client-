@@ -1,40 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: grid;
+  display: flex;
   align-items: center;
   justify-content: center;
-  grid-template-columns: repeat(2, 1fr);
-
-  .edit-page {
-    padding: 1.7rem;
-  }
-
-  .edit-page > .title-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .edit-page .title {
-    display: inline-block;
-  }
-
-  .edit-page > .description {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    resize: none;
-    font-size: 16px;
-    border: none;
-  }
-
-  .guide {
-    font-size: 0.85rem;
-    color: #757575;
-  }
+  position: relative;
+  width: 100%;
+  height: 100%;
 
   .question-page {
     padding: 0 1.3rem 0 1.3rem;
@@ -89,18 +61,66 @@ export const Container = styled.div`
     margin-top: 1.3rem;
     margin-bottom: 1.3rem;
   }
+
+  .btn-box {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border: 1px solid black;
+  }
+
+  .btn-box div:first-child {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn-box div:last-child {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-box div {
+    width: 50%;
+  }
 `;
 
 export const LeftContainer = styled.div`
+  width: 50%;
   height: 100%;
-  width: 100%;
+  padding: 1.7rem;
+
+  .title-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title {
+    display: inline-block;
+  }
+
+  .guide {
+    font-size: 0.85rem;
+    color: #757575;
+  }
+
+  .description {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    resize: none;
+    font-size: 16px;
+    border: none;
+  }
 `;
 
 export const RightContainer = styled.div`
   background-color: #f5f5f5;
   padding: 1.3rem 3rem 3rem 3rem;
   height: 100%;
-  width: 100%;
+  width: 50%;
 
   .preview-top {
     display: flex;

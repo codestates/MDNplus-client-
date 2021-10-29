@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.nav`
   width: 100%;
   height: 100%;
   display: flex;
@@ -72,4 +72,3 @@ export const LoginBtn = styled(Button)`
     font-size: 0.6rem;
   }
 `;
-

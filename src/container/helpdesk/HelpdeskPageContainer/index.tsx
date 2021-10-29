@@ -7,13 +7,13 @@ import Loading from "../../../components/Loading";
 import {
   BoxContainer,
   Container,
-  QuestionBtn,
   QuestionContainer,
 } from "./HelpdeskPageContainer.style";
 import Question from "../../../components/Question";
 import { QuestionType } from "../../../types/reducer";
 import ServiceIntro from "../../../components/ServiceIntro";
 import HelpdeskFilter from "../../../components/HelpdeskFilter";
+import Button from "../../../components/Button";
 
 type AllQuestionstype = {
   latestQuestion: QuestionType[];
@@ -89,9 +89,13 @@ function HelpdeskPageContainer() {
             handleMakeQuestion={handleMakeQuestion}
           ></ServiceIntro>
           <QuestionContainer>
-            <QuestionBtn size="medium" handler={handleMakeQuestion}>
+            <Button
+              size="medium"
+              btnStyle="primary"
+              handler={handleMakeQuestion}
+            >
               질문하기
-            </QuestionBtn>
+            </Button>
 
             <HelpdeskFilter
               isSelected={isSelected}

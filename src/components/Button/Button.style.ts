@@ -1,41 +1,62 @@
-import {ButtonProps} from "./index"
+import { ButtonProps } from "./index";
 import styled, { css } from "styled-components";
 
-type SizeType = Pick<ButtonProps, "size">;
-
-const sizeStyles = css<SizeType>`
-  ${({ size }) =>
-    size === "small" &&
-    css`
-      width: 5rem;
-      height: 1.5rem;
-      font-size: 0.9rem;
-    `}
-
-  ${({ size }) =>
-    size === "medium" &&
-    css`
-      width: 6rem;
-      height: 2rem;
-      font-size: 1rem;
-    `}
-
-  ${({ size }) =>
-    size === "large" &&
-    css`
-      width: 7rem;
-      height: 2.5rem;
-      font-size: 1.3rem;
-    `}
-`;
-
-export const ButtonStyle = styled.button<ButtonProps>`
-  ${sizeStyles}
-
-  background: ${props => props.bgColor || 'none'};
-  color: ${props => props.color || 'black'};
-  cursor: pointer;
-  border-radius: 1.5rem;
+const primaryButtonStyle = css`
+  background: ${({ theme }) => theme.primary[700]};
+  color: ${({ theme }) => theme.gray.light};
   border: none;
 
+  &:hover {
+    opacity: 80%;
+  }
+`;
+
+const textButtonStyle = css`
+  background: none;
+  border: none;
+  color: black;
+
+  &:hover {
+    background: #eeeeee;
+  }
+`;
+
+const sizeSmall = css`
+  width: 70px;
+  height: 35px;
+`;
+
+const sizeMedium = css`
+  width: 100px;
+  height: 35px;
+`;
+
+function setButtonStyle(btnStyle: string) {
+  switch (btnStyle) {
+    case "primary":
+      return primaryButtonStyle;
+    case "text":
+      return textButtonStyle;
+  }
+}
+
+function setButtonSize(size: string) {
+  switch (size) {
+    case "small":
+      return sizeSmall;
+    case "medium":
+      return sizeMedium;
+  }
+}
+
+export const ButtonStyle = styled.button<ButtonProps>`
+  padding: 0.5rem;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 100ms ease-in-out;
+
+  ${({ btnStyle }) => setButtonStyle(btnStyle)};
+  ${({ size }) => setButtonSize(size)};
 `;

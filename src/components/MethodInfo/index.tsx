@@ -9,12 +9,11 @@ type MethodInfoProps = {
   handleClickEdit: () => void;
 };
 
-function MethodInfo({ data, handleClickEdit }: MethodInfoProps) {
+function MethodInfo({ data }: MethodInfoProps) {
   return (
     <Wrapper>
       <div className="title-box">
         <h1 className="title">{data.title}</h1>
-        <EditBtn handler={handleClickEdit}>수정</EditBtn>
       </div>
       <ReactMarkdown
         rehypePlugins={[rehypeRaw]}

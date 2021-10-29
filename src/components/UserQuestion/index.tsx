@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { QuestionType } from "../../types/reducer";
 import { Container, AnswerBtn } from "./QuestionSection.style";
+import Button from '../Button';
 
 export type UserQuestionProps = {
   data: QuestionType;
@@ -58,12 +59,12 @@ function UserQuestion({
           10
         )}`}</span>
         {isMainPage ? (
-          <AnswerBtn
+          <Button
             size="medium"
+            btnStyle="primary"
             className="answer-btn"
             handler={handleAnswerBtn}
-            bgColor="#E0E0E0"
-          >답변 하기</AnswerBtn>
+          >답변 하기</Button>
         ) : null}
       </div>
     </Container>

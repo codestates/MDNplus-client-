@@ -86,12 +86,12 @@ function ContentPageContainer({
     <>
       {currentData !== null && currentData !== undefined ? (
         <Container>
-          <BackBtn
+          <Button
             size="large"
-            color="#78909c"
+            btnStyle="text"
             handler={handleMoveToBack}
             className="back-btn"
-          >{`< 돌아가기`}</BackBtn>
+          >{`< 돌아가기`}</Button>
 
           <QuestionContainer>
             <UserQuestion

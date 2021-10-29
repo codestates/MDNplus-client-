@@ -1,7 +1,13 @@
 import ReactDOM from "react-dom";
 import App from "./App";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSearch, faTimes, faChevronDown, faSortUp, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faTimes,
+  faChevronDown,
+  faSortUp,
+  faQuestion,
+} from "@fortawesome/free-solid-svg-icons";
 import { faHeart as fasHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -9,15 +15,29 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "./modules/index";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
+import GlobalStyle from "./styles/global-styles";
 
 const store = createStore(rootReducer);
 
-library.add(faSearch, faTimes, faChevronDown, faSortUp, faQuestion, fasHeart, farHeart);
+library.add(
+  faSearch,
+  faTimes,
+  faChevronDown,
+  faSortUp,
+  faQuestion,
+  fasHeart,
+  farHeart
+);
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
     </Provider>
   </BrowserRouter>,
   document.getElementById("root")

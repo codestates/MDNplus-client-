@@ -1,83 +1,64 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 const SideBar = () => {
-  const [sideBar, setSideBar] = useState("wiki");
-  const history = useHistory();
-
-  const handleMoveToHelp = () => {
-    setSideBar("helpdesk");
-    history.push("/HelpdeskPage");
-  };
-
-  const handleMoveToWiki = () => {
-    setSideBar("wiki");
-    history.push("/Wiki");
-  };
-
-  useEffect(() => {
-    if (
-      window.location.pathname === "/HelpdeskPage" ||
-      window.location.pathname === "/MyPage"
-    ) {
-      setSideBar("helpdesk");
-    } else if (window.location.pathname === "/Wiki") {
-      setSideBar("wiki");
-    }
-  });
+  const [active, setActive] = useState("wiki");
 
   return (
-    <Container>
-      {sideBar === "wiki" ? (
-        <Wiki color="isSelected" onClick={handleMoveToWiki}>
-          MDN+ 위키
-        </Wiki>
-      ) : (
-        <Wiki onClick={handleMoveToWiki}>MDN+ 위키</Wiki>
-      )}
-      {sideBar === "helpdesk" ? (
-        <HelpDesk color="isSelected" onClick={handleMoveToHelp}>
-          헬프데스크
-        </HelpDesk>
-      ) : (
-        <HelpDesk onClick={handleMoveToHelp}>헬프데스크</HelpDesk>
-      )}
-    </Container>
+    <Wrapper active={active}>
+      <Link
+        to="/Wiki"
+        className="service-name"
+        onClick={() => setActive("wiki")}
+      >
+        MDN+ 위키
+      </Link>
+      <Link
+        to="/HelpdeskPage"
+        className="service-name"
+        onClick={() => setActive("helpdesk")}
+      >
+        헬프데스크
+      </Link>
+    </Wrapper>
   );
 };
 
 export default SideBar;
 
-const handleColorType = (color: any) => {
-  switch (color) {
-    case "isSelected":
-      return "color: black; background: #DCEAFF";
-  }
-};
-
-const Container = styled.span`
-  width: 13rem;
+const Wrapper = styled.nav<{ active: string }>`
+  width: 300px;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
-  height: 100%;
-`;
 
-const Wiki = styled.div`
-  padding: 1rem;
-  cursor: pointer;
-  text-align: center;
-  font-weight: 500;
-  color: #757575;
-  ${({ color }) => handleColorType(color)};
-`;
+  .service-name {
+    display: block;
+    padding: 16px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 500;
+    color: ${({ theme }) => theme.gray.default};
+    text-decoration: none;
+  }
 
-const HelpDesk = styled.div`
-  padding: 1rem;
-  cursor: pointer;
-  text-align: center;
-  font-weight: 500;
-  color: #757575;
+  ${({ active }) =>
+    active === "wiki"
+      ? css`
+          .service-name:first-child {
+            background: rgb(220, 234, 255);
+            font-weight: bold;
+          }
+        `
+      : null}
 
-  ${({ color }) => handleColorType(color)};
+  ${({ active }) =>
+    active === "helpdesk"
+      ? css`
+          .service-name:last-child {
+            background: rgb(220, 234, 255);
+            font-weight: bold;
+          }
+        `
+      : null}
 `;

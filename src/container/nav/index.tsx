@@ -3,8 +3,9 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import LoginModal from "./LoginModal";
 import MenuModal from "./MenuModal";
-import { LoginBtn, Wrapper } from "./Nav.style";
+import { Wrapper } from "./Nav.style";
 import SearchContainer from "./Search";
+import Button from "../../components/Button";
 
 type NavContainerProps = {
   userImg: string;
@@ -133,7 +134,9 @@ function NavContainer({
         </>
       ) : (
         <>
-          <LoginBtn handler={handleLoginModal}>로그인</LoginBtn>
+          <Button size="medium" btnStyle="primary" handler={handleLoginModal}>
+            로그인
+          </Button>
           <LoginModal
             isOpen={isLogInOpen}
             onClose={handleLoginModal}

@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import HelpModal from "../../../components/HelpModal";
-import { HelpBtn, BtnBox, SubmitBtn } from "../Post.style";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
 import {
@@ -143,19 +142,20 @@ function QuestionContainer({
             className="markdown"
           />
         </RightContainer>
-        <BtnBox>
-          <Button size="large" handler={handleExitModal}>
+        <div>
+          <Button size="small" btnStyle="text" handler={handleExitModal}>
             나가기
           </Button>
-          <SubmitBtn
-            size="large"
+          <Button
+            size="medium"
+            btnStyle="primary"
             handler={handleSubmitModal}
             className="submit-btn"
           >
-            답변 등록
-          </SubmitBtn>
-          <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
-        </BtnBox>
+            질문 등록
+          </Button>
+          <button onClick={handleHelpModal}>?</button>
+        </div>
       </Container>
 
       {helpModal ? (

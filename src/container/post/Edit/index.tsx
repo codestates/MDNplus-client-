@@ -12,7 +12,6 @@ import HelpModal from "../../../components/HelpModal";
 import Loading from "../../../components/Loading";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
-import { HelpBtn, BtnBox, SubmitBtn } from "../Post.style";
 import {
   RightContainer,
   Container,
@@ -77,7 +76,7 @@ function EditContainer({
           <Loading />
         ) : (
           <>
-            <LeftContainer className="edit-page">
+            <LeftContainer>
               <div className="title-box">
                 <h1 className="title">{contentData.title}</h1>
                 <span className="guide">
@@ -109,19 +108,23 @@ function EditContainer({
                 className="markdown"
               />
             </RightContainer>
-            <BtnBox>
-              <Button size="large" handler={handleExitModal}>
-                나가기
-              </Button>
-              <SubmitBtn
-                size="large"
-                handler={handleSubmitModal}
-                className="submit-btn"
-              >
-                답변 등록
-              </SubmitBtn>
-              <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
-            </BtnBox>
+            <div className="btn-box">
+              <div>
+                <Button size="small" btnStyle="text" handler={handleExitModal}>
+                  나가기
+                </Button>
+                <Button
+                  size="medium"
+                  btnStyle="primary"
+                  handler={handleSubmitModal}
+                >
+                  수정하기
+                </Button>
+              </div>
+              <div>
+                <button onClick={handleHelpModal}>?</button>
+              </div>
+            </div>
           </>
         )}
       </Container>

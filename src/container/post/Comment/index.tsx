@@ -8,7 +8,6 @@ import useBooleanData from "../../../hooks/useBooleanData";
 import axios from "axios";
 import styled from "styled-components";
 import HelpModal from "../../../components/HelpModal";
-import { HelpBtn, BtnBox, SubmitBtn } from "../Post.style";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
 import UserQuestion from "../../../components/UserQuestion";
@@ -116,19 +115,15 @@ function CommentContainer({
         </div>
         <ReactMarkdown children={writing} components={Components} />
       </RightContainer>
-      <BtnBox>
-        <Button size="large" handler={handleExitModal}>
+      <div>
+        <Button size="small" btnStyle="text" handler={handleExitModal}>
           나가기
         </Button>
-        <SubmitBtn
-          size="large"
-          handler={handleSubmitModal}
-          className="submit-btn"
-        >
+        <Button size="medium" btnStyle="primary" handler={handleSubmitModal}>
           답변 등록
-        </SubmitBtn>
-        <HelpBtn onClick={handleHelpModal}>?</HelpBtn>
-      </BtnBox>
+        </Button>
+        <button onClick={handleHelpModal}>?</button>
+      </div>
 
       {helpModal ? (
         <HelpModal isOpen={helpModal} handleHelpModal={handleHelpModal} />

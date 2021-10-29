@@ -14,7 +14,6 @@ export const Container = styled.div`
 `;
 
 export const QuestionContainer = styled.div`
-  // border: 1px solid blue;
   padding: 2rem;
 `
 

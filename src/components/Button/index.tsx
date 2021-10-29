@@ -1,4 +1,3 @@
-import { MouseEventHandler, ReactElement } from "react";
 import {ButtonStyle} from "./Button.style"
 
 export type ButtonProps = {

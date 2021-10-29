@@ -67,12 +67,13 @@ function MainPageContainer() {
   useEffect(() => {
     axios.get("http://localhost:8080/maincontent").then((res) => {
       onFilter(res.data);
-    });
+    })
 
     if (history.location.pathname === "/Wiki") {
       onSetWriteMode(false);
     }
   }, []);
+
   return currentData ? (
     <Container>
       <ServiceIntro

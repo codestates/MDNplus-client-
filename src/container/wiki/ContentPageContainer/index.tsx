@@ -70,7 +70,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-
+  width: 100%;
   padding-bottom: 100px;
 
   .edit-btn {

@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 
   .intro-icon {
     width: 6rem;
@@ -29,7 +30,6 @@ export const Wrapper = styled.div`
   .question-btn {
     position: absolute;
     right: 0rem;
-    // margin-right: 2rem;
     font-size: 0.9rem;
     padding: 0.7rem 1.2rem 0.7rem 1.2rem;
     border-radius: 1.2rem;

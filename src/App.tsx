@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import useBooleanData from "./hooks/useBooleanData";
 import Nav from "./container/nav";
-import SideBar from "./components/SideBar";
+import Sidebar from "./components/Sidebar";
 import SearchPage from "./pages/common/SearchPage";
 import NameSettingPage from "./pages/common/NameSettingPage";
 import MyPage from "./pages/common/MyPage";
@@ -64,7 +64,7 @@ function App() {
       )}
 
       <Container>
-        {writeMode ? null : contentPageMode ? null : <SideBar></SideBar>}
+        {writeMode ? null : contentPageMode ? null : <Sidebar></Sidebar>}
         <Switch>
           <Route exact path="/" render={() => <LandingPage />} />
           <Route
@@ -120,5 +120,3 @@ export default App;
 const Container = styled.div`
   display: flex;
 `;
-
-// background: #f4f4f4;

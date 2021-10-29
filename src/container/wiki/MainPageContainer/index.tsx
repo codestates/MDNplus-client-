@@ -9,7 +9,7 @@ import useAllData from "../../../hooks/useAllData";
 import useBooleanData from "../../../hooks/useBooleanData";
 import useContentData from "../../../hooks/useContentData";
 import { MethodType } from "../../../types/reducer";
-import { MethodContainer, Container } from "./MainPageContainer.style";
+import { Container } from "./MainPageContainer.style";
 
 function MainPageContainer() {
   const [firstOption, setFirstOption] = useState("javascript");
@@ -67,7 +67,7 @@ function MainPageContainer() {
   useEffect(() => {
     axios.get("http://localhost:8080/maincontent").then((res) => {
       onFilter(res.data);
-    })
+    });
 
     if (history.location.pathname === "/Wiki") {
       onSetWriteMode(false);
@@ -75,7 +75,7 @@ function MainPageContainer() {
   }, []);
 
   return currentData ? (
-    <Container>
+    <Container className="container">
       <ServiceIntro
         img={
           "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/thinking_amc5e2.png"
@@ -89,7 +89,8 @@ function MainPageContainer() {
         setFirstOption={setFirstOption}
         firstOption={firstOption}
       ></WikiFilter>
-      <MethodContainer>
+
+      <section className="method-list">
         {currentData === null ? (
           <Loading />
         ) : (
@@ -101,7 +102,7 @@ function MainPageContainer() {
             ></Method>
           ))
         )}
-      </MethodContainer>
+      </section>
     </Container>
   ) : (
     <Loading />

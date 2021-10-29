@@ -8,13 +8,7 @@ type ServiceIntroProps = {
   type?: string;
 };
 
-function ServiceIntro({
-  handleMakeQuestion,
-  img,
-  title,
-  description,
-  type,
-}: ServiceIntroProps) {
+function ServiceIntro({ img, title, description, type }: ServiceIntroProps) {
   return (
     <Wrapper>
       {type === "wiki" ? (
@@ -24,7 +18,7 @@ function ServiceIntro({
       )}
       <div>
         <h1 className="intro-title">{title}</h1>
-        <div className="intro-description">{description}</div>
+        <p className="intro-description">{description}</p>
       </div>
     </Wrapper>
   );

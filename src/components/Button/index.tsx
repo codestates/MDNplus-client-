@@ -1,4 +1,4 @@
-import { ButtonStyle } from "./Button.style";
+import { Wrapper } from "./Button.style";
 
 export type ButtonProps = {
   size: "small" | "medium" | "large";
@@ -10,14 +10,14 @@ export type ButtonProps = {
 
 function Button({ children, size, btnStyle, handler, className }: ButtonProps) {
   return (
-    <ButtonStyle
+    <Wrapper
       className={className}
       size={size}
       btnStyle={btnStyle}
       onClick={handler}
     >
       {children}
-    </ButtonStyle>
+    </Wrapper>
   );
 }
 

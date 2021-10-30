@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
   margin: 15.5px;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  color: #757575;
   cursor: pointer;
   transition: 0.2s ease-in-out;
   word-break: break-all;
@@ -22,19 +23,16 @@ export const Wrapper = styled.div`
 
   .method-title {
     font-size: 20px;
-    color: #757575;
   }
 
   .method-desc {
     line-height: 1.5;
-    color: #757575;
   }
 
   .count {
     display: flex;
     justify-content: flex-end;
     font-size: 14px;
-    color: #757575;
   }
 
   .count dd {

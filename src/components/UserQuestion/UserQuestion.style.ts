@@ -1,57 +1,47 @@
 import { UserQuestionProps } from "./index";
 import styled, { css } from "styled-components";
-import Button from '../Button';
 
 type sizeType = Pick<UserQuestionProps, "type">;
 
 export const Container = styled.div<sizeType>`
-  height: 40%;
-  overflow-y: auto;
-  padding: 3rem 3rem 1.5rem 3rem;
+  position: relative;
+  width: ${({ type }) => (type === "content" ? "50%" : "100%")};
+  padding: 40px;
   border-bottom: 1px solid #e0e0e0;
-
-  ${({ type }) =>
-    type === "content" &&
-    css`
-      width: 50%;
-    `}
-
-  ${({ type }) =>
-    type === "writing" &&
-    css`
-      width: 100%;
-    `}
+  overflow-y: auto;
 
   .question-title-box {
     display: flex;
+    align-items: center;
   }
 
   .question-icon {
-    background: #90a4ae;
-    color: white;
-    font-weight: bold;
-    margin-right: 1rem;
-    width: 3.5rem;
-    height: 3.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: 16px;
+    background: #90a4ae;
+    color: white;
+    font-weight: bold;
   }
 
   .question-title {
-    font-size: 1.2rem;
     display: flex;
     align-items: center;
+    font-size: 20px;
+    font-weight: normal;
   }
 
-  .question-body {
-    padding-top: 1rem;
+  .question-desc {
+    line-height: 1.5;
+    margin-bottom: 10px;
   }
 
   .userInfo-box {
     display: flex;
     align-items: center;
-    margin-top: 1rem;
   }
 
   .userInfo-img {
@@ -69,36 +59,28 @@ export const Container = styled.div<sizeType>`
     font-size: 0.9rem;
   }
 
-  .date {
-    color: #757575;
+  .question-date {
+    color: ${({ theme }) => theme.gray[600]};
     font-size: 0.8rem;
-    padding-bottom: 0.1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .tag-box {
+    margin-bottom: 16px;
   }
 
   .tag {
+    margin-right: 10px;
     color: #78909c;
     cursor: pointer;
-    margin-right: 0.5rem;
 
     &:hover {
-      color: #2196f3;
+      font-weight: bold;
     }
   }
 
   .answer-btn {
-    margin-left: auto;
-    border-radius: 1rem;
-    border: none;
-    cursor: pointer;
-    width: 6rem;
-    height: 2rem;
-    @media (max-width: 375px) {
-      font-size: 0.6rem;
-    }
+    position: absolute;
+    right: 40px;
   }
 `;
-
-export const AnswerBtn = styled(Button)`
-  font-size: 0.9rem
-
-`

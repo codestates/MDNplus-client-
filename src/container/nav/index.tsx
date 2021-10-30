@@ -134,7 +134,7 @@ function NavContainer({
         </>
       ) : (
         <>
-          <Button size="medium" btnStyle="primary" handler={handleLoginModal}>
+          <Button size="small" btnStyle="white" handler={handleLoginModal}>
             로그인
           </Button>
           <LoginModal

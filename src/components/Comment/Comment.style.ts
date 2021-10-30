@@ -1,44 +1,42 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-export const Container = styled.div`
-margin-top: -3rem;
-position: relative;
-width: 75%;
+export const Wrapper = styled.article`
+  width: 55%;
+  padding: 40px 60px;
+  margin-top: 40px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background: white;
 
-.title-box {
-  display: flex;
-  align-items: center;
-  padding-bottom: 1rem;
-}
+  .comment-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+  }
 
-.user-img {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 0.4rem;
-  border: none;
-}
+  .user-img {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: none;
+  }
 
-.date {
-  color: #757575;
-  position: absolute;
-  bottom: -3rem;
-  right: 0rem;
-}
+  .comment-desc {
+    margin-bottom: 40px;
+  }
 
-.comment-title {
-  font-weight: bold;
-}
+  .date {
+    display: flex;
+    justify-content: flex-end;
+    color: #757575;
+  }
 
-.comment-body {
-  line-height: 2rem;
-}
-
-.empty {
-  text-align: center;
-  width: 100%;
-  font-size: 1.2rem;
-  color: #424242;
-}
+  .empty {
+    width: 100%;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 1.2rem;
+    color: ${({theme}) => theme.gray[600]}
+  }
 `;

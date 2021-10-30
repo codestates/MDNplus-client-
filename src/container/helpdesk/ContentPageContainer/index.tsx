@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import UserQuestion from "../../../components/UserQuestion";
@@ -8,11 +8,7 @@ import useQcontentData from "../../../hooks/useQcontentData";
 import { answerPageData } from "../../../modules/AnswerPageData";
 import Comment from "../../../components/Comment";
 import Loading from "../../../components/Loading";
-import {
-  CommentContainer,
-  Container,
-  QuestionContainer,
-} from "./ContentPageContainer.style";
+import { Container } from "./ContentPageContainer.style";
 import Button from "../../../components/Button";
 import styled from "styled-components";
 
@@ -35,7 +31,7 @@ function ContentPageContainer({
   const { currentData } = QcontentState;
   const history = useHistory();
   const dispatch = useDispatch();
-  const [isMainPage, setisMainPage] = useState<boolean>(false);
+  const [isContentPage, setIsContentPage] = useState<boolean>(false);
   const location = useLocation<PageNameType>();
 
   const handleAnswerBtn = () => {
@@ -71,7 +67,7 @@ function ContentPageContainer({
     } else if (location.state.pageName === "/MyPage") {
       questionID = location.state.questionId;
     } else if (location.state.pageName === "/HelpdeskPage") {
-      setisMainPage(true);
+      setIsContentPage(true);
       questionID = location.state.questionId;
     } else if (location.state.pageName === "/Searchpage") {
       questionID = location.state.questionId;
@@ -93,31 +89,27 @@ function ContentPageContainer({
             className="back-btn"
           >{`< 돌아가기`}</Button>
 
-          <QuestionContainer>
+          <section className="question-section">
             <UserQuestion
               data={currentData.question}
-              isMainPage={isMainPage}
+              isContentPage={isContentPage}
               handleAnswerBtn={handleAnswerBtn}
               handleSearchTag={handleSearchTag}
               type="content"
             ></UserQuestion>
-          </QuestionContainer>
+          </section>
 
-          {currentData.comments.length !== 0 ? (
-            <CommentContainer>
-              {currentData.comments?.map((el, index: number) => (
-                <div className="comment-box" key={index}>
+          <section className="comment-section">
+            {currentData.comments.length !== 0 ? (
+              <>
+                {currentData.comments?.map((el, index: number) => (
                   <Comment data={el}></Comment>
-                </div>
-              ))}
-            </CommentContainer>
-          ) : (
-            <CommentContainer>
-              <div className="comment-box">
-                <Comment></Comment>
-              </div>
-            </CommentContainer>
-          )}
+                ))}
+              </>
+            ) : (
+              <Comment></Comment>
+            )}
+          </section>
         </Container>
       ) : (
         <Loading />

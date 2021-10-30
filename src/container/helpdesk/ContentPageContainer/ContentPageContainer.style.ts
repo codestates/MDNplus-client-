@@ -9,25 +9,24 @@ export const Container = styled.div`
     position: absolute;
     top: 2rem;
     left: 2rem;
-    font-size: 1.2rem;
     color: #78909c;
-    cursor: pointer;
+    font-size: 20px;
   }
-`;
 
-export const QuestionContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+  .question-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-export const CommentContainer = styled.div`
-  background: #f6f6f6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-bottom: 5rem;
+  .comment-section {
+    background: #f6f6f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 5rem;
+  }
 
   .comment-box {
     background: white;

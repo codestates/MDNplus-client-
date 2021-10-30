@@ -11,7 +11,7 @@ export const Wrapper = styled.nav<{ active: string }>`
     cursor: pointer;
     text-align: center;
     font-weight: 500;
-    color: ${({ theme }) => theme.gray.default};
+    color: black;
     text-decoration: none;
   }
 

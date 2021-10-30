@@ -1,12 +1,11 @@
-import styled, { css } from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { QuestionType } from "../../types/reducer";
-import { Container, AnswerBtn } from "./QuestionSection.style";
-import Button from '../Button';
+import { Container } from "./UserQuestion.style";
+import Button from "../Button";
 
 export type UserQuestionProps = {
   data: QuestionType;
-  isMainPage?: boolean;
+  isContentPage?: boolean;
   type: string;
   handleAnswerBtn?: () => void;
   handleSearchTag: (tagName: string) => void;
@@ -14,7 +13,7 @@ export type UserQuestionProps = {
 
 function UserQuestion({
   data,
-  isMainPage,
+  isContentPage,
   type,
   handleAnswerBtn,
   handleSearchTag,
@@ -24,47 +23,53 @@ function UserQuestion({
       <div className="question-box">
         <div className="question-title-box">
           <span className="question-icon">질문</span>
-          <span className="question-title"> {data.title}</span>
+          <h1 className="question-title"> {data.title}</h1>
         </div>
-        <div className="question-body">
+        <div className="question-desc">
           <ReactMarkdown children={data.body} />
         </div>
-        {data.tags.length !== 0
-          ? data.tags.map((el, idx) => (
-              <span
-                className="tag"
-                key={idx}
-                onClick={() => handleSearchTag(el)}
-              >
-                {el}
-              </span>
-            ))
-          : null}
+        <div className="tag-box">
+          {data.tags.length !== 0
+            ? data.tags.map((el, idx) => (
+                <span
+                  className="tag"
+                  key={idx}
+                  onClick={() => handleSearchTag(el)}
+                >
+                  {el}
+                </span>
+              ))
+            : null}
+        </div>
       </div>
       <div className="userInfo-box">
-        {data.userId.image ? (
+        {data.userId ? (
           <img className="userInfo-img" src={data.userId.image}></img>
         ) : (
           <img
             className="userInfo-img"
             src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
+            alt="user image"
           ></img>
         )}
         <span className="userInfo-name">{data.userId.nickName}</span>
-        <span className="date">{`${data.createdAt.substring(
+        <strong className="question-date">{`${data.createdAt.substring(
           0,
           4
-        )}.${data.createdAt.substring(5, 7)}.${data.createdAt.substring(
+        )}년 ${data.createdAt.substring(5, 7)}월 ${data.createdAt.substring(
           8,
           10
-        )}`}</span>
-        {isMainPage ? (
+        )}일`}</strong>
+
+        {isContentPage ? (
           <Button
             size="medium"
-            btnStyle="primary"
+            btnStyle="gray"
             className="answer-btn"
             handler={handleAnswerBtn}
-          >답변 하기</Button>
+          >
+            답변 하기
+          </Button>
         ) : null}
       </div>
     </Container>

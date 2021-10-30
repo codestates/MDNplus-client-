@@ -11,6 +11,7 @@ export type ButtonProps = {
 function Button({ children, size, btnStyle, handler, className }: ButtonProps) {
   return (
     <Wrapper
+      type="button"
       className={className}
       size={size}
       btnStyle={btnStyle}

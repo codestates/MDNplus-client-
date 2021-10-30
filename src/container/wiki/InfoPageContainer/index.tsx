@@ -24,14 +24,14 @@ function InfoPageContainer({ isLogin, handleLoginModal }: PropsOption) {
         hash: "Edit",
       });
     } else {
-      localStorage.setItem("contentPage", "true");
+      localStorage.setItem("InfoPage", "true");
       handleLoginModal();
     }
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (history.location.pathname === "/ContentPage") {
+    if (history.location.pathname === "/InfoPage") {
       onSetWriteMode(false);
     }
   }, []);

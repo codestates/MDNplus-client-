@@ -12,13 +12,9 @@ import HelpModal from "../../../components/HelpModal";
 import Loading from "../../../components/Loading";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
-import {
-  RightContainer,
-  Container,
-  LeftContainer,
-} from "../../../styles/postLayout.style";
 import Button from "../../../components/Button";
 import { PostPagesType } from "../../../types/components";
+import { Container } from "../../../styles/postLayout.style";
 
 function EditContainer({
   helpModal,
@@ -34,6 +30,7 @@ function EditContainer({
   const { onSetWriteMode } = useBooleanData();
   const { contentData } = contentState;
   const previewRef = useRef<any>(null);
+  const textareaRef = useRef<any>(null);
   const history = useHistory();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -76,7 +73,7 @@ function EditContainer({
           <Loading />
         ) : (
           <>
-            <LeftContainer>
+            <section className="left-container" ref={textareaRef}>
               <div className="title-box">
                 <h1 className="title">{contentData.title}</h1>
                 <span className="guide">
@@ -88,6 +85,7 @@ function EditContainer({
                   className="description"
                   defaultValue={contentData.body}
                   onChange={handleChange}
+                  ref={textareaRef}
                   autoFocus
                 ></textarea>
               ) : (
@@ -97,8 +95,8 @@ function EditContainer({
                   onChange={handleChange}
                 ></textarea>
               )}
-            </LeftContainer>
-            <RightContainer ref={previewRef}>
+            </section>
+            <section className="right-container" ref={previewRef}>
               <h1 className="title">{contentData.title}</h1>
               <ReactMarkdown
                 rehypePlugins={[rehypeRaw]}
@@ -107,10 +105,15 @@ function EditContainer({
                 children={contentData.body}
                 className="markdown"
               />
-            </RightContainer>
+            </section>
             <div className="btn-box">
               <div>
-                <Button size="small" btnStyle="text" handler={handleExitModal}>
+                <Button
+                  size="medium"
+                  btnStyle="text"
+                  handler={handleExitModal}
+                  className="exit-btn"
+                >
                   나가기
                 </Button>
                 <Button
@@ -122,7 +125,13 @@ function EditContainer({
                 </Button>
               </div>
               <div>
-                <button onClick={handleHelpModal}>?</button>
+                <button
+                  type="button"
+                  onClick={handleHelpModal}
+                  className="help-btn"
+                >
+                  ?
+                </button>
               </div>
             </div>
           </>

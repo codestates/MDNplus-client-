@@ -8,14 +8,10 @@ import useBooleanData from "../../../hooks/useBooleanData";
 import HelpModal from "../../../components/HelpModal";
 import Modal from "../../../components/Modal";
 import SelectBtn from "../../../components/SelectBtn";
-import {
-  Container,
-  LeftContainer,
-  RightContainer,
-} from "../../../styles/postLayout.style";
-import TagBox from "../../../components/TagInput";
+import { Container } from "../../../styles/postLayout.style";
 import Button from "../../../components/Button";
 import { PostPagesType } from "../../../types/components";
+import TagInput from "../../../components/TagInput";
 
 type NewQuestion = {
   title: string;
@@ -104,7 +100,7 @@ function QuestionContainer({
   return (
     <>
       <Container>
-        <LeftContainer className="question-page">
+        <section className="left-container question">
           <div className="title-box">
             <textarea
               className="title"
@@ -116,7 +112,7 @@ function QuestionContainer({
               autoFocus
             />
           </div>
-          <TagBox
+          <TagInput
             handleEnter={handleEnter}
             handleChangeTag={handleChangeTag}
             handleDeleteTag={handleDeleteTag}
@@ -124,7 +120,6 @@ function QuestionContainer({
             tagValue={tagValue}
           />
           <div className="underline"></div>
-
           <textarea
             className="description"
             onChange={(e) => {
@@ -133,28 +128,42 @@ function QuestionContainer({
             placeholder={`궁금한 내용을 적어주세요\n\n답변이 등록되면 질문 수정/삭제가 불가합니다\n\n\n* 마크다운 사용법은 오른쪽 하단 도움말을 확인해주세요.
               `}
           ></textarea>
-        </LeftContainer>
-        <RightContainer ref={previewRef}>
+        </section>
+        <section className="right-container question" ref={previewRef}>
           <h1>{title}</h1>
           <ReactMarkdown
             components={Components}
             children={body}
             className="markdown"
           />
-        </RightContainer>
-        <div>
-          <Button size="small" btnStyle="text" handler={handleExitModal}>
-            나가기
-          </Button>
-          <Button
-            size="medium"
-            btnStyle="primary"
-            handler={handleSubmitModal}
-            className="submit-btn"
-          >
-            질문 등록
-          </Button>
-          <button onClick={handleHelpModal}>?</button>
+        </section>
+        <div className="btn-box">
+          <div>
+            <Button
+              size="medium"
+              btnStyle="text"
+              handler={handleExitModal}
+              className="exit-btn"
+            >
+              나가기
+            </Button>
+            <Button
+              size="medium"
+              btnStyle="primary"
+              handler={handleSubmitModal}
+            >
+              질문 등록
+            </Button>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={handleHelpModal}
+              className="help-btn"
+            >
+              ?
+            </button>
+          </div>
         </div>
       </Container>
 

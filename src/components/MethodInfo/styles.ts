@@ -5,6 +5,7 @@ export const Wrapper = styled.article`
   flex-direction: column;
   position: relative;
   width: 60%;
+  height: 100%;
   padding-top: 50px;
   line-height: 1.5rem;
 
@@ -24,5 +25,9 @@ export const Wrapper = styled.article`
     right: 0;
     font-size: 18px;
     background: none;
+  }
+
+  .markdown {
+    line-height: 1.6;
   }
 `;

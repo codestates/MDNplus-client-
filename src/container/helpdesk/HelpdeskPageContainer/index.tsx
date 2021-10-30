@@ -47,7 +47,7 @@ function HelpdeskPageContainer() {
 
   const handleClickQuestion = (question: QuestionType) => {
     history.push({
-      pathname: "/QcontentPage",
+      pathname: "/QuestionPage",
       state: { pageName: "/HelpdeskPage", questionId: question._id },
     });
   };

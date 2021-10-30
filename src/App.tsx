@@ -116,8 +116,4 @@ export default App;
 
 const Container = styled.div`
   display: flex;
-
-  .content-section {
-    // width: 85%;
-  }
 `;

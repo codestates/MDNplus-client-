@@ -61,7 +61,7 @@ function WikiPageContainer() {
 
   const handleClickMethod = (method: MethodType) => {
     onClickMethod(method);
-    history.push("/ContentPage");
+    history.push("/InfoPage");
   };
 
   useEffect(() => {

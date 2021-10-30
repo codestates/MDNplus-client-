@@ -1,4 +1,4 @@
-import { Wrapper } from "./HelpdeskFilter.style";
+import { Wrapper } from "./styles";
 
 type HelpdeskFilterProps = {
   active: string;

@@ -2,7 +2,7 @@ import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { MethodType } from "../../types/reducer";
-import { Wrapper } from "./MethodInfo.style";
+import { Wrapper } from "./styles";
 import Button from "../Button";
 
 type MethodInfoProps = {

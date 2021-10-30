@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Wrapper } from "./Sidebar.style";
+import { Wrapper } from "./styles";
 
 const SideBar = () => {
   const [active, setActive] = useState("wiki");

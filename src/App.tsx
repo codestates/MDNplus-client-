@@ -10,12 +10,12 @@ import MyPage from "./pages/common/MyPage";
 import FAQ from "./pages/common/FAQ";
 import FooterComponent from "./components/Footer";
 import LandingPage from "./pages/common/LandingPage";
-import ContentPage from "./pages/wiki/ContentPage";
 import SettingPage from "./pages/common/SettingPage";
-import MainPage from "./pages/wiki/MainPage";
-import QcontentPage from "./pages/helpdesk/ContentPage";
-import HelpdeskPage from "./pages/helpdesk/HelpdeskPage";
 import PostPage from "./pages/common/PostPage";
+import InfoPage from "./pages/wiki/InfoPage";
+import HelpdeskPage from "./pages/helpdesk/HelpdeskPage";
+import QuestionPage from "./pages/helpdesk/QuestionPage";
+import WikiPage from "./pages/wiki/WikiPage";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -65,53 +65,48 @@ function App() {
 
       <Container>
         {writeMode ? null : contentPageMode ? null : <Sidebar></Sidebar>}
-        {/* <div className="content-section"> */}
-          <Switch>
-            <Route exact path="/" render={() => <LandingPage />} />
-            <Route
-              path="/ContentPage"
-              render={() => (
-                <ContentPage
-                  isLogin={isLogin}
-                  handleLoginModal={handleLoginModal}
-                />
-              )}
-            />
-            <Route path="/SearchPage" render={() => <SearchPage />} />
-            <Route
-              path="/SettingPage"
-              render={() => (
-                <SettingPage
-                  handleLogin={handleLogin}
-                  handleChangeUserImg={handleChangeUserImg}
-                />
-              )}
-            />
-            <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
-            <Route path="/MyPage" render={() => <MyPage />} />
-            <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-            <Route
-              path="/QcontentPage"
-              render={() => (
-                <QcontentPage
-                  isLogin={isLogin}
-                  handleLoginModal={handleLoginModal}
-                />
-              )}
-            />
-            <Route path="/FAQ" render={() => <FAQ />} />
-            <Route path="/Wiki" render={() => <MainPage />} />
-            <Route
-              path="/PostPage"
-              render={() => (
-                <PostPage
-                  helpModal={helpModal}
-                  handleHelpModal={handleHelpModal}
-                />
-              )}
-            ></Route>
-          </Switch>
-        {/* </div> */}
+        <Switch>
+          <Route exact path="/" render={() => <LandingPage />} />
+          <Route path="/SearchPage" render={() => <SearchPage />} />
+          <Route path="/Wiki" render={() => <WikiPage />} />
+          <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
+          <Route
+            path="/InfoPage"
+            render={() => (
+              <InfoPage isLogin={isLogin} handleLoginModal={handleLoginModal} />
+            )}
+          />
+          <Route
+            path="/QuestionPage"
+            render={() => (
+              <QuestionPage
+                isLogin={isLogin}
+                handleLoginModal={handleLoginModal}
+              />
+            )}
+          />
+          <Route
+            path="/SettingPage"
+            render={() => (
+              <SettingPage
+                handleLogin={handleLogin}
+                handleChangeUserImg={handleChangeUserImg}
+              />
+            )}
+          />
+          <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
+          <Route path="/MyPage" render={() => <MyPage />} />
+          <Route path="/FAQ" render={() => <FAQ />} />
+          <Route
+            path="/PostPage"
+            render={() => (
+              <PostPage
+                helpModal={helpModal}
+                handleHelpModal={handleHelpModal}
+              />
+            )}
+          ></Route>
+        </Switch>
       </Container>
       {writeMode ? null : <FooterComponent />}
     </div>

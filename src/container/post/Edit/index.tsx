@@ -16,7 +16,7 @@ import {
   RightContainer,
   Container,
   LeftContainer,
-} from "../../../styles/PostLayout.style";
+} from "../../../styles/postLayout.style";
 import Button from "../../../components/Button";
 import { PostPagesType } from "../../../types/components";
 

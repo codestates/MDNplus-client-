@@ -12,7 +12,7 @@ import {
   Container,
   LeftContainer,
   RightContainer,
-} from "../../../styles/PostLayout.style";
+} from "../../../styles/postLayout.style";
 import TagBox from "../../../components/TagInput";
 import Button from "../../../components/Button";
 import { PostPagesType } from "../../../types/components";

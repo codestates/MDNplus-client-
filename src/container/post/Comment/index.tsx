@@ -15,7 +15,7 @@ import {
   Container,
   LeftContainer,
   RightContainer,
-} from "../../../styles/PostLayout.style";
+} from "../../../styles/postLayout.style";
 import { useHistory } from "react-router";
 import Button from "../../../components/Button";
 import { PostPagesType } from "../../../types/components";

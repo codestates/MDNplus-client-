@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import Loading from "../../../components/Loading";
-import { Container } from "./HelpdeskPageContainer.style";
+import { Container } from "./styles";
 import Question from "../../../components/Question";
 import { QuestionType } from "../../../types/reducer";
 import ServiceIntro from "../../../components/ServiceIntro";
@@ -83,7 +83,12 @@ function HelpdeskPageContainer() {
           description={"궁금한 점들을 질문하세요"}
           handleMakeQuestion={handleMakeQuestion}
         ></ServiceIntro>
-        <Button className="question-btn" size="medium" btnStyle="primary" handler={handleMakeQuestion}>
+        <Button
+          className="question-btn"
+          size="medium"
+          btnStyle="primary"
+          handler={handleMakeQuestion}
+        >
           질문하기
         </Button>
         <section className="question-section">

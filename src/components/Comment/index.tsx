@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import { CommentType } from "../../types/reducer";
-import { Wrapper } from "./Comment.style";
+import { Wrapper } from "./styles";
 
 type CommentProps = {
   data?: CommentType;

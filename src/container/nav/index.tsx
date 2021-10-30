@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import LoginModal from "./LoginModal";
 import MenuModal from "./MenuModal";
-import { Wrapper } from "./Nav.style";
+import { Wrapper } from "./styles";
 import SearchContainer from "./Search";
 import Button from "../../components/Button";
 

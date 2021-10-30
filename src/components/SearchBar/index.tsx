@@ -1,4 +1,4 @@
-import { Wrapper } from "./SearchBar.style";
+import { Wrapper } from "./styles";
 
 type SearchBarProps = {
   handleKeyPress: (

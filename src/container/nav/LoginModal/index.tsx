@@ -10,7 +10,7 @@ import {
   ModalContainer,
   OauthContainer,
   SocialBtnBox,
-} from "./LoginModal.style";
+} from "./styles";
 
 type Props = {
   isOpen: boolean;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { ModalContainer, ModalBox, ModalButton } from "./MenuModal.style";
+import { ModalContainer, ModalBox, ModalButton } from "./styles";
 
 type MenuProps = {
   isOpen: boolean;

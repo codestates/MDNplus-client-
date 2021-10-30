@@ -9,9 +9,9 @@ import useAllData from "../../../hooks/useAllData";
 import useBooleanData from "../../../hooks/useBooleanData";
 import useContentData from "../../../hooks/useContentData";
 import { MethodType } from "../../../types/reducer";
-import { Container } from "./MainPageContainer.style";
+import { Container } from "./styles";
 
-function MainPageContainer() {
+function WikiPageContainer() {
   const [firstOption, setFirstOption] = useState("javascript");
   const { allState, onFilter, onChangeFilter } = useAllData();
   const {
@@ -109,4 +109,4 @@ function MainPageContainer() {
   );
 }
 
-export default MainPageContainer;
+export default WikiPageContainer;

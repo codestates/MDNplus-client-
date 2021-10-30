@@ -8,11 +8,10 @@ import useQcontentData from "../../../hooks/useQcontentData";
 import { answerPageData } from "../../../modules/AnswerPageData";
 import Comment from "../../../components/Comment";
 import Loading from "../../../components/Loading";
-import { Container } from "./ContentPageContainer.style";
+import { Container } from "./styles";
 import Button from "../../../components/Button";
-import styled from "styled-components";
 
-type ContentPageContainerProps = {
+type QuestionPageContainerProps = {
   isLogin: boolean;
   handleLoginModal: () => void;
 };
@@ -22,10 +21,10 @@ type PageNameType = {
   questionId: string;
 };
 
-function ContentPageContainer({
+function QuestionPageContainer({
   isLogin,
   handleLoginModal,
-}: ContentPageContainerProps) {
+}: QuestionPageContainerProps) {
   const { QcontentState, onCurrentQData } = useQcontentData();
   const { onContentPageMode } = useBooleanData();
   const { currentData } = QcontentState;
@@ -118,8 +117,4 @@ function ContentPageContainer({
   );
 }
 
-export default ContentPageContainer;
-
-const BackBtn = styled(Button)`
-  font-size: 1.4rem;
-`;
+export default QuestionPageContainer;

@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import { QuestionType } from "../../types/reducer";
-import { Container } from "./UserQuestion.style";
+import { Container } from "./styles";
 import Button from "../Button";
 
 export type UserQuestionProps = {

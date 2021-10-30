@@ -1,5 +1,5 @@
 import { Component, ReactElement } from "react";
-import { ModalBox, ModalStyle } from "./Modal.style";
+import { ModalBox, ModalStyle } from "./styles";
 
 export type ModalProps = {
   isOpen?: boolean;

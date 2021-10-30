@@ -1,4 +1,4 @@
-import HelpdeskPageContainer from "../../../container/helpdesk/HelpdeskPageContainer";
+import HelpdeskPageContainer from "../../container/helpdesk/HelpdeskPageContainer";
 
 const HelpdeskPage = () => {
   return <HelpdeskPageContainer />;

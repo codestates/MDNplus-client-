@@ -1,5 +1,5 @@
 import { QuestionType } from "../../types/reducer";
-import { Wrapper } from "./Question.style";
+import { Wrapper } from "./styles";
 
 type QustionProps = {
   data: QuestionType;

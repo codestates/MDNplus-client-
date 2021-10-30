@@ -11,7 +11,7 @@ type PropsOption = {
   handleLoginModal: () => void;
 };
 
-function ContentPageContainer({ isLogin, handleLoginModal }: PropsOption) {
+function InfoPageContainer({ isLogin, handleLoginModal }: PropsOption) {
   const { contentState } = useContentData();
   const { contentData } = contentState;
   const { onSetWriteMode } = useBooleanData();
@@ -53,7 +53,7 @@ function ContentPageContainer({ isLogin, handleLoginModal }: PropsOption) {
   );
 }
 
-export default ContentPageContainer;
+export default InfoPageContainer;
 
 export const Container = styled.main`
   display: flex;

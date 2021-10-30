@@ -1,5 +1,5 @@
 import { MethodType } from "../../types/reducer";
-import { Wrapper } from "./Method.style";
+import { Wrapper } from "./styles";
 
 type MethodProps = {
   data: MethodType;

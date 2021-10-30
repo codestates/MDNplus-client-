@@ -1,4 +1,4 @@
-import { Wrapper } from "./Button.style";
+import { Wrapper } from "./styles";
 
 export type ButtonProps = {
   size: "small" | "medium" | "large";

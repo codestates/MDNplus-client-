@@ -1,4 +1,4 @@
-import { Wrapper } from "./ServiceIntro.style";
+import { Wrapper } from "./styles";
 
 type ServiceIntroProps = {
   handleMakeQuestion?: () => void;

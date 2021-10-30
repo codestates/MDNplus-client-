@@ -4,11 +4,7 @@ import { useHistory } from "react-router";
 import axios from "axios";
 import useBooleanData from "../../../hooks/useBooleanData";
 import Loading from "../../../components/Loading";
-import {
-  BoxContainer,
-  Container,
-  QuestionContainer,
-} from "./HelpdeskPageContainer.style";
+import { Container } from "./HelpdeskPageContainer.style";
 import Question from "../../../components/Question";
 import { QuestionType } from "../../../types/reducer";
 import ServiceIntro from "../../../components/ServiceIntro";
@@ -26,7 +22,7 @@ type HelpData = {
 };
 
 function HelpdeskPageContainer() {
-  const [isSelected, setIsSelected] = useState("최신순");
+  const [active, setActive] = useState("최신순");
   const { helpData, onStoreData, onFilter } = useHelpData();
   const { onSetWriteMode, onContentPageMode } = useBooleanData();
   const { allQuestions, selectedQuestions }: HelpData = helpData;
@@ -34,10 +30,10 @@ function HelpdeskPageContainer() {
 
   const handleFilter = (type: string) => {
     if (type === "최신순") {
-      setIsSelected("최신순");
+      setActive("최신순");
       onFilter("최신순");
     } else if (type === "인기순") {
-      setIsSelected("인기순");
+      setActive("인기순");
       onFilter("인기순");
     }
   };
@@ -79,45 +75,38 @@ function HelpdeskPageContainer() {
   return selectedQuestions ? (
     <>
       <Container>
-        <div className="stage">
-          <ServiceIntro
-            img={
-              "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/question_sirbpg.png"
-            }
-            title={"헬프데스크"}
-            description={"궁금한 점들을 질문하세요"}
-            handleMakeQuestion={handleMakeQuestion}
-          ></ServiceIntro>
-          <QuestionContainer>
-            <Button
-              size="medium"
-              btnStyle="primary"
-              handler={handleMakeQuestion}
-            >
-              질문하기
-            </Button>
+        <ServiceIntro
+          img={
+            "https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/question_sirbpg.png"
+          }
+          title={"헬프데스크"}
+          description={"궁금한 점들을 질문하세요"}
+          handleMakeQuestion={handleMakeQuestion}
+        ></ServiceIntro>
+        <Button className="question-btn" size="medium" btnStyle="primary" handler={handleMakeQuestion}>
+          질문하기
+        </Button>
+        <section className="question-section">
+          <HelpdeskFilter
+            active={active}
+            handleFilter={handleFilter}
+          ></HelpdeskFilter>
 
-            <HelpdeskFilter
-              isSelected={isSelected}
-              handleFilter={handleFilter}
-            ></HelpdeskFilter>
-
-            <BoxContainer>
-              {selectedQuestions === null ? (
-                <Loading />
-              ) : (
-                selectedQuestions.map((el, idx) => (
-                  <Question
-                    key={idx + 1}
-                    data={el}
-                    handleClickQuestion={handleClickQuestion}
-                    handleSearchTag={handleSearchTag}
-                  />
-                ))
-              )}
-            </BoxContainer>
-          </QuestionContainer>
-        </div>
+          <div className="question-list">
+            {selectedQuestions === null ? (
+              <Loading />
+            ) : (
+              selectedQuestions.map((el, idx) => (
+                <Question
+                  key={idx + 1}
+                  data={el}
+                  handleClickQuestion={handleClickQuestion}
+                  handleSearchTag={handleSearchTag}
+                />
+              ))
+            )}
+          </div>
+        </section>
       </Container>
     </>
   ) : (

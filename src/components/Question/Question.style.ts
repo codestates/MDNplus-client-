@@ -1,73 +1,82 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-export const QuestionStyle = styled.div`
-border-top: 0.01px solid #e0e0e0;
-padding: 2rem;
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-basis: 50%;
+  padding: 20px;
+  border-top: 1px solid rgb(224, 224, 224);
 
-.question-title-box {
-  cursor: pointer;
-  width: 100%;
-}
+  .question-title-box {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
 
-.question-logo {
-  color: #1658d8;
-  margin-right: 0.5rem;
-  font-weight: 600;
-  font-size: 1.2rem;
-}
+  .question-logo {
+    margin-right: 5px;
+    color: #1658d8;
+    font-weight: 600;
+    font-size: 20px;
+  }
 
-.question-title {
-  font-size: 1rem;
-  font-weight: 500;
-}
+  .question-title {
+    font-size: 16px;
+    font-weight: 500;
+  }
 
-.question-body {
-  cursor: pointer;
-  margin-top: 0.5rem;
-  margin-left: 1.3rem;
-  font-size: 0.8rem;
-  color: #757575;
-}
+  .question-desc {
+    color: #757575;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    cursor: pointer;
+  }
 
-.count-box {
-  padding-top: 1rem;
-  margin-bottom: -1rem;
-}
+  .tag-box {
+    margin: 6px 0;
+  }
 
-.like-count {
-  color: #686868;
-  font-size: 0.8rem;
-  margin-top: 1rem;
-}
+  .tag {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border-radius: 2rem;
+    background: #f6f6f6;
+    color: #686868;
+    font-size: 12px;
+    cursor: pointer;
 
-.answer-count {
-  font-size: 0.8rem;
-  margin-left: 1rem;
-  color: #686868;
-}
+    &:hover {
+      background-color: ${({ theme }) => theme.primary[500]};
+      color: white;
+    }
+  }
 
-.question-date {
-  font-size: 0.8rem;
-  color: #686868;
-  margin-left: 1rem;
-}
-`;
+  .question-info {
+    display: flex;
+    align-items: center;
+    color: #686868;
+    font-size: 0.8rem;
+  }
 
-export const TagBox = styled.div`
-margin-top: 1.8rem;
-margin-bottom: 1rem;
-`;
+  .question-info dl {
+    display: flex;
+  }
 
-export const Tag = styled.span`
-background: #f6f6f6;
-color: #686868;
-border-radius: 2rem;
-padding: 0.5rem 1rem 0.5rem 1rem;
-font-size: 0.7rem;
-cursor: pointer;
+  .question-info div {
+    display: flex;
+  }
 
-&:hover {
-  background-color: #2196f3;
-  color: white;
-}
+  .question-info dt {
+    margin-right: 3px;
+  }
+
+  .question-info dd {
+    margin: 0;
+    margin-right: 15px;
+  }
+
+  .question-date {
+    font-weight: normal;
+  }
 `;

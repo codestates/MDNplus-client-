@@ -7,12 +7,10 @@ type PropsOption = {
 
 function ContentPage({ isLogin, handleLoginModal }: PropsOption) {
   return (
-    <>
-      <ContentPageContainer
-        isLogin={isLogin}
-        handleLoginModal={handleLoginModal}
-      ></ContentPageContainer>
-    </>
+    <ContentPageContainer
+      isLogin={isLogin}
+      handleLoginModal={handleLoginModal}
+    ></ContentPageContainer>
   );
 }
 

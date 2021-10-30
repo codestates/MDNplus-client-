@@ -5,7 +5,6 @@ import useContentData from "../../../hooks/useContentData";
 import Loading from "../../../components/Loading";
 import MethodInfo from "../../../components/MethodInfo";
 import styled from "styled-components";
-import Button from "../../../components/Button";
 
 type PropsOption = {
   isLogin: boolean;
@@ -38,46 +37,28 @@ function ContentPageContainer({ isLogin, handleLoginModal }: PropsOption) {
   }, []);
 
   return (
-    <>
-      <Container>
-        {contentData === null ? (
-          <Loading />
-        ) : (
-          <>
-            <MethodInfo
-              key={contentData._id}
-              data={contentData}
-              handleClickEdit={handleClickEdit}
-            ></MethodInfo>
-            <Button
-              size="small"
-              btnStyle="text"
-              className="edit-btn"
-              handler={handleClickEdit}
-            >
-              수정
-            </Button>
-          </>
-        )}
-      </Container>
-    </>
+    <Container>
+      {contentData === null ? (
+        <Loading />
+      ) : (
+        <>
+          <MethodInfo
+            key={contentData._id}
+            data={contentData}
+            handleClickEdit={handleClickEdit}
+          ></MethodInfo>
+        </>
+      )}
+    </Container>
   );
 }
 
 export default ContentPageContainer;
 
-export const Container = styled.div`
+export const Container = styled.main`
   display: flex;
   justify-content: center;
   position: relative;
   width: 100%;
   padding-bottom: 100px;
-
-  .edit-btn {
-    position: absolute;
-    top: 7%;
-    right: 29.5%;
-    font-size: 18px;
-    background: none;
-  }
 `;

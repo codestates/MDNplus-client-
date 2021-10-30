@@ -65,51 +65,53 @@ function App() {
 
       <Container>
         {writeMode ? null : contentPageMode ? null : <Sidebar></Sidebar>}
-        <Switch>
-          <Route exact path="/" render={() => <LandingPage />} />
-          <Route
-            path="/ContentPage"
-            render={() => (
-              <ContentPage
-                isLogin={isLogin}
-                handleLoginModal={handleLoginModal}
-              />
-            )}
-          />
-          <Route path="/SearchPage" render={() => <SearchPage />} />
-          <Route
-            path="/SettingPage"
-            render={() => (
-              <SettingPage
-                handleLogin={handleLogin}
-                handleChangeUserImg={handleChangeUserImg}
-              />
-            )}
-          />
-          <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
-          <Route path="/MyPage" render={() => <MyPage />} />
-          <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
-          <Route
-            path="/QcontentPage"
-            render={() => (
-              <QcontentPage
-                isLogin={isLogin}
-                handleLoginModal={handleLoginModal}
-              />
-            )}
-          />
-          <Route path="/FAQ" render={() => <FAQ />} />
-          <Route path="/Wiki" render={() => <MainPage />} />
-          <Route
-            path="/PostPage"
-            render={() => (
-              <PostPage
-                helpModal={helpModal}
-                handleHelpModal={handleHelpModal}
-              />
-            )}
-          ></Route>
-        </Switch>
+        {/* <div className="content-section"> */}
+          <Switch>
+            <Route exact path="/" render={() => <LandingPage />} />
+            <Route
+              path="/ContentPage"
+              render={() => (
+                <ContentPage
+                  isLogin={isLogin}
+                  handleLoginModal={handleLoginModal}
+                />
+              )}
+            />
+            <Route path="/SearchPage" render={() => <SearchPage />} />
+            <Route
+              path="/SettingPage"
+              render={() => (
+                <SettingPage
+                  handleLogin={handleLogin}
+                  handleChangeUserImg={handleChangeUserImg}
+                />
+              )}
+            />
+            <Route path="/NameSettingPage" render={() => <NameSettingPage />} />
+            <Route path="/MyPage" render={() => <MyPage />} />
+            <Route path="/HelpdeskPage" render={() => <HelpdeskPage />} />
+            <Route
+              path="/QcontentPage"
+              render={() => (
+                <QcontentPage
+                  isLogin={isLogin}
+                  handleLoginModal={handleLoginModal}
+                />
+              )}
+            />
+            <Route path="/FAQ" render={() => <FAQ />} />
+            <Route path="/Wiki" render={() => <MainPage />} />
+            <Route
+              path="/PostPage"
+              render={() => (
+                <PostPage
+                  helpModal={helpModal}
+                  handleHelpModal={handleHelpModal}
+                />
+              )}
+            ></Route>
+          </Switch>
+        {/* </div> */}
       </Container>
       {writeMode ? null : <FooterComponent />}
     </div>
@@ -119,4 +121,8 @@ export default App;
 
 const Container = styled.div`
   display: flex;
+
+  .content-section {
+    // width: 85%;
+  }
 `;

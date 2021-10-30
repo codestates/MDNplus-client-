@@ -13,13 +13,18 @@ function Method({ data, handleClickMethod }: MethodProps) {
         handleClickMethod(data);
       }}
     >
-      <h1 className="method-title">{data.title}</h1>
-      {data.pureBody ? (
-        <p className="method-desc">{data.pureBody.slice(0, 70)} ...</p>
-      ) : (
-        <span className="method-desc">정보를 입력해주세요.</span>
-      )}
-      <div className="count">수정된 횟수 {data.count}</div>
+      <div>
+        <h1 className="method-title">{data.title}</h1>
+        {data.pureBody ? (
+          <p className="method-desc">{data.pureBody.slice(0, 70)} ...</p>
+        ) : (
+          <span className="method-desc">정보를 입력해주세요.</span>
+        )}
+      </div>
+      <dl className="count">
+        <dt>수정된 횟수</dt>
+        <dd>{data.count}</dd>
+      </dl>
     </Wrapper>
   );
 }

@@ -16,22 +16,20 @@ export const Wrapper = styled.nav<{ active: string }>`
   }
 
   ${({ active }) =>
-    active === "wiki"
-      ? css`
-          .service-name:first-child {
-            background: rgb(220, 234, 255);
-            font-weight: bold;
-          }
-        `
-      : null}
+    active === "wiki" &&
+    css`
+      .service-name:first-child {
+        background: rgb(220, 234, 255);
+        font-weight: bold;
+      }
+    `}
 
   ${({ active }) =>
-    active === "helpdesk"
-      ? css`
-          .service-name:last-child {
-            background: rgb(220, 234, 255);
-            font-weight: bold;
-          }
-        `
-      : null}
+    active === "helpdesk" &&
+    css`
+      .service-name:last-child {
+        background: rgb(220, 234, 255);
+        font-weight: bold;
+      }
+    `}
 `;

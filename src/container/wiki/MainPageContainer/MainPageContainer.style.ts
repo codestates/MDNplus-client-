@@ -10,7 +10,6 @@ export const Container = styled.main`
   .method-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     width: 85%;
     margin-top: 40px;
   }

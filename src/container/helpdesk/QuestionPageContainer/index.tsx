@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import UserQuestion from "../../../components/UserQuestion";
 import useBooleanData from "../../../hooks/useBooleanData";
-import useQcontentData from "../../../hooks/useQcontentData";
+import useQcontentData from "../../../hooks/useQuestionData";
 import { answerPageData } from "../../../modules/AnswerPageData";
 import Comment from "../../../components/Comment";
 import Loading from "../../../components/Loading";
@@ -25,9 +25,9 @@ function QuestionPageContainer({
   isLogin,
   handleLoginModal,
 }: QuestionPageContainerProps) {
-  const { QcontentState, onCurrentQData } = useQcontentData();
+  const { QuestionState, onCurrentQData } = useQcontentData();
   const { onContentPageMode } = useBooleanData();
-  const { currentData } = QcontentState;
+  const { currentData } = QuestionState;
   const history = useHistory();
   const dispatch = useDispatch();
   const [isContentPage, setIsContentPage] = useState<boolean>(false);

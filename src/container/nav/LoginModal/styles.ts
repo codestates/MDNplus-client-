@@ -7,6 +7,7 @@ export const Container = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
+  padding: 32px;
 
   .close-btn {
     position: absolute;
@@ -15,8 +16,9 @@ export const Container = styled.div`
   }
 
   .title {
-    font-size: 40px;
     color: ${({ theme }) => theme.primary[700]};
+    font-size: 40px;
+    font-family: "Archivo Black", sans-serif;
   }
 
   .btn-box {

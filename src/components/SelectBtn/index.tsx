@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 type SelectBtnProps = {
   type: string;
   writing: string;
@@ -15,44 +17,80 @@ function SelectBtn({
   submitType,
   handleSubmit,
   handleModal,
-  handleExit
+  handleExit,
 }: SelectBtnProps) {
   return (
-    <>
+    <Wrapper>
       {type === "submit" ? (
         writing ? (
           <>
-            <div className="askInfo">{askInfo}</div>
+            <p className="ask-info">{askInfo}</p>
             <div className="select-box">
-              <button className="select cancel" onClick={handleModal}>
+              <button type="button" onClick={handleModal}>
                 취소
               </button>
-              <button className="select submit" onClick={handleSubmit}>
+              <button type="button" onClick={handleSubmit}>
                 {submitType}
               </button>
             </div>
           </>
         ) : (
           <>
-            <div className="askInfo">게시물을 작성해주세요.</div>
+            <p className="ask-info">게시물을 작성해주세요.</p>
             <div className="select-box">
-              <div className="confirm-btn" onClick={handleModal}>
+              <button type="button" onClick={handleModal}>
                 확인
-              </div>
+              </button>
             </div>
           </>
         )
       ) : type === "exit" ? (
         <>
-          <div className="askInfo">나가시겠습니까?</div>
+          <p className="ask-info">나가시겠습니까?</p>
           <div className="select-box">
-            <button className="select yes" onClick={handleExit}>네</button>
-            <button className="select no" onClick={handleModal}>아니요</button>
+            <button type="button" onClick={handleExit}>
+              네
+            </button>
+            <button type="button" onClick={handleModal}>
+              아니요
+            </button>
           </div>
         </>
       ) : null}
-    </>
+    </Wrapper>
   );
 }
 
 export default SelectBtn;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: 32px;
+
+  .ask-info {
+    color: #616161;
+    margin: 0;
+  }
+
+  .select-box {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .select-box button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .select-box button:first-child {
+    color: #616161;
+  }
+
+  .select-box button:last-child {
+    color: ${({ theme }) => theme.primary[700]};
+  }
+`;

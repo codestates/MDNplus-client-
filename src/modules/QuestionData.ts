@@ -42,7 +42,7 @@ const initialState = {
   isLike: null,
 };
 
-function QcontentDataReducer(
+function QuestionDataReducer(
   state: InitState = initialState,
   action: CurrentQDataAction
 ): InitState {
@@ -65,4 +65,4 @@ function QcontentDataReducer(
   }
 }
 
-export default QcontentDataReducer;
+export default QuestionDataReducer;

@@ -5,12 +5,12 @@ import {
   currentQData,
   questionLike,
   commentLike,
-} from "../modules/QcontentData";
+} from "../modules/QuestionData";
 import { CommentType, DataType } from "../types/reducer";
 
-function useQcontentData() {
-  const QcontentState = useSelector(
-    (state: RootState) => state.QcontentDataReducer
+function useQuestionData() {
+  const QuestionState = useSelector(
+    (state: RootState) => state.QuestionDataReducer
   );
   const dispatch = useDispatch();
   const onCurrentQData = useCallback(
@@ -26,7 +26,7 @@ function useQcontentData() {
     [dispatch]
   );
 
-  return { QcontentState, onCurrentQData, onQuestionLike, onCommentLike };
+  return { QuestionState, onCurrentQData, onQuestionLike, onCommentLike };
 }
 
-export default useQcontentData;
+export default useQuestionData;

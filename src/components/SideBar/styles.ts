@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.nav<{ active: string }>`
-  width: 280px;
+  width: 250px;
   background: #f4f4f4;
   box-shadow: 4px 0px 5px #eeeeee;
 

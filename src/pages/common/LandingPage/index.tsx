@@ -46,7 +46,6 @@ export default LandingPage;
 export const EmptySpace = styled.div`
   width: 100%;
   height: 10rem;
-  // border: 1px solid black;
 `;
 
 export const Container = styled.div`
@@ -54,6 +53,7 @@ export const Container = styled.div`
   grid-template-columns: 1fr;
   justify-content: center;
   align-items: center;
+  width: 100%;
 
   @media (max-width: 500px) {
     display: flex;

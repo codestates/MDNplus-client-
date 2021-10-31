@@ -1,5 +1,5 @@
 import { Component, ReactElement } from "react";
-import { ModalBox, ModalStyle } from "./styles";
+import { ModalBox, Wrapper } from "./styles";
 
 export type ModalProps = {
   isOpen?: boolean;
@@ -11,10 +11,10 @@ export type ModalProps = {
 function Modal({ isOpen = false, component, handleModal, modalSize }: ModalProps) {
   if (!isOpen) return null;
   return (
-    <ModalStyle onClick={handleModal}>
+    <Wrapper onClick={handleModal}>
       <div className="modal-overlay"></div>
       <ModalBox onClick={(e) => e.stopPropagation()} modalSize={modalSize}>{component}</ModalBox>
-    </ModalStyle>
+    </Wrapper>
   );
 }
 

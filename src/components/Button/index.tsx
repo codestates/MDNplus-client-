@@ -2,7 +2,7 @@ import { Wrapper } from "./styles";
 
 export type ButtonProps = {
   size: "small" | "medium" | "large";
-  btnStyle: string;
+  btnStyle: "primary" | "white" | "text" | "gray";
   children?: string;
   className?: string;
   handler?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;

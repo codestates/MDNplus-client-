@@ -27,7 +27,6 @@ function NavContainer({
   setIsLogin,
 }: NavContainerProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [userUrl, setUserUrl] = useState("");
   const history = useHistory();
 
   const handleMenuModal = () => {
@@ -91,11 +90,6 @@ function NavContainer({
     }
 
     if (window.localStorage.getItem("sessionId")) {
-      axios
-        .get("http://localhost:8080/userinfo", { withCredentials: true })
-        .then((res) => {
-          setUserUrl(res.data.image);
-        });
       setIsLogin(true);
     }
   }, []);
@@ -110,19 +104,12 @@ function NavContainer({
       </div>
       {isLogin ? (
         <>
-          {userUrl ? (
-            <img
-              className="user-icon"
-              src={userUrl}
-              onClick={handleMenuModal}
-            ></img>
-          ) : (
-            <img
-              className="user-icon"
-              src={userImg}
-              onClick={handleMenuModal}
-            ></img>
-          )}
+          <img
+            className="user-icon"
+            src={userImg}
+            onClick={handleMenuModal}
+            alt="user image"
+          ></img>
           {isMenuOpen ? (
             <MenuModal
               handleLogin={handleLogin}

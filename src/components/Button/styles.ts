@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 const primaryButtonStyle = css`
   border: none;
   background: ${({ theme }) => theme.primary[600]};
-  color: ${({ theme }) => theme.gray[200]};
+  color: white;
   transition: opacity 200ms ease-in-out;
 
   &:hover {

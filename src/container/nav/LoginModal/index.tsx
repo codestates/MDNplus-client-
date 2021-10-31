@@ -1,16 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Title,
-  CloseIcon,
-  GithubBtn,
-  GithubLogo,
-  KaKaoLogo,
-  KakaoBtn,
-  ModalBox,
-  ModalContainer,
-  OauthContainer,
-  SocialBtnBox,
-} from "./styles";
+import Modal from "../../../components/Modal";
+import { Container } from "./styles";
 
 type Props = {
   isOpen: boolean;
@@ -37,22 +27,33 @@ function LoginModal({ isOpen, onClose }: Props) {
   };
 
   return isOpen ? (
-    <ModalContainer onClick={onClose}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <CloseIcon onClick={onClose}>
-          <FontAwesomeIcon icon="times" size="lg" color="#BDBDBD" />
-        </CloseIcon>
-        <OauthContainer>
-          <Title>MDN +</Title>
-          <SocialBtnBox>
-            <KaKaoLogo src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112350/kakao2_evw3bk.png"></KaKaoLogo>
-            <KakaoBtn onClick={kakaoLoginHandler}>카카오 로그인</KakaoBtn>
-            <GithubLogo src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/github_il3cw8.png"></GithubLogo>
-            <GithubBtn onClick={githubLoginHandler}>깃허브 로그인</GithubBtn>
-          </SocialBtnBox>
-        </OauthContainer>
-      </ModalBox>
-    </ModalContainer>
+    <Modal
+      modalSize="medium"
+      isOpen={isOpen}
+      handleModal={onClose}
+      component={
+        <Container>
+          <FontAwesomeIcon
+            onClick={onClose}
+            icon="times"
+            size="lg"
+            color="#BDBDBD"
+            className="close-btn"
+          />
+          <h1 className="title">MDN +</h1>
+          <div className="btn-box">
+            <button type="button" onClick={kakaoLoginHandler}>
+              <img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112350/kakao2_evw3bk.png"></img>
+              카카오 로그인
+            </button>
+            <button type="button" onClick={githubLoginHandler}>
+              <img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/github_il3cw8.png"></img>
+              깃허브 로그인
+            </button>
+          </div>
+        </Container>
+      }
+    ></Modal>
   ) : null;
 }
 

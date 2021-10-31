@@ -6,10 +6,10 @@ type SizeType = Pick<ModalProps, "modalSize">;
 
 const sizeStyles = css<SizeType>`
   ${({ modalSize }) =>
-    modalSize === "large" &&
+    modalSize === "medium" &&
     css`
-      width: 50rem;
-      height: 41rem;
+      width: 370px;
+      height: 350px;
     `}
 
   ${({ modalSize }) =>
@@ -20,9 +20,7 @@ const sizeStyles = css<SizeType>`
     `}
 `;
 
-export const ModalStyle = styled.div`
-  height: 100%;
-  width: 100%;
+export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,35 +28,34 @@ export const ModalStyle = styled.div`
   top: 0;
   left: 0;
   z-index: 2;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(3px);
+
   animation-duration: 0.2s;
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
-  @media (max-width: 375px) {
-    height: 100%;
-    width: 100%;
-  }
 
   .modal-overlay {
     position: absolute;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(3px);
     background: rgba(0, 0, 0, 0.6);
     cursor: pointer;
   }
 `;
 
-export const ModalBox = styled.div<ModalProps>`
+export const ModalBox = styled.aside<ModalProps>`
+  display: flex;
+  justify-content: center;
   position: relative;
   padding: 2.5rem;
   background-color: white;
   border: 1px solid #9e9e9e;
   transition: 0.2s ease-in;
   border-radius: 10px;
-  padding: ${(props) => (props.modalSize === "large" ? "0rem" : "2.5rem")};
-
-  ${sizeStyles}
+  ${sizeStyles};
 
   .askInfo {
     width: 100%;
@@ -106,10 +103,5 @@ export const ModalBox = styled.div<ModalProps>`
 
   .select.no {
     color: #3d5afe;
-  }
-
-  @media (max-width: 375px) {
-    height: 9rem;
-    width: 18rem;
   }
 `;

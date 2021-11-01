@@ -53,15 +53,14 @@ function WikiFilter({
 export default WikiFilter;
 
 const Wrapper = styled.div`
-  margin-top: 2rem;
-  width: 100%;
   display: flex;
-  // border: 1px solid black;
   justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
 
   .filter {
-    font-size: 1.2rem;
     width: 10rem;
+    font-size: 1.2rem;
     border: none;
     outline: none;
     color: #616161;

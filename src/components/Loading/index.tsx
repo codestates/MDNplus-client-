@@ -12,15 +12,14 @@ export default Loading;
 
 const Container = styled.div`
   display: flex;
-  height: 100%;
-  width: 100%;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 65vh;
 `;
 
 const Img = styled.img`
   width: 5rem;
   height: 5rem;
   object-fit: cover;
-  margin-top: 5rem;
 `;

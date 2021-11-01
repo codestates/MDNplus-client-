@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import { CommentType } from "../../types/reducer";
-import { Container } from "./Comment.style";
+import { Wrapper } from "./styles";
 
 type CommentProps = {
   data?: CommentType;
@@ -8,40 +8,44 @@ type CommentProps = {
 
 function Comment({ data }: CommentProps) {
   return (
-    <Container>
+    <Wrapper>
       {data !== undefined ? (
         <>
-          <div className="title-box">
+          <div className="comment-info">
             {data.userId.image !== "" ? (
-              <img className="user-img" src={data.userId.image}></img>
+              <img
+                className="user-img"
+                src={data.userId.image}
+                alt="user profile"
+              ></img>
             ) : (
               <img
                 className="user-img"
                 src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
+                alt="user profile"
               ></img>
             )}
-            <div className="date">{`${data.createdAt.substring(
-              0,
-              4
-            )}년 ${data.createdAt.substring(5, 7)}월 ${data.createdAt.substring(
-              8,
-              10
-            )}일`}</div>
             {data.userId.nickName !== null ? (
-              <span className="comment-title">
-                {" "}
+              <strong className="comment-title">
                 {data.userId.nickName} 님 답변
-              </span>
+              </strong>
             ) : null}
           </div>
-          <div className="comment-body">
+          <div className="comment-desc">
             <ReactMarkdown children={data.content}></ReactMarkdown>
           </div>
+          <strong className="date">{`${data.createdAt.substring(
+            0,
+            4
+          )}년 ${data.createdAt.substring(5, 7)}월 ${data.createdAt.substring(
+            8,
+            10
+          )}일`}</strong>
         </>
       ) : (
         <div className="empty">답변을 기다리는 중입니다.</div>
       )}
-    </Container>
+    </Wrapper>
   );
 }
 

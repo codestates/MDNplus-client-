@@ -1,4 +1,4 @@
-import { NewsContainer_OFF, NewsContainer_ON } from "./News.style";
+import { NewsContainerOff, NewsContainerOn } from "./News.style";
 
 type NewsSectionProps = {
   currentY: number;
@@ -8,7 +8,7 @@ function NewsSection({ currentY }: NewsSectionProps) {
   return (
     <>
       {currentY >= 3200 ? (
-        <NewsContainer_ON>
+        <NewsContainerOn>
           <div className="news-intro-box">
             <span className="news-intro">MDN+</span>
             <span className="news-intro"> 뉴스</span>
@@ -28,6 +28,7 @@ function NewsSection({ currentY }: NewsSectionProps) {
               </div>
               <img
                 className="news-img"
+                alt="a working person using a laptop on the desk"
                 src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112351/MainNews_nej1zj.jpg"
               ></img>
               <div className="news-overlay"></div>
@@ -38,6 +39,7 @@ function NewsSection({ currentY }: NewsSectionProps) {
               <div className="news-overlay sub"></div>
               <img
                 className="news-img sub"
+                alt="pen"
                 src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/pen_b7vxvc.jpg"
               ></img>
             </div>
@@ -47,6 +49,7 @@ function NewsSection({ currentY }: NewsSectionProps) {
               <div className="news-overlay sub"></div>
               <img
                 className="news-img sub"
+                alt="the earth"
                 src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112351/network_nunmed.jpg"
               ></img>
             </div>
@@ -56,13 +59,14 @@ function NewsSection({ currentY }: NewsSectionProps) {
               <div className="news-overlay sub"></div>
               <img
                 className="news-img sub"
+                alt="postits"
                 src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112351/note_hx9pna.jpg"
               ></img>
             </div>
           </div>
-        </NewsContainer_ON>
+        </NewsContainerOn>
       ) : (
-        <NewsContainer_OFF></NewsContainer_OFF>
+        <NewsContainerOff></NewsContainerOff>
       )}
     </>
   );

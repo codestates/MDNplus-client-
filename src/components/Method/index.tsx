@@ -1,5 +1,5 @@
 import { MethodType } from "../../types/reducer";
-import { Wrapper } from "./Method.style";
+import { Wrapper } from "./styles";
 
 type MethodProps = {
   data: MethodType;
@@ -8,22 +8,23 @@ type MethodProps = {
 
 function Method({ data, handleClickMethod }: MethodProps) {
   return (
-    <Wrapper>
-      <div className="contents">
-        <div
-          onClick={() => {
-            handleClickMethod(data);
-          }}
-        >
-          <h3 className="title">{data.title}</h3>
-          {data.pureBody ? (
-            <div className="body">{data.pureBody.slice(0, 70)} ...</div>
-          ) : (
-            <div>빈칸</div>
-          )}
-        </div>
+    <Wrapper
+      onClick={() => {
+        handleClickMethod(data);
+      }}
+    >
+      <div>
+        <h1 className="method-title">{data.title}</h1>
+        {data.pureBody ? (
+          <p className="method-desc">{data.pureBody.slice(0, 70)} ...</p>
+        ) : (
+          <span className="method-desc">정보를 입력해주세요.</span>
+        )}
       </div>
-      <div className="count">수정된 횟수 {data.count}</div>
+      <dl className="count">
+        <dt>수정된 횟수</dt>
+        <dd>{data.count}</dd>
+      </dl>
     </Wrapper>
   );
 }

@@ -35,7 +35,7 @@ export const Logo = styled.span`
   color: ${(props) => props.color || "black"};
 `;
 
-export const Nav_RightBox = styled.div``;
+export const NavRightBox = styled.div``;
 
 export const QuestionsBtn = styled.span`
   font-size: 1.1rem;

@@ -1,20 +1,24 @@
-import { MouseEventHandler, ReactElement } from "react";
-import {ButtonStyle} from "./Button.style"
+import { Wrapper } from "./styles";
 
 export type ButtonProps = {
-  size?: "small" | "medium" | "large";
-  bgColor?: string;
-  color?: string;
+  size: "small" | "medium" | "large";
+  btnStyle: "primary" | "white" | "text" | "gray";
   children?: string;
   className?: string;
-  handler?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  handler?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
-function Button({ children, size='medium', bgColor, color, handler, className }: ButtonProps) {
+function Button({ children, size, btnStyle, handler, className }: ButtonProps) {
   return (
-    <ButtonStyle className={className} size={size} bgColor={bgColor} color={color} onClick={handler}>
+    <Wrapper
+      type="button"
+      className={className}
+      size={size}
+      btnStyle={btnStyle}
+      onClick={handler}
+    >
       {children}
-    </ButtonStyle>
+    </Wrapper>
   );
 }
 

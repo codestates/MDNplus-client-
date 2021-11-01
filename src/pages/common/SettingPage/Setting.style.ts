@@ -1,153 +1,111 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.main`
   width: 100%;
-  height: 40rem;
+  height: 500px;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  @media (max-width: 375px) {
-    display: grid;
-    grid-template-columns: auto;
-    grid-auto-rows: auto;
-  }
-`;
-
-export const Stage = styled.div`
-  // border: 1px solid black;
-  width: 50%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  @media (max-width: 375px) {
-    display: grid;
-    grid-template-columns: auto;
-    grid-auto-rows: auto;
-  }
-`;
-
-export const ImgBox = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-export const Img = styled.img`
-  // border: 1px solid black;
-  width: 10em;
-  height: 10em;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
-export const UserNameBox = styled.div`
-  width: 20rem;
-  padding-top: 3rem;
-  // border: 1px solid black;
-`;
-
-export const UserName = styled.div`
-  // border: 1px solid black;
-  margin-left: 3rem;
-  margin-bottom: 0.5rem;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #616161;
-  @media (max-width: 375px) {
-    font-size: 1rem;
-  }
-`;
-
-export const EditName = styled.span`
-  // border: 1px solid black;
-  color: #3b85f3;
-  margin-left: 3rem;
-  cursor: pointer;
-`;
-
-export const EditName_save = styled.span`
-  display: inline-block;
-  float: right;
-  color: white;
-  margin-right: 2.4rem;
-  margin-top: 1rem;
-  background: #3b85f3;
-  padding: 0.3rem 0.7rem 0.3rem 0.7rem;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-`;
-
-export const EditInput = styled.input`
-  margin-left: 2.5rem;
-  width: 15rem;
-  font-size: 1.3rem;
-  outline: #bdbdbd;
-`;
-
-export const SubmitBox = styled.div`
-  // border: 1px solid black;
-  display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  margin-top: 2rem;
-`;
-export const ImgPickerBox = styled.div`
-  margin-top: 1rem;
-`;
 
-export const ImgPicker = styled.input`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-`;
+  /* Common btn style CSS for SettingPage */
 
-export const ImgPickerLetter = styled.label`
-  display: inline-block;
-  padding: 0.5rem 1.7rem 0.5rem 1.7rem;
-  color: white;
-  background-color: #3b85f3;
-  cursor: pointer;
-  border-radius: 0.5rem;
-`;
+  .setting-btn {
+    padding: 8px 26px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background-color: ${({ theme }) => theme.primary[500]};
+    color: white;
+    cursor: pointer;
+  }
 
-export const ImgDelete = styled.div`
-  display: inline-block;
-  color: #3b85f3;
-  cursor: pointer;
-  margin: 1rem 0rem 1rem 0rem;
-`;
+  .setting-section {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+  }
 
-export const DelAccountBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  margin-top: 3rem;
-  align-items: center;
-  @media (max-width: 375px) {
-    width: 100%;
-    height: 100%;
-    justify-content: center;
+  /* User Info, Name Setting CSS */
+
+  .user-info-box {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 0;
-    margin-left: 2.5rem;
+    width: 92%;
   }
-`;
 
-export const DelAccountBtn = styled.button`
-  display: inline-block;
-  padding: 0.5rem 1.7rem 0.5rem 1.7rem;
-  color: white;
-  background-color: #ff5b5b;
-  cursor: pointer;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  margin-left: 2rem;
-  margin-top: -3.2rem;
-  border: none;
+  .user-info-box img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-name {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #616161;
+  }
+
+  .name-edit-btn {
+    border: none;
+    background: none;
+    color: #3b85f3;
+    cursor: pointer;
+  }
+
+  .edit-box {
+    margin-left: 40px;
+  }
+
+  .edit-input {
+    margin-bottom: 8px;
+    font-size: 20px;
+    outline: #bdbdbd;
+  }
+
+  .edit-save-btn {
+    float: right;
+    padding: 3px 10px;
+    border: none;
+    border-radius: 8px;
+    background: ${({ theme }) => theme.primary[500]};
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* Image, Membership Setting CSS */
+
+  .setting-btn-box {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0 0 10px;
+  }
+
+  .image-setting-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-picker {
+    width: 0;
+    height: 0;
+  }
+
+  .image-delete-btn {
+    border: none;
+    background: none;
+    color: ${({ theme }) => theme.primary[500]};
+    cursor: pointer;
+  }
+
+  .cancel-membership-box button {
+    border: none;
+    background-color: #ff5b5b;
+    color: white;
+  }
 `;

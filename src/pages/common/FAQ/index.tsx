@@ -35,7 +35,7 @@ function FAQ() {
         >
           MDN+
         </Logo>
-        <Nav_RightBox>
+        <NavRightBox>
           <QuestionsBtn
             onClick={() => {
               history.push("/FAQ");
@@ -51,7 +51,7 @@ function FAQ() {
             웹 서비스 이동
           </HomeBtn>
           {/* <ArrowImg src={arrow}></ArrowImg> */}
-        </Nav_RightBox>
+        </NavRightBox>
       </Nav>
       <TitleContainer>
         <FAQmain>자주 하는 질문</FAQmain>
@@ -62,7 +62,8 @@ function FAQ() {
           <Tag
             style={{
               color: el.label.tagName === pickName ? "#005CE7" : " #a7a3a3",
-              borderColor: el.label.tagName === pickName ? "#005CE7" : " #a7a3a3",
+              borderColor:
+                el.label.tagName === pickName ? "#005CE7" : " #a7a3a3",
             }}
             key={el.label.tagName}
             onClick={() => handleLabel(el)}
@@ -123,7 +124,7 @@ const Logo = styled.span`
   color: ${(props) => props.color || "black"};
 `;
 
-const Nav_RightBox = styled.div``;
+const NavRightBox = styled.div``;
 
 const QuestionsBtn = styled.span`
   font-size: 1.1rem;
@@ -148,14 +149,6 @@ const HomeBtn = styled.span`
   position: relative;
   background: #263238;
   color: white;
-`;
-
-const ArrowImg = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
-  position: absolute;
-  top: 1.2rem;
-  right: 2.5rem;
 `;
 
 const TitleContainer = styled.div`

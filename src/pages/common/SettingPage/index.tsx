@@ -2,24 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
 import useBooleanData from "../../../hooks/useBooleanData";
-import {
-  Container,
-  DelAccountBox,
-  DelAccountBtn,
-  EditInput,
-  EditName,
-  EditName_save,
-  Img,
-  ImgBox,
-  ImgDelete,
-  ImgPicker,
-  ImgPickerBox,
-  ImgPickerLetter,
-  Stage,
-  SubmitBox,
-  UserName,
-  UserNameBox,
-} from "./Setting.style";
+import { Container } from "./Setting.style";
 
 function SettingPage({ handleChangeUserImg, handleLogin }: any) {
   const [userInfo, setUserInfo] = useState({
@@ -112,55 +95,75 @@ function SettingPage({ handleChangeUserImg, handleLogin }: any) {
 
   return (
     <Container>
-      <Stage>
-        <ImgBox>
+      <section className="setting-section">
+        <div className="user-info-box">
           {!userInfo.img ? (
-            <Img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"></Img>
+            <img
+              src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
+              alt="user profile"
+            ></img>
           ) : (
-            <Img src={userInfo.img} />
+            <img src={userInfo.img} alt="user profile" />
           )}
-        </ImgBox>
-        {!editing ? (
-          <UserNameBox>
-            <UserName>{userInfo.nickName}</UserName>
-            <EditName
-              onClick={() => {
-                setEditing(true);
-              }}
-            >
-              수정
-            </EditName>
-          </UserNameBox>
-        ) : (
-          <UserNameBox>
-            <EditInput
-              onChange={handleInputChange}
-              value={userInfo.nickName}
-              autoFocus
-            ></EditInput>
-            <EditName_save
-              onClick={() => {
-                handleNameSave();
-              }}
-            >
-              저장
-            </EditName_save>
-          </UserNameBox>
-        )}
+          {!editing ? (
+            <div>
+              <strong className="user-name">{userInfo.nickName}</strong>
+              <button
+                className="name-edit-btn"
+                onClick={() => {
+                  setEditing(true);
+                }}
+              >
+                수정
+              </button>
+            </div>
+          ) : (
+            <div className="edit-box">
+              <form method="POST" onSubmit={handleNameSave}>
+                <input
+                  onChange={handleInputChange}
+                  value={userInfo.nickName}
+                  className="edit-input"
+                  autoFocus
+                ></input>
+                <button type="submit" className="edit-save-btn">
+                  저장
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
 
-        <SubmitBox>
-          <ImgPickerBox>
-            <ImgPicker type="file" id="ex_file" onChange={handleChange} />
-            <ImgPickerLetter htmlFor="ex_file">프로필 설정</ImgPickerLetter>
-          </ImgPickerBox>
-          <ImgDelete onClick={handleImgDelete}>프로필 삭제</ImgDelete>
-        </SubmitBox>
-        <DelAccountBox>
-          <DelAccountBtn onClick={handleCancelMembership}>
-            회원 탈퇴
-          </DelAccountBtn>
-        </DelAccountBox>
-      </Stage>
+        <div className="setting-btn-box">
+          <div className="image-setting-box">
+            <input
+              type="file"
+              id="ex_file"
+              className="image-picker"
+              onChange={handleChange}
+            />
+            <label htmlFor="ex_file" className="setting-btn">
+              프로필 설정
+            </label>
+            <button
+              type="button"
+              className="image-delete-btn"
+              onClick={handleImgDelete}
+            >
+              프로필 삭제
+            </button>
+          </div>
+          <div className="cancel-membership-box">
+            <button
+              type="button"
+              className="setting-btn"
+              onClick={handleCancelMembership}
+            >
+              회원 탈퇴
+            </button>
+          </div>
+        </div>
+      </section>
     </Container>
   );
 }

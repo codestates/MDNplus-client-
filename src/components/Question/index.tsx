@@ -1,5 +1,5 @@
 import { QuestionType } from "../../types/reducer";
-import { Tag, TagBox, QuestionStyle } from "./Question.style";
+import { Wrapper } from "./styles";
 
 type QustionProps = {
   data: QuestionType;
@@ -14,43 +14,53 @@ function Question({
 }: QustionProps) {
   return (
     <>
-      <QuestionStyle key={data._id}>
-        <div
-          className="question-title-box"
-          onClick={() => {
-            handleClickQuestion(data);
-          }}
-        >
+      <Wrapper
+        key={data._id}
+        onClick={() => {
+          handleClickQuestion(data);
+        }}
+      >
+        <div className="question-title-box">
           <span className="question-logo">Q</span>
-          <span className="question-title">{data.title}</span>
+          <h1 className="question-title">{data.title}</h1>
         </div>
-        <div
-          className="question-body"
-          onClick={() => {
-            handleClickQuestion(data);
-          }}
-        >
-          {data.pureBody.slice(0, 150)} .......
-        </div>
-        <TagBox>
+        <p className="question-desc">{data.pureBody.slice(0, 150)} .......</p>
+
+        <div className="tag-box">
           {data.tags.map((data: string, idx: number) => (
-            <Tag key={idx + 1} onClick={() => handleSearchTag(data)}>
+            <span
+              className="tag"
+              key={idx + 1}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSearchTag(data);
+              }}
+            >
               {data}
-            </Tag>
+            </span>
           ))}
-        </TagBox>
-        <div className="count-box">
-          <span className="like-count">좋아요 {data.like}</span>
-          <span className="answer-count">답변 {data.commentCount}</span>
-          <span className="question-date">{`${data.createdAt.substring(
+        </div>
+
+        <div className="question-info" onClick={(e) => e.stopPropagation()}>
+          <dl>
+            <div>
+              <dt>좋아요</dt>
+              <dd>{data.like}</dd>
+            </div>
+            <div>
+              <dt>답변</dt>
+              <dd>{data.commentCount}</dd>
+            </div>
+          </dl>
+          <strong className="question-date">{`${data.createdAt.substring(
             0,
             4
           )}년 ${data.createdAt.substring(5, 7)}월 ${data.createdAt.substring(
             8,
             10
-          )}일`}</span>
+          )}일`}</strong>
         </div>
-      </QuestionStyle>
+      </Wrapper>
     </>
   );
 }

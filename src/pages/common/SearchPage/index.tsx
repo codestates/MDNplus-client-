@@ -42,7 +42,8 @@ type TagNameType = {
 };
 
 function SearchPage() {
-  const { SearchDataState, onSearchingData, onSearchingResult } = useSearchData();
+  const { SearchDataState, onSearchingData, onSearchingResult } =
+    useSearchData();
   const { onContentPageMode } = useBooleanData();
   const { onClickMethod } = useContentData();
   const [CurrentPage, setCurrentPage] = useState("MDN");
@@ -94,7 +95,7 @@ function SearchPage() {
           onSearchingData(res.data);
         });
     }
-  }, []);
+  }, [location, onContentPageMode, onSearchingData, onSearchingResult]);
 
   return !SearchDataState.contentData ? (
     <Loading />
@@ -104,27 +105,46 @@ function SearchPage() {
         <ResultTextColor>
           " &nbsp;
           <ResultText>
-            {SearchDataState.result} &nbsp; , &nbsp; {SearchDataState.tagResult === null && SearchDataState.tagResult === undefined ? "전체" : SearchDataState.tagResult}
+            {SearchDataState.result} &nbsp; , &nbsp;{" "}
+            {SearchDataState.tagResult === null &&
+            SearchDataState.tagResult === undefined
+              ? "전체"
+              : SearchDataState.tagResult}
             &nbsp;
           </ResultText>
           " &nbsp; (을)를 검색하셨습니다.
         </ResultTextColor>
 
         <ResultNum>
-          총 &nbsp; {SearchDataState.contentData?.mainContent !== undefined ? SearchDataState.contentData?.mainContent.length + SearchDataState.contentData?.helpdeskContent.length : 0} 개의 검색결과
-          &nbsp; / &nbsp; MDN+ &nbsp; {SearchDataState.contentData?.mainContent !== undefined ? SearchDataState.contentData?.mainContent.length : 0} 개 &nbsp; / &nbsp; Help Desk &nbsp;
+          총 &nbsp;{" "}
+          {SearchDataState.contentData?.mainContent !== undefined
+            ? SearchDataState.contentData?.mainContent.length +
+              SearchDataState.contentData?.helpdeskContent.length
+            : 0}{" "}
+          개의 검색결과 &nbsp; / &nbsp; MDN+ &nbsp;{" "}
+          {SearchDataState.contentData?.mainContent !== undefined
+            ? SearchDataState.contentData?.mainContent.length
+            : 0}{" "}
+          개 &nbsp; / &nbsp; Help Desk &nbsp;
           {SearchDataState.contentData?.helpdeskContent.length} 개
         </ResultNum>
       </SearchResult>
       <FilterSearchResult>
-        {SearchDataState.contentData?.mainContent === undefined || SearchDataState.contentData.mainContent === null ? (
+        {SearchDataState.contentData?.mainContent === undefined ||
+        SearchDataState.contentData.mainContent === null ? (
           <> </>
         ) : (
           <>
-            <MDNPlus onClick={() => HandleMDNColor()} style={{ color: MDNColor }}>
+            <MDNPlus
+              onClick={() => HandleMDNColor()}
+              style={{ color: MDNColor }}
+            >
               MDN+ 위키
             </MDNPlus>
-            <HelpDesk onClick={() => HandleHelpDeckColor()} style={{ color: HelpDeskColor }}>
+            <HelpDesk
+              onClick={() => HandleHelpDeckColor()}
+              style={{ color: HelpDeskColor }}
+            >
               HelpDesk
             </HelpDesk>
           </>
@@ -132,9 +152,11 @@ function SearchPage() {
       </FilterSearchResult>
 
       <ContentContainer>
-        {SearchDataState.contentData?.mainContent?.length === 0 && SearchDataState.contentData?.helpdeskContent.length === 0 ? (
+        {SearchDataState.contentData?.mainContent?.length === 0 &&
+        SearchDataState.contentData?.helpdeskContent.length === 0 ? (
           <AlertResult>검색결과 없음</AlertResult>
-        ) : CurrentPage === "MDN" && SearchDataState.contentData?.mainContent ? (
+        ) : CurrentPage === "MDN" &&
+          SearchDataState.contentData?.mainContent ? (
           SearchDataState.contentData.mainContent?.map((el) => (
             <Content key={el._id} onClick={() => HandleMDNClicked(el)}>
               <Title>{el.title}</Title>
@@ -243,10 +265,6 @@ const Body = styled.div`
 const HelpTitle = styled.div`
   font-weight: bold;
   font-size: 1.5rem;
-`;
-
-const HelpBody = styled.div`
-  margin-top: 1rem;
 `;
 
 const AlertResult = styled.div`

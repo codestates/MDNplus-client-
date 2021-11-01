@@ -1,74 +1,31 @@
-import styled, { css } from "styled-components";
+import { Wrapper } from "./styles";
 
 type HelpdeskFilterProps = {
-  isSelected: string;
+  active: string;
   handleFilter: (type: string) => void;
 };
 
-type FilterBtnProps = {
-  type?: string;
-};
-
-function HelpdeskFilter({ isSelected, handleFilter }: HelpdeskFilterProps) {
+function HelpdeskFilter({ active, handleFilter }: HelpdeskFilterProps) {
   return (
-    <Wrapper>
-      {isSelected === "최신순" ? (
-        <FilterBtn
-          type="selected"
-          onClick={() => {
-            handleFilter("최신순");
-          }}
-        >
-          최신순
-        </FilterBtn>
-      ) : (
-        <FilterBtn
-          onClick={() => {
-            handleFilter("최신순");
-          }}
-        >
-          최신순
-        </FilterBtn>
-      )}
-      {isSelected === "인기순" ? (
-        <FilterBtn
-          type="selected"
-          onClick={() => {
-            handleFilter("인기순");
-          }}
-        >
-          인기순
-        </FilterBtn>
-      ) : (
-        <FilterBtn
-          onClick={() => {
-            handleFilter("인기순");
-          }}
-        >
-          인기순
-        </FilterBtn>
-      )}
+    <Wrapper active={active}>
+      <button
+        className="helpdesk-filter"
+        onClick={() => {
+          handleFilter("최신순");
+        }}
+      >
+        최신순
+      </button>
+      <button
+        className="helpdesk-filter"
+        onClick={() => {
+          handleFilter("인기순");
+        }}
+      >
+        인기순
+      </button>
     </Wrapper>
   );
 }
 
 export default HelpdeskFilter;
-
-export const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  margin: 2rem 0rem 1rem 3rem;
-`;
-
-export const FilterBtn = styled.span<FilterBtnProps>`
-  color: #757575;
-  cursor: pointer;
-  margin-right: 1rem;
-
-  ${({ type }) =>
-    type === "selected" &&
-    css`
-      color: #3f51b5;
-      font-weight: bold;
-    `}
-`;

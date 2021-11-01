@@ -1,4 +1,3 @@
-import { Method } from 'axios';
 import { MethodType, EditingDataType } from "../types/reducer";
 
 const CLICKMETHOD = "ContentData/CLICKMETHOD" as const;

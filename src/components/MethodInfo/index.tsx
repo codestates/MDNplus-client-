@@ -2,7 +2,8 @@ import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { MethodType } from "../../types/reducer";
-import { Wrapper, EditBtn } from "./MethodInfo.style";
+import { Wrapper } from "./styles";
+import Button from "../Button";
 
 type MethodInfoProps = {
   data: MethodType;
@@ -14,7 +15,14 @@ function MethodInfo({ data, handleClickEdit }: MethodInfoProps) {
     <Wrapper>
       <div className="title-box">
         <h1 className="title">{data.title}</h1>
-        <EditBtn handler={handleClickEdit}>수정</EditBtn>
+        <Button
+          size="small"
+          btnStyle="text"
+          className="edit-btn"
+          handler={handleClickEdit}
+        >
+          수정
+        </Button>
       </div>
       <ReactMarkdown
         rehypePlugins={[rehypeRaw]}

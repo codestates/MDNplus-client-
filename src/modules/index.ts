@@ -3,7 +3,7 @@ import AllDataReducer from "./AllData";
 import ContentDataReducer from "./ContentData";
 import MyPageReducer from "./MyPageData";
 import SearchDataReducer from "./SearchData";
-import QcontentDataReducer from "./QcontentData";
+import QuestionDataReducer from "./QuestionData";
 import AnswerPageReducer from "./AnswerPageData";
 import HelpDataReducer from "./HelpData";
 import FAQdataReducer from "./FAQdata";
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   ContentDataReducer,
   MyPageReducer,
   SearchDataReducer,
-  QcontentDataReducer,
+  QuestionDataReducer,
   AnswerPageReducer,
   HelpDataReducer,
   FAQdataReducer,

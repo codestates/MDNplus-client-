@@ -9,7 +9,7 @@ function Review({ img, name, body }: ReviewProps) {
     <>
       <div className="review-box">
         <div className="reviewer-box">
-          <img className="reviewer-img" src={img}></img>
+          <img className="reviewer-img" src={img} alt="user profile"></img>
           <span className="reviewer-name">{name}</span>
         </div>
         <div className="review-body">{body}</div>

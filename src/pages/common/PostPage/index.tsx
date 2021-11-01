@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import CommentContainer from "../../../container/post/Comment";
-import EditContainer from "../../../container/post/Edit";
-import QuestionContainer from "../../../container/post/Question";
+import CommentContainer from "../../../containers/post/Comment";
+import EditContainer from "../../../containers/post/Edit";
+import QuestionContainer from "../../../containers/post/Question";
 import useBooleanData from "../../../hooks/useBooleanData";
 
 type PostPageProps = {
@@ -39,7 +39,7 @@ function PostPage({ helpModal, handleHelpModal }: PostPageProps) {
   useEffect(() => {
     onSetWriteMode(true);
     setPageType(history.location.hash);
-  }, []);
+  }, [history, onSetWriteMode]);
 
   return (
     <>

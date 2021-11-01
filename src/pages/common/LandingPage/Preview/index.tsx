@@ -1,6 +1,6 @@
 import {
-  PreviewContainer_OFF,
-  PreviewContainer_ON,
+  PreviewContainerOff,
+  PreviewContainerOn,
   Container,
 } from "./Preview.style";
 import styled from "styled-components";
@@ -13,11 +13,12 @@ function PreviewSection({ currentY }: PreviewSectionProps) {
   return (
     <Container>
       {currentY >= 600 ? (
-        <PreviewContainer_ON className="preview1">
+        <PreviewContainerOn className="preview1">
           <div className="preview-box">
             <div className="sub-box"></div>
             <img
               className="preview-img"
+              alt="preview of wiki service"
               src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/appeal1_ekduys.png"
             ></img>
           </div>
@@ -28,15 +29,15 @@ function PreviewSection({ currentY }: PreviewSectionProps) {
               개발자들이 자유롭게 작성해놓은 개발 정보들을 얻어가세요!
             </div>
           </div>
-        </PreviewContainer_ON>
+        </PreviewContainerOn>
       ) : (
-        <PreviewContainer_OFF></PreviewContainer_OFF>
+        <PreviewContainerOff></PreviewContainerOff>
       )}
 
       <EmptySpace></EmptySpace>
 
       {currentY >= 1300 ? (
-        <PreviewContainer_ON className="preview2">
+        <PreviewContainerOn className="preview2">
           <div className="appeal-box second">
             <div className="underline second"></div>
             <div className="appeal-title">헬프데스크</div>
@@ -49,12 +50,13 @@ function PreviewSection({ currentY }: PreviewSectionProps) {
             <div className="sub-box second"></div>
             <img
               className="preview-img"
+              alt="preview of helpdesk service"
               src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/appeal2_nehb8u.png"
             ></img>
           </div>
-        </PreviewContainer_ON>
+        </PreviewContainerOn>
       ) : (
-        <PreviewContainer_OFF></PreviewContainer_OFF>
+        <PreviewContainerOff></PreviewContainerOff>
       )}
     </Container>
   );
@@ -65,5 +67,4 @@ export default PreviewSection;
 const EmptySpace = styled.div`
   width: 100%;
   height: 10rem;
-  // border: 1px solid black;
 `;

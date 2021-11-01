@@ -12,6 +12,7 @@ function IntroSection() {
               <button className="app-btn google">
                 <img
                   className="app-logo"
+                  alt="google play logo"
                   src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/googleLogo_vxfjro.png"
                 ></img>
                 Google Play
@@ -19,6 +20,7 @@ function IntroSection() {
               <button className="app-btn apple">
                 <img
                   className="app-logo"
+                  alt="apple store logo"
                   src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/appleLogo_pcdiqo.png"
                 ></img>
                 App Store
@@ -40,6 +42,7 @@ function IntroSection() {
           <div className="img-box">
             <img
               className="main-image"
+              alt="monitor"
               src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112350/monitor3_ltq26s.png"
             ></img>
           </div>

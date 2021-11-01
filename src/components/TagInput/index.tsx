@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 type TagInputProps = {
   tags: string[];
@@ -16,7 +17,7 @@ function TagInput({
   handleChangeTag,
 }: TagInputProps) {
   return (
-    <div onKeyPress={handleEnter}>
+    <Wrapper onKeyPress={handleEnter}>
       {tags.length === 0
         ? null
         : tags.map((el, idx) => (
@@ -36,8 +37,15 @@ function TagInput({
         onChange={handleChangeTag}
         placeholder="태그를 입력해주세요"
       />
-    </div>
+    </Wrapper>
   );
 }
 
 export default TagInput;
+
+const Wrapper = styled.div`
+  .input-box {
+    border: none;
+    outline: none;
+  }
+`;

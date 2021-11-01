@@ -1,5 +1,5 @@
 import Review from "../../../../components/Review";
-import { Container_OFF, Container_ON } from "./Review.style";
+import { ContainerOff, ContainerOn } from "./Review.style";
 
 type ReviewSectionProps = {
   currentY: number;
@@ -9,7 +9,7 @@ function ReviewSection({ currentY }: ReviewSectionProps) {
   return (
     <>
       {currentY >= 2350 ? (
-        <Container_ON>
+        <ContainerOn>
           <div className="review-title">
             개발공부에 얼마나 많은 도움이 되었을까?{" "}
           </div>
@@ -22,9 +22,9 @@ function ReviewSection({ currentY }: ReviewSectionProps) {
               <Review img={el.img} name={el.name} body={el.body}></Review>
             ))}
           </div>
-        </Container_ON>
+        </ContainerOn>
       ) : (
-        <Container_OFF></Container_OFF>
+        <ContainerOff></ContainerOff>
       )}
     </>
   );

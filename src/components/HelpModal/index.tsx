@@ -74,6 +74,7 @@ const HelpModal = ({ isOpen, handleHelpModal }: PropsOptions) => {
               src={
                 "https://res.cloudinary.com/dr4ka7tze/image/upload/v1622032268/oke1b4jtmpxebeofuqbu.jpg"
               }
+              alt="test"
             ></img>
           </div>
         </Container>
@@ -89,14 +90,13 @@ const Container = styled.div`
   grid-template-columns: 1fr 0.7fr;
   width: 100%;
   height: 100%;
-  border: 1px solid black;
 
   .left-container {
-    padding: 1rem 0rem 0rem 3rem;
+    padding: 32px;
   }
 
   .right-container {
-    padding: 3.5rem;
+    padding: 32px;
     background: #eceff1;
   }
 

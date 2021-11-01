@@ -44,12 +44,16 @@ function UserQuestion({
       </div>
       <div className="userInfo-box">
         {data.userId ? (
-          <img className="userInfo-img" src={data.userId.image}></img>
+          <img
+            className="userInfo-img"
+            src={data.userId.image}
+            alt="user profile"
+          ></img>
         ) : (
           <img
             className="userInfo-img"
             src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
-            alt="user image"
+            alt="user profile"
           ></img>
         )}
         <span className="userInfo-name">{data.userId.nickName}</span>

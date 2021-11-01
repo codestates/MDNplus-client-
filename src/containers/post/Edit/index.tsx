@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -64,7 +64,7 @@ function EditContainer({
 
   useEffect(() => {
     onSetWriteMode(true);
-  }, []);
+  }, [onSetWriteMode]);
 
   return (
     <>

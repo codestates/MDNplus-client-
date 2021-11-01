@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import useBooleanData from "./hooks/useBooleanData";
-import Nav from "./container/nav";
+import Nav from "./containers/nav";
 import Sidebar from "./components/Sidebar";
 import SearchPage from "./pages/common/SearchPage";
 import NameSettingPage from "./pages/common/NameSettingPage";

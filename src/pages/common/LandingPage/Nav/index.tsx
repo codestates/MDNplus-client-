@@ -4,7 +4,7 @@ import {
   Nav,
   ArrowImg,
   Logo,
-  Nav_RightBox,
+  NavRightBox,
   QuestionsBtn,
   HomeBtn,
 } from "./Nav.style";
@@ -28,7 +28,7 @@ function NavContainer({ currentY }: NavContainerProps) {
           >
             MDN+
           </Logo>
-          <Nav_RightBox>
+          <NavRightBox>
             <QuestionsBtn
               onClick={() => {
                 history.push("/FAQ");
@@ -44,7 +44,7 @@ function NavContainer({ currentY }: NavContainerProps) {
               웹 서비스 이동
             </HomeBtn>
             <ArrowImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/arrow2_oht57k.png"></ArrowImg>
-          </Nav_RightBox>
+          </NavRightBox>
         </Nav2>
       ) : (
         <Nav>
@@ -55,7 +55,7 @@ function NavContainer({ currentY }: NavContainerProps) {
           >
             MDN+
           </Logo>
-          <Nav_RightBox>
+          <NavRightBox>
             <QuestionsBtn
               onClick={() => {
                 history.push("/FAQ");
@@ -71,7 +71,7 @@ function NavContainer({ currentY }: NavContainerProps) {
               웹 서비스 이동
             </HomeBtn>
             <ArrowImg src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112348/arrow2_oht57k.png"></ArrowImg>
-          </Nav_RightBox>
+          </NavRightBox>
         </Nav>
       )}
     </>

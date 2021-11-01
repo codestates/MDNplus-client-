@@ -1,4 +1,4 @@
-import WikiPageContainer from "../../container/wiki/WikiPageContainer";
+import WikiPageContainer from "../../containers/wiki/WikiPageContainer";
 
 function WikiPage() {
   return <WikiPageContainer />;

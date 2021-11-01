@@ -12,9 +12,9 @@ function ServiceIntro({ img, title, description, type }: ServiceIntroProps) {
   return (
     <Wrapper>
       {type === "wiki" ? (
-        <img className="intro-icon wiki" src={img} />
+        <img className="intro-icon wiki" src={img} alt="thinker" />
       ) : (
-        <img className="intro-icon" src={img} />
+        <img className="intro-icon" src={img} alt="quizzer" />
       )}
       <div>
         <h1 className="intro-title">{title}</h1>

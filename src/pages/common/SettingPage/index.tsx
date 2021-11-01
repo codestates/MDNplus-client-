@@ -100,10 +100,10 @@ function SettingPage({ handleChangeUserImg, handleLogin }: any) {
           {!userInfo.img ? (
             <img
               src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
-              alt="user image"
+              alt="user profile"
             ></img>
           ) : (
-            <img src={userInfo.img} alt="user image" />
+            <img src={userInfo.img} alt="user profile" />
           )}
           {!editing ? (
             <div>
@@ -126,7 +126,9 @@ function SettingPage({ handleChangeUserImg, handleLogin }: any) {
                   className="edit-input"
                   autoFocus
                 ></input>
-                <button type="submit" className="edit-save-btn">저장</button>
+                <button type="submit" className="edit-save-btn">
+                  저장
+                </button>
               </form>
             </div>
           )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
 import LoginModal from "./LoginModal";
@@ -33,48 +33,60 @@ function NavContainer({
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const gitAccessToken = (authorizationCode: string) => {
-    axios
-      .post(
-        "http://localhost:8080/oauth",
-        { authorizationCode: authorizationCode },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const { nickName } = res.data;
-        if (nickName) {
-          handleChangeUserImg(res.data.image);
-          history.push("/Wiki");
-          handleLogin();
-        } else {
-          handleLogin();
-          history.push("/NameSettingPage");
-        }
+  const gitAccessToken = useCallback(
+    (authorizationCode: string) => {
+      axios
+        .post(
+          "http://localhost:8080/oauth",
+          { authorizationCode: authorizationCode },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          const { nickName } = res.data;
+          if (nickName) {
+            handleChangeUserImg(res.data.image);
+            history.push("/Wiki");
+            handleLogin();
+          } else {
+            handleLogin();
+            history.push("/NameSettingPage");
+          }
 
-        window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
-      });
-  };
+          window.localStorage.setItem(
+            "sessionId",
+            JSON.stringify(res.data._id)
+          );
+        });
+    },
+    [handleChangeUserImg, handleLogin, history]
+  );
 
-  const kakaoAccessToken = (authorizationCode: string) => {
-    axios
-      .post(
-        "http://localhost:8080/oauth",
-        { authorizationCode: authorizationCode },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const { nickName } = res.data;
-        if (nickName) {
-          handleChangeUserImg(res.data.image);
-          history.push("/Wiki");
-          handleLogin();
-        } else {
-          handleLogin();
-          history.push("/NameSettingPage");
-        }
-        window.localStorage.setItem("sessionId", JSON.stringify(res.data._id));
-      });
-  };
+  const kakaoAccessToken = useCallback(
+    (authorizationCode: string) => {
+      axios
+        .post(
+          "http://localhost:8080/oauth",
+          { authorizationCode: authorizationCode },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          const { nickName } = res.data;
+          if (nickName) {
+            handleChangeUserImg(res.data.image);
+            history.push("/Wiki");
+            handleLogin();
+          } else {
+            handleLogin();
+            history.push("/NameSettingPage");
+          }
+          window.localStorage.setItem(
+            "sessionId",
+            JSON.stringify(res.data._id)
+          );
+        });
+    },
+    [handleChangeUserImg, handleLogin, history]
+  );
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -92,7 +104,7 @@ function NavContainer({
     if (window.localStorage.getItem("sessionId")) {
       setIsLogin(true);
     }
-  }, []);
+  }, [gitAccessToken, kakaoAccessToken, setIsLogin]);
 
   return (
     <Wrapper>
@@ -108,7 +120,7 @@ function NavContainer({
             className="user-icon"
             src={userImg}
             onClick={handleMenuModal}
-            alt="user image"
+            alt="user profile"
           ></img>
           {isMenuOpen ? (
             <MenuModal

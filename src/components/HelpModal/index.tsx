@@ -74,6 +74,7 @@ const HelpModal = ({ isOpen, handleHelpModal }: PropsOptions) => {
               src={
                 "https://res.cloudinary.com/dr4ka7tze/image/upload/v1622032268/oke1b4jtmpxebeofuqbu.jpg"
               }
+              alt="test"
             ></img>
           </div>
         </Container>

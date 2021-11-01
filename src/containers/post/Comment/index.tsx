@@ -74,7 +74,7 @@ function CommentContainer({
         setUserInfo({ img: res.data.image, nickName: res.data.nickName });
       });
     onSetWriteMode(true);
-  }, []);
+  }, [onSetWriteMode]);
 
   return displayQuestion === undefined || displayQuestion === null ? (
     <div>비어있는 질문</div>
@@ -102,9 +102,10 @@ function CommentContainer({
             <img
               className="my-image"
               src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
+              alt="my profile"
             />
           ) : (
-            <img className="my-image" src={userInfo.img} alt="user image"/>
+            <img className="my-image" src={userInfo.img} alt="my profile" />
           )}
           <span className="my-nickname">{userInfo.nickName} 님의 답변</span>
         </div>

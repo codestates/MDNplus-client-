@@ -1,4 +1,4 @@
-import InfoPageContainer from "../../container/wiki/InfoPageContainer";
+import InfoPageContainer from "../../containers/wiki/InfoPageContainer";
 
 type PropsOption = {
   isLogin: boolean;

@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import { keyframes } from "styled-components";
 
 export const fadeIn = keyframes`
   from {
@@ -109,8 +109,6 @@ export const slideLeft_box = keyframes`
   }
 `;
 
-
-
 export const slideLeft_line = keyframes`
   0% {
     opacity: 0;
@@ -137,7 +135,7 @@ export const slideRight = keyframes`
   to {
     transform: translateX(0rem)
   }
-`
+`;
 
 export const slideRight_box = keyframes`
   0% {

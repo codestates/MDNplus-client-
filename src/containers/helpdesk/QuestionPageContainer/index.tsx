@@ -75,7 +75,7 @@ function QuestionPageContainer({
     axios.get(`http://localhost:8080/question/${questionID}`).then((res) => {
       onCurrentQData(res.data);
     });
-  }, []);
+  }, [location, onContentPageMode, onCurrentQData]);
 
   return (
     <>

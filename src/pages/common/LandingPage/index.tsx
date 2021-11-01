@@ -11,16 +11,13 @@ import NewsSection from "./News";
 
 const LandingPage = () => {
   const { onSetWriteMode } = useBooleanData();
-  const [height, setHeight] = useState(0);
   const [currentY, setCurrentY] = useState(0);
 
   useEffect(() => {
     onSetWriteMode(true);
-    const height = document.body.scrollHeight;
     const currentY = window.scrollY;
-    setHeight(height);
     setCurrentY(currentY);
-  }, []);
+  }, [onSetWriteMode]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {

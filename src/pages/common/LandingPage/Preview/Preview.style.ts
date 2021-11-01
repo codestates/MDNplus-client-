@@ -122,7 +122,7 @@ export const Container = styled.div`
   }
 `;
 
-export const PreviewContainer_ON = styled.div`
+export const PreviewContainerOn = styled.div`
   opacity: 1;
   width: 100%;
   height: 45rem;
@@ -140,7 +140,7 @@ export const PreviewContainer_ON = styled.div`
   }
 `;
 
-export const PreviewContainer_OFF = styled.div`
+export const PreviewContainerOff = styled.div`
   opacity: 0;
   width: 100%;
   height: 45rem;

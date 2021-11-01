@@ -95,7 +95,7 @@ function QuestionContainer({
 
   useEffect(() => {
     onSetWriteMode(true);
-  }, []);
+  }, [onSetWriteMode]);
 
   return (
     <>

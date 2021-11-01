@@ -1,4 +1,4 @@
-import QuestionPageContainer from "../../container/helpdesk/QuestionPageContainer";
+import QuestionPageContainer from "../../containers/helpdesk/QuestionPageContainer";
 
 type QuestionPageProps = {
   isLogin: boolean;

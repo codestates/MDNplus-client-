@@ -25,7 +25,7 @@ function HelpdeskPageContainer() {
   const [active, setActive] = useState("최신순");
   const { helpData, onStoreData, onFilter } = useHelpData();
   const { onSetWriteMode, onContentPageMode } = useBooleanData();
-  const { allQuestions, selectedQuestions }: HelpData = helpData;
+  const { selectedQuestions }: HelpData = helpData;
   const history = useHistory();
 
   const handleFilter = (type: string) => {
@@ -70,7 +70,7 @@ function HelpdeskPageContainer() {
     axios.get("http://localhost:8080/helpdesk").then((res) => {
       onStoreData(res.data);
     });
-  }, []);
+  }, [history, onContentPageMode, onSetWriteMode, onStoreData]);
 
   return selectedQuestions ? (
     <>

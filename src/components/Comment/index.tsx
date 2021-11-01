@@ -13,11 +13,16 @@ function Comment({ data }: CommentProps) {
         <>
           <div className="comment-info">
             {data.userId.image !== "" ? (
-              <img className="user-img" src={data.userId.image}></img>
+              <img
+                className="user-img"
+                src={data.userId.image}
+                alt="user profile"
+              ></img>
             ) : (
               <img
                 className="user-img"
                 src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
+                alt="user profile"
               ></img>
             )}
             {data.userId.nickName !== null ? (

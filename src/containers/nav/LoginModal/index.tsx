@@ -43,11 +43,17 @@ function LoginModal({ isOpen, onClose }: Props) {
           <h1 className="title">MDN +</h1>
           <div className="btn-box">
             <button type="button" onClick={kakaoLoginHandler}>
-              <img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112350/kakao2_evw3bk.png"></img>
+              <img
+                src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112350/kakao2_evw3bk.png"
+                alt="kakao logo"
+              ></img>
               카카오 로그인
             </button>
             <button type="button" onClick={githubLoginHandler}>
-              <img src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/github_il3cw8.png"></img>
+              <img
+                src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112349/github_il3cw8.png"
+                alt="github logo"
+              ></img>
               깃허브 로그인
             </button>
           </div>

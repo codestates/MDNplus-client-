@@ -1,5 +1,5 @@
 import { UserQuestionProps } from "./index";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 type sizeType = Pick<UserQuestionProps, "type">;
 

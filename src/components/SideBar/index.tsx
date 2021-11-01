@@ -9,7 +9,7 @@ const SideBar = () => {
   useEffect(() => {
     if (history.location.pathname === "/Wiki") setActive("wiki");
     if (history.location.pathname === "/HelpdeskPage") setActive("helpdesk");
-  }, [active]);
+  }, [active, history]);
 
   return (
     <Wrapper active={active}>

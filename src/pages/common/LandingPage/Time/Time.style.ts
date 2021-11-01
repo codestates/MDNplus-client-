@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { fadeIn } from "../../../../styles/animation";
 
-export const Container_ON = styled.div`
+export const ContainerOn = styled.div`
   opacity: 1;
   width: 100%;
   height: 31rem;
@@ -44,7 +44,7 @@ export const Container_ON = styled.div`
   }
 `;
 
-export const Container_OFF = styled.div`
+export const ContainerOff = styled.div`
   opacity: 0;
   width: 100%;
   height: 30rem;

@@ -31,6 +31,7 @@ function SearchBar({
           className="search-icon"
           onClick={handleSearchClick}
           src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112352/search_u2ytnm.jpg"
+          alt="search icon"
         ></img>
       </div>
       <select name="filter" className="search-filter" onChange={option}>

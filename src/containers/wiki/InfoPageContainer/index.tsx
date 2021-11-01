@@ -34,7 +34,7 @@ function InfoPageContainer({ isLogin, handleLoginModal }: PropsOption) {
     if (history.location.pathname === "/InfoPage") {
       onSetWriteMode(false);
     }
-  }, []);
+  }, [history, onSetWriteMode]);
 
   return (
     <Container>

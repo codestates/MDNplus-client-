@@ -53,7 +53,7 @@ function MyPage() {
     if (history.location.pathname === "/MyPage") {
       onContentPageMode(false);
     }
-  }, []);
+  }, [dispatch, history, onContentPageMode]);
 
   return !myPageData || myPageData === undefined ? (
     <Loading />
@@ -64,10 +64,10 @@ function MyPage() {
           {!myPageData.user.image ? (
             <img
               src="https://res.cloudinary.com/dr4ka7tze/image/upload/v1629112353/userIcon_gray_k0aghd.jpg"
-              alt="user image"
+              alt="user profile"
             />
           ) : (
-            <img src={myPageData.user.image} alt="user image" />
+            <img src={myPageData.user.image} alt="user profile" />
           )}
           <strong className="user-name">{myPageData.user.nickName}</strong>
         </section>

@@ -72,7 +72,7 @@ function WikiPageContainer() {
     if (history.location.pathname === "/Wiki") {
       onSetWriteMode(false);
     }
-  }, []);
+  }, [history, onFilter, onSetWriteMode]);
 
   return currentData ? (
     <Container className="container">
